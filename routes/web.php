@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+//=========================================
+// ------------admin panel-----------------
+//=========================================
+Route::prefix('panel')->group(function () {
+    Route::get('dashboard', 'panel_view@index');
+
+});
+//=========================================
