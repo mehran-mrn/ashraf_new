@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ------------admin panel-----------------
 //=========================================
 Route::prefix('panel')->group(function () {
-    Route::get('dashboard', 'panel_view@index');
+    Route::get('dashboard', 'panel\panel_view@dashboard');
 
 });
 //=========================================

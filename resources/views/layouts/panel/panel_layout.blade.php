@@ -9,7 +9,7 @@
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="../../../../global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/css/layout.min.css') }}" rel="stylesheet" type="text/css">
@@ -47,7 +47,7 @@
         }</style>
 </noscript>
 
-<body class="withscript navbar-top {{isset($sidebar_collapse) ? "sidebar-xs" : ""}}">
+<body class="{{isset($sidebar_collapse) ? "sidebar-xs" : ""}}">
 @include('layouts.panel.navbar')
     <!-- Page content -->
     <div class="page-content">

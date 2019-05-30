@@ -8,4 +8,8 @@ use App\Http\Controllers\Controller;
 class panel_view extends Controller
 {
     //
+    public function dashboard()
+    {
+        return view('panel.dashboard');
+    }
 }
