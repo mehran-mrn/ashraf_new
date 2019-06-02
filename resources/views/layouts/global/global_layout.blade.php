@@ -51,6 +51,27 @@
     <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-blue.css') }}" rel="stylesheet" type="text/css">
 @yield('css')
 
+    <style>
+
+
+        @font-face {
+            font-family: 'Samim';
+            src: url("{{ URL::asset('/public/fonts/Samim.eot') }}"); /* IE9 Compat Modes */
+            src: url("{{ URL::asset('/public/fonts/Samim.eot?#iefix') }}") format('embedded-opentype'), /* IE6-IE8 */ url("{{ URL::asset('/public/fonts/Samim.woff2') }}") format('woff2'), /* Super Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim.woff') }}") format('woff'), /* Pretty Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim.ttf') }}") format('truetype'), /* Safari, Android, iOS */ url("{{ URL::asset('/public/fonts/Samim.svg#svgFontName') }}") format('svg'); /* Old iOS */
+        }
+
+        @font-face {
+            font-family: 'BSamim';
+            src: url("{{ URL::asset('/public/fonts/Samim-Bold.eot') }}"); /* IE9 Compat Modes */
+            src: url("{{ URL::asset('/public/fonts/Samim-Bold.eot?#iefix') }}") format('embedded-opentype'), /* IE6-IE8 */ url("{{ URL::asset('/public/fonts/Samim-Bold.woff2') }}") format('woff2'), /* Super Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim-Bold.woff') }}") format('woff'), /* Pretty Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim-Bold.ttf') }}") format('truetype'), /* Safari, Android, iOS */ url("{{ URL::asset('/public/fonts/Samim-Bold.svg#svgFontName') }}") format('svg'); /* Old iOS */
+        }
+
+    </style>
+    <style>
+        body {
+            font-family: Samim !Important;
+        }
+    </style>
     <!-- external javascripts -->
     <script src="{{ URL::asset('/public/assets/global/js/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/jquery-ui.min.js') }}"></script>

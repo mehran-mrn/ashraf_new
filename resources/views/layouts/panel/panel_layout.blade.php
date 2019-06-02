@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,27 @@
     <link href="{{ URL::asset('/public/assets/panel/css/colors.min.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     @yield('css')
+    <style>
 
+
+        @font-face {
+            font-family: 'Samim';
+            src: url("{{ URL::asset('/public/fonts/Samim.eot') }}"); /* IE9 Compat Modes */
+            src: url("{{ URL::asset('/public/fonts/Samim.eot?#iefix') }}") format('embedded-opentype'), /* IE6-IE8 */ url("{{ URL::asset('/public/fonts/Samim.woff2') }}") format('woff2'), /* Super Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim.woff') }}") format('woff'), /* Pretty Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim.ttf') }}") format('truetype'), /* Safari, Android, iOS */ url("{{ URL::asset('/public/fonts/Samim.svg#svgFontName') }}") format('svg'); /* Old iOS */
+        }
+
+        @font-face {
+            font-family: 'BSamim';
+            src: url("{{ URL::asset('/public/fonts/Samim-Bold.eot') }}"); /* IE9 Compat Modes */
+            src: url("{{ URL::asset('/public/fonts/Samim-Bold.eot?#iefix') }}") format('embedded-opentype'), /* IE6-IE8 */ url("{{ URL::asset('/public/fonts/Samim-Bold.woff2') }}") format('woff2'), /* Super Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim-Bold.woff') }}") format('woff'), /* Pretty Modern Browsers */ url("{{ URL::asset('/public/fonts/Samim-Bold.ttf') }}") format('truetype'), /* Safari, Android, iOS */ url("{{ URL::asset('/public/fonts/Samim-Bold.svg#svgFontName') }}") format('svg'); /* Old iOS */
+        }
+
+    </style>
+    <style>
+        body {
+            font-family: Samim !Important;
+        }
+    </style>
     <!-- Core JS files -->
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
