@@ -1,11 +1,11 @@
 <!-- Header -->
 <header id="header" class="header">
-    <div class="header-top p-0 bg-theme-colored xs-text-center" data-bg-img="images/footer-bg.png">
+    <div class="header-top p-0 bg-theme-colored xs-text-center" data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
         <div class="container pt-20 pb-20">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
-                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="index-mp-layout1.html"><img src="images/logo-wide-white.png" alt=""></a>
+                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="index-mp-layout1.html"><img src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">

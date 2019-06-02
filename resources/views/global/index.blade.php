@@ -15,7 +15,7 @@
                         <!-- SLIDE 1 -->
                         <li data-index="rs-1" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg14.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
                             <!-- MAIN IMAGE -->
-                            <img src="images/bg/bg14.jpg"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
+                            <img src="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                             <!-- LAYERS -->
 
                             <!-- LAYER NR. 1 -->
@@ -120,7 +120,7 @@
                         <!-- SLIDE 2 -->
                         <li data-index="rs-2" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg5.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 2" data-description="">
                             <!-- MAIN IMAGE -->
-                            <img src="images/bg/bg5.jpg"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
+                            <img src="{{ URL::asset('/public/assets/global/images/bg/bg5.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                             <!-- LAYERS -->
 
                             <!-- LAYER NR. 1 -->
@@ -225,7 +225,7 @@
                         <!-- SLIDE 3 -->
                         <li data-index="rs-3" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg7.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 3" data-description="">
                             <!-- MAIN IMAGE -->
-                            <img src="images/bg/bg7.jpg"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
+                            <img src="{{ URL::asset('/public/assets/global/images/bg/bg7.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                             <!-- LAYERS -->
 
                             <!-- LAYER NR. 1 -->
@@ -387,7 +387,7 @@
                                 h_offset:0,
                                 v_offset:30,
                                 space:5,
-                                tmp:'<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title">{{title}}</span>'
+                                tmp:'<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title"></span>'
                             }
                         },
                         responsiveLevels: [1240, 1024, 778],
@@ -435,7 +435,7 @@
             <div class="section-content">
                 <div class="row">
                     <div class="col-md-6">
-                        <img class="img-fullwidth" src="images/about/about2.jpg" alt="">
+                        <img class="img-fullwidth" src="{{ URL::asset('/public/assets/global/images/about/about2.jpg') }}" alt="">
                         <h3 class="line-bottom">Who We Are?</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et magni temporibus voluptates. Iure quam laboriosam ullam omnis nulla deleniti, repellendus sequi reiciendis quas voluptatibus consectetur alias aspernatur deserunt veritatis.</p>
                         <a class="text-theme-colored font-13" href="page-about1.html">Read More →</a>
@@ -539,7 +539,7 @@
                     <div class="col-md-5">
                         <h3 class="text-uppercase title line-bottom mt-0 mb-30"><i class="fa fa-calendar text-gray-darkgray mr-10"></i>Upcoming <span class="text-theme-colored">Events</span></h3>
                         <article class="post media-post clearfix pb-0 mb-10">
-                            <a href="#" class="post-thumb mr-20"><img alt="" src="images/events/1.jpg"></a>
+                            <a href="#" class="post-thumb mr-20"><img alt="" src="{{ URL::asset('/public/assets/global/images/events/1.jpg') }}"></a>
                             <div class="post-right">
                                 <h4 class="mt-0 mb-5"><a href="page-single-event.html">Upcoming Event Title</a></h4>
                                 <ul class="list-inline font-12 mb-5">
@@ -551,7 +551,7 @@
                             </div>
                         </article>
                         <article class="post media-post clearfix pb-0 mb-10">
-                            <a href="#" class="post-thumb mr-20"><img alt="" src="images/events/2.jpg"></a>
+                            <a href="#" class="post-thumb mr-20"><img alt="" src="{{ URL::asset('/public/assets/global/images/events/2.jpg') }}"></a>
                             <div class="post-right">
                                 <h4 class="mt-0 mb-5"><a href="page-single-event.html">Upcoming Event Title</a></h4>
                                 <ul class="list-inline font-12 mb-5">
@@ -563,7 +563,7 @@
                             </div>
                         </article>
                         <article class="post media-post clearfix pb-0 mb-10">
-                            <a href="#" class="post-thumb mr-20"><img alt="" src="images/events/3.jpg"></a>
+                            <a href="#" class="post-thumb mr-20"><img alt="" src="{{ URL::asset('/public/assets/global/images/events/3.jpg') }}"></a>
                             <div class="post-right">
                                 <h4 class="mt-0 mb-5"><a href="page-single-event.html">Upcoming Event Title</a></h4>
                                 <ul class="list-inline font-12 mb-5">
@@ -581,7 +581,7 @@
                             <div class="item">
                                 <div class="causes bg-white maxwidth500 mb-sm-30">
                                     <div class="thumb">
-                                        <img src="images/project/2.jpg" alt="" class="img-fullwidth">
+                                        <img src="{{ URL::asset('/public/assets/global/images/project/2.jpg') }}" alt="" class="img-fullwidth">
                                         <div class="overlay-donate-now">
                                             <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                                         </div>
@@ -604,7 +604,7 @@
                             <div class="item">
                                 <div class="causes bg-white maxwidth500 mb-sm-30">
                                     <div class="thumb">
-                                        <img src="images/project/6.jpg" alt="" class="img-fullwidth">
+                                        <img src="{{ URL::asset('/public/assets/global/images/project/6.jpg') }}" alt="" class="img-fullwidth">
                                         <div class="overlay-donate-now">
                                             <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                                         </div>
@@ -627,7 +627,7 @@
                             <div class="item">
                                 <div class="causes bg-white maxwidth500 mb-sm-30">
                                     <div class="thumb">
-                                        <img src="images/project/7.jpg" alt="" class="img-fullwidth">
+                                        <img src="{{ URL::asset('/public/assets/global/images/project/7.jpg') }}" alt="" class="img-fullwidth">
                                         <div class="overlay-donate-now">
                                             <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                                         </div>
@@ -655,7 +655,7 @@
     </section>
 
     <!-- Divider: Become a Volunteer -->
-    <section class="divider parallax layer-overlay overlay-dark-4" data-bg-img="images/bg/bg13.jpg" data-parallax-ratio="0.7">
+    <section class="divider parallax layer-overlay overlay-dark-4" data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg13.jpg') }}" data-parallax-ratio="0.7">
         <div class="container pt-110 pb-110">
             <div class="row">
                 <div class="col-md-8">
@@ -683,7 +683,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-30">
                         <div class="thumb">
-                            <img src="images/project/1.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/1.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -706,7 +706,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-30">
                         <div class="thumb">
-                            <img src="images/project/2.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/2.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -729,7 +729,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-30">
                         <div class="thumb">
-                            <img src="images/project/3.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/3.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -752,7 +752,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-30">
                         <div class="thumb">
-                            <img src="images/project/4.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/4.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -775,7 +775,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-sm-30">
                         <div class="thumb">
-                            <img src="images/project/5.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/5.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -798,7 +798,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-sm-30">
                         <div class="thumb">
-                            <img src="images/project/6.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/6.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -821,7 +821,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-sm-30">
                         <div class="thumb">
-                            <img src="images/project/7.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/7.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -844,7 +844,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="causes bg-white maxwidth500 mb-sm-30">
                         <div class="thumb">
-                            <img src="images/project/8.jpg" alt="" class="img-fullwidth">
+                            <img src="{{ URL::asset('/public/assets/global/images/project/8.jpg') }}" alt="" class="img-fullwidth">
                             <div class="overlay-donate-now">
                                 <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                             </div>
@@ -869,7 +869,7 @@
     </section>
 
     <!-- Divider: Funfact -->
-    <section class="divider parallax layer-overlay overlay-theme-colored-9" data-bg-img="images/bg/bg14.jpg" data-parallax-ratio="0.7">
+    <section class="divider parallax layer-overlay overlay-theme-colored-9" data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}" data-parallax-ratio="0.7">
         <div class="container pt-90 pb-90">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
@@ -917,12 +917,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm1.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm5.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg1.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg5.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -933,12 +933,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm2.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm3.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg2.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg3.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -949,12 +949,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm3.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm3.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg3.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg3.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -965,12 +965,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm4.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm4.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg4.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg4.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -981,12 +981,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm5.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm5.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg5.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg5.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -997,12 +997,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm6.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm6.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg6.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg6.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1013,12 +1013,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm7.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm7.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg7.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg7.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1029,12 +1029,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm8.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm8.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg8.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg8.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1045,12 +1045,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm9.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm9.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg9.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg9.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1061,12 +1061,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm10.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm10.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg10.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg10.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1077,12 +1077,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm11.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm11.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg11.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg11.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1093,12 +1093,12 @@
                             <!-- Portfolio Item Start -->
                             <div class="gallery-item">
                                 <div class="thumb">
-                                    <img alt="project" src="images/gallery/gallery-sm12.jpg" class="img-fullwidth">
+                                    <img alt="project" src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm12.jpg') }}" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">
                                             <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                <a href="images/gallery/gallery-lg12.jpg"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
+                                                <a href="{{ URL::asset('/public/assets/global/images/gallery/gallery-lg12.jpg') }}"  data-lightbox-gallery="gallery"><i class="fa fa-picture-o"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -1115,7 +1115,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1126,7 +1126,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1137,7 +1137,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1148,7 +1148,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1159,7 +1159,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1170,7 +1170,7 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                        <img width="75" class="img-circle" alt="" src="images/testimonials/1.jpg">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
@@ -1202,7 +1202,7 @@
                         <article class="post clearfix mb-sm-30 bg-silver-light">
                             <div class="entry-header">
                                 <div class="post-thumb thumb">
-                                    <img src="images/blog/1.jpg" alt="" class="img-responsive img-fullwidth">
+                                    <img src="{{ URL::asset('/public/assets/global/images/blog/1.jpg') }}" alt="" class="img-responsive img-fullwidth">
                                 </div>
                             </div>
                             <div class="entry-content p-20 pr-10">
@@ -1231,7 +1231,7 @@
                         <article class="post clearfix mb-sm-30 bg-silver-light">
                             <div class="entry-header">
                                 <div class="post-thumb thumb">
-                                    <img src="images/blog/2.jpg" alt="" class="img-responsive img-fullwidth">
+                                    <img src="{{ URL::asset('/public/assets/global/images/blog/2.jpg') }}" alt="" class="img-responsive img-fullwidth">
                                 </div>
                             </div>
                             <div class="entry-content p-20 pr-10">
@@ -1260,7 +1260,7 @@
                         <article class="post clearfix mb-sm-30 bg-silver-light">
                             <div class="entry-header">
                                 <div class="post-thumb thumb">
-                                    <img src="images/blog/3.jpg" alt="" class="img-responsive img-fullwidth">
+                                    <img src="{{ URL::asset('/public/assets/global/images/blog/3.jpg') }}" alt="" class="img-responsive img-fullwidth">
                                 </div>
                             </div>
                             <div class="entry-content p-20 pr-10">
@@ -1297,16 +1297,16 @@
                 <div class="col-md-12">
                     <!-- Section: Clients -->
                     <div class="owl-carousel-6col clients-logo transparent text-center">
-                        <div class="item"> <a href="#"><img src="images/clients/w1.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w2.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w3.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w4.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w5.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w6.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w3.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w4.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w5.png" alt=""></a></div>
-                        <div class="item"> <a href="#"><img src="images/clients/w6.png" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w1.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w2.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w3.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w4.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w5.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w6.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w3.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w4.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w5.png') }}" alt=""></a></div>
+                        <div class="item"> <a href="#"><img src="{{ URL::asset('/public/assets/global/images/clients/w6.png') }}" alt=""></a></div>
                     </div>
                 </div>
             </div>

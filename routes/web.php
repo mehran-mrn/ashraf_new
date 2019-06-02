@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', 'global\global_view@index');
+Route::get('/', 'globals\global_view@index');
 
 
 Auth::routes();

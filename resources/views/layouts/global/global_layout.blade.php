@@ -90,7 +90,7 @@
     <!-- preloader -->
     <div id="preloader">
         <div id="spinner">
-            <img class="floating" src="images/preloaders/13.png" alt="">
+            <img class="floating" src="{{ URL::asset('/public/assets/global/images/preloaders/13.png') }}" alt="">
             <h5 class="line-height-50 font-18 ml-15">Loading...</h5>
         </div>
         <div id="disable-preloader" class="btn btn-default btn-sm">Disable Preloader</div>
@@ -107,7 +107,7 @@
 
 <!-- Footer Scripts -->
 <!-- JS | Custom script for all pages -->
-<script src="js/custom.js"></script>
+<script src="{{ URL::asset('/public/assets/global/js/custom.js') }}"></script>
 
 <!-- SLIDER REVOLUTION 5.0 EXTENSIONS
       (Load Extensions only on Local File Systems !
