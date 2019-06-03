@@ -24,7 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ------------admin panel-----------------
 //=========================================
 Route::prefix('panel')->group(function () {
+
     Route::get('dashboard', 'panel\panel_view@dashboard');
+
+    Route::prefix('user_manager')->group(function () {
+        Route::get('users_list', 'panel\panel_view@users_list');
+    });
 
 });
 //=========================================

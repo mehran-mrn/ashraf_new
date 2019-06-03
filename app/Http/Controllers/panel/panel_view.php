@@ -12,4 +12,8 @@ class panel_view extends Controller
     {
         return view('panel.dashboard');
     }
+    public function users_list()
+    {
+        return view('panel.user_manager.users_list');
+    }
 }
