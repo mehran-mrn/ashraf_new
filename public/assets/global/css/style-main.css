@@ -116,7 +116,7 @@ body {
   line-height: 1.7;
   color: #666666;
   font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: Samim,'Open Sans', sans-serif;
   background-color: #fff;
 }
 a {
@@ -166,7 +166,7 @@ h1,
 h2,
 .h1,
 .h2 {
-  font-family: 'Trirong', serif;
+  font-family: Samim,'Trirong', serif;
   font-weight: 600;
   line-height: 1.42857143;
   color: #333333;
@@ -197,7 +197,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Trirong', serif;
+  font-family: Samim,'Trirong', serif;
   font-weight: 500;
   line-height: 1.42857143;
   color: #333333;
@@ -248,13 +248,13 @@ form {
 }
 /* -------- Custom Font Family ---------- */
 .font-opensans {
-  font-family: 'Open Sans', sans-serif;
+  font-family: Samim,'Open Sans', sans-serif;
 }
 .font-raleway {
-  font-family: 'Raleway', sans-serif;
+  font-family: Samim,'Raleway', sans-serif;
 }
 .font-trirong {
-  font-family: 'Trirong', serif;
+  font-family: Samim,'Trirong', serif;
 }
 /* breadcrumb */
 .breadcrumb {

@@ -15,5 +15,11 @@ return [
 
     'test' => 'Test.',
     'html_title' => 'Ashraf-ol-Anbia(G).Charity Institute',
+    'Loading...'=>"Loading...",
+    'Disable_Preloader'=>"Disable Preloader",
+    'FAQ'=>'FAQ',
+    'help_desk'=>'Help Desk',
+    'support'=>'Support',
+    'home'=>'Home'
 
 ];

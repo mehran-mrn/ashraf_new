@@ -204,7 +204,7 @@ html[dir="rtl"] .stylish-header:after {
 }
 html[dir="rtl"] .menuzord-responsive .menuzord-menu li .indicator {
   right: auto;
-  left: 0;
+  left: 3px;
 }
 html[dir="rtl"] .menuzord .showhide {
   float: left;

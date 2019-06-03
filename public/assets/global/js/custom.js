@@ -960,21 +960,21 @@ var THEMEMASCOT = {};
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
             });
             $("#menuzord-right").menuzord({
                 align: "right",
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
             });
             $("#menuzord-side-panel").menuzord({
                 align: "right",
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "",
-                indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
             });
             
             $("#menuzord-verticalnav").menuzord({
@@ -982,7 +982,7 @@ var THEMEMASCOT = {};
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
                 /*indicatorFirstLevel: "<i class='fa fa-angle-right'></i>",
                 indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"*/
             });

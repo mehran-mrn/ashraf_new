@@ -8,3 +8,21 @@ theme. But don't modify style-main.css file.
 */
 
 /* Your custom css codes start here: */
+
+
+@font-face {
+    font-family: 'Samim';
+    src: url("/public/fonts/Samim.eot"); /* IE9 Compat Modes */
+    src: url("/public/fonts/Samim.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */ url("/public/fonts/Samim.woff2") format('woff2'), /* Super Modern Browsers */ url("/public/fonts/Samim.woff") format('woff'), /* Pretty Modern Browsers */ url("/public/fonts/Samim.ttf") format('truetype'), /* Safari, Android, iOS */ url("/public/fonts/Samim.svg#svgFontName") format('svg'); /* Old iOS */
+}
+
+@font-face {
+    font-family: 'BSamim';
+    src: url("/public/fonts/Samim-Bold.eot"); /* IE9 Compat Modes */
+    src: url("/public/fonts/Samim-Bold.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */ url("/public/fonts/Samim-Bold.woff2") format('woff2'), /* Super Modern Browsers */ url("/public/fonts/Samim-Bold.woff") format('woff'), /* Pretty Modern Browsers */ url("/public/fonts/Samim-Bold.ttf") format('truetype'), /* Safari, Android, iOS */ url("/public/fonts/Samim-Bold.svg#svgFontName") format('svg'); /* Old iOS */
+}
+
+
+body {
+    font-family: Samim !Important;
+}

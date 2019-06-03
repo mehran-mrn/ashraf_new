@@ -74,9 +74,9 @@
     <div id="preloader">
         <div id="spinner">
             <img class="floating" src="images/preloaders/13.png" alt="">
-            <h5 class="line-height-50 font-18 ml-15">Loading...</h5>
+            <h5 class="line-height-50 font-18 ml-15">{{trans('Loading...')}}</h5>
         </div>
-        <div id="disable-preloader" class="btn btn-default btn-sm">Disable Preloader</div>
+        <div id="disable-preloader" class="btn btn-default btn-sm">{{trans('Disable_Preloader')}}</div>
     </div>
 
     <!-- Header -->

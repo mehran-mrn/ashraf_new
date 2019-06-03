@@ -12,15 +12,15 @@
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
                             <li>
-                                <a class="text-white" href="#">FAQ</a>
+                                <a class="text-white" href="#">{{trans('messages.FAQ')}}</a>
                             </li>
                             <li class="text-white">|</li>
                             <li>
-                                <a class="text-white" href="#">Help Desk</a>
+                                <a class="text-white" href="#">{{trans('messages.help_desk')}}</a>
                             </li>
                             <li class="text-white">|</li>
                             <li>
-                                <a class="text-white" href="#">Support</a>
+                                <a class="text-white" href="#">{{trans('messages.support')}}</a>
                             </li>
                         </ul>
                     </div>
@@ -42,7 +42,7 @@
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-silver-light">
                     <ul class="menuzord-menu">
-                        <li class="active"><a href="#home">Home</a>
+                        <li class="active"><a href="#home">{{trans('messages.home')}}</a>
                             <ul class="dropdown">
                                 <li><a href="#">Multi Page Layouts</a>
                                     <ul class="dropdown">
@@ -166,7 +166,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#">Features <span class="label label-info">New</span></a>
+                        <li><a href="#">Features</a>
                             <ul class="dropdown">
                                 <li><a href="features-preloader.html">Preloaders</a></li>
                                 <li><a href="#">Header</a>
@@ -635,10 +635,10 @@
                     </ul>
                     <ul class="list-inline pull-right flip hidden-sm hidden-xs">
                         <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/donation-form.html" >Donate Now</a>
+                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/donation-form.html" >{{trans('messages.donate')}}</a>
                         </li>
                         <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/volunteer-apply-form.html" >Join Us</a>
+                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/volunteer-apply-form.html" >{{trans('messages.register')}}</a>
                         </li>
                     </ul>
                 </nav>
