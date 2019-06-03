@@ -15,12 +15,6 @@
     @include('global.materials.blog_cards')
     @include('global.materials.clients')
 
-
-
-
-
-
-
 </div>
 <!-- end main-content -->
 @endsection
