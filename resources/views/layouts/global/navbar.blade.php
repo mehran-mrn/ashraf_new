@@ -12,7 +12,7 @@
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
                             <li>
-                                <a class="text-white" href="#">{{trans('messages.FAQ')}}</a>
+                                <a class="text-white" href="#">{{__('messages.FAQ')}}</a>
                             </li>
                             <li class="text-white">|</li>
                             <li>
@@ -638,7 +638,7 @@
                             <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/donation-form.html" >{{trans('messages.donate')}}</a>
                         </li>
                         <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/volunteer-apply-form.html" >{{trans('messages.register')}}</a>
+                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="/resources/views/global/ajax/register.blade.php" >{{trans('messages.register')}}</a>
                         </li>
                     </ul>
                 </nav>

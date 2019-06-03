@@ -25,6 +25,7 @@ return [
     'FAQ'=>'FAQ',
     'help_desk'=>'Help Desk',
     'support'=>'Support',
-    'home'=>'Home'
+    'home'=>'Home',
+    'name'=>"Name"
 
 ];

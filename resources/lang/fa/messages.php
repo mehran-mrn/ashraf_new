@@ -27,6 +27,7 @@ return [
     'support'=>'پیشتیبانی',
     'home'=>'خانه',
     'register'=>'عضویت',
-    'donate'=>'پول بده'
+    'donate'=>'پول بده',
+    'name'=>"نام"
 
 ];
