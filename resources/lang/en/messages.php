@@ -14,5 +14,6 @@ return [
     */
 
     'test' => 'Test.',
+    'html_title' => 'Ashraf-ol-Anbia(G).Charity Institute',
 
 ];
