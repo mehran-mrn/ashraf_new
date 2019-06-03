@@ -15,6 +15,11 @@ return [
 
     'test' => 'Test.',
     'html_title' => 'Ashraf-ol-Anbia(G).Charity Institute',
+    'users_management' => 'Users Management',
+    'add_new_user' => 'Add New User',
+    'users_list' => 'List of Users',
+    'roles_permission' => 'roles and Permissions',
+    'groups' => 'Group management',
     'Loading...'=>"Loading...",
     'Disable_Preloader'=>"Disable Preloader",
     'FAQ'=>'FAQ',
