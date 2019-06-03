@@ -88,6 +88,21 @@
 								</span>
                     </a>
                 </li>
+
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
+
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                        <li class="nav-item"><a href="#" class="nav-link active">{{trans('messages.users_management')}}</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.users_list')}}</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.roles_permission')}}</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.groups')}}</a></li>
+                    </ul>
+                </li>
+
+
+
+
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Layouts</span></a>
 
