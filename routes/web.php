@@ -25,10 +25,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //=========================================
 Route::prefix('panel')->group(function () {
 
-    Route::get('dashboard', 'panel\panel_view@dashboard');
+    Route::get('dashboard', 'panel\panel_view@dashboard')->name('dashboard');
 
     Route::prefix('user_manager')->group(function () {
-        Route::get('users_list', 'panel\panel_view@users_list');
+        Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');;
     });
 
 });

@@ -1,3 +1,6 @@
+<?php
+if (!isset($active_sidbare)){$active_sidbare=[];}
+?>
 <!-- Main sidebar -->
 <div class="sidebar sidebar-light sidebar-main sidebar-expand-md">
 
@@ -80,7 +83,7 @@
                 <!-- Main -->
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">
+                    <a href="{{route('dashboard')}}" class="nav-link">
                         <i class="icon-home4"></i>
                         <span>
 									Dashboard
@@ -89,12 +92,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="pe-7s-users"></i> <span>{{trans('messages.users_management')}}</span></a>
+                <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-expanded nav-item-open' : '' }}">
+                    <a href="#" class=" nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                        <li class="nav-item"><a href="#" class="nav-link active">{{trans('messages.users_management')}}</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.users_list')}}</a></li>
+                        <li class="nav-item"><a href="{{route('users_list')}}" class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.roles_permission')}}</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.groups')}}</a></li>
                     </ul>

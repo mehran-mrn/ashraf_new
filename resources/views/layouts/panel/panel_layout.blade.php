@@ -47,8 +47,6 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     @yield('js')
 
     <script src="{{ URL::asset('/public/assets/panel/js/app.js') }}"></script>
