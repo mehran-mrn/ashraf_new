@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Kim\Activity\ActivityServiceProvider::class,
+        Laratrust\LaratrustServiceProvider::class,
 
 
         /*
@@ -178,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
@@ -231,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
+        'Laratrust'   => Laratrust\LaratrustFacade::class,
 
 
     ],
