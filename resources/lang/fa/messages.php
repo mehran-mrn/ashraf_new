@@ -27,6 +27,6 @@ return [
     'support'=>'پیشتیبانی',
     'home'=>'خانه',
     'register'=>'عضویت',
-    'donate'=>'کمک'
+    'donate'=>'پول بده'
 
 ];

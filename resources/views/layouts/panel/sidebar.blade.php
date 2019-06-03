@@ -90,7 +90,7 @@
                 </li>
 
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
+                    <a href="#" class="nav-link"><i class="pe-7s-users"></i> <span>{{trans('messages.users_management')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <li class="nav-item"><a href="#" class="nav-link active">{{trans('messages.users_management')}}</a></li>

@@ -41,7 +41,6 @@
     <link href="{{ URL::asset('/public/assets/global/css/style-main-rtl-extra.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
     <!-- <link href="css/style.css" rel="stylesheet" type="text/css"> -->
-
     <!-- Revolution Slider 5.x CSS settings -->
     <link  href="{{ URL::asset('/public/assets/global/js/revolution-slider/css/settings.css') }}" rel="stylesheet" type="text/css"/>
     <link  href="{{ URL::asset('/public/assets/global/js/revolution-slider/css/layers.css') }}" rel="stylesheet" type="text/css"/>
