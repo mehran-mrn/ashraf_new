@@ -43,6 +43,7 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/js/custom.js') }}"></script>
 
     <!-- /core JS files -->
 

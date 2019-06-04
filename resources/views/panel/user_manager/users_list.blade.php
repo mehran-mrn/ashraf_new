@@ -21,7 +21,7 @@
         {{--</div>--}}
 
         <div class="card-body">
-            <p><button type="button" class="btn btn-outline-info btn-lg" data-toggle="modal" data-target="#modal_add_new_user"><i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}</button></p>
+            <p><button type="button" class="btn btn-outline-info btn-lg modal-ajax-load" data-ajax-link="{{route('panel_register_form')}}" data-toggle="modal" data-modal-title="{{trans('messages.add_new_user')}}" data-target="#modal_add_new_user"><i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}</button></p>
             <!-- Info modal -->
             <div id="modal_add_new_user" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
@@ -33,15 +33,8 @@
 
                         <div class="modal-body">
 
-@include('panel.user_manager.user_register_form')
-
-
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn bg-info">Save changes</button>
-                        </div>
                     </div>
                 </div>
             </div>

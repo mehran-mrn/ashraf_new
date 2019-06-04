@@ -28,6 +28,7 @@ return [
     'home'=>'خانه',
     'register'=>'عضویت',
     'donate'=>'پول بده',
-    'name'=>"نام"
+    'name'=>"نام",
+    'username'=>"نام کاربری"
 
 ];
