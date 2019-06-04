@@ -31,23 +31,25 @@ $(document).ready(function(){
             data: $(this).serialize(),
 
             success: function (response){
-                $(".error_content").fadeOut('slow');
-                $(".message_content").html("");
-                $(".message_content").append("<li><b>"  + response.message + "</b></li>"  + "\n");
-                $(".message_content").fadeIn('slow');
+                new PNotify({
+                    title: '',
+                    text: response.message,
+                    type: 'success'
+                });
                 setTimeout(function(){
                     location.reload();
-                }, 2000)
+                }, 3000)
             },
 
             error:function (response){
                 var errors = response.responseJSON;
-                $(".message_content").hide();
-                $(".error_content").html("");
                 $.each( errors, function( index, value ) {
-                    $(".error_content").append("<li><b>"  + value + "</b></li>"  + "\n");
+                    new PNotify({
+                        title: index,
+                        text: value,
+                        type: 'error'
+                    });
                 });
-                $(".error_content").fadeIn('slow');
 
             }
         });

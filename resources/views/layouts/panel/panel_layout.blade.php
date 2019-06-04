@@ -49,8 +49,33 @@
 
     <!-- Theme JS files -->
     @yield('js')
-
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/js/app.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+<script>
+
+    $( document ).ready(function() {
+        @if(!$errors->isEmpty())
+            @foreach ($errors->all() as $key => $error)
+                new PNotify({
+                    title: '{{$key}}',
+                    text: '{{ $error }}',
+                    type: 'error'
+                });
+
+            @endforeach
+        @endif
+        @if ($message = Session::get('message'))
+            new PNotify({
+                title: '',
+                text: '{{$message}}',
+                type: 'success'
+            });
+        @endif
+
+    });
+</script>
     <!-- /theme JS files -->
 
 </head>
@@ -68,6 +93,13 @@
 
 <body class="{{isset($sidebar_collapse) ? "sidebar-xs" : ""}}">
 @include('layouts.panel.navbar')
+
+@include('panel.materials.form_notification')
+
+
+
+
+
     <!-- Page content -->
     <div class="page-content">
         @include('layouts.panel.sidebar')
