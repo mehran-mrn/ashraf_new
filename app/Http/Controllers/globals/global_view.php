@@ -12,4 +12,9 @@ class global_view extends Controller
         return view('global.index');
     }
 
+    public function register_form()
+    {
+        return view('global.materials.register');
+    }
+
 }

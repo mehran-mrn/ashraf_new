@@ -31,5 +31,19 @@ Route::prefix('panel')->group(function () {
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');;
     });
 
+    Route::prefix('ajax')->group(function (){
+
+    });
 });
 //=========================================
+
+
+//=========================================
+// ------------Global View-----------------
+//=========================================
+Route::prefix('ajax')->group(function (){
+    Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
+
+});
+//=========================================
+

@@ -28,6 +28,9 @@ return [
     'home'=>'خانه',
     'register'=>'عضویت',
     'donate'=>'پول بده',
-    'name'=>"نام"
+    'name'=>"نام",
+    'register_form_title'=>"ثبت نام",
+    'email'=>"پست الکترونیکی",
+
 
 ];
