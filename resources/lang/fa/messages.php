@@ -27,8 +27,13 @@ return [
     'support'=>'پیشتیبانی',
     'home'=>'خانه',
     'register'=>'عضویت',
+    'submit'=>'ثبت',
     'donate'=>'پول بده',
     'name'=>"نام",
-    'username'=>"نام کاربری"
+    'email'=>"ایمیل",
+    'phone'=>"شماره تلفن",
+    'username'=>"نام کاربری",
+    'password'=>"رمز عبور",
+    're-password'=>"ورود مجدد رمز عبور",
 
 ];
