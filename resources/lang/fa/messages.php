@@ -36,4 +36,14 @@ return [
     'password'=>"رمز عبور",
     're-password'=>"ورود مجدد رمز عبور",
 
+    'please_waite'=>'منتظر بامنید...',
+    'register_btn'=>'ثبت نام',
+    'repeat_repeat_password'=>'تکرار کلمه عبور',
+    'form_password'=>'کلمه عبور',
+    'enter_password'=>'کلمه عبور',
+    'enter_email_mobile'=>"ایمیل یا شماره موبایل",
+    'email_or_mobile'=>'ایمیل با موبایل',
+    'repeat_password'=>'تکرار کلمه عبور',
+    'password'=>'کلمه عبور',
+
 ];
