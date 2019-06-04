@@ -17,4 +17,9 @@ class panel_view extends Controller
 
         return view('panel.user_manager.users_list');
     }
+    public function register_form()
+    {
+        return view('panel.user_manager.user_register_form');
+    }
+
 }

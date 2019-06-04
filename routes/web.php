@@ -32,6 +32,7 @@ Route::prefix('panel')->group(function () {
     });
 
     Route::prefix('ajax')->group(function (){
+        Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
 
     });
 });

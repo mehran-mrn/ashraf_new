@@ -26,7 +26,6 @@ return [
     'help_desk'=>'Help Desk',
     'support'=>'Support',
     'home'=>'Home',
-    'name'=>"Name",
-    'register_form_title'=>"Register",
+    'name'=>"Name"
 
 ];
