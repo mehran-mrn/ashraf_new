@@ -42,7 +42,7 @@ $(document).ready(function(){
             },
 
             error:function (response){
-                var errors = response.responseJSON;
+                var errors = response.responseJSON.errors;
                 $.each( errors, function( index, value ) {
                     new PNotify({
                         title: index,
@@ -50,6 +50,10 @@ $(document).ready(function(){
                         type: 'error'
                     });
                 });
+                setTimeout(function(){
+                    $('[type="submit"]').prop('disabled', false);
+
+                }, 2500);
 
             }
         });

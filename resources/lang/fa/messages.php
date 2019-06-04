@@ -36,6 +36,11 @@ return [
     'password'=>"کلمه عبور",
     're-password'=>"ورود مجدد رمز عبور",
 
+    'last_login'=>"آخرین لاگین",
+    'register_date'=>"تاریخ ثبت نام",
+    'status'=>"وضعیت",
+
+    'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
     'please_waite'=>'منتظر بامنید...',
     'register_btn'=>'ثبت نام',
     'repeat_repeat_password'=>'تکرار کلمه عبور',
@@ -45,5 +50,6 @@ return [
     'email_or_mobile'=>'ایمیل یا موبایل',
     'repeat_password'=>'تکرار کلمه عبور',
     'register_form_title'=>'فرم ثبت نام'
+
 
 ];

@@ -9,20 +9,20 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group ">
-                                    <label for="form_email" class="pull-right">{{trans('messages.email_or_mobile')}} <small>*</small></label>
-                                    <input id="form_email" name="form_email" type="text" placeholder="{{__('messages.enter_email_mobile')}}" class="form-control text-left required">
+                                    <label for="phone_email" class="pull-right">{{trans('messages.email_or_mobile')}} <small>*</small></label>
+                                    <input id="phone_email" name="phone_email" type="text" placeholder="{{__('messages.enter_email_mobile')}}" class="form-control text-left required">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="form_password" class="pull-right">{{__('messages.password')}} <small>*</small></label>
-                                    <input id="form_password" name="form_password" class="form-control required text-left" type="password" placeholder="{{__('messages.enter_password')}}">
+                                    <label for="password" class="pull-right">{{__('messages.password')}} <small>*</small></label>
+                                    <input id="password" name="password" class="form-control required text-left" type="password" placeholder="{{__('messages.enter_password')}}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="form_repeat_password" class="pull-right">{{__('messages.repeat_password')}} <small>*</small></label>
-                                    <input id="form_repeat_password" name="form_repeat_password" class="form-control required text-left" type="password" placeholder="{{__('messages.repeat_repeat_password')}}">
+                                    <label for="password_confirmation" class="pull-right">{{__('messages.repeat_password')}} <small>*</small></label>
+                                    <input id="password_confirmation" name="password_confirmation" class="form-control required text-left" type="password" placeholder="{{__('messages.repeat_repeat_password')}}">
                                 </div>
                             </div>
                         </div>
@@ -37,18 +37,18 @@
                         $("#register_form").validate({
                             lang:"fa",
                             rules: {
-                                form_email: {
+                                phone_email: {
                                     required: true,
                                     minlength: 3
                                 },
-                                form_password: {
+                                password: {
                                     required: true,
                                     minlength: 5,
                                     maxlength: 100,
                                 },
-                                form_repeat_password: {
+                                password_confirmation: {
                                     minlength: 5,
-                                    equalTo: "#form_password"
+                                    equalTo: "#password"
                                 },
                             },
                             submitHandler: function(form) {

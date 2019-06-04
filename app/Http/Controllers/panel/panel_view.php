@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,8 +15,8 @@ class panel_view extends Controller
     }
     public function users_list()
     {
-
-        return view('panel.user_manager.users_list');
+            $users = User::get();
+        return view('panel.user_manager.users_list',compact('users'));
     }
     public function register_form()
     {
