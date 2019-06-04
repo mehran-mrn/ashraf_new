@@ -18,7 +18,7 @@ class global_view extends Controller
     }
     public function register_form_store(Request $request)
     {
-        dd($request);
+        return response()->json($request);
     }
 
 }
