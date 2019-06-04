@@ -4,7 +4,8 @@
         <div class="section-content bg-white p-30">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="volunteer_apply_form" name="job_apply_form" action="includes/become-volunteer.php" method="post" enctype="multipart/form-data">
+                    <form id="register_form" name="register_form" action="{{route('global_register_form_store')}}" method="post" >
+                        {{@csrf_field()}}
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group ">
@@ -33,7 +34,7 @@
                     </form>
                     <!-- Job Form Validation-->
                     <script type="text/javascript">
-                        $("#volunteer_apply_form").validate({
+                        $("#register_form").validate({
                             lang:"fa",
                             rules: {
                                 form_email: {
@@ -59,8 +60,8 @@
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
                                     dataType:  'json',
-                                    url: '{{route('global_register_form_store')}}',
                                     success: function(data) {
+                                        console.log(data);
                                         if( data.status == 'true' ) {
                                             $(form).find('.form-control').val('');
                                         }

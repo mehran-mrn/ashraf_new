@@ -16,5 +16,9 @@ class global_view extends Controller
     {
         return view('global.materials.register');
     }
+    public function register_form_store(Request $request)
+    {
+        dd($request);
+    }
 
 }
