@@ -21,5 +21,9 @@ class panel_view extends Controller
     {
         return view('panel.user_manager.user_register_form');
     }
+    public function form_notification()
+    {
+        return view('panel.materials.form_notification');
+    }
 
 }
