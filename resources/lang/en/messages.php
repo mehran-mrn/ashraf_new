@@ -26,6 +26,17 @@ return [
     'help_desk'=>'Help Desk',
     'support'=>'Support',
     'home'=>'Home',
-    'name'=>"Name"
+    'name'=>"Name",
+    'please_waite'=>'Please waite',
+    'register_btn'=>'register',
+    'repeat_repeat_password'=>'Repeat Password',
+    'form_password'=>'Password',
+    'enter_password'=>'Enter Password',
+    'enter_email_mobile'=>"Enter email or mobile",
+    'email_or_mobile'=>'email or mobile',
+    'repeat_password'=>'Repeat Password',
+    'password'=>'Password',
+    'register_form_title'=>'Register Form'
+
 
 ];

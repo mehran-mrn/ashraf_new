@@ -33,7 +33,17 @@ return [
     'email'=>"ایمیل",
     'phone'=>"شماره تلفن",
     'username'=>"نام کاربری",
-    'password'=>"رمز عبور",
+    'password'=>"کلمه عبور",
     're-password'=>"ورود مجدد رمز عبور",
+
+    'please_waite'=>'منتظر بامنید...',
+    'register_btn'=>'ثبت نام',
+    'repeat_repeat_password'=>'تکرار کلمه عبور',
+    'form_password'=>'کلمه عبور',
+    'enter_password'=>'کلمه عبور',
+    'enter_email_mobile'=>"ایمیل یا شماره موبایل",
+    'email_or_mobile'=>'ایمیل یا موبایل',
+    'repeat_password'=>'تکرار کلمه عبور',
+    'register_form_title'=>'فرم ثبت نام'
 
 ];
