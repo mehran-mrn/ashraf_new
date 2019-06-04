@@ -1,6 +1,6 @@
 <section class="">
     <div class="container"  style="max-width: 700px">
-        <h3 class="bg-theme-colored p-15 mb-0 text-white">{{trans('messages.register_form_title')}}</h3>
+        <h3 class="bg-theme-colored text-center p-15 mb-0 text-white">{{trans('messages.register_form_title')}}</h3>
         <div class="section-content bg-white p-30">
             <div class="row">
                 <div class="col-md-12">
@@ -59,6 +59,7 @@
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
                                     dataType:  'json',
+                                    url: '{{route('global_register_form_store')}}',
                                     success: function(data) {
                                         if( data.status == 'true' ) {
                                             $(form).find('.form-control').val('');

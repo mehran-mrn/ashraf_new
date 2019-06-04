@@ -45,6 +45,7 @@ Route::prefix('panel')->group(function () {
 //=========================================
 Route::prefix('ajax')->group(function (){
     Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
+    Route::POST('/register', 'globals\global_view@register_form_store')->name('global_register_form_store');
 
 });
 //=========================================
