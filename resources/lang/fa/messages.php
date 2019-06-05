@@ -41,7 +41,7 @@ return [
     'status'=>"وضعیت",
 
     'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
-    'please_waite'=>'منتظر بامنید...',
+    'please_waite'=>'منتظر بمانید...',
     'register_btn'=>'ثبت نام',
     'repeat_repeat_password'=>'تکرار کلمه عبور',
     'form_password'=>'کلمه عبور',
@@ -59,7 +59,8 @@ return [
     'login_page_title'=>'ورود به سایت',
     'features'=>'ویژگی ها',
     'register_page_title'=>'حساب کاربری ندارید؟ ایجاد کنید.',
-    'register_page_description'=>'برای استفاده کامل از امکانات سایت حساب کاربری ایجاد کنید.'
+    'register_page_description'=>'برای استفاده کامل از امکانات سایت حساب کاربری ایجاد کنید.',
+    'duplicate_email'=>'این نام کاربری در سیستم وجود دارد.'
 
 
 ];

@@ -39,7 +39,14 @@
                             rules: {
                                 phone_email: {
                                     required: true,
-                                    minlength: 3
+                                    minlength: 3,
+                                    remote:{
+                                        url:"{{route('check_email')}}",
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+                                        },
+                                        type:"post"
+                                    },
                                 },
                                 password: {
                                     required: true,
@@ -51,6 +58,12 @@
                                     equalTo: "#password"
                                 },
                             },
+                            messages:
+                                {
+                                    phone_email:{
+                                        remote:"{{__('messages.duplicate_email')}}"
+                                    }
+                                },
                             submitHandler: function(form) {
                                 var form_btn = $(form).find('button[type="submit"]');
                                 var form_result_div = '#form-result';
@@ -60,16 +73,37 @@
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
                                     dataType:  'json',
-                                    success: function(data) {
-                                        console.log(data);
-                                        if( data.status == 'true' ) {
-                                            $(form).find('.form-control').val('');
-                                        }
-                                        form_btn.prop('disabled', false).html(form_btn_old_msg);
-                                        $(form_result_div).html(data.message).fadeIn('slow');
-                                        setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 6000);
+                                    success: function(response) {
+                                        PNotify.success({
+                                            text: response.message,
+                                            delay: 5000,
+                                        });
+                                        setTimeout(function(){
+                                            location.reload();
+                                        }, 3000);
+                                        $(form).find('.form-control').val('');
+                                        $(form_btn).html(form_btn_old_msg);
+                                        $(form_result_div).html(response.message).fadeIn('slow');
+                                        setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 3000);
+                                    },
+                                    error:function (response){
+                                        var errors = response.responseJSON.errors;
+                                        $.each( errors, function( index, value ) {
+                                            PNotify.error({
+                                                delay: 5000,
+                                                title: index,
+                                                text: value,
+                                            });
+                                        });
+                                        setTimeout(function(){
+                                            $('[type="submit"]').prop('disabled', false);
+                                        }, 2500);
+                                        $(form_btn).html(form_btn_old_msg);
+
                                     }
+
                                 });
+
                             }
                         });
                     </script>
