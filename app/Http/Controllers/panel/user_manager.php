@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\Permission;
 use App\Role;
+use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,7 +42,7 @@ class user_manager extends Controller
             'display_name' => 'required|unique:permissions',
         ]);
 
-        $user = Permission::create([
+        Permission::create([
             'name' => $request->name ,
             'display_name' => $request->display_name ,
             'description' =>  $request->description ,
@@ -55,12 +56,26 @@ class user_manager extends Controller
             'display_name' => 'required|unique:permissions',
         ]);
 
-        $user = Role::create([
+        Role::create([
             'name' => $request->name ,
             'display_name' => $request->display_name ,
             'description' =>  $request->description ,
         ]);
         $message =trans("messages.item_created",['item'=>trans('messages.role')]);
+        return back_normal($request,$message);
+    }
+    public function register_team(Request $request){
+        $this->validate($request, [
+            'name' => 'required|unique:permissions',
+            'display_name' => 'required|unique:permissions',
+        ]);
+
+         Team::create([
+            'name' => $request->name ,
+            'display_name' => $request->display_name ,
+            'description' =>  $request->description ,
+        ]);
+        $message =trans("messages.item_created",['item'=>trans('messages.team')]);
         return back_normal($request,$message);
     }
 

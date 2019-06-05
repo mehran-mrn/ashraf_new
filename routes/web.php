@@ -38,12 +38,16 @@ Route::prefix('panel')->group(function () {
         Route::get('roles_list', 'panel\panel_view@roles_list')->name('roles_list');
         Route::post('register_role', 'panel\user_manager@register_role')->name('panel_register_role');
 
+        Route::get('teams_list', 'panel\panel_view@teams_list')->name('teams_list');
+        Route::post('register_team', 'panel\user_manager@register_team')->name('panel_register_team');
+
     });
 
     Route::prefix('ajax')->group(function (){
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
         Route::get('/register_role', 'panel\panel_view@register_role_form')->name('panel_register_role_form');
+        Route::get('/register_team', 'panel\panel_view@register_team_form')->name('panel_register_team_form');
         Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 
     });

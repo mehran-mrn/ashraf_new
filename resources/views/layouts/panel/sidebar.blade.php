@@ -99,6 +99,7 @@ if (!isset($active_sidbare)){$active_sidbare=[];}
                         <li class="nav-item"><a href="{{route('users_list')}}" class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a></li>
                         <li class="nav-item"><a href="{{route('permissions_list')}}" class="nav-link {{in_array("permissions_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.permissions_list')}}</a></li>
                         <li class="nav-item"><a href="{{route('roles_list')}}" class="nav-link {{in_array("roles_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.roles_list')}}</a></li>
+                        <li class="nav-item"><a href="{{route('teams_list')}}" class="nav-link {{in_array("teams_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.teams_list')}}</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.roles_permission')}}</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">{{trans('messages.groups')}}</a></li>
                     </ul>
