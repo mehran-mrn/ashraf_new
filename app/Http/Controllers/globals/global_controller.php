@@ -8,10 +8,8 @@ use App\Http\Controllers\Controller;
 
 class global_controller extends Controller
 {
-
     public function register_form_store(Request $request)
     {
-//        $currentUser = Auth::user();
         $this->validate($request, [
             'phone_email' => 'required',
             'password' => 'required|confirmed|min:6',
@@ -31,19 +29,13 @@ class global_controller extends Controller
             ]);
             $phone = $request->phone_email;
         }
-
-
-        $user = User::create([
+        User::create([
             'email' => $email ,
             'phone' =>  $phone ,
             'disabled' =>  1,
-//            'last_modifier' =>  $currentUser->id,
             'password' => bcrypt($request->password),
         ]);
         $message =trans("messages.user_created");
         return back_normal($request,$message);
-
-
     }
-
 }
