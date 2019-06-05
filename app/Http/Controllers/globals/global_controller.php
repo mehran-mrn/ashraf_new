@@ -42,8 +42,26 @@ class global_controller extends Controller
         ]);
         $message =trans("messages.user_created");
         return back_normal($request,$message);
+    }
 
+    public function check_email(Request $request)
+    {
 
+        $email = null;
+        $phone = null;
+        $is_email = filter_var( $request->phone_email, FILTER_VALIDATE_EMAIL );
+        if ($is_email){
+            $email = $request->phone_email;
+        }
+        else{
+            $phone = $request->phone_email;
+        }
+        if(User::where('email',$email)->first() || ‌User::where('phone',$phone)->first() ) {
+            return 'false';
+        }
+        else{
+            return 'true';
+        }
     }
 
 }
