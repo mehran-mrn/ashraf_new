@@ -59,11 +59,11 @@
     <script src="{{ URL::asset('/public/assets/global/js/bootstrap.min.js') }}"></script>
     <!-- JS | jquery plugin collection for this theme -->
     <script src="{{ URL::asset('/public/assets/global/js/jquery-plugin-collection.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/global/js/jquery-plugin-collection.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
 
     <!-- Revolution Slider 5.x SCRIPTS -->
     <script src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.tools.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.revolution.min.js') }}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

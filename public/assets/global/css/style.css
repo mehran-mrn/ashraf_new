@@ -26,3 +26,11 @@ theme. But don't modify style-main.css file.
 body {
     font-family: Samim !Important;
 }
+
+::-webkit-input-placeholder {
+    text-align: right;
+}
+
+input:-moz-placeholder {
+    text-align: right;
+}

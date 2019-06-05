@@ -49,7 +49,12 @@ return [
     'enter_email_mobile'=>"ایمیل یا شماره موبایل",
     'email_or_mobile'=>'ایمیل یا موبایل',
     'repeat_password'=>'تکرار کلمه عبور',
-    'register_form_title'=>'فرم ثبت نام'
+    'register_form_title'=>'فرم ثبت نام',
+
+    'login'=>'ورود',
+    'login_form_title'=>'ورود به سایت',
+    'forgot_password'=>'فراموشی کلمه عبور',
+    'remember_me'=>'مرا به یاد داشته باش',
 
 
 ];

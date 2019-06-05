@@ -50,6 +50,10 @@ Route::prefix('ajax')->group(function (){
     Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
     Route::post('/register', 'globals\global_controller@register_form_store')->name('global_register_form_store');
 
+    Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
+    Route::post('/login', 'globals\global_view@login_form_check')->name('global_login_form_check');
+
+
 });
 //=========================================
 

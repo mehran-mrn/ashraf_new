@@ -635,7 +635,7 @@
                     </ul>
                     <ul class="list-inline pull-right flip hidden-sm hidden-xs">
                         <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="ajax-load/donation-form.html" >{{trans('messages.donate')}}</a>
+                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="{{route('global_login_form')}}" >{{trans('messages.login')}}</a>
                         </li>
                         <li>
                             <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="{{route('global_register_form')}}" > {{trans('messages.register')}}</a>
