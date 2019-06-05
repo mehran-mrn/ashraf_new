@@ -21,24 +21,8 @@
         {{--</div>--}}
 
         <div class="card-body">
-            <p><button type="button" class="btn btn-outline-info btn-lg modal-ajax-load" data-ajax-link="{{route('panel_register_form')}}" data-toggle="modal" data-modal-title="{{trans('messages.add_new_user')}}" data-target="#modal_add_new_user"><i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}</button></p>
-            <!-- Info modal -->
-            <div id="modal_add_new_user" class="modal fade" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-info">
-                            <h6 class="modal-title">Info header</h6>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+            <p><button type="button" class="btn btn-outline-info btn-lg modal-ajax-load" data-ajax-link="{{route('panel_register_form')}}" data-toggle="modal" data-modal-title="{{trans('messages.add_new_user')}}" data-target="#general_modal"><i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}</button></p>
 
-                        <div class="modal-body">
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- /info modal -->
         </div>
 
         <table class="table datatable-responsive">

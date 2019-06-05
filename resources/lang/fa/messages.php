@@ -12,12 +12,20 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'add_new' => 'ثبت :item جدید',
+    'item_created' => ':item با موفقیت ایجاد شد.',
 
     'test' => 'امتحانی.',
     'html_title' => 'موسسه خیریه اشرف الانبیا',
     'users_management' => 'مدیریت کاربران',
     'add_new_user' => 'افزودن کاربر جدید',
     'users_list' => 'لیست کاربران',
+    'permissions_list' => 'لیست مجوز ها',
+    'permission' => 'مجوز',
+    'permissions' => 'مجوز ها',
+    'roles_list' => 'لیست نقش ها',
+    'role' => 'نقش',
+    'roles' => 'نقش ها',
     'roles_permission' => 'نقش ها و دسترسی ها',
     'groups' => 'مدیریت گروه ها',
     'Loading...'=>"منتظر بمانید...",
@@ -50,6 +58,8 @@ return [
     'email_or_mobile'=>'ایمیل یا موبایل',
     'repeat_password'=>'تکرار کلمه عبور',
     'register_form_title'=>'فرم ثبت نام',
+    'key'=>'کلید',
+    'description'=>'توضیح',
 
     'login'=>'ورود',
     'login_form_title'=>'ورود به سایت',

@@ -85,5 +85,24 @@
             </div>
     </div>
     <!-- /page content -->
+
+
+<!-- Info modal -->
+<div id="general_modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h6 class="modal-title">Info header</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /info modal -->
 </body>
 </html>

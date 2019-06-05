@@ -31,10 +31,19 @@ Route::prefix('panel')->group(function () {
     Route::prefix('user_manager')->group(function () {
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
         Route::post('register', 'panel\user_manager@register')->name('panel_register_user');
+
+        Route::get('permissions_list', 'panel\panel_view@permissions_list')->name('permissions_list');
+        Route::post('register_permission', 'panel\user_manager@register_permission')->name('panel_register_permission');
+
+        Route::get('roles_list', 'panel\panel_view@roles_list')->name('roles_list');
+        Route::post('register_role', 'panel\user_manager@register_role')->name('panel_register_role');
+
     });
 
     Route::prefix('ajax')->group(function (){
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
+        Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
+        Route::get('/register_role', 'panel\panel_view@register_role_form')->name('panel_register_role_form');
         Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 
     });
