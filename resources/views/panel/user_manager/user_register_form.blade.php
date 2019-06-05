@@ -4,7 +4,7 @@
 
     <div class="form-group row ">
         <div class="col-md-6 offset-md-4">
-            <span class="text-info"><i class="text-danger">*</i>  حداقل یکی از سه فیلد اول باید تکمیل شود
+            <span class="text-info"><i class="text-danger">*</i>  حداقل یکی از دو فیلد تلفن یا ایمیل، باید تکمیل شود
             </span>
         </div>
     </div>

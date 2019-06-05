@@ -23,11 +23,11 @@
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input id="username" type="text" class="form-control @error('email') is-invalid @enderror" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
 
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
-                                    @error('email')
+                                    @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

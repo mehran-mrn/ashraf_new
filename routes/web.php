@@ -16,6 +16,7 @@ Route::get('/', 'globals\global_view@index');
 
 
 Auth::routes();
+Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -23,7 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 //=========================================
 // ------------admin panel-----------------
 //=========================================
-Route::prefix('panel')->group(function () {
+
+Route::middleware('auth')->prefix('panel')->group(function () {
 
     Route::get('dashboard', 'panel\panel_view@dashboard')->name('dashboard');
 
