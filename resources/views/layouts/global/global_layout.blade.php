@@ -161,14 +161,14 @@
                 title: '{{$key}}',
                 text: '{{ $error }}',
                 delay: 5000,
-        });
+            });
         @endforeach
         @endif
         @if ($message = Session::get('message'))
             PNotify.success({
                 text: '{{$message}}',
                 delay: 3000,
-        });
+            });
         @endif
     });
 </script>

@@ -46,7 +46,6 @@ class global_controller extends Controller
 
     public function check_email(Request $request)
     {
-
         $email = null;
         $phone = null;
         $is_email = filter_var( $request->phone_email, FILTER_VALIDATE_EMAIL );
@@ -56,7 +55,7 @@ class global_controller extends Controller
         else{
             $phone = $request->phone_email;
         }
-        if(User::where('email',$email)->first() || ‌User::where('phone',$phone)->first() ) {
+        if(User::where('email',$email)->exists() || User::where('phone',$phone)->exists() ) {
             return 'false';
         }
         else{

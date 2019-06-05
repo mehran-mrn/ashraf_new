@@ -164,6 +164,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Kim\Activity\ActivityServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
+        Nestable\NestableServiceProvider::class,
 
 
         /*
@@ -234,7 +235,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
-
+        'Nestable' => Nestable\Facades\NestableService::class,
 
     ],
 
