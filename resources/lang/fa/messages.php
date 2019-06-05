@@ -55,6 +55,11 @@ return [
     'login_form_title'=>'ورود به سایت',
     'forgot_password'=>'فراموشی کلمه عبور',
     'remember_me'=>'مرا به یاد داشته باش',
+    'account'=>'حساب کاربری',
+    'login_page_title'=>'ورود به سایت',
+    'features'=>'ویژگی ها',
+    'register_page_title'=>'حساب کاربری ندارید؟ ایجاد کنید.',
+    'register_page_description'=>'برای استفاده کامل از امکانات سایت حساب کاربری ایجاد کنید.'
 
 
 ];

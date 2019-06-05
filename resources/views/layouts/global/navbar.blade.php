@@ -166,21 +166,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="#">Features</a>
+                        <li><a href="#">{{__('messages.features')}}</a>
                             <ul class="dropdown">
-                                <li><a href="features-preloader.html">Preloaders</a></li>
-                                <li><a href="#">Header</a>
-                                    <ul class="dropdown">
-                                        <li><a href="features-header-style1.html">Header Style1</a></li>
-                                        <li><a href="features-header-style2.html">Header Style2</a></li>
-                                        <li><a href="features-header-style3.html">Header Style3</a></li>
-                                        <li><a href="features-header-style4.html">Header Style4</a></li>
-                                        <li><a href="features-header-style5.html">Header Style5</a></li>
-                                        <li><a href="features-header-style6.html">Header Style6</a></li>
-                                        <li><a href="features-header-style7.html">Header Style7</a></li>
-                                        <li><a href="features-header-vertical-nav.html">Vertical Header</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{route('global_login_page')}}">{{__('messages.login')}}</a></li>
+                                <li><a href="{{route('global_register_page')}}">{{__('messages.register')}}</a></li>
+
                                 <li><a href="#">Page Title</a>
                                     <ul class="dropdown">
                                         <li><a href="features-page-title-text-left.html">Text Left</a></li>

@@ -31,4 +31,13 @@ class global_view extends Controller
 
     }
 
+    public function register_page()
+    {
+        return view('global.materials.register_page');
+    }
+
+    public function login_page()
+    {
+        return view('global.materials.login_page');
+    }
 }

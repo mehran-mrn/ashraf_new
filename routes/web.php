@@ -53,6 +53,11 @@ Route::prefix('ajax')->group(function (){
     Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
     Route::post('/login', 'globals\global_view@login_form_check')->name('global_login_form_check');
 
+});
+
+Route::prefix('page')->group(function () {
+    Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
+    Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
 
 });
 //=========================================
