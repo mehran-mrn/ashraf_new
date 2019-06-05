@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'accepted' => 'The :attribute must be accepted.',
-    'active_url' => 'The :attribute is not a valid URL.',
-    'after' => 'The :attribute must be a date after :date.',
+    'accepted' => 'نیاز است با :attribute موافقت شود.',
+    'active_url' => ':attribute یک آدرس معتبر نیست',
+    'after' => ':attribute باید تاریخی بعد از :date‌باشد.',
     'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
     'alpha' => 'The :attribute may only contain letters.',
     'alpha_dash' => 'The :attribute may only contain letters, numbers, dashes and underscores.',
@@ -85,23 +85,24 @@ return [
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
-        'file' => 'The :attribute must be at least :min kilobytes.',
-        'string' => 'The :attribute must be at least :min characters.',
-        'array' => 'The :attribute must have at least :min items.',
+        'numeric' => ':attribute نباید از :min کمتر باشد.',
+        'file' => ':attribute باید حداقل :min کیلوبایت باشد.',
+        'string' => ':attribute باید حداقل :min کارکتر باشد',
+        'array' => ':attribute باید حداقل شامل :min‌ آیتم باشد.',
     ],
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
-    'numeric' => 'The :attribute must be a number.',
+    'numeric' => 'فیلد :attribute باید فقط عدد باشد.',
     'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
-    'required_if' => 'The :attribute field is required when :other is :value.',
+    'regex' => 'فرمت :attribute صحیح وارد نشده است.',
+    'required' => ':attribute الزامی است.',
+    'required_if' => ':attribute در شرایطی که :other برابر با  :value باشد الزامی است.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
     'required_with_all' => 'The :attribute field is required when :values are present.',
-    'required_without' => 'The :attribute field is required when :values is not present.',
+    'required_without' => 'اگر :values‌وارد نشده باشند :attribute الزامی است.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
+    'required_without_all' => ':attribute وقتی :values وارد نشده باشد الزامی است.',
     'same' => 'The :attribute and :other must match.',
     'size' => [
         'numeric' => 'The :attribute must be :size.',
@@ -112,7 +113,7 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
+    'unique' => ':attribute تکراری است.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
@@ -145,6 +146,15 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'display_name'=>"نام",
+        'name'=>"نام",
+        'username'=>"نام کاربری",
+        'password'=>"رمز عبور",
+        'password_confirmation'=>"تایید رمز عبور",
+        'description'=>"توضیحات",
+        'email'=>"ایمیل",
+        'phone'=>"شماره تلفن",
+    ],
 
 ];
