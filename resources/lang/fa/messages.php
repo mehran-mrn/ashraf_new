@@ -15,7 +15,16 @@ return [
     'add_new' => 'ثبت :item جدید',
     'item_created' => ':item با موفقیت ایجاد شد.',
 
+
+    'roles_user_has' => 'نقش هایی که این کاربر دارد',
+    'permission_user_has' => 'دسترسی هایی که این کاربر دارد',
+    'users_has_this_permission' => 'کاربرانی که این دسترسی را دارند',
+    'roles_has_this_permission' => 'نقش هایی که این دسترسی را دارند',
+    'user_that_has_the_role' => 'کاربرانی که این نقش را دارند',
+    'permission_that_role_has' => 'دسترسی هایی که این نقش دارد',
+
     'test' => 'امتحانی.',
+    'that' => 'که',
     'html_title' => 'موسسه خیریه اشرف الانبیا',
     'users_management' => 'مدیریت حساب های کاربری',
     'add_new_user' => 'افزودن کاربر جدید',

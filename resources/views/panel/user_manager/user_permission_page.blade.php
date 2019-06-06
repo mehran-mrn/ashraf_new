@@ -35,7 +35,7 @@
             <div class="col-md-3 ">
                 <div class="card border-1 border-blue-400">
                     <div class="card-header alpha-blue text-blue-800 border-bottom-blue header-elements-inline justify-content-between">
-                        <h6 class="card-title">{{__('messages.roles')}}</h6>
+                        <h6 class="card-title">{{__('messages.roles_user_has')}}</h6>
 
                         <button type="button" class="btn bg-blue-700 btn-lg modal-ajax-load"
                                 data-ajax-link="{{route('assign_role_to_user_form',['user_id'=>$user['id']])}}" data-toggle="modal"
