@@ -1,15 +1,14 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
     <!-- Theme JS files -->
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/extensions/rowlink.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/mail_list.js') }}"></script>
     <!-- /theme JS files -->
 @endsection
 @section('content')
     <?php
-    $active_sidbare=['user_manager','roles_list']
+    $active_sidbare = ['user_manager', 'roles_list']
     ?>
 
     <!-- Content area -->
@@ -20,47 +19,49 @@
 
             {{--</div>--}}
 
-            <div class="card-body">
-                <p><button type="button" class="btn btn-outline-info btn-lg modal-ajax-load" data-ajax-link="{{route('panel_register_role_form')}}" data-toggle="modal" data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}" data-target="#general_modal"><i class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.role')])}}</button></p>
+            <div class="card-header">
+                <p>
+                    <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
+                            data-ajax-link="{{route('panel_register_role_form')}}" data-toggle="modal"
+                            data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
+                            data-target="#general_modal"><i
+                                class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.role')])}}
+                    </button>
+                </p>
 
             </div>
+            <div class="card-body">
 
-            <table class="table datatable-responsive">
-                <thead>
-                <tr>
-                    <th>{{__('messages.name')}}</th>
-                    <th>{{__('messages.key')}}</th>
-                    <th>{{__('messages.description')}}</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($roles as $role)
-                    <tr>
-                        <td><b>{{$role['display_name']}}</b></td>
-                        <td><b>{{$role['name']}}</b></td>
-                        <td><b>{{$role['description']}}</b></td>
-                        <td class="text-center">
-                            <div class="list-icons">
-                                <div class="dropdown">
-                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                        <i class="icon-menu9"></i>
-                                    </a>
 
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Export to .pdf</a>
-                                        <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Export to .csv</a>
-                                        <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
-                                    </div>
-                                </div>
+                <!-- Table -->
+                <div class="table-responsive">
+
+
+                    <div class="card border-x-2 rounded-0">
+                        <div class="card-header bg-light d-flex justify-content-between">
+                            <span class="font-size-sm text-uppercase font-weight-semibold">{{__('messages.name')}} <i class="icon-arrow-down32"></i> </span>
+                            <span class="font-size-sm text-uppercase font-weight-semibold">{{__('messages.description')}} <i class="icon-arrow-down32"></i> </span>
+                            <span class="font-size-sm text-uppercase font-weight-semibold">{{__('messages.key')}} <i class="icon-arrow-down32"></i> </span>
+                        </div>
+                    </div>
+                    @foreach($roles as $role)
+                        <div class="card border-x-1 m-0 border-left-indigo-400 border-right-indigo-400 rounded-0">
+                            <div class="card-header  bg-light d-flex justify-content-between">
+                                <span class="font-size-sm text-uppercase font-weight-bold"> <i class="icon-move text-muted"></i> {{$role['display_name']}} </span>
+                                <span class="font-size-sm text-uppercase font-weight-semibold text-muted">{{$role['description']}} </span>
+                                <span class="font-size-sm text-uppercase text-success font-weight-semibold">{{$role['name']}}</span>
                             </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+
+
+                        </div>
+
+                    @endforeach
+                </div>
+                <!-- /table -->
+
+            </div>
+            <!-- /basic responsive configuration -->
         </div>
-        <!-- /basic responsive configuration -->
     </div>
     <!-- /content area -->
 
