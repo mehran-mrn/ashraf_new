@@ -48,7 +48,7 @@
                             <td><b>{{$user['email']}}</b></td>
                             <td><b>{{$user['phone']}}</b></td>
                             <td>{{$user['created_at']}}</td>
-                            <td><a href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}"><span class="badge badge-success">Active</span></a> </td>
+                            <td><a href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}"><span class="badge badge-info">Link</span></a> </td>
                             <td class="text-center">
                                 <div class="list-icons">
                                     <div class="dropdown">
