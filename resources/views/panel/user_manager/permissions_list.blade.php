@@ -11,22 +11,22 @@
     <?php
     $active_sidbare = ['user_manager', 'permissions_list']
     ?>
-
+    <div class="page-header page-header-light">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
+                        data-ajax-link="{{route('panel_register_permission_form')}}" data-toggle="modal"
+                        data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.permission')])}}"
+                        data-target="#general_modal"><i
+                            class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.permission')])}}
+                </button>
+            </div>
+        </div>
+    </div>
     <!-- Content area -->
     <div class="content">
         <!-- Basic responsive configuration -->
-        <div class="card">
-            <div class="card-header">
-                <p>
-                    <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
-                            data-ajax-link="{{route('panel_register_permission_form')}}" data-toggle="modal"
-                            data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.permission')])}}"
-                            data-target="#general_modal"><i
-                                class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.permission')])}}
-                    </button>
-                </p>
-            </div>
-        </div>
+
 
         <div class="row">
 
@@ -36,10 +36,10 @@
                     <div class="card-header alpha-blue text-blue-800 border-bottom-blue header-elements-inline">
                         <h6 class="card-title">{{$category}}</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
 
-                        <table class="table datatable-responsive">
-                            <thead>
+                        <table class="table table-bordered table-striped">
+                            <thead >
                             <tr>
                                 <th>{{__('messages.name')}}</th>
                                 <th>{{__('messages.key')}}</th>
