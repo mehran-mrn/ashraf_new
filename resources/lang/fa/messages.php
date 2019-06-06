@@ -50,6 +50,7 @@ return [
     'last_login'=>"آخرین لاگین",
     'register_date'=>"تاریخ ثبت نام",
     'status'=>"وضعیت",
+    'category'=>"دسته بندی",
 
     'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
     'please_waite'=>'منتظر بمانید...',

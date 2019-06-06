@@ -27,8 +27,13 @@ class panel_view extends Controller
     }
     public function permissions_list()
     {
-        $permissions = Permission::all();
-        return view('panel.user_manager.permissions_list',compact('permissions'));
+        $categories = Permission::groupBy('category')->get(['category']);
+        $categories_permissions=[];
+        foreach ($categories as $category){
+            $category_permissions = Permission::where('category',$category['category'])->get();
+            $categories_permissions[$category['category']] = $category_permissions;
+        }
+        return view('panel.user_manager.permissions_list',compact('categories_permissions'));
     }
     public function register_permission_form()
     {

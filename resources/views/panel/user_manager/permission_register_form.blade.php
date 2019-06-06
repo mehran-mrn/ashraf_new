@@ -20,11 +20,11 @@
     </div>
 
     <div class="form-group row">
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.key') }}</label>
+        <label for="key" class="col-md-4 col-form-label text-md-right">{{ __('messages.key') }}</label>
 
         <div class="col-md-6">
-            <input id="name" type="text" class="form-control @error('email') is-invalid @enderror" name="name"
-                   value="{{ old('name') }}"  autocomplete="name">
+            <input id="key" type="text" class="form-control @error('email') is-invalid @enderror" name="key"
+                   value="{{ old('key') }}"  autocomplete="key">
             <label id="key-error" class="validation-invalid-label" for="key"></label>
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -35,13 +35,27 @@
     </div>
 
     <div class="form-group row">
+        <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('messages.category') }}</label>
+
+        <div class="col-md-6">
+            <input id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category"
+                   value="{{ old('category') }}"  autocomplete="category">
+
+            @error('category')
+            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group row">
         <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('messages.description') }}</label>
 
         <div class="col-md-6">
             <input id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description"
                    value="{{ old('description') }}"  autocomplete="description">
 
-            @error('email')
+            @error('description')
             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

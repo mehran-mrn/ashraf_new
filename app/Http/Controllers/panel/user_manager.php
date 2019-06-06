@@ -37,13 +37,14 @@ class user_manager extends Controller
 
     public function register_permission(Request $request){
         $this->validate($request, [
-            'name' => 'required|unique:permissions',
+            'key' => 'required|unique:permissions,name',
             'display_name' => 'required|unique:permissions',
         ]);
 
         Permission::create([
-            'name' => $request->name ,
+            'name' => $request->key ,
             'display_name' => $request->display_name ,
+            'category' => $request->category ,
             'description' =>  $request->description ,
         ]);
         $message =trans("messages.item_created",['item'=>trans('messages.permission')]);

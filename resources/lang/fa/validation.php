@@ -149,6 +149,7 @@ return [
     'attributes' => [
         'display_name'=>"نام",
         'name'=>"نام",
+        'key'=>"کلید",
         'username'=>"نام کاربری",
         'password'=>"رمز عبور",
         'password_confirmation'=>"تایید رمز عبور",
