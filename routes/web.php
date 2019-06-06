@@ -36,8 +36,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('register', 'panel\user_manager@register')->name('panel_register_user');
 
         Route::get('permission/{permission_id}', 'panel\panel_view@permission_assign')->name('permission_assign_page');
-        Route::post('assign_user_to_permission}', 'panel\user_manager@assign_user_to_permission')->name('assign_user_to_permission');
-        Route::post('assign_role_to_permission}', 'panel\user_manager@assign_role_to_permission')->name('assign_role_to_permission');
+        Route::post('assign_user_to_permission', 'panel\user_manager@assign_user_to_permission')->name('assign_user_to_permission');
+        Route::post('assign_role_to_permission', 'panel\user_manager@assign_role_to_permission')->name('assign_role_to_permission');
+        Route::get('user_permissions/{user_id}', 'panel\panel_view@user_permission_assign')->name('user_permission_assign_page');//***
+        Route::post('assign_role_to_user', 'panel\user_manager@assign_role_to_user')->name('assign_role_to_user');
 
         Route::get('permissions_list', 'panel\panel_view@permissions_list')->name('permissions_list');
         Route::post('register_permission', 'panel\user_manager@register_permission')->name('panel_register_permission');
@@ -57,6 +59,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/register_team', 'panel\panel_view@register_team_form')->name('panel_register_team_form');
         Route::get('/assign_user_to_permission_form/{permission_id}', 'panel\panel_view@assign_user_to_permission_form')->name('assign_user_to_permission_form');
         Route::get('/assign_role_to_permission_form/{permission_id}', 'panel\panel_view@assign_role_to_permission_form')->name('assign_role_to_permission_form');
+        Route::get('/assign_role_to_user_form/{user_id}', 'panel\panel_view@assign_role_to_user_form')->name('assign_role_to_user_form');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

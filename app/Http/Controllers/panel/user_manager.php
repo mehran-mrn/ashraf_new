@@ -92,11 +92,22 @@ class user_manager extends Controller
     public function assign_role_to_permission(Request $request){
         $this->validate($request, [
             'permission_id' => 'required|exists:permissions,id',
-            'role_id' => 'required|exists:users,id',
+            'role_id' => 'required|exists:roles,id',
         ]);
         $permission = Permission::find($request['permission_id']);
         $role = Role::find($request['role_id']);
         $role->attachPermission($permission);
+
+        return back_normal($request);
+    }
+    public function assign_role_to_user(Request $request){
+        $this->validate($request, [
+            'user_id' => 'required|exists:users,id',
+            'role_id' => 'required|exists:roles,id',
+        ]);
+        $user = User::find($request['user_id']);
+        $role = Role::find($request['role_id']);
+        $user->attachRole($role);
 
         return back_normal($request);
     }
