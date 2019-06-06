@@ -23,6 +23,7 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/js/selectize/selectize.js')}}"></script>
     <script src="{{ URL::asset('/public/assets/panel/js/custom.js') }}"></script>
 
     <!-- /core JS files -->
@@ -88,7 +89,7 @@
 
 
 <!-- Info modal -->
-<div id="general_modal" class="modal fade" tabindex="-1">
+<div id="general_modal" class="modal fade" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info">

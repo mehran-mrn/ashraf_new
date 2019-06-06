@@ -23,8 +23,19 @@ class panel_view extends Controller
     }
     public function permission_assign( $permission_id)
     {
-        $permission = Permission::find($permission_id);
-        return view('panel.user_manager.permission_assign_page',compact('permission'));
+        $users= User::get();
+        $permission = Permission::with('users','roles')->find($permission_id);
+        return view('panel.user_manager.permission_assign_page',compact('permission','users'));
+    }
+    public function assign_user_to_permission_form($permission_id)
+    {
+        $users= User::get();
+        return view('panel.user_manager.assign_user_to_permission_form',compact('permission_id','users'));
+    }
+    public function assign_role_to_permission_form($permission_id)
+    {
+        $roles= Role::get();
+        return view('panel.user_manager.assign_role_to_permission_form',compact('permission_id','roles'));
     }
     public function register_form()
     {

@@ -78,5 +78,27 @@ class user_manager extends Controller
         $message =trans("messages.item_created",['item'=>trans('messages.team')]);
         return back_normal($request,$message);
     }
+    public function assign_user_to_permission(Request $request){
+        $this->validate($request, [
+            'permission_id' => 'required|exists:permissions,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        $permission = Permission::find($request['permission_id']);
+        $user = User::find($request['user_id']);
+        $user->attachPermission($permission);
+
+        return back_normal($request);
+    }
+    public function assign_role_to_permission(Request $request){
+        $this->validate($request, [
+            'permission_id' => 'required|exists:permissions,id',
+            'role_id' => 'required|exists:users,id',
+        ]);
+        $permission = Permission::find($request['permission_id']);
+        $role = Role::find($request['role_id']);
+        $role->attachPermission($permission);
+
+        return back_normal($request);
+    }
 
 }
