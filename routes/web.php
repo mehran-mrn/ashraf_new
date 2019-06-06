@@ -31,9 +31,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
 
     Route::prefix('user_manager')->group(function () {
+
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
         Route::post('register', 'panel\user_manager@register')->name('panel_register_user');
 
+        Route::get('permission/{permission_id}', 'panel\panel_view@permission_assign')->name('permission_assign_page');
         Route::get('permissions_list', 'panel\panel_view@permissions_list')->name('permissions_list');
         Route::post('register_permission', 'panel\user_manager@register_permission')->name('panel_register_permission');
 

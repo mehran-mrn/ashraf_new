@@ -49,7 +49,7 @@
                             <tbody>
                             @foreach($permissions as $permission)
                                 <tr>
-                                    <td><b>{{$permission['display_name']}}</b></td>
+                                    <td><a href="{{route('permission_assign_page',['permission'=>$permission->id])}}"><b>{{$permission['display_name']}}</b></a> </td>
                                     <td>{{$permission['name']}}</td>
                                     <td>{{$permission['description']}}</td>
                                 </tr>

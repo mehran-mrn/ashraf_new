@@ -21,6 +21,11 @@ class panel_view extends Controller
             $users = User::get();
         return view('panel.user_manager.users_list',compact('users'));
     }
+    public function permission_assign( $permission_id)
+    {
+        $permission = Permission::find($permission_id);
+        return view('panel.user_manager.permission_assign_page',compact('permission'));
+    }
     public function register_form()
     {
         return view('panel.user_manager.user_register_form');

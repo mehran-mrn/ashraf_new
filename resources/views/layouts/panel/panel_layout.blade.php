@@ -71,7 +71,7 @@
         }</style>
 </noscript>
 
-<body class="{{isset($sidebar_collapse) ? "sidebar-xs" : ""}}">
+<body class="{{in_array("collapse", $active_sidbare) ? 'sidebar-xs' : '' }}">
 @include('layouts.panel.navbar')
 
 @include('panel.materials.form_notification')
