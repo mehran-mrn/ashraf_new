@@ -38,7 +38,7 @@ $(document).ready(function(){
                 });
                 setTimeout(function(){
                     location.reload();
-                }, 3000)
+                }, 1000)
             },
 
             error:function (response){

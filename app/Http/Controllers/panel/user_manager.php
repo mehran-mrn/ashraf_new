@@ -109,6 +109,8 @@ class user_manager extends Controller
         $role = Role::find($request['role_id']);
         $user->attachRole($role);
 
+        $user->ability(['assign'],$team2);
+
         return back_normal($request);
     }
 

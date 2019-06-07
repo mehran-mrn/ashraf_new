@@ -14,6 +14,21 @@
                 @endforeach
             </select>
         </div>
+
+    </div>
+    <div class="form-group row">
+
+        <label for="team_id" class="col-md-4 col-form-label text-md-right">{{ __('messages.team') }}</label>
+
+        <div class="col-md-6">
+            <select id="select_team_{{$rand_id}}" name="team_id" class="form-control select-search" data-fouc>
+                <option value="">همه تیم ها</option>
+                @foreach($teams as $team)
+                    <option value="{{$team['id']}}">{{$team['display_name']}}</option>
+                @endforeach
+            </select>
+        </div>
+
     </div>
     <div class="form-group row">
         <input type="hidden" name="permission_id" value="{{$permission_id}}">
@@ -32,5 +47,6 @@
 <script>
     $(document).ready(function () {
         $("#select_user_{{$rand_id}}").select2();
+        $("#select_team_{{$rand_id}}").select2();
     });
 </script>
