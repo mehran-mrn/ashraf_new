@@ -71,7 +71,11 @@
             display: none;
         }</style>
 </noscript>
-
+<?php
+if(!isset($active_sidbare)){
+    $active_sidbare=[];
+}
+    ?>
 <body class="{{in_array("collapse", $active_sidbare) ? 'sidebar-xs' : '' }}">
 @include('layouts.panel.navbar')
 
