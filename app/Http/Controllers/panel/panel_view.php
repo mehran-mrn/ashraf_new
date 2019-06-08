@@ -18,7 +18,7 @@ class panel_view extends Controller
     }
     public function users_list()
     {
-            $users = User::get();
+        $users = User::get();
         return view('panel.user_manager.users_list',compact('users'));
     }
     public function permission_assign( $permission_id)
@@ -78,7 +78,8 @@ class panel_view extends Controller
     public function teams_list()
     {
         $teams = Team::all();
-        return view('panel.user_manager.teams_list',compact('teams'));
+        $nes = NestableTableGetData('1','','');
+        return view('panel.user_manager.teams_list',compact('teams','nes'));
     }
     public function register_team_form()
     {
@@ -89,5 +90,6 @@ class panel_view extends Controller
     {
         return view('panel.materials.form_notification');
     }
+
 
 }

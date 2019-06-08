@@ -4,7 +4,7 @@
         <div class="section-content bg-white p-30">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="login_form" name="login_form" action="{{route('global_login_form_check')}}" method="post">
+                    <form id="login_form" name="login_form" action="{{route('login')}}" method="post">
                         {{@csrf_field()}}
                         <div class="row">
                             <div class="col-sm-12">

@@ -55,7 +55,7 @@ class global_controller extends Controller
         else{
             $phone = $request->phone_email;
         }
-        if(User::where('email',$email)->exists() || User::where('phone',$phone)->exists() ) {
+        if(User::where('email',$email)->first() || User::where('phone',$phone)->first() ) {
             return 'false';
         }
         else{

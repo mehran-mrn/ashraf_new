@@ -25,11 +25,6 @@ class global_view extends Controller
     {
         return view(('global.materials.loginP'));
     }
-    public function login_form_check(Request $request)
-    {
-        return response()->json($request);
-
-    }
 
     public function register_page()
     {

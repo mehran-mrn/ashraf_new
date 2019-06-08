@@ -114,4 +114,13 @@ class user_manager extends Controller
         return back_normal($request);
     }
 
+    public function teams_list_update(Request $request)
+    {
+        $jde = json_decode($request->sortval, true);
+        NesatableUpdateSort(0, $jde);
+
+        $message =trans("messages.item_created",['item'=>trans('messages.team_sorted')]);
+        return back_normal($request,"ok");
+    }
 }
+

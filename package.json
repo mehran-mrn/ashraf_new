@@ -23,6 +23,7 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "nestable2": "^1.6.0",
         "pnotify": "^4.0.0"
     }
 }
