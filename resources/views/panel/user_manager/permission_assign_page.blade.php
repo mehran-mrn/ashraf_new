@@ -80,14 +80,20 @@
                         <table class="table table-bordered table-striped">
                             <thead >
                             <tr>
-                                <th>{{__('messages.name')}}</th>
+                                <th>{{__('messages.role')}}</th>
+                                <th>{{__('messages.team')}}</th>
 
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($permission['roles'] as $role)
+                            @foreach($teams_roles as $team => $roles)
                                 <tr>
-                                    <td><b>{{$role['display_name']}}</b> </td>
+                                    <td>
+                                    @foreach($roles as $role)
+                                        <span class="badge bg-teal" >{{$role['display_name']}}</span>
+                                    @endforeach
+                                    </td>
+                                    <td><b>{{get_team($team)['display_name']}}</b> </td>
 
                                 </tr>
                             @endforeach

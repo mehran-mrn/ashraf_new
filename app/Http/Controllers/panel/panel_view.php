@@ -8,6 +8,7 @@ use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class panel_view extends Controller
 {
@@ -18,14 +19,19 @@ class panel_view extends Controller
     }
     public function users_list()
     {
-        $users = User::get();
+            $users = User::get();
         return view('panel.user_manager.users_list',compact('users'));
     }
     public function permission_assign( $permission_id)
     {
         $users= User::get();
         $permission = Permission::with('users','roles')->find($permission_id);
-        return view('panel.user_manager.permission_assign_page',compact('permission','users'));
+        $teams_roles = [];
+        $teamForeignKey = Config::get('laratrust.foreign_keys.team');
+        foreach ($permission['roles'] as $role){
+            $teams_roles[$role['pivot'][$teamForeignKey]][] = $role;
+        }
+        return view('panel.user_manager.permission_assign_page',compact('permission','users','teams_roles'));
     }
     public function user_permission_assign( $user_id)
     {
@@ -40,7 +46,7 @@ class panel_view extends Controller
     public function assign_role_to_permission_form($permission_id)
     {
         $roles= Role::get();
-        $teams= Team::get();
+        $teams= Team::all();
         return view('panel.user_manager.assign_role_to_permission_form',compact('permission_id','roles','teams'));
     }
     public function assign_role_to_user_form($user_id)
@@ -78,8 +84,7 @@ class panel_view extends Controller
     public function teams_list()
     {
         $teams = Team::all();
-        $nes = NestableTableGetData('1','','');
-        return view('panel.user_manager.teams_list',compact('teams','nes'));
+        return view('panel.user_manager.teams_list',compact('teams'));
     }
     public function register_team_form()
     {
@@ -90,6 +95,5 @@ class panel_view extends Controller
     {
         return view('panel.materials.form_notification');
     }
-
 
 }

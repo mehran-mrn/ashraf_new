@@ -8,6 +8,7 @@ use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class user_manager extends Controller
 {
@@ -95,8 +96,12 @@ class user_manager extends Controller
             'role_id' => 'required|exists:roles,id',
         ]);
         $permission = Permission::find($request['permission_id']);
-        $role = Role::find($request['role_id']);
-        $role->attachPermission($permission);
+        $team = null;
+        if ($request['team_id']){
+            $team = $request['team_id'];
+        }
+        $role = Role::find($request['role_id']); 
+        $role->attachPermission($permission,$team);
 
         return back_normal($request);
     }
