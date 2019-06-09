@@ -44,7 +44,7 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
                 $html .= $extra_float[$select->id];
             }
             $html .= '
-                    <a class="btn btn-sm" href="javascript:;" onclick="nestableRemove_' . $id . '(' . $select->id . ')">delete</a>
+                    <a class="btn btn-sm" href="'.route('permissions_team_list',$select->id).'" onclick="nestableRemove_' . $id . '(' . $select->id . ')">'.__('messages.show_permissions').'</a>
                 </span></div>';
             $html .= NestableTableGetData($id, $select->id, $extra_float, $module);
             $html .= '</li>';
