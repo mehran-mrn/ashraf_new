@@ -81,8 +81,8 @@
                         <table class="table table-bordered table-striped">
                             <thead >
                             <tr>
-                                <th>{{__('messages.role')}}</th>
                                 <th>{{__('messages.team')}}</th>
+                                <th>{{__('messages.role')}}</th>
                                 <th>{{__('messages.edit')}}</th>
 
                             </tr>
@@ -97,7 +97,14 @@
                                     @endforeach
                                     </td>
                                     <th>
-                                        <div class="btn btn-outline-success btn-lg legitRipple"><span class="icon icon-pencil "></span> </div> </th>
+                                        <button type="button" class="btn btn-outline-success btn-sm legitRipple modal-ajax-load"
+                                                data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id'],'team_id'=>$team])}}" data-toggle="modal"
+                                                data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
+                                                data-modal-size="modal-lg"
+                                                data-target="#general_modal">
+                                            <i class="icon-pencil"></i>
+                                        </button>
+
 
                                 </tr>
                             @endforeach

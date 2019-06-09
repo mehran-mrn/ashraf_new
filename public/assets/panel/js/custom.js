@@ -13,8 +13,30 @@ $(document).ready(function(){
         var target = this.getAttribute("data-target");
         var title = this.getAttribute("data-modal-title");
         var size = this.getAttribute("data-modal-size");
+        // $(target+" .modal-body").load(ajax_link);
+        $.ajax({
+            url:ajax_link,
+            type:'GET',
+            // data: $(this).serialize(),
 
-        $(target+" .modal-body").load(ajax_link);
+            success: function (response){
+                $(target+" .modal-body").html(response);
+            },
+
+            error:function (response){
+                new PNotify({
+                    title: 'oops',
+                    text:' Unable to load',
+                    type: 'error'
+                });
+
+            }
+        });
+
+
+
+
+
         $(target+" .modal-title").html(title);
         $(target+" .modal-dialog").removeClass().addClass("modal-dialog");
         $(target+" .modal-dialog").addClass(size);

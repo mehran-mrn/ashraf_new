@@ -60,7 +60,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/register_role', 'panel\panel_view@register_role_form')->name('panel_register_role_form');
         Route::get('/register_team', 'panel\panel_view@register_team_form')->name('panel_register_team_form');
         Route::get('/assign_user_to_permission_form/{permission_id}', 'panel\panel_view@assign_user_to_permission_form')->name('assign_user_to_permission_form');
-        Route::get('/assign_role_to_permission_form/{permission_id}', 'panel\panel_view@assign_role_to_permission_form')->name('assign_role_to_permission_form');
+        Route::get('/assign_role_to_permission_form/{permission_id}/{team_id?}', 'panel\panel_view@assign_role_to_permission_form')->name('assign_role_to_permission_form');
         Route::get('/assign_role_to_user_form/{user_id}', 'panel\panel_view@assign_role_to_user_form')->name('assign_role_to_user_form');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');

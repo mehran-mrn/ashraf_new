@@ -50,11 +50,27 @@ class panel_view extends Controller
         return view('panel.user_manager.assign_user_to_permission_form', compact('permission_id', 'users'));
     }
 
-    public function assign_role_to_permission_form($permission_id)
+    public function assign_role_to_permission_form($permission_id,$team_id = null)
     {
         $roles = Role::get();
         $teams = Team::all();
-        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams'));
+        $checked_roles=[];
+        $checked_teams=[];
+        $current_roles = Permission::with('roles')->find($permission_id);
+        $old_values = [];
+        if (!empty($current_roles['roles'])){
+
+            $current_roles = Permission::with('roles')->find($permission_id);
+            foreach ($current_roles['roles'] as $current_role){
+
+                if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
+                    $checked_roles[]= $current_role['id'];
+                    $checked_teams[]= $team_id;
+                    $old_values[$current_role['id']] = $team_id;
+                }
+            }
+        }
+        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_teams','old_values'));
     }
 
     public function assign_role_to_user_form($user_id)

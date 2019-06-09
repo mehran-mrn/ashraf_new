@@ -98,6 +98,7 @@ class user_manager extends Controller
         ]);
         $permission = Permission::find($request['permission_id']);
         $teams = $request['teams_id'];
+//        $old_values = $request['old_values'];
 
         if (in_array('0',$teams)){
             foreach ($request['roles_id'] as $role){

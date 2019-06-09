@@ -13,7 +13,6 @@
         {{--@endforeach--}}
         {{--</select>--}}
         <div class="col-md-6">
-
             <div class="card ">
                 <div class="card-header ">
                 <span class="badge badge-flat"><label
@@ -23,15 +22,15 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="teams_id[]"
                                value="0"
-                               id="roles_id_0" >
+                               id="team_id_0" {{!array_filter($checked_teams) ? "checked":""}} >
                         <label class="custom-control-label"
-                               for="roles_id_0">{{trans('messages.all_teams')}}</label>
+                               for="team_id_0">{{trans('messages.all_teams')}}</label>
                     </div>
                     <hr>
                     @foreach($teams as $team)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="teams_id[]" value="{{$team['id']}}"
-                                   id="team_id{{$team['id']}}" >
+                                   id="team_id{{$team['id']}}" {{in_array($team['id'],$checked_teams)?"checked":""}} >
                             <label class="custom-control-label"
                                    for="team_id{{$team['id']}}">{{$team['display_name']}}</label>
                         </div>
@@ -48,19 +47,21 @@
                 </div>
                 <div class="card-body ">
 
+
                     @foreach($roles as $role)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="roles_id[]"
                                    value="{{$role['id']}}"
-                                   id="roles_id_{{$role['id']}}" >
+                                   id="roles_id_{{$role['id']}}" {{in_array($role['id'],$checked_roles)?"checked":""}}>
                             <label class="custom-control-label"
                                    for="roles_id_{{$role['id']}}">{{$role['display_name']}}</label>
                         </div>
                     @endforeach
                 </div>
             </div>
-
-
+            @foreach($old_values as $role_id=>$team_id)
+                <input type="hidden" name="old_values[]" value="{{$team_id}}-{{$role_id}}">
+            @endforeach
         </div>
 
     </div>
@@ -71,7 +72,7 @@
     <div class="form-group row ">
         <div class="col-md-6 offset-md-3">
             <button type="submit" class="btn btn-block btn-info">
-                {{ __('messages.add') }}
+                {{ __('messages.save') }}
             </button>
         </div>
     </div>
