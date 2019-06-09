@@ -65,4 +65,8 @@ class global_controller extends Controller
 
     }
 
+    public function login(Request $request)
+    {
+        back_normal($request);
+    }
 }

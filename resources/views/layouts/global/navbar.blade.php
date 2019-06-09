@@ -1,11 +1,13 @@
 <!-- Header -->
 <header id="header" class="header">
-    <div class="header-top p-0 bg-theme-colored xs-text-center" data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
+    <div class="header-top p-0 bg-theme-colored xs-text-center"
+         data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
         <div class="container pt-20 pb-20">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
-                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="index-mp-layout1.html"><img src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt=""></a>
+                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="index-mp-layout1.html"><img
+                                src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -120,46 +122,66 @@
                                 </li>
                                 <li><a href="#">Portfolio Home Layouts <span class="label label-info">New</span></a>
                                     <ul class="dropdown">
-                                        <li><a href="index-portfolio-presentation-layout1.html">Portfolio Presentation Layout1</a></li>
-                                        <li><a href="index-portfolio-presentation-layout2.html">Portfolio Presentation Layout2</a></li>
-                                        <li><a href="index-portfolio-presentation-layout3.html">Portfolio Presentation Layout3</a></li>
+                                        <li><a href="index-portfolio-presentation-layout1.html">Portfolio Presentation
+                                                Layout1</a></li>
+                                        <li><a href="index-portfolio-presentation-layout2.html">Portfolio Presentation
+                                                Layout2</a></li>
+                                        <li><a href="index-portfolio-presentation-layout3.html">Portfolio Presentation
+                                                Layout3</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Hot Layouts <span class="label label-info">New</span></a>
                                     <ul class="dropdown">
                                         <li><a href="index-hot-split-slider-home.html">Split Slider Home Layout</a></li>
-                                        <li><a href="index-hot-vertical-slider-home.html">Vertical Slider Home Layout</a></li>
+                                        <li><a href="index-hot-vertical-slider-home.html">Vertical Slider Home
+                                                Layout</a></li>
                                         <li><a href="index-hot-fullscreen-home.html">Fullscreen Home Layout</a></li>
                                         <li><a href="index-hot-parallax-home.html">Parallax Home Layout</a></li>
                                         <li><a href="index-hot-personal-home.html">Personal Home Layout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="index-hot-shop-home.html">Shop Home <span class="label label-info">New</span></a></li>
+                                <li><a href="index-hot-shop-home.html">Shop Home <span
+                                            class="label label-info">New</span></a></li>
                                 <li><a href="#">Home Variations <span class="label label-info">New</span></a>
                                     <ul class="dropdown">
                                         <li><a href="#">Rev Slider</a>
                                             <ul class="dropdown">
-                                                <li><a href="index-home-variation-revslider-style1.html">Layout1</a></li>
-                                                <li><a href="index-home-variation-revslider-style2.html">Layout2</a></li>
+                                                <li><a href="index-home-variation-revslider-style1.html">Layout1</a>
+                                                </li>
+                                                <li><a href="index-home-variation-revslider-style2.html">Layout2</a>
+                                                </li>
                                             </ul>
                                         </li>
                                         <li><a href="#">Maximage Slider</a>
                                             <ul class="dropdown">
-                                                <li><a href="index-home-variation-maximageslider-style1.html">Layout1</a></li>
-                                                <li><a href="index-home-variation-maximageslider-style2.html">Layout2</a></li>
-                                                <li><a href="index-home-variation-maximageslider-style3.html">Layout3</a></li>
+                                                <li>
+                                                    <a href="index-home-variation-maximageslider-style1.html">Layout1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-home-variation-maximageslider-style2.html">Layout2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-home-variation-maximageslider-style3.html">Layout3</a>
+                                                </li>
                                             </ul>
                                         </li>
                                         <li><a href="index-home-variation-owl-carousel.html">Owl Slider</a></li>
                                         <li><a href="index-home-variation-typed-text.html">Typed Text Layout</a></li>
-                                        <li><a href="index-home-variation-video-background.html">Youtube Background Video</a></li>
-                                        <li><a href="index-home-variation-html5-video.html">Html5 Background Video</a></li>
-                                        <li><a href="index-home-variation-bg-image-parallax.html">Bg Image Parallax Layout</a></li>
+                                        <li><a href="index-home-variation-video-background.html">Youtube Background
+                                                Video</a></li>
+                                        <li><a href="index-home-variation-html5-video.html">Html5 Background Video</a>
+                                        </li>
+                                        <li><a href="index-home-variation-bg-image-parallax.html">Bg Image Parallax
+                                                Layout</a></li>
                                         <li><a href="index-home-variation-bg-static.html">Bg Static Layout</a></li>
                                         <li><a href="#">Home Appointment Form</a>
                                             <ul class="dropdown">
-                                                <li><a href="index-home-variation-appointment-form-style1.html">Layout1</a></li>
-                                                <li><a href="index-home-variation-appointment-form-style2.html">Layout2</a></li>
+                                                <li>
+                                                    <a href="index-home-variation-appointment-form-style1.html">Layout1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-home-variation-appointment-form-style2.html">Layout2</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -178,12 +200,15 @@
                                         <li><a href="features-page-title-text-right.html">Text Right</a></li>
                                         <li><a href="features-page-title-mini-version.html">Mini Version</a></li>
                                         <li><a href="features-page-title-big-version.html">Big Version</a></li>
-                                        <li><a href="features-page-title-extra-big-version.html">Extra Big Version</a></li>
+                                        <li><a href="features-page-title-extra-big-version.html">Extra Big Version</a>
+                                        </li>
                                         <li><a href="features-page-title-bg-white.html">Bg White</a></li>
                                         <li><a href="features-page-title-bg-image.html">Bg Image</a></li>
-                                        <li><a href="features-page-title-bg-image-parallax.html">Bg Image Parallax</a></li>
+                                        <li><a href="features-page-title-bg-image-parallax.html">Bg Image Parallax</a>
+                                        </li>
                                         <li><a href="features-page-title-bg-video.html">Bg Video</a></li>
-                                        <li><a href="features-page-title-full-transparent.html">Full Transparent</a></li>
+                                        <li><a href="features-page-title-full-transparent.html">Full Transparent</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Side Push Panel</a>
@@ -199,11 +224,13 @@
                                         <li><a href="#">Revolution Slider</a>
                                             <ul class="dropdown">
                                                 <li><a href="features-home-revslider.html">Revolution Slider</a></li>
-                                                <li><a href="features-rev-slider-premium-templates.html">Revolution Slider All In One</a></li>
+                                                <li><a href="features-rev-slider-premium-templates.html">Revolution
+                                                        Slider All In One</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="features-home-bg-image-slider.html">Bg Image Slider</a></li>
-                                        <li><a href="features-home-owl-fullwidth-carousel.html">Owl Fullwidth Carousel</a></li>
+                                        <li><a href="features-home-owl-fullwidth-carousel.html">Owl Fullwidth
+                                                Carousel</a></li>
                                         <li><a href="features-home-parallax-bg.html">Static/Parallax Image Bg</a></li>
                                         <li><a href="features-home-video-bg.html">Video Image Bg</a></li>
                                     </ul>
@@ -216,16 +243,20 @@
                                                 <li><a href="page-contact-style2.html">Contact style 2</a></li>
                                                 <li><a href="page-contact-style3.html">Contact style 3</a></li>
                                                 <li><a href="page-contact-style4.html">Contact style 4</a></li>
-                                                <li><a href="page-contact5-with-multiple-marker.html">Contact style 5 with multiple marker</a></li>
-                                                <li><a href="page-contact6-with-multiple-marker.html">Contact style 6 with multiple marker</a></li>
+                                                <li><a href="page-contact5-with-multiple-marker.html">Contact style 5
+                                                        with multiple marker</a></li>
+                                                <li><a href="page-contact6-with-multiple-marker.html">Contact style 6
+                                                        with multiple marker</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="#">Login/Register Form</a>
                                             <ul class="dropdown">
                                                 <li><a href="#">Login/Register</a>
                                                     <ul class="dropdown">
-                                                        <li><a href="form-login-register-style1.html">Form style 1</a></li>
-                                                        <li><a href="form-login-register-style2.html">Form style 2</a></li>
+                                                        <li><a href="form-login-register-style1.html">Form style 1</a>
+                                                        </li>
+                                                        <li><a href="form-login-register-style2.html">Form style 2</a>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Login</a>
@@ -296,10 +327,14 @@
                                         </li>
                                         <li><a href="#">Both Onetime/Recurring</a>
                                             <ul class="dropdown">
-                                                <li><a href="form-paypal-donate-both-onetime-recurring-style1.html">Style1</a></li>
-                                                <li><a href="form-paypal-donate-both-onetime-recurring-style2.html">Style2</a></li>
-                                                <li><a href="form-paypal-donate-both-onetime-recurring-style3.html">Style3</a></li>
-                                                <li><a href="form-paypal-donate-both-onetime-recurring-style4.html">Style4</a></li>
+                                                <li><a href="form-paypal-donate-both-onetime-recurring-style1.html">Style1</a>
+                                                </li>
+                                                <li><a href="form-paypal-donate-both-onetime-recurring-style2.html">Style2</a>
+                                                </li>
+                                                <li><a href="form-paypal-donate-both-onetime-recurring-style3.html">Style3</a>
+                                                </li>
+                                                <li><a href="form-paypal-donate-both-onetime-recurring-style4.html">Style4</a>
+                                                </li>
                                             </ul>
                                         </li>
                                         <li><a href="form-paypal-cart-style1.html">Cart Payment</a></li>
@@ -310,7 +345,8 @@
                                 <li><a href="#">Popup Promo Box</a>
                                     <ul class="dropdown">
                                         <li><a href="features-popup-promo-box.html">Default</a></li>
-                                        <li><a href="features-popup-promo-box-cookie-enabled.html">Cookie Enabled</a></li>
+                                        <li><a href="features-popup-promo-box-cookie-enabled.html">Cookie Enabled</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Footer</a>
@@ -458,7 +494,8 @@
                                     <ul class="dropdown">
                                         <li><a href="blog-classic-no-sidebar.html">Blog Classic No Sidebar</a></li>
                                         <li><a href="blog-classic-left-sidebar.html">Blog Classic Left Sidebar</a></li>
-                                        <li><a href="blog-classic-right-sidebar.html">Blog Classic Right Sidebar</a></li>
+                                        <li><a href="blog-classic-right-sidebar.html">Blog Classic Right Sidebar</a>
+                                        </li>
                                         <li><a href="blog-classic-both-sidebar.html">Blog Classic Both Sidebar</a></li>
                                     </ul>
                                 </li>
@@ -500,38 +537,55 @@
                                         <h5 class=""><strong>Featured News:</strong></h5>
                                         <article class="post clearfix">
                                             <div class="entry-header">
-                                                <div class="post-thumb"> <img class="img-fullwidth" src="images/blog/mega-menu.jpg" alt=""> </div>
+                                                <div class="post-thumb"><img class="img-fullwidth"
+                                                                             src="images/blog/mega-menu.jpg" alt="">
+                                                </div>
                                             </div>
                                             <div class="post-details">
-                                                <h4 class="entry-title mt-10"><a href="#">Featured News Title Here</a></h4>
-                                                <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna et sed aliqua<a class="text-theme-colored" href="#"> read more →</a> </p>
+                                                <h4 class="entry-title mt-10"><a href="#">Featured News Title Here</a>
+                                                </h4>
+                                                <p class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                                    do eiusmod tempor incididunt ut labore et dolore magna et sed aliqua<a
+                                                        class="text-theme-colored" href="#"> read more →</a></p>
                                             </div>
                                         </article>
                                     </div>
                                     <div class="col4">
                                         <h5 class=""><strong>Latest News:</strong></h5>
                                         <div class="list-dashed">
-                                            <article class="post media-post clearfix pb-0 mb-10"> <a href="#" class="post-thumb"><img alt="" src="images/blog/square1.jpg"></a>
+                                            <article class="post media-post clearfix pb-0 mb-10"><a href="#"
+                                                                                                    class="post-thumb"><img
+                                                        alt="" src="images/blog/square1.jpg"></a>
                                                 <div class="post-right">
-                                                    <h5 class="post-title mt-0"><a href="#">Bankruptcy Rights Proceedings</a></h5>
+                                                    <h5 class="post-title mt-0"><a href="#">Bankruptcy Rights
+                                                            Proceedings</a></h5>
                                                     <p>Oct 23, 2015</p>
                                                 </div>
                                             </article>
-                                            <article class="post media-post clearfix pb-0 mb-10"> <a href="#" class="post-thumb"><img alt="" src="images/blog/square2.jpg"></a>
+                                            <article class="post media-post clearfix pb-0 mb-10"><a href="#"
+                                                                                                    class="post-thumb"><img
+                                                        alt="" src="images/blog/square2.jpg"></a>
                                                 <div class="post-right">
-                                                    <h5 class="post-title mt-0"><a href="#">Assertive and Persistent Advocacy</a></h5>
+                                                    <h5 class="post-title mt-0"><a href="#">Assertive and Persistent
+                                                            Advocacy</a></h5>
                                                     <p>Jun 23, 2015</p>
                                                 </div>
                                             </article>
-                                            <article class="post media-post clearfix pb-0 mb-10"> <a href="#" class="post-thumb"><img alt="" src="images/blog/square3.jpg"></a>
+                                            <article class="post media-post clearfix pb-0 mb-10"><a href="#"
+                                                                                                    class="post-thumb"><img
+                                                        alt="" src="images/blog/square3.jpg"></a>
                                                 <div class="post-right">
-                                                    <h5 class="post-title mt-0"><a href="#">Government Contracts Procurement</a></h5>
+                                                    <h5 class="post-title mt-0"><a href="#">Government Contracts
+                                                            Procurement</a></h5>
                                                     <p>Apr 15, 2015</p>
                                                 </div>
                                             </article>
-                                            <article class="post media-post clearfix pb-0 mb-10"> <a href="#" class="post-thumb"><img alt="" src="images/blog/square2.jpg"></a>
+                                            <article class="post media-post clearfix pb-0 mb-10"><a href="#"
+                                                                                                    class="post-thumb"><img
+                                                        alt="" src="images/blog/square2.jpg"></a>
                                                 <div class="post-right">
-                                                    <h5 class="post-title mt-0"><a href="#">Criminal Defence Advocacy</a></h5>
+                                                    <h5 class="post-title mt-0"><a href="#">Criminal Defence
+                                                            Advocacy</a></h5>
                                                     <p>Mar 08, 2015</p>
                                                 </div>
                                             </article>
@@ -545,78 +599,135 @@
                                 <div class="megamenu-row">
                                     <div class="col3">
                                         <ul class="list-unstyled list-dashed">
-                                            <li><a href="shortcode-accordion.html"><i class="fa fa-list-ul"></i> Accordion</a></li>
-                                            <li><a href="shortcode-alerts.html"><i class="fa fa-exclamation-circle"></i> Alerts</a></li>
-                                            <li><a href="shortcode-animations.html"><i class="fa fa-magic"></i> Animations</a></li>
-                                            <li><a href="shortcode-background-html5-video.html"><i class="fa fa-video-camera"></i> HTML5 Background Video</a></li>
-                                            <li><a href="shortcode-blockquotes.html"><i class="fa fa-quote-right"></i> Blockquotes</a></li>
-                                            <li><a href="shortcode-button-groups-and-dropdowns.html"><i class="fa fa-link"></i> Button Groups</a></li>
-                                            <li><a href="shortcode-button-hover-effect.html"><i class="fa fa-flag-o"></i> Button Hover Effect</a></li>
-                                            <li><a href="shortcode-buttons.html"><i class="fa fa-external-link"></i> Buttons</a></li>
-                                            <li><a href="shortcode-call-to-actions.html"><i class="fa fa-plus-square"></i> Call To Actions</a></li>
-                                            <li><a href="shortcode-charts.html"><i class="fa fa-pie-chart"></i> Charts</a></li>
-                                            <li><a href="shortcode-columns-grids.html"><i class="fa fa-columns"></i> Columns Grids</a></li>
-                                            <li><a href="shortcode-divider.html"><i class="fa fa-indent"></i> Divider</a></li>
-                                            <li><a href="shortcode-dropcaps.html"><i class="fa fa-bold"></i> Dropcaps</a></li>
-                                            <li><a href="shortcode-datetime-datepicker.html"><i class="fa fa-calendar"></i> Date Picker</a></li>
-                                            <li><a href="shortcode-datetime-timepicker.html"><i class="fa fa-calendar"></i> Time Picker</a></li>
+                                            <li><a href="shortcode-accordion.html"><i class="fa fa-list-ul"></i>
+                                                    Accordion</a></li>
+                                            <li><a href="shortcode-alerts.html"><i class="fa fa-exclamation-circle"></i>
+                                                    Alerts</a></li>
+                                            <li><a href="shortcode-animations.html"><i class="fa fa-magic"></i>
+                                                    Animations</a></li>
+                                            <li><a href="shortcode-background-html5-video.html"><i
+                                                        class="fa fa-video-camera"></i> HTML5 Background Video</a></li>
+                                            <li><a href="shortcode-blockquotes.html"><i class="fa fa-quote-right"></i>
+                                                    Blockquotes</a></li>
+                                            <li><a href="shortcode-button-groups-and-dropdowns.html"><i
+                                                        class="fa fa-link"></i> Button Groups</a></li>
+                                            <li><a href="shortcode-button-hover-effect.html"><i
+                                                        class="fa fa-flag-o"></i> Button Hover Effect</a></li>
+                                            <li><a href="shortcode-buttons.html"><i class="fa fa-external-link"></i>
+                                                    Buttons</a></li>
+                                            <li><a href="shortcode-call-to-actions.html"><i
+                                                        class="fa fa-plus-square"></i> Call To Actions</a></li>
+                                            <li><a href="shortcode-charts.html"><i class="fa fa-pie-chart"></i>
+                                                    Charts</a></li>
+                                            <li><a href="shortcode-columns-grids.html"><i class="fa fa-columns"></i>
+                                                    Columns Grids</a></li>
+                                            <li><a href="shortcode-divider.html"><i class="fa fa-indent"></i>
+                                                    Divider</a></li>
+                                            <li><a href="shortcode-dropcaps.html"><i class="fa fa-bold"></i>
+                                                    Dropcaps</a></li>
+                                            <li><a href="shortcode-datetime-datepicker.html"><i
+                                                        class="fa fa-calendar"></i> Date Picker</a></li>
+                                            <li><a href="shortcode-datetime-timepicker.html"><i
+                                                        class="fa fa-calendar"></i> Time Picker</a></li>
                                         </ul>
                                     </div>
                                     <div class="col3">
                                         <ul class="list-unstyled list-dashed">
-                                            <li><a href="shortcode-datetime-datetimepicker.html"><i class="fa fa-calendar"></i> Bootstrap Date-Time Picker</a></li>
-                                            <li><a href="shortcode-datetime-datepair.html"><i class="fa fa-calendar"></i> Date Pair</a></li>
-                                            <li><a href="shortcode-flex-sliders.html"><i class="fa fa-sliders"></i> Flex Sliders</a></li>
-                                            <li><a href="shortcode-flipbox.html"><i class="fa fa-square"></i> Flipbox</a></li>
-                                            <li><a href="shortcode-forms.html"><i class="fa fa-align-justify"></i> Forms</a></li>
-                                            <li><a href="shortcode-iconbox.html"><i class="fa fa-unsorted"></i> Icon Box</a></li>
-                                            <li><a href="shortcode-icon-7stroke.html"><i class="fa fa-circle-o"></i> Icons 7stroke</a></li>
-                                            <li><a href="shortcode-icon-elegant-icons.html"><i class="fa fa-eye-slash"></i> Icons Elegant</a></li>
-                                            <li><a href="shortcode-icon-flat-color-icons.html"><i class="fa fa-i-cursor"></i> Icons Flat Color</a></li>
-                                            <li><a href="shortcode-icon-fontawesome.html"><i class="fa fa-fort-awesome"></i> Icons FontAwesome</a></li>
-                                            <li><a href="shortcode-icon-fontawesome-tutorial.html"><i class="fa fa-fonticons"></i> Icons FontAwesome Tutorial</a></li>
-                                            <li><a href="shortcode-icon-strokegap.html"><i class="fa fa-anchor"></i> Icons Strokegap</a></li>
-                                            <li><a href="shortcode-image-box.html"><i class="fa fa-file-image-o"></i> Image Box</a></li>
-                                            <li><a href="shortcode-instagram.html"><i class="fa fa-instagram"></i> Instagram Feed</a></li>
-                                            <li><a href="shortcode-labels-badges.html"><i class="fa fa-check-square-o"></i> Labels Badges</a></li>
+                                            <li><a href="shortcode-datetime-datetimepicker.html"><i
+                                                        class="fa fa-calendar"></i> Bootstrap Date-Time Picker</a></li>
+                                            <li><a href="shortcode-datetime-datepair.html"><i
+                                                        class="fa fa-calendar"></i> Date Pair</a></li>
+                                            <li><a href="shortcode-flex-sliders.html"><i class="fa fa-sliders"></i> Flex
+                                                    Sliders</a></li>
+                                            <li><a href="shortcode-flipbox.html"><i class="fa fa-square"></i>
+                                                    Flipbox</a></li>
+                                            <li><a href="shortcode-forms.html"><i class="fa fa-align-justify"></i> Forms</a>
+                                            </li>
+                                            <li><a href="shortcode-iconbox.html"><i class="fa fa-unsorted"></i> Icon Box</a>
+                                            </li>
+                                            <li><a href="shortcode-icon-7stroke.html"><i class="fa fa-circle-o"></i>
+                                                    Icons 7stroke</a></li>
+                                            <li><a href="shortcode-icon-elegant-icons.html"><i
+                                                        class="fa fa-eye-slash"></i> Icons Elegant</a></li>
+                                            <li><a href="shortcode-icon-flat-color-icons.html"><i
+                                                        class="fa fa-i-cursor"></i> Icons Flat Color</a></li>
+                                            <li><a href="shortcode-icon-fontawesome.html"><i
+                                                        class="fa fa-fort-awesome"></i> Icons FontAwesome</a></li>
+                                            <li><a href="shortcode-icon-fontawesome-tutorial.html"><i
+                                                        class="fa fa-fonticons"></i> Icons FontAwesome Tutorial</a></li>
+                                            <li><a href="shortcode-icon-strokegap.html"><i class="fa fa-anchor"></i>
+                                                    Icons Strokegap</a></li>
+                                            <li><a href="shortcode-image-box.html"><i class="fa fa-file-image-o"></i>
+                                                    Image Box</a></li>
+                                            <li><a href="shortcode-instagram.html"><i class="fa fa-instagram"></i>
+                                                    Instagram Feed</a></li>
+                                            <li><a href="shortcode-labels-badges.html"><i
+                                                        class="fa fa-check-square-o"></i> Labels Badges</a></li>
                                         </ul>
                                     </div>
                                     <div class="col3">
                                         <ul class="list-unstyled list-dashed">
-                                            <li><a href="shortcode-listgroup-panels.html"><i class="fa fa-th-list"></i> Listgroup Panels</a></li>
+                                            <li><a href="shortcode-listgroup-panels.html"><i class="fa fa-th-list"></i>
+                                                    Listgroup Panels</a></li>
                                             <li><a href="shortcode-lists.html"><i class="fa fa-list"></i> Lists</a></li>
                                             <li><a href="shortcode-maps.html"><i class="fa fa-map-o"></i> Maps</a></li>
-                                            <li><a href="shortcode-media-embed.html"><i class="fa fa-play-circle-o"></i> Media Embed</a></li>
-                                            <li><a href="shortcode-modal-bootstrap.html"><i class="fa fa-search-plus"></i> Modal</a></li>
-                                            <li><a href="shortcode-modal-lightbox.html"><i class="fa fa-expand"></i> Lightbox</a></li>
-                                            <li><a href="shortcode-navigation.html"><i class="fa fa-navicon"></i> Navigation</a></li>
-                                            <li><a href="shortcode-owl-carousel.html"><i class="fa fa-sliders"></i> Owl Carousel</a></li>
-                                            <li><a href="shortcode-pagination.html"><i class="fa fa-arrow-circle-o-right"></i> Pagination</a></li>
-                                            <li><a href="shortcode-progressbar.html"><i class="fa fa-tasks"></i> Progress Bars</a></li>
-                                            <li><a href="shortcode-responsive.html"><i class="fa fa-tablet"></i> Responsive</a></li>
-                                            <li><a href="shortcode-separator.html"><i class="fa fa-minus-square-o"></i> Separator</a></li>
-                                            <li><a href="shortcode-sitemap.html"><i class="fa fa-sitemap"></i> Sitemap</a></li>
-                                            <li><a href="shortcode-sliders.html"><i class="fa fa-sliders"></i> Sliders</a></li>
-                                            <li><a href="shortcode-smoothscrolling.html"><i class="fa fa-binoculars"></i> Smoothscrolling</a></li>
+                                            <li><a href="shortcode-media-embed.html"><i class="fa fa-play-circle-o"></i>
+                                                    Media Embed</a></li>
+                                            <li><a href="shortcode-modal-bootstrap.html"><i
+                                                        class="fa fa-search-plus"></i> Modal</a></li>
+                                            <li><a href="shortcode-modal-lightbox.html"><i class="fa fa-expand"></i>
+                                                    Lightbox</a></li>
+                                            <li><a href="shortcode-navigation.html"><i class="fa fa-navicon"></i>
+                                                    Navigation</a></li>
+                                            <li><a href="shortcode-owl-carousel.html"><i class="fa fa-sliders"></i> Owl
+                                                    Carousel</a></li>
+                                            <li><a href="shortcode-pagination.html"><i
+                                                        class="fa fa-arrow-circle-o-right"></i> Pagination</a></li>
+                                            <li><a href="shortcode-progressbar.html"><i class="fa fa-tasks"></i>
+                                                    Progress Bars</a></li>
+                                            <li><a href="shortcode-responsive.html"><i class="fa fa-tablet"></i>
+                                                    Responsive</a></li>
+                                            <li><a href="shortcode-separator.html"><i class="fa fa-minus-square-o"></i>
+                                                    Separator</a></li>
+                                            <li><a href="shortcode-sitemap.html"><i class="fa fa-sitemap"></i>
+                                                    Sitemap</a></li>
+                                            <li><a href="shortcode-sliders.html"><i class="fa fa-sliders"></i>
+                                                    Sliders</a></li>
+                                            <li><a href="shortcode-smoothscrolling.html"><i
+                                                        class="fa fa-binoculars"></i> Smoothscrolling</a></li>
                                         </ul>
                                     </div>
                                     <div class="col3">
                                         <ul class="list-unstyled list-dashed">
-                                            <li><a href="shortcode-styled-icons.html"><i class="fa fa-facebook-square"></i> Styled Icons</a></li>
-                                            <li><a href="shortcode-subscribe.html"><i class="fa fa-user-plus"></i> Subscribe</a></li>
-                                            <li><a href="shortcode-tables.html"><i class="fa fa-table"></i> Tables</a></li>
+                                            <li><a href="shortcode-styled-icons.html"><i
+                                                        class="fa fa-facebook-square"></i> Styled Icons</a></li>
+                                            <li><a href="shortcode-subscribe.html"><i class="fa fa-user-plus"></i>
+                                                    Subscribe</a></li>
+                                            <li><a href="shortcode-tables.html"><i class="fa fa-table"></i> Tables</a>
+                                            </li>
                                             <li><a href="shortcode-tabs.html"><i class="fa fa-indent"></i> Tabs</a></li>
-                                            <li><a href="shortcode-textblock.html"><i class="fa fa-bold"></i> Textblock</a></li>
-                                            <li><a href="shortcode-thumbnails-carousels.html"><i class="fa fa-sliders"></i> Thumbnails/carousels</a></li>
-                                            <li><a href="shortcode-title.html"><i class="fa fa-text-height"></i> Title</a></li>
-                                            <li><a href="shortcode-timer-final-countdown.html"><i class="fa fa-text-height"></i> Timer Final Countdown</a></li>
-                                            <li><a href="shortcode-timer-flipclock.html"><i class="fa fa-text-height"></i> Timer Flipclock</a></li>
-                                            <li><a href="shortcode-timer-slick-circular.html"><i class="fa fa-text-height"></i> Timer Slick Circular</a></li>
-                                            <li><a href="shortcode-twitter.html"><i class="fa fa-twitter-square"></i> Twitter Feed</a></li>
-                                            <li><a href="shortcode-typography.html"><i class="fa fa-font"></i> Typography</a></li>
-                                            <li><a href="shortcode-vertical-timeline.html"><i class="fa fa-arrows-v"></i> Vertical Timeline</a></li>
-                                            <li><a href="shortcode-widgets.html"><i class="fa fa-gift"></i> Widgets</a></li>
-                                            <li><a href="shortcode-working-process.html"><i class="fa fa-exchange"></i> Working Process</a></li>
+                                            <li><a href="shortcode-textblock.html"><i class="fa fa-bold"></i> Textblock</a>
+                                            </li>
+                                            <li><a href="shortcode-thumbnails-carousels.html"><i
+                                                        class="fa fa-sliders"></i> Thumbnails/carousels</a></li>
+                                            <li><a href="shortcode-title.html"><i class="fa fa-text-height"></i>
+                                                    Title</a></li>
+                                            <li><a href="shortcode-timer-final-countdown.html"><i
+                                                        class="fa fa-text-height"></i> Timer Final Countdown</a></li>
+                                            <li><a href="shortcode-timer-flipclock.html"><i
+                                                        class="fa fa-text-height"></i> Timer Flipclock</a></li>
+                                            <li><a href="shortcode-timer-slick-circular.html"><i
+                                                        class="fa fa-text-height"></i> Timer Slick Circular</a></li>
+                                            <li><a href="shortcode-twitter.html"><i class="fa fa-twitter-square"></i>
+                                                    Twitter Feed</a></li>
+                                            <li><a href="shortcode-typography.html"><i class="fa fa-font"></i>
+                                                    Typography</a></li>
+                                            <li><a href="shortcode-vertical-timeline.html"><i
+                                                        class="fa fa-arrows-v"></i> Vertical Timeline</a></li>
+                                            <li><a href="shortcode-widgets.html"><i class="fa fa-gift"></i> Widgets</a>
+                                            </li>
+                                            <li><a href="shortcode-working-process.html"><i class="fa fa-exchange"></i>
+                                                    Working Process</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -624,12 +735,21 @@
                         </li>
                     </ul>
                     <ul class="list-inline pull-right flip hidden-sm hidden-xs">
-                        <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="{{route('global_login_form')}}" >{{trans('messages.login')}}</a>
-                        </li>
-                        <li>
-                            <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup" href="{{route('global_register_form')}}" > {{trans('messages.register')}}</a>
-                        </li>
+                        @if (Auth::check())
+                            <li>
+                                <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup"
+                                   href="{{route('logout')}}">{{trans('messages.logout')}}</a>
+                            </li>
+                        @else
+                            <li>
+                                <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup"
+                                   href="{{route('global_login_form')}}">{{trans('messages.login')}}</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup"
+                                   href="{{route('global_register_form')}}"> {{trans('messages.register')}}</a>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

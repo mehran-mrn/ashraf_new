@@ -4,7 +4,7 @@
         <div class="section-content bg-white p-30">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="login_form" name="login_form" action="{{route('login')}}" method="post">
+                    <form id="login_form" name="login_form" method="post" action="{{route('login')}}">
                         {{@csrf_field()}}
                         <div class="row">
                             <div class="col-sm-12">
@@ -12,7 +12,7 @@
                                     <label for="phone_email" class="pull-right">{{trans('messages.email_or_mobile')}}
                                         <small>*</small>
                                     </label>
-                                    <input id="phone_email" name="phone_email" type="text"
+                                    <input id="name" name="name" type="text"
                                            placeholder="{{__('messages.enter_email_mobile')}}"
                                            class="form-control text-left required">
                                 </div>
@@ -50,7 +50,7 @@
                         $("#login_form").validate({
                             lang: "fa",
                             rules: {
-                                phone_email: {
+                                name: {
                                     required: true,
                                     minlength: 3
                                 },
@@ -68,17 +68,33 @@
                                 var form_btn_old_msg = form_btn.html();
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
-                                    dataType: 'json',
+                                    dataType: '',
                                     success: function (data) {
-                                        console.log(data);
-                                        if (data.status == 'true') {
-                                            $(form).find('.form-control').val('');
-                                        }
-                                        form_btn.prop('disabled', false).html(form_btn_old_msg);
+                                        PNotify.success({
+                                            text: data.message,
+                                            delay: 3000,
+                                        });
+                                        setTimeout(function(){
+                                            location.reload();
+                                        }, 3000);
+                                        $(form).find('.form-control').val('');
+                                        $(form_btn).html(form_btn_old_msg);
                                         $(form_result_div).html(data.message).fadeIn('slow');
-                                        setTimeout(function () {
-                                            $(form_result_div).fadeOut('slow')
-                                        }, 6000);
+                                        setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 3000);
+                                    }, error:function (response){
+                                        var errors = response.responseJSON.errors;
+                                        $.each( errors, function( index, value ) {
+                                            PNotify.error({
+                                                delay: 3000,
+                                                title: index,
+                                                text: value,
+                                            });
+                                        });
+                                        setTimeout(function(){
+                                            $('[type="submit"]').prop('disabled', false);
+                                        }, 2500);
+                                        $(form_btn).html(form_btn_old_msg);
+
                                     }
                                 });
                             }

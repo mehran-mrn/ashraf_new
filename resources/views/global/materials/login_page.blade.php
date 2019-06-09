@@ -24,10 +24,12 @@
                     <p>{{__('messages.login_page_title')}}
                         @if (Auth::check())
                             {{Auth::user()->created_at}}
+                            @php \Illuminate\Support\Facades\Auth::logout() @endphp
                         @else
                         @endif
                     </p>
                     <form name="login-form" class="clearfix" method="POST" action="{{ route('login') }}">
+                        @csrf
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="name">{{__('messages.email_or_mobile')}}</label>

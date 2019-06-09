@@ -80,6 +80,7 @@ return [
     'description'=>'توضیح',
 
     'login'=>'ورود',
+    'logout'=>'خروج',
     'login_form_title'=>'ورود به سایت',
     'forgot_password'=>'فراموشی کلمه عبور',
     'remember_me'=>'مرا به یاد داشته باش',
@@ -88,7 +89,9 @@ return [
     'features'=>'ویژگی ها',
     'register_page_title'=>'حساب کاربری ندارید؟ ایجاد کنید.',
     'register_page_description'=>'برای استفاده کامل از امکانات سایت حساب کاربری ایجاد کنید.',
-    'duplicate_email'=>'این نام کاربری در سیستم وجود دارد.'
+    'duplicate_email'=>'این نام کاربری در سیستم وجود دارد.',
+    'my_profile'=>'پروفایل من',
+    'dashboard'=>'داشبورد'
 
 
 ];

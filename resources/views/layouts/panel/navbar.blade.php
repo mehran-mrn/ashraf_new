@@ -26,7 +26,7 @@
 
         <span class="navbar-text ml-md-3">
 				<span class="badge badge-mark border-orange-300 mr-2"></span>
-				Morning, Victoria!
+				{{user_information('full')}}
 			</span>
 
         <ul class="navbar-nav ml-md-auto">
@@ -172,9 +172,9 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="navbar-nav-link">
+                <a href="{{route('logout')}}" class="navbar-nav-link">
                     <i class="icon-switch2"></i>
-                    <span class="d-md-none ml-2">Logout</span>
+                    <span class="d-md-none ml-2">{{__('messages.logout')}}</span>
                 </a>
             </li>
         </ul>
