@@ -24,7 +24,6 @@
                                     'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                                 },
                                 success: function (response) {
-                                    $("#nestable_sort_result_1").html("response");
                                     new PNotify({
                                         title: '',
                                         text: response.message,
