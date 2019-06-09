@@ -45,7 +45,7 @@
                             <thead >
                             <tr>
                                 <th>{{__('messages.name')}}</th>
-                                <th>{{__('messages.key')}}</th>
+                                <th></th>
                                 <th>{{__('messages.description')}}</th>
                             </tr>
                             </thead>
@@ -83,6 +83,7 @@
                             <tr>
                                 <th>{{__('messages.role')}}</th>
                                 <th>{{__('messages.team')}}</th>
+                                <th>{{__('messages.edit')}}</th>
 
                             </tr>
                             </thead>
@@ -95,6 +96,8 @@
                                         <span class="badge bg-teal" >{{$role['display_name']}}</span>
                                     @endforeach
                                     </td>
+                                    <th>
+                                        <div class="btn btn-outline-success btn-lg legitRipple"><span class="icon icon-pencil "></span> </div> </th>
 
                                 </tr>
                             @endforeach
