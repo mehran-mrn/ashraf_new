@@ -40,6 +40,8 @@ return [
     'teams_list' => 'لیست تیم ها',
     'team' => 'تیم',
     'teams' => 'تیم ها',
+    'all_teams' => 'همه تیم ها',
+    'team_not_found' => 'تیم یافت نشد',
     'roles_permission' => 'نقش ها و دسترسی ها',
     'groups' => 'مدیریت گروه ها',
     'Loading...'=>"منتظر بمانید...",

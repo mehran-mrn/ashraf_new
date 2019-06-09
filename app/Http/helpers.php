@@ -30,10 +30,10 @@ function back_normal($request, $message = null)
 
 function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
 {
-    $html='';
+    $html ='';
     $selects = \App\Team::where('parent_id', $parent)->get();
     if (sizeof($selects) >= 1) {
-        $html .= '<ol class="dd-list dd-list-rtl" id="nestable_dd_list_'.$id.'">';
+        $html .= '<ol class="dd-list dd-list" id="nestable_dd_list_'.$id.'">';
         foreach ($selects as $select) {
             $title = $select->display_name;
             $html .= '
@@ -55,6 +55,34 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
     return $html;
 }
 
+function NestableTableGetDataChild($id, $parent = 0, $extra_float = "", $module = "")
+{
+    $html2 = '';
+    $selects = \App\Team::where('parent_id', $parent)->get();
+    if (sizeof($selects) >= 1) {
+        $html2 .= '<ol class="dd-list dd-list" id="nestable_dd_list_'.$id.'">';
+        foreach ($selects as $select) {
+            $title = $select->display_name;
+            $html2 .= '
+            <li class="dd-item dd3-item" data-id="' . $select->id . '">
+                <div class="dd-handle dd3-handle"></div>
+                <div class="dd3-content">' . $title . '
+                <span class="float-right" style="margin-top: -5px;">';
+                    if (isset($extra_float[$select->id])) {
+                        $html2.= $extra_float[$select->id];
+                    }
+                    $html2.='
+                    <a class="btn btn-sm" href="javascript:;" onclick="nestableRemove_'. $id.'('.$select->id.')">delete</a>
+                </span></div>';
+            $html2 .= NestableTableGetData($id, $select->id, $extra_float, $module);
+            $html2 .= '</li>';
+        }
+        $html2 .= '</ol>';
+    }
+    return $html2;
+}
+
+
 function NesatableUpdateSort($sub, $jde)
 {
     $js = 0;
@@ -67,3 +95,17 @@ function NesatableUpdateSort($sub, $jde)
 
     }
 }
+
+function get_team($team_id = null)
+{
+    if (!$team_id) {
+        $team['display_name'] = trans('messages.all_teams');
+    } else {
+        $team = \App\Team::find($team_id);
+        if (!$team) {
+            $team['display_name'] = trans('messages.team_not_found');
+        }
+    }
+    return $team;
+}
+
