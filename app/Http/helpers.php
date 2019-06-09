@@ -89,6 +89,12 @@ function user_information($type)
         return $user->email;
     }elseif($type=='id'){
         return $user->id;
+    }elseif ($type=='avatar'){
+        if($user->avatar!="") {
+            return $user->avatar;
+        }else{
+            return '/public/assets/panel/images/person.png';
+        }
     }
 }
 

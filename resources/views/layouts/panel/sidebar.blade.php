@@ -29,7 +29,7 @@ if (!isset($active_sidbare)) {
                 <div class="card-body text-center">
                     <a href="#">
                         <img
-                            src="{{ URL::asset('/public/assets/panel/global_assets/images/placeholders/placeholder.jpg') }}"
+                            src="{{ URL::asset(user_information('avatar')) }}"
                             class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
                     </a>
                     <h6 class="mb-0 text-white text-shadow-dark">{{user_information('full')}}</h6>
