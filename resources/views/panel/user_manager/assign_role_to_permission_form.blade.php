@@ -1,32 +1,66 @@
-<?php $rand_id = rand(1, 8000); ?>
 <form method="POST" id="register_role_panel" class="form-ajax-submit" action="{{route('assign_role_to_permission')}}">
     @csrf
 
     <div class="form-group row">
 
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>
+        {{--<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>--}}
 
+        {{--<div class="col-md-6">--}}
+        {{--<select id="select_user_{{$rand_id}}" name="role_id" class="form-control select-search" data-fouc>--}}
+        {{--<option value="">|</option>--}}
+        {{--@foreach($roles as $role)--}}
+        {{--<option value="{{$role['id']}}">{{$role['display_name']}}</option>--}}
+        {{--@endforeach--}}
+        {{--</select>--}}
         <div class="col-md-6">
-            <select id="select_user_{{$rand_id}}" name="role_id" class="form-control select-search" data-fouc>
-                <option value="">|</option>
-                @foreach($roles as $role)
-                    <option value="{{$role['id']}}">{{$role['display_name']}}</option>
-                @endforeach
-            </select>
+
+            <div class="card ">
+                <div class="card-header ">
+                <span class="badge badge-flat"><label
+                            class="d-block font-weight-semibold">{{ __('messages.teams') }}</label></span>
+                </div>
+                <div class="card-body ">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="teams_id[]"
+                               value="0"
+                               id="roles_id_0" >
+                        <label class="custom-control-label"
+                               for="roles_id_0">{{trans('messages.all_teams')}}</label>
+                    </div>
+                    <hr>
+                    @foreach($teams as $team)
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="teams_id[]" value="{{$team['id']}}"
+                                   id="team_id{{$team['id']}}" >
+                            <label class="custom-control-label"
+                                   for="team_id{{$team['id']}}">{{$team['display_name']}}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
 
-    </div>
-    <div class="form-group row">
-
-        <label for="team_id" class="col-md-4 col-form-label text-md-right">{{ __('messages.team') }}</label>
-
         <div class="col-md-6">
-            <select id="select_team_{{$rand_id}}" name="team_id" class="form-control select-search" data-fouc>
-                <option value="">همه تیم ها</option>
-                @foreach($teams as $team)
-                    <option value="{{$team['id']}}">{{$team['display_name']}}</option>
-                @endforeach
-            </select>
+            <div class="card ">
+                <div class="card-header ">
+                    <span class="badge badge-flat"><label
+                                class="d-block font-weight-semibold">{{ __('messages.roles') }}</label></span>
+                </div>
+                <div class="card-body ">
+
+                    @foreach($roles as $role)
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="roles_id[]"
+                                   value="{{$role['id']}}"
+                                   id="roles_id_{{$role['id']}}" >
+                            <label class="custom-control-label"
+                                   for="roles_id_{{$role['id']}}">{{$role['display_name']}}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+
         </div>
 
     </div>
@@ -35,7 +69,7 @@
     </div>
 
     <div class="form-group row ">
-        <div class="col-md-6 offset-md-4">
+        <div class="col-md-6 offset-md-3">
             <button type="submit" class="btn btn-block btn-info">
                 {{ __('messages.add') }}
             </button>
@@ -44,9 +78,3 @@
 
 </form>
 
-<script>
-    $(document).ready(function () {
-        $("#select_user_{{$rand_id}}").select2();
-        $("#select_team_{{$rand_id}}").select2();
-    });
-</script>

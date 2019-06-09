@@ -12,9 +12,13 @@ $(document).ready(function(){
         var ajax_link = this.getAttribute("data-ajax-link");
         var target = this.getAttribute("data-target");
         var title = this.getAttribute("data-modal-title");
+        var size = this.getAttribute("data-modal-size");
 
         $(target+" .modal-body").load(ajax_link);
         $(target+" .modal-title").html(title);
+        $(target+" .modal-dialog").removeClass().addClass("modal-dialog");
+        $(target+" .modal-dialog").addClass(size);
+
     });
 
 

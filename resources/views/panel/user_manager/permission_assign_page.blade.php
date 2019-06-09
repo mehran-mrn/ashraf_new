@@ -72,6 +72,7 @@
                         <button type="button" class="btn bg-blue-700 btn-lg modal-ajax-load"
                                 data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id']])}}" data-toggle="modal"
                                 data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
+                                data-modal-size="modal-lg"
                                 data-target="#general_modal">
                             <i class="icon-plus3"></i>
                         </button>
@@ -88,12 +89,12 @@
                             <tbody>
                             @foreach($teams_roles as $team => $roles)
                                 <tr>
+                                    <td><b>{{get_team($team)['display_name']}}</b> </td>
                                     <td>
                                     @foreach($roles as $role)
                                         <span class="badge bg-teal" >{{$role['display_name']}}</span>
                                     @endforeach
                                     </td>
-                                    <td><b>{{get_team($team)['display_name']}}</b> </td>
 
                                 </tr>
                             @endforeach

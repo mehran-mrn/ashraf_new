@@ -93,15 +93,30 @@ class user_manager extends Controller
     public function assign_role_to_permission(Request $request){
         $this->validate($request, [
             'permission_id' => 'required|exists:permissions,id',
-            'role_id' => 'required|exists:roles,id',
+            'roles_id' => 'required',
+            'teams_id' => 'required',
         ]);
         $permission = Permission::find($request['permission_id']);
-        $team = null;
-        if ($request['team_id']){
-            $team = $request['team_id'];
+        $teams = $request['teams_id'];
+
+        if (in_array('0',$teams)){
+            foreach ($request['roles_id'] as $role){
+                $role = Role::find($role);
+                if ($role){
+                    $role->attachPermission($permission,null);
+                }
+            }
         }
-        $role = Role::find($request['role_id']); 
-        $role->attachPermission($permission,$team);
+        else{
+            foreach ($teams as $team){
+                foreach ($request['roles_id'] as $role){
+                    $role = Role::find($role);
+                    if ($role){
+                        $role->attachPermission($permission,$team);
+                    }
+                }
+            }
+        }
 
         return back_normal($request);
     }
@@ -114,7 +129,7 @@ class user_manager extends Controller
         $role = Role::find($request['role_id']);
         $user->attachRole($role);
 
-        $user->ability(['assign'],$team2);
+        $user->ability(['assign'],null);
 
         return back_normal($request);
     }

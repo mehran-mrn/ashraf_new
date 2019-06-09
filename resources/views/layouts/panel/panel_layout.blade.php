@@ -18,6 +18,31 @@
     <link href="{{ URL::asset('/public/assets/panel/css/style.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     @yield('css')
+    <style >
+        /* width */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #00897B;
+            border-radius: 3px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00695C;
+        }
+
+    </style>
+
     <!-- Core JS files -->
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
@@ -93,8 +118,8 @@ if(!isset($active_sidbare)){
 
 
 <!-- Info modal -->
-<div id="general_modal" class="modal fade" >
-    <div class="modal-dialog">
+<div id="general_modal" class="modal fade " >
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <h6 class="modal-title">Info header</h6>
