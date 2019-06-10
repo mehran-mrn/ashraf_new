@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "nestable2": "^1.6.0",
-        "pnotify": "^4.0.0"
+        "pnotify": "^4.0.0",
+        "sweetalert2": "^8.12.0"
     }
 }

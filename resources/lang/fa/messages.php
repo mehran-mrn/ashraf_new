@@ -14,6 +14,8 @@ return [
     */
     'add_new' => 'ثبت :item جدید',
     'item_created' => ':item با موفقیت ایجاد شد.',
+    'delete_item' => 'حذف :item',
+    'delete_item_text'=>'آیا از حذف :item اطمینان دارید؟',
 
 
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
@@ -96,5 +98,5 @@ return [
     'dashboard'=>'داشبورد',
     'blog'=>'وبلاگ',
     'add_post'=>'افزودن مطلب',
-    'post_list'=>'لیست مطالب'
+    'post_list'=>'لیست مطالب',
 ];

@@ -143,5 +143,11 @@ class user_manager extends Controller
         $message =trans("messages.item_created",['item'=>trans('messages.team_sorted')]);
         return back_normal($request,"ok");
     }
+
+
+    public function delete_role_from_permission(Request $request)
+    {
+        return back_normal($request,$request->permission_id."-".$request->team_id);
+    }
 }
 
