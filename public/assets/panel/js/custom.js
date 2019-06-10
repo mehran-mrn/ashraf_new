@@ -64,7 +64,7 @@ $(document).ready(function(){
                 });
                 setTimeout(function(){
                     location.reload();
-                }, 1000)
+                }, 10000000000)
             },
 
             error:function (response){

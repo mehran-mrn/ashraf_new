@@ -50,27 +50,28 @@ class panel_view extends Controller
         return view('panel.user_manager.assign_user_to_permission_form', compact('permission_id', 'users'));
     }
 
-    public function assign_role_to_permission_form($permission_id,$team_id = null)
+    public function assign_role_to_permission_form($permission_id,$old = null,$team_id = null)
     {
         $roles = Role::get();
         $teams = Team::all();
         $checked_roles=[];
-        $checked_teams=[];
         $current_roles = Permission::with('roles')->find($permission_id);
-        $old_values = [];
-        if (!empty($current_roles['roles'])){
+        $checked_team = null;
+        $old_team = [];
+        if ($old and !empty($current_roles['roles'])){
+            $checked_team= (empty($team_id) ? "0" : $team_id);
 
             $current_roles = Permission::with('roles')->find($permission_id);
             foreach ($current_roles['roles'] as $current_role){
 
                 if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
                     $checked_roles[]= $current_role['id'];
-                    $checked_teams[]= $team_id;
-                    $old_values[$current_role['id']] = $team_id;
+                    $old_team[] = $team_id."-".$current_role['id'];
+
                 }
             }
         }
-        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_teams','old_values'));
+        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_team','old_team'));
     }
 
     public function assign_role_to_user_form($user_id)

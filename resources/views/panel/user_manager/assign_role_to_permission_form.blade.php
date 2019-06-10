@@ -22,7 +22,7 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="teams_id[]"
                                value="0"
-                               id="team_id_0" {{!array_filter($checked_teams) ? "checked":""}} >
+                               id="team_id_0" {{(count($old_team) != 0 and $checked_team == 0 ) ? "checked":""}} >
                         <label class="custom-control-label"
                                for="team_id_0">{{trans('messages.all_teams')}}</label>
                     </div>
@@ -30,7 +30,7 @@
                     @foreach($teams as $team)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="teams_id[]" value="{{$team['id']}}"
-                                   id="team_id{{$team['id']}}" {{in_array($team['id'],$checked_teams)?"checked":""}} >
+                                   id="team_id{{$team['id']}}" {{$team['id'] == $checked_team ?"checked":""}} >
                             <label class="custom-control-label"
                                    for="team_id{{$team['id']}}">{{$team['display_name']}}</label>
                         </div>
@@ -59,8 +59,8 @@
                     @endforeach
                 </div>
             </div>
-            @foreach($old_values as $role_id=>$team_id)
-                <input type="hidden" name="old_values[]" value="{{$team_id}}-{{$role_id}}">
+            @foreach($old_team as $team_role)
+                <input type="hidden" name="old_team[]" value="{{$team_role}}">
             @endforeach
         </div>
 

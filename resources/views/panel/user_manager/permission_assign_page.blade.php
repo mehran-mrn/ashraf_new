@@ -98,7 +98,7 @@
                                     </td>
                                     <th>
                                         <button type="button" class="btn btn-outline-success btn-sm legitRipple modal-ajax-load"
-                                                data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id'],'team_id'=>$team])}}" data-toggle="modal"
+                                                data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id'],"old"=>"ex",'team_id'=>$team])}}" data-toggle="modal"
                                                 data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
                                                 data-modal-size="modal-lg"
                                                 data-target="#general_modal">

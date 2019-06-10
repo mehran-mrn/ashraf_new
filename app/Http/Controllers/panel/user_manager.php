@@ -98,13 +98,25 @@ class user_manager extends Controller
         ]);
         $permission = Permission::find($request['permission_id']);
         $teams = $request['teams_id'];
-//        $old_values = $request['old_values'];
+
+        if (isset($request['old_team'])){
+            foreach ($request['old_team'] as  $value){
+                $team_role = explode('-',$value);
+                $team_id = $team_role[0];
+                $role_id = $team_role[1];
+
+                $old_role = Role::find($role_id);
+                if ($old_role){
+                    $old_role->detachPermission($permission,($team_id?$team_id:null));
+                }
+            }
+        }
 
         if (in_array('0',$teams)){
-            foreach ($request['roles_id'] as $role){
-                $role = Role::find($role);
+            foreach ($request['roles_id'] as $role_id){
+                $role = Role::find($role_id);
                 if ($role){
-                    $role->attachPermission($permission,null);
+                    $role->attachPermission($permission);
                 }
             }
         }
