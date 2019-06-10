@@ -70,6 +70,9 @@ return [
     'register_date'=>"تاریخ ثبت نام",
     'status'=>"وضعیت",
     'category'=>"دسته بندی",
+    'msd_house'=>"خانه فرهنگی مشهد مقدس",
+    'add_caravan'=>"ثبت کاروان جدید",
+    'caravan_list'=>"لیست کاروان ها",
 
     'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
     'please_waite'=>'منتظر بمانید...',
