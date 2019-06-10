@@ -50,7 +50,7 @@ class panel_view extends Controller
         return view('panel.user_manager.assign_user_to_permission_form', compact('permission_id', 'users'));
     }
 
-    public function assign_role_to_permission_form($permission_id,$team_id = null)
+    public function assign_role_to_permission_form($permission_id,$old=null,$team_id = null)
     {
         $roles = Role::get();
         $teams = Team::all();
