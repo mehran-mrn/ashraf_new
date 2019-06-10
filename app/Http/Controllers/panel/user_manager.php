@@ -113,9 +113,11 @@ class user_manager extends Controller
         }
 
         if (in_array('0',$teams)){
+
             foreach ($request['roles_id'] as $role_id){
                 $role = Role::find($role_id);
                 if ($role){
+                    $role->detachPermission($permission);
                     $role->attachPermission($permission);
                 }
             }
