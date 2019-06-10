@@ -102,7 +102,7 @@ $(document).ready(function(){
                 });
                 setTimeout(function(){
                     location.reload();
-                }, 10000000000)
+                }, 1000)
             },
 
             error:function (response){

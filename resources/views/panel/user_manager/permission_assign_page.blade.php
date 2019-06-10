@@ -46,15 +46,27 @@
                             <tr>
                                 <th>{{__('messages.name')}}</th>
                                 <th></th>
-                                <th>{{__('messages.description')}}</th>
+                                <th>{{__('messages.delete')}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($permission['users'] as $user)
                                 <tr>
                                     <td><b>{{$user['name']}}</b> </td>
-                                    <td>{{$user['email']}}</td>
-                                    <td>{{$user['phone']}}</td>
+                                    <td>{{$user['email']}}  {{$user['phone']}}</td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-outline-danger btn-sm legitRipple swal-alert"
+                                                data-ajax-link=""
+                                                data-title="{{trans('messages.delete_item',['item'=>trans('messages.role')])}}"
+                                                data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.role')])}}"
+                                                data-type="warning"
+                                                data-cancel="true"
+                                                data-confirm-text="test"
+                                                data-target="#general_modal">
+                                            <i class="icon-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -105,6 +117,18 @@
                                             <i class="icon-pencil"></i>
                                         </button>
 
+
+                                        <button type="button"
+                                                class="btn btn-outline-danger btn-sm legitRipple swal-alert"
+                                                data-ajax-link="{{route('delete_role_from_permission',['permission_id'=>$permission['id'],'team_id'=>$team])}}"
+                                                data-title="{{trans('messages.delete_item',['item'=>trans('messages.role')])}}"
+                                                data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.role')])}}"
+                                                data-type="warning"
+                                                data-cancel="true"
+                                                data-confirm-text="test"
+                                                data-target="#general_modal">
+                                            <i class="icon-trash"></i>
+                                        </button>
 
                                 </tr>
                             @endforeach
