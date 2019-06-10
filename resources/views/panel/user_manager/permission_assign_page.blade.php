@@ -65,13 +65,14 @@
                                     <td>
                                         <button type="button"
                                                 class="btn btn-outline-danger btn-sm legitRipple swal-alert"
-                                                data-ajax-link=""
+                                                data-ajax-link="{{route('delete_user_from_permission',['permission_id'=>$permission['id'],'user_id'=>$user['id']])}}"
+                                                data-method="POST"
+                                                data-csrf="{{csrf_token()}}"
                                                 data-title="{{trans('messages.delete_item',['item'=>trans('messages.user')])}}"
                                                 data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.user')])}}"
                                                 data-type="warning"
                                                 data-cancel="true"
-                                                data-confirm-text="test"
-                                                data-target="#general_modal">
+                                                data-confirm-text="{{trans('messages.delete')}}">
                                             <i class="icon-trash"></i>
                                         </button>
                                     </td>
@@ -137,7 +138,7 @@
                                                 data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.role')])}}"
                                                 data-type="warning"
                                                 data-cancel="true"
-                                                data-confirm-text="test">
+                                                data-confirm-text="{{trans('messages.delete')}}">
                                             <i class="icon-trash"></i>
                                         </button>
 

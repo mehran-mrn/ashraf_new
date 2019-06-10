@@ -173,5 +173,14 @@ class user_manager extends Controller
         return back_normal($request);
 
     }
+
+    public function delete_user_from_permission($permission_id , $user_id ,Request $request)
+    {
+        $permission = Permission::find($permission_id);
+        $user = User::find($user_id);
+        $user->detachPermission($permission);
+        return back_normal($request);
+
+    }
 }
 
