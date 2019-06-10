@@ -104,7 +104,7 @@ if (!isset($active_sidbare)) {
 
 
                 <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? 'nav-item-expanded nav-item-open' : '' }}">
-                    <a href="#" class=" nav-link"><i class="icon-users4"></i>
+                    <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
