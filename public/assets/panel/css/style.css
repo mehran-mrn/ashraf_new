@@ -9,6 +9,25 @@
     src: url("/public/fonts/Samim-Bold.eot"); /* IE9 Compat Modes */
     src: url("/public/fonts/Samim-Bold.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */ url("/public/fonts/Samim-Bold.woff2") format('woff2'), /* Super Modern Browsers */ url("/public/fonts/Samim-Bold.woff") format('woff'), /* Pretty Modern Browsers */ url("/public/fonts/Samim-Bold.ttf") format('truetype'), /* Safari, Android, iOS */ url("/public/fonts/Samim-Bold.svg#svgFontName") format('svg'); /* Old iOS */
 }
+
 body {
     font-family: Samim !Important;
+}
+
+.swal2-popup {
+    font-size: 1.25rem;
+}
+
+.swal2-container {
+    zoom: 0;
+}
+
+
+.swal2-icon {
+    color: #ff7043;
+    border-color: #ff7043;
+    font-size: 1rem!important;
+    line-height: 1rem!important;
+    -ms-flex-pack: center;
+    justify-content: center;
 }

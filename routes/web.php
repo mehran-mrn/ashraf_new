@@ -53,6 +53,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('register_team', 'panel\user_manager@register_team')->name('panel_register_team');
 
     });
+    Route::prefix('blog')->group(function () {
+        Route::get('add_post', 'panel\panel_view@add_post')->name('add_post');
+        Route::get('post_list', 'panel\panel_view@post_list')->name('post_list');
+    });
 
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
@@ -62,6 +66,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/assign_user_to_permission_form/{permission_id}', 'panel\panel_view@assign_user_to_permission_form')->name('assign_user_to_permission_form');
         Route::get('/assign_role_to_permission_form/{permission_id}/{old?}/{team_id?}', 'panel\panel_view@assign_role_to_permission_form')->name('assign_role_to_permission_form');
         Route::get('/assign_role_to_user_form/{user_id}', 'panel\panel_view@assign_role_to_user_form')->name('assign_role_to_user_form');
+        Route::get('/delete_role_from_permission/{permission_id}/{team_id}', 'panel\user_manager@delete_role_from_permission')->name('delete_role_from_permission');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

@@ -14,6 +14,8 @@ return [
     */
     'add_new' => 'ثبت :item جدید',
     'item_created' => ':item با موفقیت ایجاد شد.',
+    'delete_item' => 'حذف :item',
+    'delete_item_text'=>'آیا از حذف :item اطمینان دارید؟',
 
 
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
@@ -93,7 +95,8 @@ return [
     'register_page_description'=>'برای استفاده کامل از امکانات سایت حساب کاربری ایجاد کنید.',
     'duplicate_email'=>'این نام کاربری در سیستم وجود دارد.',
     'my_profile'=>'پروفایل من',
-    'dashboard'=>'داشبورد'
-
-
+    'dashboard'=>'داشبورد',
+    'blog'=>'وبلاگ',
+    'add_post'=>'افزودن مطلب',
+    'post_list'=>'لیست مطالب',
 ];

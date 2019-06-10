@@ -7,7 +7,48 @@
  * ---------------------------------------------------------------------------- */
 
 $(document).ready(function(){
-    $(".modal-ajax-load").on('click',function(e){
+    $(".swal-alert").on('click',function(e) {
+        e.preventDefault();
+        var bt = $(".swal-alert");
+        var ajax_link = bt.data("ajax-link");
+        var target = bt.data("target");
+        var title = bt.data("title");
+        var text = bt.data("text");
+        var type = bt.data("type");
+        var cancel = bt.data("cancel");
+        var confirmText = bt.data("confirm-text");
+        Swal.fire({
+            title: title,
+            text: text,
+            type: type,
+            showCancelButton: cancel,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmText
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url:ajax_link,
+                    type:'get',
+                    // data: $(this).serialize(),
+                    success: function (response){
+                        console.log(response)
+                    },
+                    error:function (response){
+                        new PNotify({
+                            title: 'oops',
+                            text:' Unable to load',
+                            type: 'error'
+                        });
+
+                    }
+                });
+
+            }
+        })
+    });
+        $(".modal-ajax-load").on('click',function(e){
         e.preventDefault();
         var ajax_link = this.getAttribute("data-ajax-link");
         var target = this.getAttribute("data-target");
@@ -32,9 +73,6 @@ $(document).ready(function(){
 
             }
         });
-
-
-
 
 
         $(target+" .modal-title").html(title);
