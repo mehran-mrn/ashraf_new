@@ -20,6 +20,7 @@ class panel_view extends Controller
         return view('panel.dashboard');
     }
 
+//users module
     public function users_list()
     {
         $users = User::get();
@@ -50,27 +51,27 @@ class panel_view extends Controller
         return view('panel.user_manager.assign_user_to_permission_form', compact('permission_id', 'users'));
     }
 
-    public function assign_role_to_permission_form($permission_id,$team_id = null)
+    public function assign_role_to_permission_form($permission_id, $team_id = null)
     {
         $roles = Role::get();
         $teams = Team::all();
-        $checked_roles=[];
-        $checked_teams=[];
+        $checked_roles = [];
+        $checked_teams = [];
         $current_roles = Permission::with('roles')->find($permission_id);
         $old_values = [];
-        if (!empty($current_roles['roles'])){
+        if (!empty($current_roles['roles'])) {
 
             $current_roles = Permission::with('roles')->find($permission_id);
-            foreach ($current_roles['roles'] as $current_role){
+            foreach ($current_roles['roles'] as $current_role) {
 
-                if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
-                    $checked_roles[]= $current_role['id'];
-                    $checked_teams[]= $team_id;
+                if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id) {
+                    $checked_roles[] = $current_role['id'];
+                    $checked_teams[] = $team_id;
                     $old_values[$current_role['id']] = $team_id;
                 }
             }
         }
-        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_teams','old_values'));
+        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_teams', 'old_values'));
     }
 
     public function assign_role_to_user_form($user_id)
@@ -127,7 +128,6 @@ class panel_view extends Controller
         return view('panel.materials.form_notification');
     }
 
-
     public function permissions_team_list(Request $request)
     {
         $permissionRoles = Permission::with('roles')->find(1);
@@ -139,7 +139,20 @@ class panel_view extends Controller
             }
 
         }
-        return view('panel.user_manager.teams_list_permissions',compact('teams_roles'));
+        return view('panel.user_manager.teams_list_permissions', compact('teams_roles'));
     }
+//end users module
+
+//blog module
+    public function add_post()
+    {
+        return view('panel.blog.add_post');
+    }
+
+    public function post_list()
+    {
+        return view('panel.blog.post_list');
+    }
+//end blog module
 
 }
