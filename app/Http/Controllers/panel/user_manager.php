@@ -139,17 +139,33 @@ class user_manager extends Controller
     public function assign_role_to_user(Request $request){
         $this->validate($request, [
             'user_id' => 'required|exists:users,id',
-            'role_id' => 'required|exists:roles,id',
+            'roles_id' => 'required',
         ]);
         $user = User::find($request['user_id']);
-        $role = Role::find($request['role_id']);
-        $user->attachRole($role);
-
-        $user->ability(['assign'],null);
-
+        $all_roles = Role::pluck('id')->toArray();
+        $detached_roles = array_diff($all_roles,$request['roles_id']);
+        $user->detachRoles($detached_roles);
+        foreach ($request['roles_id'] as $role_id){
+            $role = Role::find($role_id);
+            $user->attachRole($role);
+        }
         return back_normal($request);
     }
-
+    public function assign_permission_to_user(Request $request){
+        $this->validate($request, [
+            'user_id' => 'required|exists:users,id',
+            'permissions_id' => 'required',
+        ]);
+        $user = User::find($request['user_id']);
+        $all_permissions = Permission::pluck('id')->toArray();
+        $detached_permissions = array_diff($all_permissions,$request['permissions_id']);
+        $user->detachPermissions($detached_permissions);
+        foreach ($request['permissions_id'] as $permission_id){
+            $Permission = Permission::find($permission_id);
+            $user->attachPermission($Permission);
+        }
+        return back_normal($request);
+    }
     public function teams_list_update(Request $request)
     {
         $jde = json_decode($request->sortval, true);
@@ -158,8 +174,6 @@ class user_manager extends Controller
         $message =trans("messages.item_created",['item'=>trans('messages.team_sorted')]);
         return back_normal($request,"ok");
     }
-
-
     public function delete_role_from_permission($permission_id , $team_id =null ,Request $request)
     {
         $permission = Permission::with('roles')->find($permission_id);
@@ -173,12 +187,19 @@ class user_manager extends Controller
         return back_normal($request);
 
     }
-
     public function delete_user_from_permission($permission_id , $user_id ,Request $request)
     {
         $permission = Permission::find($permission_id);
         $user = User::find($user_id);
         $user->detachPermission($permission);
+        return back_normal($request);
+
+    }
+    public function delete_role_from_user($role_id , $user_id ,Request $request)
+    {
+        $role = Role::find($role_id);
+        $user = User::find($user_id);
+        $user->detachRole($role);
         return back_normal($request);
 
     }

@@ -1,4 +1,3 @@
-<?php $rand_id = rand(1, 8000); ?>
 <form method="POST" id="" class="form-ajax-submit" action="{{route('assign_role_to_user')}}">
     @csrf
 
@@ -7,12 +6,18 @@
         <label for="role_id" class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>
 
         <div class="col-md-6">
-            <select id="select_user_{{$rand_id}}" name="role_id" class="form-control select-search" data-fouc>
-                <option value="">|</option>
-                @foreach($roles as $role)
-                    <option value="{{$role['id']}}">{{$role['display_name']}}</option>
-                @endforeach
-            </select>
+
+        @foreach($roles as $role)
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="roles_id[]"
+                           value="{{$role['id']}}"
+                           id="roles_id_{{$role['id']}}" {{in_array($role['id'],$checked_roles)?"checked":""}}>
+                    <label class="custom-control-label"
+                           for="roles_id_{{$role['id']}}">{{$role['display_name']}}</label>
+                </div>
+            @endforeach
+
+
         </div>
     </div>
     <div class="form-group row">
@@ -30,7 +35,5 @@
 </form>
 
 <script>
-    $(document).ready(function () {
-        $("#select_user_{{$rand_id}}").select2();
-    });
+
 </script>

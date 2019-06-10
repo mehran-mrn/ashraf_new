@@ -47,7 +47,6 @@
                 </div>
                 <div class="card-body ">
 
-
                     @foreach($roles as $role)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="roles_id[]"

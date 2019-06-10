@@ -41,7 +41,18 @@ class panel_view extends Controller
     public function user_permission_assign($user_id)
     {
         $user = user::with('permissions', 'roles')->find($user_id);
-        return view('panel.user_manager.user_permission_page', compact('user'));
+        $checked_permissions =[];
+        foreach ($user['permissions'] as $permission){
+            $checked_permissions[]=$permission['id'];
+        }
+        $categories = Permission::groupBy('category')->get(['category']);
+        $categories_permissions = [];
+        foreach ($categories as $category) {
+            $category_permissions = Permission::where('category', $category['category'])->get();
+            $categories_permissions[$category['category']] = $category_permissions;
+        }
+
+        return view('panel.user_manager.user_permission_page', compact('user','categories_permissions','checked_permissions'));
     }
 
     public function assign_user_to_permission_form($permission_id)
@@ -75,7 +86,13 @@ class panel_view extends Controller
     public function assign_role_to_user_form($user_id)
     {
         $roles = Role::get();
-        return view('panel.user_manager.assign_role_to_user_form', compact('user_id', 'roles'));
+        $user = user::with('permissions', 'roles')->find($user_id);
+        $checked_roles=[];
+
+        foreach ($user['roles']as $role){
+            $checked_roles[]=$role['id'];
+        }
+        return view('panel.user_manager.assign_role_to_user_form', compact('user_id', 'roles','checked_roles'));
     }
 
     public function register_form()
