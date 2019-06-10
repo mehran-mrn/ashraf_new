@@ -66,8 +66,8 @@
                                         <button type="button"
                                                 class="btn btn-outline-danger btn-sm legitRipple swal-alert"
                                                 data-ajax-link=""
-                                                data-title="{{trans('messages.delete_item',['item'=>trans('messages.role')])}}"
-                                                data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.role')])}}"
+                                                data-title="{{trans('messages.delete_item',['item'=>trans('messages.user')])}}"
+                                                data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.user')])}}"
                                                 data-type="warning"
                                                 data-cancel="true"
                                                 data-confirm-text="test"
@@ -91,6 +91,7 @@
 
                         <button type="button" class="btn bg-blue-700 btn-lg modal-ajax-load"
                                 data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id']])}}" data-toggle="modal"
+                                data-method="POST"
                                 data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
                                 data-modal-size="modal-lg"
                                 data-target="#general_modal">
@@ -118,7 +119,8 @@
                                     </td>
                                     <th>
                                         <button type="button" class="btn btn-outline-success btn-sm legitRipple modal-ajax-load"
-                                                data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id'],"old"=>"old",'team_id'=>$team])}}" data-toggle="modal"
+                                                data-ajax-link="{{route('assign_role_to_permission_form',['permission_id'=>$permission['id'],"old"=>"old",'team_id'=>$team])}}"
+                                                data-toggle="modal"
                                                 data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
                                                 data-modal-size="modal-lg"
                                                 data-target="#general_modal">
@@ -129,12 +131,13 @@
                                         <button type="button"
                                                 class="btn btn-outline-danger btn-sm legitRipple swal-alert"
                                                 data-ajax-link="{{route('delete_role_from_permission',['permission_id'=>$permission['id'],'team_id'=>$team])}}"
+                                                data-method="POST"
+                                                data-csrf="{{csrf_token()}}"
                                                 data-title="{{trans('messages.delete_item',['item'=>trans('messages.role')])}}"
                                                 data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.role')])}}"
                                                 data-type="warning"
                                                 data-cancel="true"
-                                                data-confirm-text="test"
-                                                data-target="#general_modal">
+                                                data-confirm-text="test">
                                             <i class="icon-trash"></i>
                                         </button>
 

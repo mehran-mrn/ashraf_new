@@ -97,6 +97,7 @@ class user_manager extends Controller
             'teams_id' => 'required',
         ]);
         $permission = Permission::find($request['permission_id']);
+
         $teams = $request['teams_id'];
 
         if (isset($request['old_team'])){
@@ -159,9 +160,18 @@ class user_manager extends Controller
     }
 
 
-    public function delete_role_from_permission(Request $request)
+    public function delete_role_from_permission($permission_id , $team_id =null ,Request $request)
     {
-        return back_normal($request,$request->permission_id."-".$request->team_id);
+        $permission = Permission::with('roles')->find($permission_id);
+        if (!empty($permission['roles'])){
+            foreach ($permission['roles'] as $role){
+                if ($role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
+                    $role->detachPermission($permission,$team_id);
+                }
+            }
+        }
+        return back_normal($request);
+
     }
 }
 

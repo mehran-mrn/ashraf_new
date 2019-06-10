@@ -60,8 +60,6 @@ class panel_view extends Controller
         $old_team = [];
         if ($old and !empty($current_roles['roles'])){
             $checked_team= (empty($team_id) ? "0" : $team_id);
-
-            $current_roles = Permission::with('roles')->find($permission_id);
             foreach ($current_roles['roles'] as $current_role){
 
                 if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
