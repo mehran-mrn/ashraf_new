@@ -18,30 +18,6 @@
     <link href="{{ URL::asset('/public/assets/panel/css/style.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     @yield('css')
-    <style >
-        /* width */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 5px grey;
-            border-radius: 10px;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            background: #00897B;
-            border-radius: 3px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00695C;
-        }
-
-    </style>
 
     <!-- Core JS files -->
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/jquery.min.js') }}"></script>
@@ -51,8 +27,6 @@
     <script src="{{ URL::asset('/public/assets/panel/js/selectize/selectize.js')}}"></script>
     <script src="{{ URL::asset('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/js/custom.js') }}"></script>
-
-
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -62,7 +36,6 @@
     <script src="{{ URL::asset('/public/assets/panel/js/app.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 <script>
-
     $( document ).ready(function() {
         @if(!$errors->isEmpty())
             @foreach ($errors->all() as $key => $error)
@@ -85,7 +58,6 @@
     });
 </script>
     <!-- /theme JS files -->
-
 </head>
 <noscript>
     <!-- Error title -->
