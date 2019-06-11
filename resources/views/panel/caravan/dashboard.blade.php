@@ -39,16 +39,16 @@
 
                                 <button  class="btn bg-purple btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
+                                        data-container="body" data-original-title="{{trans('messages.caravan_list')}}">
                                     <i class="icon-list2 icon-3x"></i>
                                     <span>{{trans('messages.caravan_list')}}</span>
                                 </button>
 
                                 <button class="btn bg-pink btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
+                                        data-container="body" data-original-title="{{trans('messages.pending_list')}}">
                                     <i class="icon-spinner4 spinner icon-3x"></i>
-                                    <span>{{trans('messages.pending_list')}} <b>3</b></span>
+                                    <span><b>3</b> {{trans('messages.pending_list')}} </span>
                                 </button>
                             </div>
                         </div>

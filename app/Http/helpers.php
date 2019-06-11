@@ -84,12 +84,11 @@ function get_team($team_id = null)
     return $team;
 }
 
-function image_saver($source_image, $folder, $module, $custom_size = [])
+function image_saver($image_input, $folder, $module, $custom_size = [])
 {
 //    $request->validate([
 //        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
 //    ]);
-
     if (!file_exists('public/images')) {
         mkdir('public/images', 0755, true);
     }
@@ -97,7 +96,8 @@ function image_saver($source_image, $folder, $module, $custom_size = [])
         mkdir('public/images/' . $folder, 0755, true);
     }
 
-    $image = $source_image;
+//    $image = $request->file('image');
+    $image = $image_input;
     $destinationPath = 'public/images/' . $folder;
     $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
 

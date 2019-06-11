@@ -98,12 +98,16 @@ $(document).ready(function(){
 
         var target = this.getAttribute("action");
         var method = this.getAttribute("method");
+        var formData = new FormData(this);
 
 
         $.ajax({
             url:target,
             type:method,
-            data: $(this).serialize(),
+            contentType: false,
+            processData: false,
+            // data: $(this).serialize(),
+            data: formData,
 
             success: function (response){
                 new PNotify({

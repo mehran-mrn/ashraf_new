@@ -194,7 +194,9 @@ class panel_view extends Controller
 
     public function hosts_list()
     {
-        return view('panel.caravan.hosts_list');
+        $hosts = caravan_host::get();
+
+        return view('panel.caravan.hosts_list',compact('hosts'));
     }
     public function load_host_form($host_id = null)
     {

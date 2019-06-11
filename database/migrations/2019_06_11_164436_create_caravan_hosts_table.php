@@ -19,7 +19,7 @@ class CreateCaravanHostsTable extends Migration
             $table->string('city_name')->nullable();
             $table->integer('capacity')->nullable();//null => infinite
             $table->integer('gender')->nullable(); //null => both 1=>male only 2=>female only
-            $table->string('image')->nullable();
+            $table->unsignedInteger('media_id')->nullable();
             $table->timestamps();
         });
     }

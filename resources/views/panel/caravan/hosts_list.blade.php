@@ -21,18 +21,21 @@
                     <div class="card-body">
                         <div class="row">
 
+                            @foreach($hosts as $host)
                             <div class="col-md-4">
                                 <div class="card card-body bg-blue text-center" style="background-image: url({{asset('public/assets/panel/images/person.png')}}); background-size: contain;">
                                     <div class="mb-3">
                                         <h5 class="font-weight-semibold mb-0 mt-1">
-                                            Victoria Davidson
+                                            {{$host['name']}}
                                         </h5>
 
-                                        <span class="d-block">Head of UX</span>
                                     </div>
 
                                     <a href="#" class="d-inline-block mb-3">
-                                        <img src="{{asset('public/assets/panel/images/person.png')}}" class="rounded-round" width="110" height="110" alt="">
+                                        <i class="icon-home2 icon-3x mb-10" ></i>
+                                        <br>
+                                        <span class="badge rounded-round border-3 text-light">{{$host['city_name']}}</span>
+
                                     </a>
 
                                     <ul class="list-inline mb-0">
@@ -50,7 +53,7 @@
 
 
                             </div>
-
+                            @endforeach
                         </div>
                     </div>
                 </div>

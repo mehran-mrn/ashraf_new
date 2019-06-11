@@ -60,17 +60,17 @@
 
 
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
+                <input value="1" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
                 <label class="custom-control-label" for="custom_radio_inline_checked">{{__('messages.male')}}</label>
             </div>
 
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
+                <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
                 <label class="custom-control-label" for="custom_radio_inline_checked">{{__('messages.female')}}</label>
             </div>
 
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_unchecked" checked="">
+                <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_unchecked" checked="">
                 <label class="custom-control-label" for="custom_radio_inline_unchecked">{{__('messages.both')}}</label>
             </div>
         </div>
