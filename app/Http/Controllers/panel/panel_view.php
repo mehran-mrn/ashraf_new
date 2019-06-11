@@ -169,6 +169,15 @@ class panel_view extends Controller
     {
         return view('panel.blog.post_list');
     }
+
+    public function category()
+    {
+        return view('panel.blog.category');
+    }
+    public function category_add_form()
+    {
+        return view('panel.blog.add_category');
+    }
 //end blog module
 
 }

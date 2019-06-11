@@ -16,6 +16,7 @@ return [
     'item_created' => ':item با موفقیت ایجاد شد.',
     'delete_item' => 'حذف :item',
     'delete_item_text'=>'آیا از حذف :item اطمینان دارید؟',
+    'add_category'=>'افزودن :item',
 
 
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
@@ -103,4 +104,6 @@ return [
     'blog'=>'وبلاگ',
     'add_post'=>'افزودن مطلب',
     'post_list'=>'لیست مطالب',
+    'title'=>'عنوان',
+    'enter_category_title'=>'عنوان دسته بندی را وارد نمایید.'
 ];
