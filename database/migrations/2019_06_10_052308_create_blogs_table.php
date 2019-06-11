@@ -15,23 +15,35 @@ class CreateBlogsTable extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->string('slug');
+            $table->longText('text');
+            $table->string('description');
+            $table->text('image');
+            $table->dateTime('publish_time');
+            $table->string('publish_status');
+            $table->integer('user_id');
             $table->timestamps();
         });
-
+        Schema::create('blog_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('blog_id');
+            $table->string('tag');
+            $table->timestamps();
+        });
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
             $table->integer('status')->default(10);
             $table->timestamps();
         });
-        Schema::create('blogs_category_rel', function (Blueprint $table) {
+        Schema::create('blog_category_rel', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('blog_id');
             $table->integer('category_id');
             $table->integer('status');
             $table->timestamps();
         });
-
         DB::table('categories')->insert(
             array(
                 'title' => 'علمی',
@@ -54,5 +66,8 @@ class CreateBlogsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('blogs');
+        Schema::dropIfExists('blog_tag');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('blog_category_rel');
     }
 }

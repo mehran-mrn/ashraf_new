@@ -59,6 +59,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
     Route::prefix('blog')->group(function () {
         Route::get('add_post', 'panel\panel_view@add_post')->name('add_post');
+        Route::post('add_post', 'panel\blog@add_post_store')->name('add_post_store');
         Route::get('post_list', 'panel\panel_view@post_list')->name('post_list');
         Route::get('category', 'panel\panel_view@category')->name('category');
         Route::get('panel_category_add_form', 'panel\panel_view@category_add_form')->name('panel_category_add_form');

@@ -18,11 +18,7 @@
                 res = title.replace(/ /g, '_');
                 $("#slug").val(res);
             });
-
-
-
         });
-
         var FileUpload = function() {
             var _componentFileUpload = function() {
                 if (!$().fileinput) {
@@ -116,7 +112,6 @@
                 }
             }
         }();
-
         document.addEventListener('DOMContentLoaded', function() {
             FileUpload.init();
         });
@@ -127,6 +122,8 @@
     $active_sidbare = ['blog', 'add_post']
     ?>
     <div class="content">
+        <form action="{{route('add_post_store')}}" method="post" enctype="multipart/form-data">
+            @csrf
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
@@ -227,5 +224,6 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 @endsection

@@ -1,4 +1,8 @@
 <?php
+
+use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+
 /**
  * Created by PhpStorm.
  * User: asus
@@ -44,7 +48,7 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
                 $html .= $extra_float[$select->id];
             }
             $html .= '
-                    <a class="btn btn-sm" href="'.route('permissions_team_list',$select->id).'" onclick="nestableRemove_' . $id . '(' . $select->id . ')">'.__('messages.show_permissions').'</a>
+                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>
                 </span></div>';
             $html .= NestableTableGetData($id, $select->id, $extra_float, $module);
             $html .= '</li>';
@@ -80,21 +84,77 @@ function get_team($team_id = null)
     return $team;
 }
 
+function media_proses(Request $request, $folder, $module, $custom_size = [])
+{
+    $request->validate([
+        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
+    ]);
+    if (!file_exists('public/images')) {
+        mkdir('public/images', 0755, true);
+    }
+    if (!file_exists('public/images/' . $folder)) {
+        mkdir('public/images/' . $folder, 0755, true);
+    }
+
+    $image = $request->file('image');
+    $destinationPath = 'public/images/' . $folder;
+    $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
+
+    $size = ['100,100', '200,200', '400,400'];
+    array_merge($size, $custom_size);
+
+    foreach ($size as $value) {
+        $si = explode(',', $value);
+        if (!file_exists('public/images/' . $folder . "/" . $si[0] . "x" . $si[1])) {
+            mkdir('public/images/' . $folder . "/" . "/" . $si[0] . "x" . $si[1], 0755, true);
+        }
+        $thumbnailPath = 'public/images/' . $folder . '/' . $si[0] . "x" . $si[1];
+        $img = Image::make($image->getRealPath());
+        $img->resize($si[0], $si[1], function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($thumbnailPath . '/' . $image_name);
+        \App\media::create([
+            'name' => $image_name,
+            'url' => $thumbnailPath . "/" . $image_name,
+            'path' => $thumbnailPath,
+            'org_name' => $image->getClientOriginalName(),
+            'mime' => $image->getClientMimeType(),
+            'module' => $module,
+            'size' => "1"
+        ]);
+    }
+
+    $image->move($destinationPath, $image_name);
+    $media_info = \App\media::create([
+        'name' => $image_name,
+        'url' => $destinationPath . "/" . $image_name,
+        'path' => $destinationPath,
+        'org_name' => $image->getClientOriginalName(),
+        'mime' => $image->getClientMimeType(),
+        'module' => $module,
+        'size' => "1"
+    ]);
+    $media_id = $media_info['id'];
+
+    return $media_id;
+}
+
 function user_information($type)
 {
-    $user = Auth::user();
-    if($type=='full'){
+    $user = \Illuminate\Support\Facades\Auth::user();
+    if ($type == 'full') {
         return $user->name;
-    }elseif($type=='email'){
+    } elseif ($type == 'email') {
         return $user->email;
-    }elseif($type=='id'){
+    } elseif ($type == 'id') {
         return $user->id;
-    }elseif ($type=='avatar'){
-        if($user->avatar!="") {
+    } elseif ($type == 'avatar') {
+        if ($user->avatar != "") {
             return $user->avatar;
-        }else{
+        } else {
             return '/public/assets/panel/images/person.png';
         }
     }
 }
+
 
