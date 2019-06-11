@@ -4,7 +4,7 @@ if (!isset($active_sidbare)) {
 }
 ?>
 <!-- Main sidebar -->
-<div class="sidebar sidebar-light sidebar-main sidebar-expand-md">
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
 
     <!-- Sidebar mobile toggler -->
     <div class="sidebar-mobile-toggler text-center">
