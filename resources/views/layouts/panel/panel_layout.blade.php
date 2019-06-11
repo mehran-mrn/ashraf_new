@@ -35,7 +35,8 @@
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/js/app.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
-<script>
+
+    <script>
     $( document ).ready(function() {
         @if(!$errors->isEmpty())
             @foreach ($errors->all() as $key => $error)

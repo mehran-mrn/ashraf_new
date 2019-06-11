@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\caravan_host;
 use App\category;
 use App\Permission;
 use App\Role;
@@ -189,6 +190,21 @@ class panel_view extends Controller
     public function caravan_dashboard()
     {
         return view('panel.caravan.dashboard');
+    }
+
+    public function hosts_list()
+    {
+        return view('panel.caravan.hosts_list');
+    }
+    public function load_host_form($host_id = null)
+    {
+        if ($host_id){
+            $host = caravan_host::find($host_id);
+        }
+        else{
+            $host = null;
+        }
+        return view('panel.caravan.materials.add_new_host_form', compact('host'));
     }
 
 //end caravan module

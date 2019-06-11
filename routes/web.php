@@ -54,9 +54,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('register_team', 'panel\user_manager@register_team')->name('panel_register_team');
 
     });
+
     Route::prefix('caravan')->group(function () {
         Route::get('dashboard', 'panel\panel_view@caravan_dashboard')->name('caravan_dashboard');
+        Route::get('hosts_list', 'panel\panel_view@hosts_list')->name('hosts_list');
+        Route::post('host_data', 'panel\caravan@host_data')->name('host_data');
     });
+
     Route::prefix('blog')->group(function () {
         Route::get('add_post', 'panel\panel_view@add_post')->name('add_post');
         Route::post('add_post', 'panel\blog@add_post_store')->name('add_post_store');
@@ -76,6 +80,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/delete_role_from_permission/{permission_id}/{team_id?}', 'panel\user_manager@delete_role_from_permission')->name('delete_role_from_permission');
         Route::post('/delete_user_from_permission/{permission_id}/{user_id}', 'panel\user_manager@delete_user_from_permission')->name('delete_user_from_permission');
         Route::post('/delete_role_from_user/{role_id}/{user_id}', 'panel\user_manager@delete_role_from_user')->name('delete_role_from_user');
+        Route::get('/host_form/{host_id?}', 'panel\panel_view@load_host_form')->name('load_host_form');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

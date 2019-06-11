@@ -96,12 +96,16 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("caravans_dashboard", $active_sidbare) ? 'active' : '' }}">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
-                                                class="nav-link {{in_array("add_caravan", $active_sidbare) ? 'active' : '' }}">{{trans('messages.dashboard')}} {{trans('messages.caravans')}}</a>
+                                                class="nav-link {{in_array("caravans_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.dashboard')}} {{trans('messages.caravans')}}</a>
                         </li>
                         <li class="nav-item"><a href="{{route('post_list')}}"
                                                 class="nav-link {{in_array("caravan_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.caravan_list')}}</a>
+
+                        </li>
+                        <li class="nav-item"><a href="{{route('hosts_list')}}"
+                                                class="nav-link {{in_array("hosts_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.hosts_list')}}</a>
 
                         </li>
 

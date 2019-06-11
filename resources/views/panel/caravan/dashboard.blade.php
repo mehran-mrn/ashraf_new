@@ -8,7 +8,7 @@
 @endsection
 @section('content')
     <?php
-    $active_sidbare = ['caravan', 'caravan_dashboard']
+    $active_sidbare = ['caravans', 'caravans_dashboard']
     ?>
     <!-- Content area -->
     <div class="content">
@@ -27,17 +27,17 @@
                                     <span>{{trans('messages.add_caravan')}}</span>
                                 </button>
 
-                                <button class="btn bg-blue btn-block btn-float btn-float-lg"
+                                <a href="{{route('hosts_list')}}" class="btn bg-blue btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
+                                        data-container="body" data-original-title="{{trans('messages.hosts_list')}}">
                                     <i class="icon-home2 icon-3x"></i>
                                     <span>{{trans('messages.hosts_list')}}</span>
-                                </button>
+                                </a>
                             </div>
 
                             <div class="col-md-6">
 
-                                <button class="btn bg-purple btn-block btn-float btn-float-lg"
+                                <button  class="btn bg-purple btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
                                     <i class="icon-list2 icon-3x"></i>
@@ -47,8 +47,8 @@
                                 <button class="btn bg-pink btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
-                                    <h1><b>3</b></h1>
-                                    <span>{{trans('messages.pending_list')}}</span>
+                                    <i class="icon-spinner4 spinner icon-3x"></i>
+                                    <span>{{trans('messages.pending_list')}} <b>3</b></span>
                                 </button>
                             </div>
                         </div>
