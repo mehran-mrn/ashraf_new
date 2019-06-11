@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 ">
-                                <button class="btn bg-pink btn-block btn-float btn-float-lg"
+                                <button class="btn bg-danger btn-block btn-float btn-float-lg"
                                         type="button" data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
                                     <i class="icon-folder-plus2 icon-3x"></i>
@@ -42,6 +42,13 @@
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
                                     <i class="icon-list2 icon-3x"></i>
                                     <span>{{trans('messages.caravan_list')}}</span>
+                                </button>
+
+                                <button class="btn bg-pink btn-block btn-float btn-float-lg"
+                                        type="button" data-popup="tooltip" title="" data-placement="bottom"
+                                        data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
+                                    <h1><b>3</b></h1>
+                                    <span>{{trans('messages.pending_list')}}</span>
                                 </button>
                             </div>
                         </div>

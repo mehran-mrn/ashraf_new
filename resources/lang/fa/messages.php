@@ -77,6 +77,7 @@ return [
     'add_caravan'=>"ثبت کاروان جدید",
     'caravan_list'=>"لیست کاروان ها",
     'active_caravan'=>"کاروان های در حال انجام",
+    'pending_list'=>"لیست در انتظار",
 
     'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
     'please_waite'=>'منتظر بمانید...',
