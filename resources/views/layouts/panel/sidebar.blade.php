@@ -114,6 +114,8 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{route('post_list')}}"
                                                 class="nav-link {{in_array("post_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_list')}}</a>
                         </li>
+                        <li class="nav-item"><a href="{{route('category')}}"
+                                                class="nav-link {{in_array("blog_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a></li>
 
                     </ul>
                 </li>
@@ -128,6 +130,7 @@ if (!isset($active_sidbare)) {
                         </li>
                         <li class="nav-item"><a href="{{route('post_list')}}"
                                                 class="nav-link {{in_array("caravan_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.caravan_list')}}</a>
+
                         </li>
 
                     </ul>
