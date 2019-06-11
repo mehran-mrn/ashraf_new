@@ -1,7 +1,7 @@
-<!-- Main navbar -->
-<div class="navbar navbar-expand-md navbar-dark bg-indigo navbar-static">
+<!-- main navbar -->
+<div class="navbar navbar-expand-md navbar-dark bg-indigo">
     <div class="navbar-brand">
-        <a href="index.html" class="d-inline-block">
+        <a href="{{route('dashboard')}}" class="d-inline-block">
             <img src="{{ URL::asset('/public/assets/panel/global_assets/images/logo_light.png') }}" alt="">
         </a>
     </div>
@@ -22,72 +22,102 @@
                     <i class="icon-paragraph-justify3"></i>
                 </a>
             </li>
-        </ul>
 
-        <span class="navbar-text ml-md-3">
-				<span class="badge badge-mark border-orange-300 mr-2"></span>
-				{{user_information('full')}}
-			</span>
-
-        <ul class="navbar-nav ml-md-auto">
             <li class="nav-item dropdown">
-                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-make-group mr-2"></i>
-                    Connect
+                <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                    <i class="icon-git-compare"></i>
+                    <span class="d-md-none ml-2">Git updates</span>
+                    <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">9</span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                    <div class="dropdown-content-body p-2">
-                        <div class="row no-gutters">
-                            <div class="col-12 col-sm-4">
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-github4 icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Github</div>
-                                </a>
+                <div class="dropdown-menu dropdown-content wmin-md-350">
+                    <div class="dropdown-content-header">
+                        <span class="font-weight-semibold">Git updates</span>
+                        <a href="#" class="text-default"><i class="icon-sync"></i></a>
+                    </div>
 
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-dropbox text-blue-400 icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Dropbox</div>
-                                </a>
-                            </div>
+                    <div class="dropdown-content-body dropdown-scrollable">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
+                                </div>
 
-                            <div class="col-12 col-sm-4">
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-dribbble3 text-pink-400 icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Dribbble</div>
-                                </a>
+                                <div class="media-body">
+                                    Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                                    <div class="text-muted font-size-sm">4 minutes ago</div>
+                                </div>
+                            </li>
 
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-google-drive text-success-400 icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Drive</div>
-                                </a>
-                            </div>
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-warning text-warning rounded-round border-2 btn-icon"><i class="icon-git-commit"></i></a>
+                                </div>
 
-                            <div class="col-12 col-sm-4">
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-twitter text-info-400 icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Twitter</div>
-                                </a>
+                                <div class="media-body">
+                                    Add full font overrides for popovers and tooltips
+                                    <div class="text-muted font-size-sm">36 minutes ago</div>
+                                </div>
+                            </li>
 
-                                <a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
-                                    <i class="icon-youtube text-danger icon-2x"></i>
-                                    <div class="font-size-sm font-weight-semibold text-uppercase mt-2">Youtube</div>
-                                </a>
-                            </div>
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-info text-info rounded-round border-2 btn-icon"><i class="icon-git-branch"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span> branch
+                                    <div class="text-muted font-size-sm">2 hours ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-success text-success rounded-round border-2 btn-icon"><i class="icon-git-merge"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Eugene Kopyov</a> merged <span class="font-weight-semibold">Master</span> and <span class="font-weight-semibold">Dev</span> branches
+                                    <div class="text-muted font-size-sm">Dec 18, 18:36</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    Have Carousel ignore keyboard events
+                                    <div class="text-muted font-size-sm">Dec 12, 05:46</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown-content-footer bg-light">
+                        <a href="#" class="text-grey mr-auto">All updates</a>
+                        <div>
+                            <a href="#" class="text-grey" data-popup="tooltip" title="Mark all as read"><i class="icon-radio-unchecked"></i></a>
+                            <a href="#" class="text-grey ml-2" data-popup="tooltip" title="Bug tracker"><i class="icon-bug2"></i></a>
                         </div>
                     </div>
                 </div>
             </li>
+        </ul>
 
+        <span class="badge bg-success ml-md-3 mr-md-auto">Online</span>
+
+        <ul class="navbar-nav">
             <li class="nav-item dropdown">
-                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-pulse2 mr-2"></i>
-                    Activity
+                <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                    <i class="icon-people"></i>
+                    <span class="d-md-none ml-2">Users</span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-300">
                     <div class="dropdown-content-header">
-                        <span class="font-size-sm line-height-sm text-uppercase font-weight-semibold">Latest activity</span>
+                        <span class="font-weight-semibold">Users online</span>
                         <a href="#" class="text-default"><i class="icon-search4 font-size-base"></i></a>
                     </div>
 
@@ -95,89 +125,190 @@
                         <ul class="media-list">
                             <li class="media">
                                 <div class="mr-3">
-                                    <a href="#" class="btn bg-success-400 rounded-round btn-icon"><i class="icon-mention"></i></a>
+                                    <img src="../../../../global_assets/images/demo/users/face18.jpg" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
-
                                 <div class="media-body">
-                                    <a href="#">Taylor Swift</a> mentioned you in a post "Angular JS. Tips and tricks"
-                                    <div class="font-size-sm text-muted mt-1">4 minutes ago</div>
+                                    <a href="#" class="media-title font-weight-semibold">Jordana Ansley</a>
+                                    <span class="d-block text-muted font-size-sm">Lead web developer</span>
                                 </div>
+                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
                             </li>
 
                             <li class="media">
                                 <div class="mr-3">
-                                    <a href="#" class="btn bg-pink-400 rounded-round btn-icon"><i class="icon-paperplane"></i></a>
+                                    <img src="../../../../global_assets/images/demo/users/face24.jpg" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
-
                                 <div class="media-body">
-                                    Special offers have been sent to subscribed users by <a href="#">Donna Gordon</a>
-                                    <div class="font-size-sm text-muted mt-1">36 minutes ago</div>
+                                    <a href="#" class="media-title font-weight-semibold">Will Brason</a>
+                                    <span class="d-block text-muted font-size-sm">Marketing manager</span>
                                 </div>
+                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-danger"></span></div>
                             </li>
 
                             <li class="media">
                                 <div class="mr-3">
-                                    <a href="#" class="btn bg-blue rounded-round btn-icon"><i class="icon-plus3"></i></a>
+                                    <img src="../../../../global_assets/images/demo/users/face17.jpg" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
-
                                 <div class="media-body">
-                                    <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span> branch in <span class="font-weight-semibold">Limitless</span> repository
-                                    <div class="font-size-sm text-muted mt-1">2 hours ago</div>
+                                    <a href="#" class="media-title font-weight-semibold">Hanna Walden</a>
+                                    <span class="d-block text-muted font-size-sm">Project manager</span>
                                 </div>
+                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
                             </li>
 
                             <li class="media">
                                 <div class="mr-3">
-                                    <a href="#" class="btn bg-purple-300 rounded-round btn-icon"><i class="icon-truck"></i></a>
+                                    <img src="../../../../global_assets/images/demo/users/face19.jpg" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
-
                                 <div class="media-body">
-                                    Shipping cost to the Netherlands has been reduced, database updated
-                                    <div class="font-size-sm text-muted mt-1">Feb 8, 11:30</div>
+                                    <a href="#" class="media-title font-weight-semibold">Dori Laperriere</a>
+                                    <span class="d-block text-muted font-size-sm">Business developer</span>
                                 </div>
+                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-warning-300"></span></div>
                             </li>
 
                             <li class="media">
                                 <div class="mr-3">
-                                    <a href="#" class="btn bg-warning-400 rounded-round btn-icon"><i class="icon-comment"></i></a>
+                                    <img src="../../../../global_assets/images/demo/users/face16.jpg" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
-
                                 <div class="media-body">
-                                    New review received on <a href="#">Server side integration</a> services
-                                    <div class="font-size-sm text-muted mt-1">Feb 2, 10:20</div>
+                                    <a href="#" class="media-title font-weight-semibold">Vanessa Aurelius</a>
+                                    <span class="d-block text-muted font-size-sm">UX expert</span>
                                 </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-teal-400 rounded-round btn-icon"><i class="icon-spinner11"></i></a>
-                                </div>
-
-                                <div class="media-body">
-                                    <strong>January, 2018</strong> - 1320 new users, 3284 orders, $49,390 revenue
-                                    <div class="font-size-sm text-muted mt-1">Feb 1, 05:46</div>
-                                </div>
+                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-grey-400"></span></div>
                             </li>
                         </ul>
                     </div>
 
                     <div class="dropdown-content-footer bg-light">
-                        <a href="#" class="font-size-sm line-height-sm text-uppercase font-weight-semibold text-grey mr-auto">All activity</a>
-                        <div>
-                            <a href="#" class="text-grey" data-popup="tooltip" title="Clear list"><i class="icon-checkmark3"></i></a>
-                            <a href="#" class="text-grey ml-2" data-popup="tooltip" title="Settings"><i class="icon-gear"></i></a>
-                        </div>
+                        <a href="#" class="text-grey mr-auto">All users</a>
+                        <a href="#" class="text-grey"><i class="icon-gear"></i></a>
                     </div>
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a href="{{route('logout')}}" class="navbar-nav-link">
-                    <i class="icon-switch2"></i>
-                    <span class="d-md-none ml-2">{{__('messages.logout')}}</span>
+            <li class="nav-item dropdown">
+                <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                    <i class="icon-bubbles4"></i>
+                    <span class="d-md-none ml-2">Messages</span>
+                    <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">2</span>
                 </a>
+
+                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+                    <div class="dropdown-content-header">
+                        <span class="font-weight-semibold">Messages</span>
+                        <a href="#" class="text-default"><i class="icon-compose"></i></a>
+                    </div>
+
+                    <div class="dropdown-content-body dropdown-scrollable">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="mr-3 position-relative">
+                                    <img src="../../../../global_assets/images/demo/users/face10.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                </div>
+
+                                <div class="media-body">
+                                    <div class="media-title">
+                                        <a href="#">
+                                            <span class="font-weight-semibold">James Alexander</span>
+                                            <span class="text-muted float-right font-size-sm">04:58</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3 position-relative">
+                                    <img src="../../../../global_assets/images/demo/users/face3.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                </div>
+
+                                <div class="media-body">
+                                    <div class="media-title">
+                                        <a href="#">
+                                            <span class="font-weight-semibold">Margo Baker</span>
+                                            <span class="text-muted float-right font-size-sm">12:16</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="text-muted">That was something he was unable to do because...</span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <img src="../../../../global_assets/images/demo/users/face24.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-title">
+                                        <a href="#">
+                                            <span class="font-weight-semibold">Jeremy Victorino</span>
+                                            <span class="text-muted float-right font-size-sm">22:48</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="text-muted">But that would be extremely strained and suspicious...</span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <img src="../../../../global_assets/images/demo/users/face4.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-title">
+                                        <a href="#">
+                                            <span class="font-weight-semibold">Beatrix Diaz</span>
+                                            <span class="text-muted float-right font-size-sm">Tue</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="text-muted">What a strenuous career it is that I've chosen...</span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <img src="../../../../global_assets/images/demo/users/face25.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-title">
+                                        <a href="#">
+                                            <span class="font-weight-semibold">Richard Vango</span>
+                                            <span class="text-muted float-right font-size-sm">Mon</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown-content-footer justify-content-center p-0">
+                        <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown dropdown-user">
+                <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{URL::asset(user_information('avatar'))}}" class="rounded-circle mr-2" height="34" alt="">
+                    <span>{{user_information('full')}}</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                    <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
+                    <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                    <a href="{{route('logout')}}" class="dropdown-item"><i class="icon-switch2"></i>{{__('messages.logout')}}</a>
+                </div>
             </li>
         </ul>
     </div>
 </div>
 <!-- /main navbar -->
+

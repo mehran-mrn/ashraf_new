@@ -19,69 +19,47 @@ if (!isset($active_sidbare)) {
     </div>
     <!-- /sidebar mobile toggler -->
 
-
     <!-- Sidebar content -->
     <div class="sidebar-content">
 
         <!-- User menu -->
-        <div class="sidebar-user-material">
-            <div class="sidebar-user-material-body">
-                <div class="card-body text-center">
-                    <a href="#">
-                        <img
-                            src="{{ URL::asset(user_information('avatar')) }}"
-                            class="img-fluid rounded-circle shadow-1 mb-3" width="80" height="80" alt="">
-                    </a>
-                    <h6 class="mb-0 text-white text-shadow-dark">{{user_information('full')}}</h6>
-                    <span class="font-size-sm text-white text-shadow-dark">Role - Team</span>
+        <div class="sidebar-user">
+            <div class="card-body">
+                <div class="media">
+                    <div class="mr-3">
+                        <a href="#"><img src="{{ URL::asset(user_information('avatar')) }}" width="38" height="38" class="rounded-circle" alt=""></a>
+                    </div>
+
+                    <div class="media-body">
+                        <div class="media-title font-weight-semibold">{{user_information('full')}}</div>
+                        <div class="font-size-xs opacity-50">
+                            <i class="icon-pin font-size-sm"></i> &nbsp;Role - Team
+                        </div>
+                    </div>
+
+                    <div class="ml-3 align-self-center">
+                        <a href="#" class="text-white"><i class="icon-cog3"></i></a>
+                    </div>
                 </div>
-
-                <div class="sidebar-user-material-footer">
-                    <a href="#user-nav"
-                       class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle"
-                       data-toggle="collapse"><span>{{__('messages.account')}}</span></a>
-                </div>
-            </div>
-
-            <div class="collapse" id="user-nav">
-                <ul class="nav nav-sidebar">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="icon-user-plus"></i>
-                            <span>{{__('messages.my_profile')}}</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{route('logout')}}" class="nav-link">
-                            <i class="icon-switch2"></i>
-                            <span>{{__('messages.logout')}}</span>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
         <!-- /user menu -->
-
 
         <!-- Main navigation -->
         <div class="card card-sidebar-mobile">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                 <!-- Main -->
-                <li class="nav-item-header">
-                    <div class="text-uppercase font-size-xs line-height-xs"></div>
-                    <i class="icon-menu" title="Main"></i></li>
+                <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs"></div> <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
-                    <a href="{{route('dashboard')}}" class="nav-link">
+                    <a href="{{route('dashboard')}}" class="nav-link active">
                         <i class="icon-home4"></i>
-                        <span>{{__('messages.dashboard')}}<span class="d-block font-weight-normal opacity-50"></span></span>
+                        <span>{{__('messages.dashboard')}}</span>
                     </a>
                 </li>
 
-                <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-expanded nav-item-open' : '' }}">
-                    <a href="#" class=" nav-link"><i class="icon-users4"></i>
-                        <span>{{trans('messages.users_management')}}</span></a>
+                <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <li class="nav-item"><a href="{{route('users_list')}}"
@@ -98,12 +76,7 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
-
-
-
-
-
-                <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? 'nav-item-expanded nav-item-open' : '' }}">
+                <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
@@ -119,8 +92,7 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-
-                <li class="nav-item nav-item-submenu {{in_array("msd_house", $active_sidbare) ? 'nav-item-expanded nav-item-open' : '' }}">
+                <li class="nav-item nav-item-submenu {{in_array("msd_house", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-home9"></i>
                         <span>{{trans('messages.msd_house')}}</span></a>
 
@@ -135,13 +107,12 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-
+                <!-- /main -->
             </ul>
         </div>
         <!-- /main navigation -->
 
     </div>
     <!-- /sidebar content -->
-
 </div>
 <!-- /main sidebar -->
