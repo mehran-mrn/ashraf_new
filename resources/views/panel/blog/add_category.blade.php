@@ -1,4 +1,5 @@
 <form action="{{route('panel_category_add')}}" method="post">
+    @csrf
 <div class="form-row">
     <div class="col-md-12">
         <div class="form-group">

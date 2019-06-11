@@ -105,5 +105,18 @@ return [
     'add_post'=>'افزودن مطلب',
     'post_list'=>'لیست مطالب',
     'title'=>'عنوان',
-    'enter_category_title'=>'عنوان دسته بندی را وارد نمایید.'
+    'enter_category_title'=>'عنوان دسته بندی را وارد نمایید.',
+    'post_count'=>'تعداد پست',
+    'published'=>'منتشر شده',
+    'draft'=>'پیش نویس',
+    'publish'=>'انتشار',
+    'cancel'=>'انصراف',
+    'publish_time'=>'زمان انتشار',
+    'publish_status'=>'وضعیت انتشار',
+    'enter_text'=>'تایپ نمایید',
+    'new_post'=>'مطلب جدید',
+    'text'=>'متن',
+    'slug'=>'اسلاگ',
+    'tages'=>'تگ ها',
+    'enter_title'=>'عنوان را وارد نمایید...'
 ];

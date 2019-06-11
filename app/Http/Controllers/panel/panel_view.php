@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\category;
 use App\Permission;
 use App\Role;
 use App\Team;
@@ -162,7 +163,8 @@ class panel_view extends Controller
 //blog module
     public function add_post()
     {
-        return view('panel.blog.add_post');
+        $cats = category::all();
+        return view('panel.blog.add_post',compact('cats'));
     }
 
     public function post_list()
@@ -172,7 +174,9 @@ class panel_view extends Controller
 
     public function category()
     {
-        return view('panel.blog.category');
+        $cats = category::all();
+
+        return view('panel.blog.category',compact('cats'));
     }
     public function category_add_form()
     {
