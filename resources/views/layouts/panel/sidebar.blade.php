@@ -52,7 +52,7 @@ if (!isset($active_sidbare)) {
                 <!-- Main -->
                 <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs"></div> <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
-                    <a href="{{route('dashboard')}}" class="nav-link active">
+                    <a href="{{route('dashboard')}}" class="nav-link">
                         <i class="icon-home4"></i>
                         <span>{{__('messages.dashboard')}}</span>
                     </a>
@@ -61,7 +61,7 @@ if (!isset($active_sidbare)) {
                 <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('users_list')}}"
                                                 class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a>
                         </li>
@@ -80,7 +80,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('add_post')}}"
                                                 class="nav-link {{in_array("add_post", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_post')}}</a>
                         </li>
@@ -96,7 +96,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-home9"></i>
                         <span>{{trans('messages.msd_house')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("msd_house", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('add_post')}}"
                                                 class="nav-link {{in_array("add_caravan", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_caravan')}}</a>
                         </li>
