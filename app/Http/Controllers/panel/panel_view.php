@@ -184,4 +184,13 @@ class panel_view extends Controller
     }
 //end blog module
 
+
+//caravan module
+    public function caravan_dashboard()
+    {
+        return view('panel.caravan.dashboard');
+    }
+
+//end caravan module
+
 }
