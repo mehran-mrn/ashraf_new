@@ -35,8 +35,8 @@
                                             </div>
 
                                             <div class="card-body">
-                                                <h6 class="font-weight-semibold"><b>{{$host['city_name']}}</b></h6>
-                                                {{$host['name']}} |
+                                                <h6 class="font-weight-semibold"><b>{{$host['name']}}</b></h6>
+                                                {{$host['city_name']}} |
                                                 <i class="icon-2x @if($host['gender'] ==1 )  icon-man @elseif($host['gender'] == 2) icon-woman @else icon-man-woman @endif"></i>
                                                 |
                                                 {{trans('messages.capacity')." : "}}@if($host['capacity']){{$host['capacity']}}@else {{trans('messages.no_limit')}}@endif

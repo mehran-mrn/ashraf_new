@@ -8,6 +8,7 @@ use App\Permission;
 use App\Role;
 use App\Team;
 use App\User;
+use App\caravan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -198,6 +199,7 @@ class panel_view extends Controller
 
         return view('panel.caravan.hosts_list',compact('hosts'));
     }
+
     public function load_host_form($host_id = null)
     {
         if ($host_id){
@@ -208,7 +210,26 @@ class panel_view extends Controller
         }
         return view('panel.caravan.materials.add_new_host_form', compact('host'));
     }
-
+    public function add_caravan_page($caravan_id = null)
+    {
+        if ($caravan_id){
+            $caravan = caravan::find($caravan_id);
+        }
+        else{
+            $caravan = null;
+        }
+        $caravan_hosts = caravan_host::get();
+        $users = User::get();
+        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users'));
+    }
 //end caravan module
+
+
+//setting module
+    public function cities_list()
+    {
+        return view('panel.setting.cities_list');
+    }
+//end setting module
 
 }

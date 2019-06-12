@@ -27,7 +27,8 @@ if (!isset($active_sidbare)) {
             <div class="card-body">
                 <div class="media">
                     <div class="mr-3">
-                        <a href="#"><img src="{{ URL::asset(user_information('avatar')) }}" width="38" height="38" class="rounded-circle" alt=""></a>
+                        <a href="#"><img src="{{ URL::asset(user_information('avatar')) }}" width="38" height="38"
+                                         class="rounded-circle" alt=""></a>
                     </div>
 
                     <div class="media-body">
@@ -50,7 +51,9 @@ if (!isset($active_sidbare)) {
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                 <!-- Main -->
-                <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs"></div> <i class="icon-menu" title="Main"></i></li>
+                <li class="nav-item-header">
+                    <div class="text-uppercase font-size-xs line-height-xs"></div>
+                    <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
                     <a href="{{route('dashboard')}}" class="nav-link">
                         <i class="icon-home4"></i>
@@ -59,9 +62,11 @@ if (!isset($active_sidbare)) {
                 </li>
 
                 <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>{{trans('messages.users_management')}}</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users4"></i>
+                        <span>{{trans('messages.users_management')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('users_list')}}"
                                                 class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a>
                         </li>
@@ -80,7 +85,8 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('add_post')}}"
                                                 class="nav-link {{in_array("add_post", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_post')}}</a>
                         </li>
@@ -88,15 +94,18 @@ if (!isset($active_sidbare)) {
                                                 class="nav-link {{in_array("post_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_list')}}</a>
                         </li>
                         <li class="nav-item"><a href="{{route('category')}}"
-                                                class="nav-link {{in_array("blog_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a></li>
+                                                class="nav-link {{in_array("blog_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a>
+                        </li>
 
                     </ul>
                 </li>
+
                 <li class="nav-item nav-item-submenu {{in_array("caravans", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
                                                 class="nav-link {{in_array("caravans_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.dashboard')}} {{trans('messages.caravans')}}</a>
                         </li>
@@ -111,6 +120,20 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+
+                <li class="nav-item nav-item-submenu {{in_array("setting", $active_sidbare) ? ' nav-item-open' : '' }}">
+                    <a href="#" class=" nav-link"><i class="icon-gear"></i>
+                        <span>{{trans('messages.setting')}}</span></a>
+
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("setting", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('cities_list')}}"
+                                                class="nav-link {{in_array("cities_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.cities')}}</a>
+                        </li>
+
+                    </ul>
+                </li>
+
                 <!-- /main -->
             </ul>
         </div>

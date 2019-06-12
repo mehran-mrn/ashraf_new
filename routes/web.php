@@ -59,6 +59,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('dashboard', 'panel\panel_view@caravan_dashboard')->name('caravan_dashboard');
         Route::get('hosts_list', 'panel\panel_view@hosts_list')->name('hosts_list');
         Route::post('host_data', 'panel\caravan@host_data')->name('host_data');
+        Route::get('add_caravan_page', 'panel\panel_view@add_caravan_page')->name('add_caravan_page');
     });
 
     Route::prefix('blog')->group(function () {
@@ -69,6 +70,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('panel_category_add_form', 'panel\panel_view@category_add_form')->name('panel_category_add_form');
         Route::post('category_add', 'panel\blog@category_add')->name('panel_category_add');
     });
+
+    Route::prefix('setting')->group(function () {
+        Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
+    });
+
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
