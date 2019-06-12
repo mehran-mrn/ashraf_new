@@ -219,9 +219,10 @@ class panel_view extends Controller
         else{
             $caravan = null;
         }
+
         $caravan_hosts = caravan_host::get();
         $users = User::get();
-        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users'));
+        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users','cities','provinces'));
     }
 //end caravan module
 
@@ -229,7 +230,7 @@ class panel_view extends Controller
 //setting module
     public function cities_list()
     {
-        $cities = city::where('parent','0')->paginate(12);
+        $cities = city::where('parent','0')->orderBy('name')->paginate(32);
         return view('panel.setting.cities_list',compact('cities'));
     }
 //end setting module

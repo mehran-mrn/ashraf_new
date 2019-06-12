@@ -60,6 +60,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('hosts_list', 'panel\panel_view@hosts_list')->name('hosts_list');
         Route::post('host_data', 'panel\caravan@host_data')->name('host_data');
         Route::get('add_caravan_page', 'panel\panel_view@add_caravan_page')->name('add_caravan_page');
+        Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
     });
 
     Route::prefix('blog')->group(function () {

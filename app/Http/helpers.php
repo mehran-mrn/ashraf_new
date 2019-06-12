@@ -164,4 +164,25 @@ function user_information($type)
     }
 }
 
+function get_cites($id = null)
+{
+    if ($id){
+        $cities = \App\city::find($id);
+    }
+    else{
+        $cities = \App\city::where('parent','!=','0')->get();
+    }
+    return $cities;
+}
+function get_provinces($id = null)
+{
+    if ($id){
+        $provinces = \App\city::find($id);
+    }
+    else{
+        $provinces = \App\city::where('parent','0')->get();
+    }
+    return $provinces;
+}
+
 

@@ -62,4 +62,22 @@ class caravan extends Controller
         return back_normal($request,$messages);
     }
 
+    public function caravan_data(Request $request){
+        $this->validate($request, [
+            'capacity' => 'required',
+            'user_id' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'budget' => 'required',
+            'transport' => 'required',
+            'start' => 'required',
+            'arrival' => 'required',
+            'departure' => 'required',
+            'end' => 'required',
+        ]);
+
+
+    }
+
+
 }
