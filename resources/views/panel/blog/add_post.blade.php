@@ -1,6 +1,7 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
     <script src="{{URL::asset('/node_modules/ckeditor/ckeditor.js')}}"></script>
+
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tagsinput.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tokenfield.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js')}}"></script>
@@ -9,8 +10,17 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
     <script>
+        // var path =;
+        // path[ path.length-3 ] = 'upload_image';
+
         $(document).ready(function () {
-            CKEDITOR.replace('text');
+            CKEDITOR.replace('text', {
+                language: 'fa',
+                uiColor: '#9AB8F3',
+                // filebrowserUploadUrl: path.join('/').replace(/\/+$/, ''),
+                filebrowserUploadUrl: '{{route('ckeditorImage',['_token' => csrf_token() ])}}',
+                extraPlugins: 'filebrowser'
+            });
             $('.tokenfield').tokenfield();
 
             $("#title").keyup(function () {
@@ -18,6 +28,9 @@
                 res = title.replace(/ /g, '_');
                 $("#slug").val(res);
             });
+
+
+
         });
         var FileUpload = function() {
             var _componentFileUpload = function() {
@@ -136,19 +149,19 @@
                                 <div class="form-group">
                                     <label for="title">{{__('messages.title')}}</label>
                                     <input type="text" class="form-control" name="title" id="title"
-                                           placeholder="{{__('messages.enter_title')}}">
+                                           placeholder="{{__('messages.enter_title')}}" value="{{old('title')}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="slug">{{__('messages.slug')}}</label>
-                                    <input type="text" class="form-control" name="slug" id="slug" disabled>
+                                    <input type="text" class="form-control" readonly="readonly" name="slug" id="slug" value="{{old('slug')}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="text">{{__('messages.text')}}</label>
-                                    <textarea name="text" id="text" class="textarea" cols="30" rows="10"></textarea>
+                                    <textarea name="text" id="text" class="textarea" cols="30" rows="10">{{old('text')}}</textarea>
                                 </div>
                             </div>
 
@@ -156,7 +169,7 @@
                                 <div class="form-group">
                                     <label for="description">{{__('messages.description')}}</label>
                                     <textarea name="description" id="description" class="form-control" cols="30"
-                                              rows="3"></textarea>
+                                              rows="3">{{old('description')}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -170,7 +183,7 @@
                                     <label for="tages">{{__('messages.tages')}}</label>
                                     <input type="text" class="form-control tokenfield"
                                            placeholder="{{__('messages.enter_text')}}"
-                                           data-fouc name="tages" id="tages">
+                                           data-fouc name="tags" id="tags" value="{{old('tags')}}">
                                 </div>
                             </div>
 
@@ -187,7 +200,7 @@
                     <div class="card-body">
                         @foreach($cats as $cat)
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="cat_{{$cat->id}}">
+                                <input type="checkbox" class="custom-control-input"  value="{{$cat->id}}" id="cat_{{$cat->id}}" name="cats[]">
                                 <label class="custom-control-label"
                                        for="cat_{{$cat->id}}">{{$cat->title}}</label>
                             </div>
@@ -200,8 +213,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="publis_time" id="publish_time"
-                                   value="{{date("Y-m-d H:I:s")}}">
+                            <input type="text" class="form-control" name="publish_time" id="publish_time"
+                                   value="{{date("Y-m-d H:i:s")}}" >
                         </div>
                     </div>
                 </div>
@@ -212,8 +225,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <select name="publish_status" id="publish_status" class="form-control">
-                                <option value="published">{{__('messages.published')}}</option>
-                                <option value="draft">{{__('messages.draft')}}</option>
+                                <option value="published" {{old('publish_status')=='published'?'selected':''}}>{{__('messages.published')}}</option>
+                                <option value="draft" {{old('publish_status')=='draft'?'selected':''}}>{{__('messages.draft')}}</option>
                             </select>
                             <div class="form-group pt-2">
                                 <button class="btn btn-success btn-block">{{__('messages.publish')}}</button>

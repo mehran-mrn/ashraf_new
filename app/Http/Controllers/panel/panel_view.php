@@ -172,7 +172,8 @@ class panel_view extends Controller
 
     public function post_list()
     {
-        return view('panel.blog.post_list');
+        $posts = \App\blog::with('blog_categories.category')->get();
+        return view('panel.blog.post_list',compact('posts'));
     }
 
     public function category()

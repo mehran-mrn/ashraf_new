@@ -25,7 +25,7 @@ class CreateBlogsTable extends Migration
             $table->integer('user_id');
             $table->timestamps();
         });
-        Schema::create('blog_tag', function (Blueprint $table) {
+        Schema::create('blog_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('blog_id');
             $table->string('tag');
@@ -37,11 +37,11 @@ class CreateBlogsTable extends Migration
             $table->integer('status')->default(10);
             $table->timestamps();
         });
-        Schema::create('blog_category_rel', function (Blueprint $table) {
+        Schema::create('blog_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('blog_id');
             $table->integer('category_id');
-            $table->integer('status');
+            $table->integer('status')->default(10);
             $table->timestamps();
         });
         DB::table('categories')->insert(

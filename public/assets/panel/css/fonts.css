@@ -1,0 +1,26 @@
+@font-face {
+    font-family: "IRANSans";
+    src: url(/public/assets/panel/webfonts/IRANSans/IRANSansWeb.eot) format('eot');
+    src: local("IRANSans"), url("/public/assets/panel/webfonts/IRANSans/IRANSansWeb.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "IRANSans-Bold";
+    src: url(/public/assets/panel/webfonts/IRANSans/IRANSansWeb_Bold.eot);
+    src: local("IRANSans-Bold"), url("/public/assets/panel/webfonts/IRANSans/IRANSansWeb_Bold.ttf") format("truetype");
+
+}
+
+@font-face {
+    font-family: "Titr";
+    src: url(/public/assets/panel/webfonts/titr/titr.otf);
+    src: local("titr"), url("/public/assets/panel/webfonts/titr/titr.ttf") format("truetype");
+
+}
+@font-face {
+    font-family: "Nastaliq";
+    src: local("Nastaliq"), url("/public/assets/panel/webfonts/nastaligh/Far_Nastaliq.ttf") format("truetype");
+
+}

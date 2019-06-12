@@ -116,3 +116,30 @@ Route::prefix('page')->group(function () {
 });
 //=========================================
 
+
+Route::post('/upload_image', function(\Illuminate\Http\Request $request) {
+    $CKEditor = \Illuminate\Support\Facades\Input::get('CKEditor');
+    $funcNum = $request['CKEditorFuncNum'];
+    $message = $url = '';
+    if (\Illuminate\Support\Facades\Input::hasFile('upload')) {
+        $file = \Illuminate\Support\Facades\Input::file('upload');
+//        if ($file->isValid()) {
+//            $filename = $file->getClientOriginalName();
+//            $file->move('public/images/', $filename);
+//
+//        } else {
+//            $message = 'An error occured while uploading the file.';
+//        }
+
+        $image_id = image_saver($file,"posts",'blog');
+        $image_info = \App\media::find($image_id);
+        $url =  $image_info['url'];
+        $message = 'ok';
+
+    } else {
+        $message = 'No file uploaded.';
+    }
+    echo '<script>window.parent.CKEDITOR.tools.callFunction(1, "'.$url.'", "'.$image_id.'")</script>';
+})->name('ckeditorImage');
+
+
