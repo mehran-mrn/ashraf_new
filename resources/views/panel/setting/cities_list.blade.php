@@ -21,10 +21,13 @@
                         <div class="row">
                             @foreach($cities as $cite)
 
-                                <div class="card col-md-3">
-                                    <div class="card-body ">
-                                        {{$cite['name']}}
+                                <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body alpha-blue border-1 border-blue border-radius-5px">
+                                        <span class="icon-tree7 text-blue-600 "> </span>
+                                        <span class="text-black"><b>{{$cite['name']}}</b></span>
                                     </div>
+                                </div>
                                 </div>
 
                             @endforeach
