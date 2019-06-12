@@ -19,42 +19,55 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row">
 
-                            @foreach($hosts as $host)
-                            <div class="col-md-4">
-                                <div class="card card-body bg-blue text-center" style="background-image: url({{asset('public/assets/panel/images/person.png')}}); background-size: contain;">
-                                    <div class="mb-3">
-                                        <h5 class="font-weight-semibold mb-0 mt-1">
-                                            {{$host['name']}}
-                                        </h5>
+                        @foreach($hosts->chunk(3) as $chunk)
+                            <div class="row">
+                                @foreach($chunk as $host)
+                                    <div class="col-md-4">
+                                        <div class="card">
+
+                                            <div class="card-img-actions px-1 pt-1">
+                                                <img class="card-img img-fluid img-absolute "
+                                                     src="{{'/'.$host['media']['url']}}" alt="">
+                                                <div class="card-img-actions-overlay  card-img bg-dark-alpha">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <h6 class="font-weight-semibold"><b>{{$host['city_name']}}</b></h6>
+                                                {{$host['name']}} |
+                                                <i class="icon-2x @if($host['gender'] ==1 )  icon-man @elseif($host['gender'] == 2) icon-woman @else icon-man-woman @endif"></i>
+                                                |
+                                                {{trans('messages.capacity')." : "}}@if($host['capacity']){{$host['capacity']}}@else {{trans('messages.no_limit')}}@endif
+                                                <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
+                                             modal-ajax-load"
+                                                        data-ajax-link="{{route('load_host_form',[$host['id']])}}"
+                                                        data-toggle="modal"
+                                                        data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.host')])}}"
+                                                        data-target="#general_modal">
+                                                    <i class="icon-pencil"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                                        data-ajax-link="{{route('delete_caravan_host',['host_id'=>$host['id']])}}"
+                                                        data-method="POST"
+                                                        data-csrf="{{csrf_token()}}"
+                                                        data-title="{{trans('messages.delete_item',['item'=>trans('messages.host')])}}"
+                                                        data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.host')])}}"
+                                                        data-type="warning"
+                                                        data-cancel="true"
+                                                        data-confirm-text="{{trans('messages.delete')}}">
+                                                    <i class="icon-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
 
                                     </div>
-
-                                    <a href="#" class="d-inline-block mb-3">
-                                        <i class="icon-home2 icon-3x mb-10" ></i>
-                                        <br>
-                                        <span class="badge rounded-round border-3 text-light">{{$host['city_name']}}</span>
-
-                                    </a>
-
-                                    <ul class="list-inline mb-0">
-                                        <li class="list-inline-item"><a href="#" class="btn btn-outline btn-icon text-white btn-lg border-white rounded-round">
-                                                <i class="icon-phone"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#" class="btn btn-outline btn-icon text-white btn-lg border-white rounded-round">
-                                                <i class="icon-bubbles4"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#" class="btn btn-outline btn-icon text-white btn-lg border-white rounded-round">
-                                                <i class="icon-envelop4"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

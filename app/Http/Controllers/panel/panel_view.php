@@ -194,7 +194,7 @@ class panel_view extends Controller
 
     public function hosts_list()
     {
-        $hosts = caravan_host::get();
+        $hosts = caravan_host::with('media')->get();
 
         return view('panel.caravan.hosts_list',compact('hosts'));
     }

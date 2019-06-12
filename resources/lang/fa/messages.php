@@ -13,8 +13,10 @@ return [
     |
     */
     'add_new' => 'ثبت :item جدید',
+    'edit_item' => 'ویرایش :item ',
     'item_created' => ':item با موفقیت ایجاد شد.',
     'delete_item' => 'حذف :item',
+    'item_deleted' => ':item‌حذف شد !',
     'delete_item_text'=>'آیا از حذف :item اطمینان دارید؟',
     'add_category'=>'افزودن :item',
 

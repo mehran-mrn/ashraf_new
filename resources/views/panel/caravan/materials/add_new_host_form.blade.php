@@ -1,14 +1,16 @@
 
 <form method="POST" id="" enctype="multipart/form-data" class="form-ajax-submit" action="{{route('host_data')}}">
     @csrf
-
-    <div class="form-group row">
+    @if(!empty($host))
+    <input type="hidden" name="host_id" value="{{$host['id']}}">
+    @endif
+        <div class="form-group row">
 
         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.name'). " " . __('messages.host')  }}</label>
 
         <div class="col-md-6">
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                   value="{{ old('name') }}"  autocomplete="name" autofocus>
+                   value="{{$host['name']}}"  autocomplete="name" autofocus>
 
             @error('name')
             <span class="invalid-feedback" role="alert">
@@ -24,7 +26,7 @@
 
         <div class="col-md-6">
             <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city"
-                   value="{{ old('city') }}"  autocomplete="city" autofocus>
+                   value="{{$host['city_name']}}"  autocomplete="city" autofocus>
 
             @error('name')
             <span class="invalid-feedback" role="alert">
@@ -40,7 +42,7 @@
 
         <div class="col-md-6">
             <input id="capacity" type="number" class="form-control @error('capacity') is-invalid @enderror" name="capacity"
-                   value="{{ old('capacity') }}"  autocomplete="capacity" autofocus>
+                   value="{{$host['capacity']}}"  autocomplete="capacity" autofocus>
             <span class="help-block text-muted">{{ trans('messages.empty').":". trans('messages.no_limit')}}</span>
 
             @error('name')
@@ -58,26 +60,28 @@
 
         <div class="col-md-6">
 
-
             <div class="custom-control custom-radio custom-control-inline">
-                <input value="1" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
-                <label class="custom-control-label" for="custom_radio_inline_checked">{{__('messages.male')}}</label>
+                <input value="1" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_g1"
+                        {{$host['gender'] == 1 ? "checked":""}}>
+                <label class="custom-control-label" for="custom_radio_inline_g1">{{__('messages.male')}}</label>
             </div>
 
             <div class="custom-control custom-radio custom-control-inline">
-                <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_checked">
-                <label class="custom-control-label" for="custom_radio_inline_checked">{{__('messages.female')}}</label>
+                <input value="2" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_g2"
+                        {{$host['gender'] == 2 ? "checked":""}}>
+                <label class="custom-control-label" for="custom_radio_inline_g2">{{__('messages.female')}}</label>
             </div>
 
             <div class="custom-control custom-radio custom-control-inline">
-                <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_unchecked" checked="">
-                <label class="custom-control-label" for="custom_radio_inline_unchecked">{{__('messages.both')}}</label>
+                <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_g0"
+                       {{$host['gender'] == null ? "checked":""}}>
+                <label class="custom-control-label" for="custom_radio_inline_g0">{{__('messages.both')}}</label>
             </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('messages.image') }}</label>
+        <label for="image" class="col-md-4 col-form-label text-md-right" >{{ __('messages.image') }}</label>
 
         <div class="col-lg-6">
             <input type="file" name="image" id="fileToUpload">
@@ -86,12 +90,12 @@
 
     <div class="form-group row">
 
-        <label for="capacity" class="col-md-4 col-form-label text-md-right">{{ __('messages.description') }}</label>
+        <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('messages.description') }}</label>
 
         <div class="col-md-6">
 
-            <input id="city" type="text" class="form-control @error('description') is-invalid @enderror" name="description"
-                   value="{{ old('description') }}"  autocomplete="city" autofocus>
+            <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description"
+                   value="{{$host['description']}}"  autocomplete="city" autofocus>
 
             @error('name')
             <span class="invalid-feedback" role="alert">

@@ -84,7 +84,7 @@ function get_team($team_id = null)
     return $team;
 }
 
-function image_saver($image_input, $folder, $module, $custom_size = [])
+function image_saver($image_input, $folder, $module, $custom_size = [],$image_name=null)
 {
 //    $request->validate([
 //        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
@@ -99,7 +99,13 @@ function image_saver($image_input, $folder, $module, $custom_size = [])
 //    $image = $request->file('image');
     $image = $image_input;
     $destinationPath = 'public/images/' . $folder;
-    $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
+    if (empty($image_name)){
+        $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
+    }
+    else{
+        $image_name =  pathinfo($image_name)['filename'] .'.' . $image->getClientOriginalExtension();
+
+    }
 
     $size = ['100,100', '200,200', '400,400'];
     array_merge($size, $custom_size);
@@ -135,7 +141,7 @@ function image_saver($image_input, $folder, $module, $custom_size = [])
         'module' => $module,
         'size' => "1"
     ]);
-    $media_id = $media_info['id'];
+    $media_id = $media_info->id;
 
     return $media_id;
 }

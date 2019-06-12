@@ -81,6 +81,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/delete_user_from_permission/{permission_id}/{user_id}', 'panel\user_manager@delete_user_from_permission')->name('delete_user_from_permission');
         Route::post('/delete_role_from_user/{role_id}/{user_id}', 'panel\user_manager@delete_role_from_user')->name('delete_role_from_user');
         Route::get('/host_form/{host_id?}', 'panel\panel_view@load_host_form')->name('load_host_form');
+        Route::post('/delete_caravan_host/{host_id}', 'panel\caravan@delete_caravan_host')->name('delete_caravan_host');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 
