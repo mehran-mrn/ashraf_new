@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\caravan_host;
 use App\category;
+use App\city;
 use App\Permission;
 use App\Role;
 use App\Team;
@@ -228,7 +229,8 @@ class panel_view extends Controller
 //setting module
     public function cities_list()
     {
-        return view('panel.setting.cities_list');
+        $cities = city::where('parent','0')->paginate(12);
+        return view('panel.setting.cities_list',compact('cities'));
     }
 //end setting module
 
