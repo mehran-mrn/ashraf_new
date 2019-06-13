@@ -63,6 +63,7 @@
                        class="col-md-4 col-form-label text-md-right">{{ __('messages.city') . " " . __('messages.departure') }}</label>
                 <div class="col-md-6">
                     <select id="select_city_{{$rand_id}}" name="city_id" class="form-control select-search" data-fouc>
+
                         @foreach(get_cites() as $city)
                             <option value="{{$city['id']}}">{{$city['name']}}</option>
                         @endforeach
