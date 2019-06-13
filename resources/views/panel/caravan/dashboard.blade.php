@@ -21,14 +21,14 @@
                         <div class="row">
                             <div class="col-md-6 ">
                                 <a href="{{route('add_caravan_page')}}" class="btn bg-danger btn-block btn-float btn-float-lg"
-                                        type="button" data-popup="tooltip" title="" data-placement="bottom"
+                                        data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
                                     <i class="icon-folder-plus2 icon-3x"></i>
                                     <span>{{trans('messages.add_caravan')}}</span>
                                 </a>
 
                                 <a href="{{route('hosts_list')}}" class="btn bg-blue btn-block btn-float btn-float-lg"
-                                        type="button" data-popup="tooltip" title="" data-placement="bottom"
+                                        data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.hosts_list')}}">
                                     <i class="icon-home2 icon-3x"></i>
                                     <span>{{trans('messages.hosts_list')}}</span>
@@ -39,14 +39,14 @@
                             <div class="col-md-6">
 
                                 <a href="" class="btn bg-purple btn-block btn-float btn-float-lg"
-                                        type="button" data-popup="tooltip" title="" data-placement="bottom"
+                                        data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.caravan_list')}}">
                                     <i class="icon-list2 icon-3x"></i>
                                     <span>{{trans('messages.caravan_list')}}</span>
                                 </a>
 
                                 <a href="" class="btn bg-pink btn-block btn-float btn-float-lg"
-                                        type="button" data-popup="tooltip" title="" data-placement="bottom"
+                                        data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.pending_list')}}">
                                     <i class="icon-spinner4 spinner icon-3x"></i>
                                     <span><b>3</b> {{trans('messages.pending_list')}} </span>
