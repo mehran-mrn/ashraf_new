@@ -16,8 +16,8 @@ class CreateCaravansTable extends Migration
         Schema::create('caravans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('capacity');//null => infinite
-            $table->string('dep_province')->nullable();
-            $table->string('dep_city')->nullable();
+            $table->unsignedInteger('dep_province')->nullable();
+            $table->unsignedInteger('dep_city')->nullable();
             $table->unsignedInteger('caravan_host_id');
             $table->unsignedInteger('duty');
             $table->string('budget')->nullable();
@@ -26,7 +26,7 @@ class CreateCaravansTable extends Migration
             $table->dateTime('arrival')->nullable();
             $table->dateTime('departure')->nullable();
             $table->dateTime('end')->nullable();
-            $table->integer('status');
+            $table->integer('status')->default('0');
             $table->timestamps();
         });
     }
