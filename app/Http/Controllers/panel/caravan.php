@@ -101,8 +101,7 @@ class caravan extends Controller
         $caravan->end = $end;
         $caravan->status = "0";
         $caravan->save();
-
-        return back_normal($request);
+        return redirect(route('caravan',['caravan_id'=>$caravan->id]));
     }
 
 

@@ -178,11 +178,11 @@
 
             <div class="form-group row">
 
-                <label for="date_get_back{{$rand_id}}"
+                <label for="date_get_back_{{$rand_id}}"
                        class="col-md-4 col-form-label text-md-right">{{ __('messages.date'). " " . __('messages.get_back')  }}</label>
 
                 <div class="col-md-6">
-                    <input id="date_get_back{{$rand_id}}" type="text"
+                    <input id="date_get_back_{{$rand_id}}" type="text"
                            class="form-control @error('end') is-invalid @enderror" name="end"
                            value="{{$caravan['end']}}" autofocus>
 
@@ -200,7 +200,7 @@
     <div class="form-group row ">
         <div class="col-md-2 ">
             <button type="submit" class="btn btn-block btn-info">
-                {{ __('messages.save') }}
+                {{ __('messages.save_and_continue') }} <i class="icon-arrow-left5"></i>
             </button>
         </div>
     </div>
@@ -220,12 +220,12 @@
             targetTextSelector: '#date_entrance_{{$rand_id}}',
 
         });
-        $('#date_exit{{$rand_id}}').MdPersianDateTimePicker({
-            targetTextSelector: '#date_exit{{$rand_id}}',
+        $('#date_exit_{{$rand_id}}').MdPersianDateTimePicker({
+            targetTextSelector: '#date_exit_{{$rand_id}}',
 
         });
-        $('#date_get_back{{$rand_id}}').MdPersianDateTimePicker({
-            targetTextSelector: '#date_get_back{{$rand_id}}',
+        $('#date_get_back_{{$rand_id}}').MdPersianDateTimePicker({
+            targetTextSelector: '#date_get_back_{{$rand_id}}',
         });
 
     });

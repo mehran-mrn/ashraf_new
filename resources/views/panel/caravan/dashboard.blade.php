@@ -38,11 +38,11 @@
 
                             <div class="col-md-6">
 
-                                <a href="" class="btn bg-purple btn-block btn-float btn-float-lg"
+                                <a href="{{route('caravans_list')}}" class="btn bg-purple btn-block btn-float btn-float-lg"
                                         data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.caravan_list')}}">
+                                        data-container="body" data-original-title="{{trans('messages.caravans_list')}}">
                                     <i class="icon-list2 icon-3x"></i>
-                                    <span>{{trans('messages.caravan_list')}}</span>
+                                    <span>{{trans('messages.caravans_list')}}</span>
                                 </a>
 
                                 <a href="" class="btn bg-pink btn-block btn-float btn-float-lg"

@@ -186,6 +186,17 @@ function get_provinces($id = null)
     return $provinces;
 }
 
+function get_hosts($id = null)
+{
+    if ($id){
+        $host = \App\caravan_host::find($id);
+    }
+    else{
+        $host = \App\caravan_host::get();
+    }
+    return $host;
+}
+
 function shamsi_to_miladi($input)
 {
     // yyyy/mm/dd
