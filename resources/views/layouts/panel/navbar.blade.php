@@ -125,57 +125,13 @@
                         <ul class="media-list">
                             <li class="media">
                                 <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face18.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                    <img src="{{URL::asset(user_information('avatar'))}}" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
                                 <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">Jordana Ansley</a>
+                                    <a href="#" class="media-title font-weight-semibold">{{user_information('full')}}</a>
                                     <span class="d-block text-muted font-size-sm">Lead web developer</span>
                                 </div>
                                 <div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face24.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">Will Brason</a>
-                                    <span class="d-block text-muted font-size-sm">Marketing manager</span>
-                                </div>
-                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-danger"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face17.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">Hanna Walden</a>
-                                    <span class="d-block text-muted font-size-sm">Project manager</span>
-                                </div>
-                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face19.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">Dori Laperriere</a>
-                                    <span class="d-block text-muted font-size-sm">Business developer</span>
-                                </div>
-                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-warning-300"></span></div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face16.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">Vanessa Aurelius</a>
-                                    <span class="d-block text-muted font-size-sm">UX expert</span>
-                                </div>
-                                <div class="ml-3 align-self-center"><span class="badge badge-mark border-grey-400"></span></div>
                             </li>
                         </ul>
                     </div>
@@ -204,83 +160,18 @@
                         <ul class="media-list">
                             <li class="media">
                                 <div class="mr-3 position-relative">
-                                    <img src="../../../../global_assets/images/demo/users/face10.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                    <img src="{{URL::asset(user_information('avatar'))}}" width="36" height="36" class="rounded-circle" alt="">
                                 </div>
 
                                 <div class="media-body">
                                     <div class="media-title">
                                         <a href="#">
-                                            <span class="font-weight-semibold">James Alexander</span>
+                                            <span class="font-weight-semibold">{{user_information('full')}}</span>
                                             <span class="text-muted float-right font-size-sm">04:58</span>
                                         </a>
                                     </div>
 
                                     <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3 position-relative">
-                                    <img src="../../../../global_assets/images/demo/users/face3.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Margo Baker</span>
-                                            <span class="text-muted float-right font-size-sm">12:16</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">That was something he was unable to do because...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face24.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Jeremy Victorino</span>
-                                            <span class="text-muted float-right font-size-sm">22:48</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">But that would be extremely strained and suspicious...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face4.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Beatrix Diaz</span>
-                                            <span class="text-muted float-right font-size-sm">Tue</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">What a strenuous career it is that I've chosen...</span>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <img src="../../../../global_assets/images/demo/users/face25.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-title">
-                                        <a href="#">
-                                            <span class="font-weight-semibold">Richard Vango</span>
-                                            <span class="text-muted float-right font-size-sm">Mon</span>
-                                        </a>
-                                    </div>
-
-                                    <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
                                 </div>
                             </li>
                         </ul>

@@ -15,7 +15,8 @@
         "kim/activity": "^1.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "santigarcor/laratrust": "5.0.*"
+        "santigarcor/laratrust": "5.0.*",
+        "unisharp/laravel-filemanager": "~1.8"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

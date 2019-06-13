@@ -167,6 +167,9 @@ return [
         Nestable\NestableServiceProvider::class,
 
 
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
         /*
          * Package Service Providers...
          *
@@ -236,6 +239,7 @@ return [
         'Activity' => Kim\Activity\ActivityFacade::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
         'Nestable' => Nestable\Facades\NestableService::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 
