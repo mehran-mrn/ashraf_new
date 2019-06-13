@@ -35,6 +35,7 @@
                                 </a>
                             </div>
 
+
                             <div class="col-md-6">
 
                                 <a href="" class="btn bg-purple btn-block btn-float btn-float-lg"
