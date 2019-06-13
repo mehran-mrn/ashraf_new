@@ -223,7 +223,7 @@ class panel_view extends Controller
 
         $caravan_hosts = caravan_host::get();
         $users = User::get();
-        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users','cities','provinces'));
+        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users'));
     }
 //end caravan module
 
