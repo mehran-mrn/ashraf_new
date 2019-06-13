@@ -1,9 +1,9 @@
 <?php $rand_id = rand(1, 8000); ?>
-<form method="POST" id="" enctype="multipart/form-data" class="form-ajax-submit" action="{{route('caravan_data')}}"
+<form method="POST" id="" class="" action="{{route('caravan_data')}}"
       autocomplete="off">
     @csrf
     @if(!empty($caravan))
-        <input type="hidden" name="host_id" value="{{$caravan['id']}}">
+        <input type="hidden" name="caravan_id" value="{{$caravan['id']}}">
     @endif
     <div class="row">
         <div class="col-md-6">
@@ -33,7 +33,7 @@
                        class="col-md-4 col-form-label text-md-right">{{ __('messages.name'). " " . __('messages.host')  }}</label>
 
                 <div class="col-md-6">
-                    <select id="select_host_{{$rand_id}}" name="user_id" class="form-control select-search" data-fouc>
+                    <select id="select_host_{{$rand_id}}" name="host_id" class="form-control select-search" data-fouc>
                         @foreach($caravan_hosts as $caravan_host)
                             <option value="{{$caravan_host['id']}}">{{$caravan_host['city_name'].' | '. $caravan_host['name']}}</option>
                         @endforeach
@@ -63,7 +63,6 @@
                        class="col-md-4 col-form-label text-md-right">{{ __('messages.city') . " " . __('messages.departure') }}</label>
                 <div class="col-md-6">
                     <select id="select_city_{{$rand_id}}" name="city_id" class="form-control select-search" data-fouc>
-
                         @foreach(get_cites() as $city)
                             <option value="{{$city['id']}}">{{$city['name']}}</option>
                         @endforeach
@@ -77,9 +76,9 @@
                 <label for="budget" class="col-md-4 col-form-label text-md-right">{{ __('messages.budget') }}</label>
 
                 <div class="col-md-6">
-                    <input id="budget" type="number" class="form-control @error('capacity') is-invalid @enderror"
-                           name="capacity"
-                           value="{{$caravan['capacity']}}" >
+                    <input id="budget" type="number" class="form-control @error('budget') is-invalid @enderror"
+                           name="budget"
+                           value="{{$caravan['budget']}}" >
 
                     @error('budget')
                     <span class="invalid-feedback" role="alert">
@@ -131,7 +130,7 @@
                 <div class="col-md-6">
                     <input id="date_depart_{{$rand_id}}" type="text"
                            class="form-control @error('name') is-invalid @enderror" name="start"
-                           value="{{$caravan['start']}}" autofocus>
+                           value="{{$caravan['start']}}" >
 
                     @error('start')
                     <span class="invalid-feedback" role="alert">
@@ -194,7 +193,6 @@
                     @enderror
                 </div>
             </div>
-
 
         </div>
     </div>
