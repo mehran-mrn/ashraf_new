@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\caravan_host;
+use App\caravan_workflow;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Image;
@@ -81,7 +82,6 @@ class caravan extends Controller
             'arrival' => ['nullable','regex:/'.$regex_date.'/'],
             'departure' => ['nullable','regex:/'.$regex_date.'/'],
             'end' => ['nullable','regex:/'.$regex_date.'/'],
-
         ]);
         $arrival = $request['arrival'] ? shamsi_to_miladi($request['arrival']) :null;
         $departure = $request['departure'] ? shamsi_to_miladi($request['departure']) :null;
@@ -101,6 +101,10 @@ class caravan extends Controller
         $caravan->end = $end;
         $caravan->status = "0";
         $caravan->save();
+        $workflow = new caravan_workflow();
+        $workflow->caravan_id = $caravan['id'];
+        $workflow->status = '1';
+        $workflow->save();
         return redirect(route('caravan',['caravan_id'=>$caravan->id]));
     }
 

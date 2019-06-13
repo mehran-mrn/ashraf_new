@@ -11,4 +11,8 @@ class caravan extends Model
     {
         return $this->belongsTo('App\caravan_host','caravan_host_id');
     }
+    public function workflow()
+    {
+        return $this->hasMany('App\caravan_workflow','caravan_id');
+    }
 }

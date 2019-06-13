@@ -59,7 +59,8 @@ $(document).ready(function(){
             }
         })
     });
-        $(".modal-ajax-load").on('click',function(e){
+    $(document).on('click', '.modal-ajax-load', function(e){
+
         e.preventDefault();
         var ajax_link = this.getAttribute("data-ajax-link");
         var target = this.getAttribute("data-target");

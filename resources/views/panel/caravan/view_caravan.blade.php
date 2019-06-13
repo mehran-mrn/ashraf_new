@@ -22,6 +22,13 @@
             </div>
             <div class="col-md-3">
 
+                <a  target="_blank" href="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}" class="btn bg-danger btn-block btn-float btn-float-lg "
+                        data-popup="tooltip"  data-placement="bottom"
+                        data-container="body" data-original-title="{{trans('messages.new_register')}}">
+                    <i class="icon-user-plus icon-3x"></i>
+                    <span>{{trans('messages.new_register')}}</span>
+                </a>
+                <span class="divider"><hr></span>
                 <div class="card">
                     <div class="card-header bg-primary">
                         <span class="card-title">{{trans('messages.destination')}}</span>
@@ -37,7 +44,7 @@
                     <div class="card-body">
                         <h6 class="font-weight-semibold"><b>{{$caravan['host']['name']}}</b></h6>
                         {{$caravan['host']['city_name']}}
-                        </div>
+                    </div>
                 </div>
 
 
@@ -114,8 +121,8 @@
                     <div class="card-header bg-primary">
                         <span class="card-title">{{__('messages.Workflow')}}</span>
                     </div>
-                    <div class="card-body">
-
+                    <div class="card-body p-0">
+                        @include('panel.caravan.materials.caravan_timeline')
                     </div>
                 </div>
 
@@ -123,7 +130,7 @@
                     <div class="card-header bg-primary">
                         <span class="card-title">Tag's</span>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body px-0">
 
                     </div>
                 </div>

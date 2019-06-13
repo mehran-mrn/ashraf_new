@@ -28,6 +28,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     Route::get('dashboard', 'panel\panel_view@dashboard')->name('dashboard');
 
+    Route::get('images/users/{media_id}', [
+        'as'         => 'images.show',
+        'uses'       => 'private_doc@show',
+        'middleware' => 'auth',
+    ]);
     Route::prefix('user_manager')->group(function () {
 
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
@@ -63,6 +68,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('caravans_list', 'panel\panel_view@caravans_list')->name('caravans_list');
         Route::get('caravan/{caravan_id}', 'panel\panel_view@caravan')->name('caravan');
         Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
+        Route::get('register_to_caravan/{caravan_id}', 'panel\panel_view@register_to_caravan')->name('register_to_caravan');
+        Route::get('register_to_caravan/national_code/{caravan_id}', 'panel\panel_view@register_to_caravan_national_code')->name('register_to_caravan_national_code');
     });
 
     Route::prefix('blog')->group(function () {
