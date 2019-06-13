@@ -174,6 +174,7 @@ function get_cites($id = null)
     }
     return $cities;
 }
+
 function get_provinces($id = null)
 {
     if ($id){
@@ -184,5 +185,61 @@ function get_provinces($id = null)
     }
     return $provinces;
 }
+
+function shamsi_to_miladi($input)
+{
+    // yyyy/mm/dd
+    // yyyy/mm/dd hh:MM:ss
+    // yyyy-mm-dd
+    // yyyy-mm-dd hh:MM:ss
+
+    $date_array = explode(" ",$input);
+    $date =$date_array[0];
+    $time = (empty($date_array[1]) ? "00:00:00" : $date_array[1]);
+    if (strpos($date,'-') > 0 and strpos($date,'/') == false){
+        $new_date = explode("-", $date);
+    }
+    elseif (strpos($date,"-") == false and strpos($date,"/") > 0){
+        $new_date = explode("/", $date);
+    }
+    else{
+        return false;
+    }
+    $new_date_day = $new_date[2];
+    $new_date_month = $new_date[1];
+    $new_date_year = $new_date[0];
+    if ($new_date_year > 1800){//if input is not shamsi date
+        return false;
+    }
+
+    $date_gregorian = jalali_to_gregorian($new_date_year, $new_date_month, $new_date_day, "-");
+
+    $date_gregorian = $date_gregorian . " " . $time;
+    return $date_gregorian;
+
+}
+
+function persian_num($string)
+{
+    //arrays of persian and latin numbers
+    $persian_num = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+    $latin_num = range(0, 9);
+
+    $string = str_replace($latin_num, $persian_num, $string);
+
+    return $string;
+}
+
+function latin_num($string)
+{
+    //arrays of persian and latin numbers
+    $persian_num = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
+    $latin_num = range(0, 9);
+
+    $string = str_replace($persian_num, $latin_num, $string);
+
+    return $string;
+}
+
 
 

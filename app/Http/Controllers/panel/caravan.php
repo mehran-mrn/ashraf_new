@@ -63,20 +63,46 @@ class caravan extends Controller
     }
 
     public function caravan_data(Request $request){
+
+        $request['capacity'] = latin_num($request['capacity']);
+        $request['start'] = latin_num($request['start']);
+        $request['arrival'] = latin_num($request['arrival']);
+        $request['departure'] = latin_num($request['departure']);
+        $request['end'] = latin_num($request['end']);
+        $regex_date = "([1][3,4]\d{2}['\-'|'\/'](0[1-9]|[1-9]|1[0-2])['\-'|'\/'](0[1-9]|[12]\d|3[01]|\d))";
         $this->validate($request, [
-            'capacity' => 'required',
-            'user_id' => 'required',
-            'province_id' => 'required',
-            'city_id' => 'required',
-            'budget' => 'required',
-            'transport' => 'required',
-            'start' => 'required',
-            'arrival' => 'required',
-            'departure' => 'required',
-            'end' => 'required',
+            'capacity' => 'required|numeric|between:0,1000000',
+            'host_id' => 'required|exists:caravan_hosts,id',
+            'province_id' => 'required|exists:cities,id',
+            'city_id' => 'required|exists:cities,id',
+            'user_id' => 'required|exists:users,id',
+            'budget' => ['nullable', 'numeric'],
+            'start' => ['required', 'regex:/'.$regex_date.'/'],
+            'arrival' => ['nullable','regex:/'.$regex_date.'/'],
+            'departure' => ['nullable','regex:/'.$regex_date.'/'],
+            'end' => ['nullable','regex:/'.$regex_date.'/'],
+
         ]);
+        $arrival = $request['arrival'] ? shamsi_to_miladi($request['arrival']) :null;
+        $departure = $request['departure'] ? shamsi_to_miladi($request['departure']) :null;
+        $end = $request['end'] ? shamsi_to_miladi($request['end']) : null;
 
+        $caravan = new \App\caravan();
+        $caravan->capacity = $request['capacity'];
+        $caravan->dep_province = $request['province_id'];
+        $caravan->dep_city = $request['city_id'];
+        $caravan->caravan_host_id = $request['host_id'];
+        $caravan->duty = $request['user_id'];
+        $caravan->budget = $request['budget'] or null;
+        $caravan->transport = $request['transport'];
+        $caravan->start = shamsi_to_miladi($request['start']);
+        $caravan->arrival = $arrival;
+        $caravan->departure = $departure;
+        $caravan->end = $end;
+        $caravan->status = "0";
+        $caravan->save();
 
+        return back_normal($request);
     }
 
 
