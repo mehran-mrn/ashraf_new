@@ -65,11 +65,16 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     Route::prefix('blog')->group(function () {
         Route::get('add_post', 'panel\panel_view@add_post')->name('add_post');
-        Route::post('add_post', 'panel\blog@add_post_store')->name('add_post_store');
+        Route::post('add_post', 'panel\blogs@add_post_store')->name('add_post_store');
         Route::get('post_list', 'panel\panel_view@post_list')->name('post_list');
         Route::get('category', 'panel\panel_view@category')->name('category');
         Route::get('panel_category_add_form', 'panel\panel_view@category_add_form')->name('panel_category_add_form');
-        Route::post('category_add', 'panel\blog@category_add')->name('panel_category_add');
+        Route::post('category_add', 'panel\blogs@category_add')->name('panel_category_add');
+
+        Route::get('edit/{post_id}', 'panel\panel_view@post_edit')->name('edit_post');
+        Route::post('update/{post_id}', 'panel\blogs@update')->name('add_post_update');
+        Route::get('delete_post', 'panel\blogs@delete')->name('delete_post');
+        Route::get('delete_category', 'panel\blogs@delete_category')->name('delete_category');
     });
 
     Route::prefix('setting')->group(function () {
@@ -116,7 +121,6 @@ Route::prefix('page')->group(function () {
 
 });
 //=========================================
-
 
 
 //=========================================
@@ -213,7 +217,7 @@ Route::group(compact('middleware', 'prefix', 'as', 'namespace'), function () {
         'as' => 'getDelete',
     ]);
 
-     Route::get('/demo', 'DemoController@index');
+    Route::get('/demo', 'DemoController@index');
 });
 
 Route::group(compact('prefix', 'as', 'namespace'), function () {

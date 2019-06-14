@@ -175,6 +175,13 @@ class panel_view extends Controller
         $posts = \App\blog::with('blog_categories.category')->get();
         return view('panel.blog.post_list',compact('posts'));
     }
+    public function post_edit(Request $request)
+    {
+
+        $post = \App\blog::with(['blog_categories.category','blog_tag'])->find($request['post_id']);
+        $cats = category::all();
+        return view('panel.blog.edit_post',compact('post','cats'));
+    }
 
     public function category()
     {

@@ -23,18 +23,21 @@ class CreateBlogsTable extends Migration
             $table->dateTime('publish_time');
             $table->string('publish_status');
             $table->integer('user_id');
+            $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('blog_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('blog_id');
             $table->string('tag');
+            $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
             $table->integer('status')->default(10);
+            $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('blog_categories', function (Blueprint $table) {
@@ -42,6 +45,7 @@ class CreateBlogsTable extends Migration
             $table->integer('blog_id');
             $table->integer('category_id');
             $table->integer('status')->default(10);
+            $table->softDeletes();
             $table->timestamps();
         });
         DB::table('categories')->insert(

@@ -127,7 +127,8 @@ function image_saver($image_input, $folder, $module, $custom_size = [],$image_na
             'org_name' => $image->getClientOriginalName(),
             'mime' => $image->getClientMimeType(),
             'module' => $module,
-            'size' => "1"
+            'size' => "1",
+            'type'=>"image"
         ]);
     }
 
@@ -139,7 +140,8 @@ function image_saver($image_input, $folder, $module, $custom_size = [],$image_na
         'org_name' => $image->getClientOriginalName(),
         'mime' => $image->getClientMimeType(),
         'module' => $module,
-        'size' => "1"
+        'size' => "1",
+        'type'=>"image"
     ]);
     $media_id = $media_info->id;
 

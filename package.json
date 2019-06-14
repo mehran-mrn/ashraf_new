@@ -23,6 +23,7 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-decoupled-document": "^12.2.0",
         "ckeditor": "^4.11.4",
         "md.bootstrappersiandatetimepicker": "^3.4.7",
         "nestable2": "^1.6.0",

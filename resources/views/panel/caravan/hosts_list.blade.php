@@ -57,8 +57,9 @@
                                                         data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.host')])}}"
                                                         data-type="warning"
                                                         data-cancel="true"
-                                                        data-confirm-text="{{trans('messages.delete')}}">
-                                                    <i class="icon-trash"></i>
+                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-trash"></i>
                                                 </button>
                                             </div>
                                         </div>

@@ -6,9 +6,12 @@
     <?php
     $active_sidbare = ['blog_category', 'blog']
     ?>
-    <div class="page-header page-header-light">
-        <div class="page-header-content header-elements-md-inline">
-            <div class="page-title d-flex">
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Basic responsive configuration -->
+        <div class="card">
+            <div class="card-header bg-light">
                 <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
                         data-ajax-link="{{route('panel_category_add_form')}}" data-toggle="modal"
                         data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.category')])}}"
@@ -16,15 +19,7 @@
                         class="icon-user-plus mr-2"></i> {{trans('messages.add_category',['item'=>trans('messages.category')])}}
                 </button>
             </div>
-        </div>
-    </div>
-    <!-- Content area -->
-    <div class="content">
-        <!-- Basic responsive configuration -->
-        <div class="card">
-
             <div class="card-body">
-
                 <table class="table text-nowrap">
                     <thead>
                     <tr>
@@ -57,7 +52,24 @@
                             <span class="text-muted font-size-sm">0</span>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-outline-danger btn-xs"><i class="icon-trash icon-xs text-danger"></i></button>
+                            <a href="{{route('delete_category',$cat['id'])}}"
+                               class="legitRipple float-right btn alpha-success border-success-400 text-success-800 btn-icon rounded-round ml-2">
+                                <i class="icon-database-edit2"></i>
+                            </a>
+
+                            <button
+                                class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                data-ajax-link="{{route('delete_category',['id'=>$cat['id']])}}"
+                                data-method="get"
+                                data-csrf="{{csrf_token()}}"
+                                data-title="{{trans('messages.delete_item',['item'=>trans('messages.category')])}}"
+                                data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.category')])}}"
+                                data-type="warning"
+                                data-cancel="true"
+                                data-confirm-text="{{trans('messages.delete')}}"
+                                data-cancel-text="{{trans('messages.cancel')}}">
+                                <i class="icon-trash"></i>
+                            </button>
                         </td>
                     </tr>
                         @endforeach

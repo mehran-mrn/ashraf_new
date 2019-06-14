@@ -1,6 +1,6 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
-    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/extensions/rowlink.js')}}"></script>
+    {{--    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/extensions/rowlink.js')}}"></script>--}}
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/demo_pages/mail_list.js')}}"></script>
 
@@ -9,31 +9,13 @@
     <?php
     $active_sidbare = ['blog', 'post_list']
     ?>
-    <div class="page-header page-header-light">
-        <div class="page-header-content header-elements-md-inline">
-            <div class="page-title d-flex">
-                <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
-                        data-ajax-link="{{route('panel_register_role_form')}}" data-toggle="modal"
-                        data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.role')])}}"
-                        data-target="#general_modal"><i
-                        class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.role')])}}
-                </button>
-            </div>
-        </div>
-    </div>
     <!-- Content area -->
     <div class="content">
-
         <!-- Single line -->
         <div class="card">
             <div class="card-header bg-transparent header-elements-inline">
-                <h6 class="card-title">My Inbox (single line)</h6>
-
-                <div class="header-elements">
-                    <span class="badge bg-blue">259 new today</span>
-                </div>
+                <h6 class="card-title">{{__('messages.post_list')}}</h6>
             </div>
-
             <!-- Action toolbar -->
             <div class="bg-light">
                 <div class="navbar navbar-light bg-light navbar-expand-lg py-lg-2">
@@ -64,78 +46,68 @@
                             </div>
 
                             <div class="btn-group ml-3 mr-lg-3">
-                                <button type="button" class="btn btn-light"><i class="icon-pencil7"></i> <span
-                                        class="d-none d-lg-inline-block ml-2">Compose</span></button>
+                                <a class="btn btn-light" href="{{route('add_post')}}"><i class="icon-pencil7"></i> <span
+                                        class="d-none d-lg-inline-block ml-2">{{__('messages.new_post')}}</span></a>
                                 <button type="button" class="btn btn-light"><i class="icon-bin"></i> <span
-                                        class="d-none d-lg-inline-block ml-2">Delete</span></button>
-                                <button type="button" class="btn btn-light"><i class="icon-spam"></i> <span
-                                        class="d-none d-lg-inline-block ml-2">Spam</span></button>
+                                        class="d-none d-lg-inline-block ml-2">{{__('messages.delete')}}</span></button>
                             </div>
                         </div>
 
-                        <div class="navbar-text ml-lg-auto"><span class="font-weight-semibold">1-50</span> of <span
-                                class="font-weight-semibold">528</span></div>
-
-                        <div class="ml-lg-3 mb-3 mb-lg-0">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-light btn-icon disabled"><i
-                                        class="icon-arrow-right13"></i></button>
-                                <button type="button" class="btn btn-light btn-icon"><i class="icon-arrow-left12"></i>
-                                </button>
-                            </div>
-
-                            <div class="btn-group ml-3">
-                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"><i
-                                        class="icon-cog3"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item">Action</a>
-                                    <a href="#" class="dropdown-item">Another action</a>
-                                    <a href="#" class="dropdown-item">Something else here</a>
-                                    <a href="#" class="dropdown-item">One more line</a>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="navbar-text ml-lg-auto"><span class="font-weight-semibold">۱۲</span> <span
+                                class="font-weight-semibold"></span></div>
                     </div>
                 </div>
             </div>
             <!-- /action toolbar -->
-
-
             <!-- Table -->
             <div class="table-responsive">
                 <table class="table table-inbox">
-                    <tbody data-link="row" class="rowlink">
+                    <tbody data-link="row">
                     @foreach($posts as $post)
-                        <tr class="unread">
+                        <tr>
                             <td class="table-inbox-checkbox rowlink-skip">
                                 <input type="checkbox" class="form-input-styled" data-fouc>
                             </td>
-                            <td class="table-inbox-star rowlink-skip">
-                                <a href="#">
-                                    <i class="icon-star-empty3 text-muted"></i>
-                                </a>
-                            </td>
-                            <td class="table-inbox-image">
+                            <td class="table-inbox-image"
+                                data-popup="tooltip" title="" data-placement="bottom"
+                                data-container="body" data-original-title="{{user_information(['name'])}}">
                                 <img src="{{URL::asset(user_information('avatar',$post['user_id']))}}"
                                      class="rounded-circle"
                                      width="32" height="32" alt="">
                             </td>
                             <td class="table-inbox-name">
-                                <a href="mail_read.html">
-                                    <div class="letter-icon-title text-default">{{$post['title']}}</div>
-                                </a>
+                                <div class="letter-icon-title text-default">{{$post['title']}}</div>
                             </td>
                             <td class="table-inbox-message">
                                 <span class="table-inbox-subject"></span>
-                                <span class="text-muted font-weight-normal">{{$post['description']}}</span>
+                                <span
+                                    class="text-muted font-weight-normal">{{__('messages.'.$post['publish_status'])}}</span>
                             </td>
                             <td class="table-inbox-message">
                                 @foreach($post['blog_categories'] as $cat)
                                     <span class="badge badge-info">{{$cat['category']['title']}}</span>
                                 @endforeach
                             </td>
-                            <td class="table-inbox-message"><span class="text-muted">{{$post['publish_time']}}</span></td>
+                            <td class="table-inbox-name"><span class="text-muted">{{$post['publish_time']}}</span>
+                            </td>
                             <td class="table-inbox-message">
+                                <a href="{{route('edit_post',$post['id'])}}"
+                                   class="legitRipple float-right btn alpha-success border-success-400 text-success-800 btn-icon rounded-round ml-2">
+                                    <i class="icon-database-edit2"></i>
+                                </a>
+                                <button
+                                    class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                    data-ajax-link="{{route('delete_post',['post_id'=>$post['id']])}}"
+                                    data-method="get"
+                                    data-csrf="{{csrf_token()}}"
+                                    data-title="{{trans('messages.delete_item',['item'=>trans('messages.post')])}}"
+                                    data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.post')])}}"
+                                    data-type="warning"
+                                    data-cancel="true"
+                                    data-confirm-text="{{trans('messages.delete')}}"
+                                    data-cancel-text="{{trans('messages.cancel')}}">
+                                    <i class="icon-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach

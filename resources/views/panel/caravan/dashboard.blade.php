@@ -19,7 +19,7 @@
                 <div class="card ">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 ">
+                            <div class="col-md-6">
                                 <a href="{{route('add_caravan_page')}}" class="btn bg-danger btn-block btn-float btn-float-lg"
                                         data-popup="tooltip" title="" data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.add_caravan')}}">
