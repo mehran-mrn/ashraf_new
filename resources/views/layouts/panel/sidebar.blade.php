@@ -87,14 +87,14 @@ if (!isset($active_sidbare)) {
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts"
                         style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
-                        <li class="nav-item"><a href="{{route('add_post')}}"
-                                                class="nav-link {{in_array("add_post", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_post')}}</a>
+                        <li class="nav-item"><a href="{{route('post_add')}}"
+                                                class="nav-link {{in_array("post_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_add')}}</a>
                         </li>
                         <li class="nav-item"><a href="{{route('post_list')}}"
                                                 class="nav-link {{in_array("post_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_list')}}</a>
                         </li>
-                        <li class="nav-item"><a href="{{route('category')}}"
-                                                class="nav-link {{in_array("blog_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a>
+                        <li class="nav-item"><a href="{{route('category_list')}}"
+                                                class="nav-link {{in_array("category_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a>
                         </li>
 
                     </ul>

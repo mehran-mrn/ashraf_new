@@ -143,7 +143,7 @@ return [
     'my_profile'=>'پروفایل من',
     'dashboard'=>'میزکار',
     'blog'=>'وبلاگ',
-    'add_post'=>'افزودن مطلب',
+    'post_add'=>'افزودن مطلب',
     'post_list'=>'لیست مطالب',
     'title'=>'عنوان',
     'enter_category_title'=>'عنوان دسته بندی را وارد نمایید.',
@@ -163,4 +163,5 @@ return [
     'slug'=>'اسلاگ',
     'tages'=>'تگ ها',
     'enter_title'=>'عنوان را وارد نمایید...',
+    'categories_list'=>'لیست دسته بندی ها'
 ];

@@ -73,17 +73,20 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
 
     Route::prefix('blog')->group(function () {
-        Route::get('add_post', 'panel\panel_view@add_post')->name('add_post');
-        Route::post('add_post', 'panel\blogs@add_post_store')->name('add_post_store');
-        Route::get('post_list', 'panel\panel_view@post_list')->name('post_list');
-        Route::get('category', 'panel\panel_view@category')->name('category');
-        Route::get('panel_category_add_form', 'panel\panel_view@category_add_form')->name('panel_category_add_form');
-        Route::post('category_add', 'panel\blogs@category_add')->name('panel_category_add');
+        Route::get('post_add', 'panel\panel_view@post_add')->name('post_add');
+        Route::post('post_add', 'panel\blogs@post_add_store')->name('post_add_store');
 
-        Route::get('edit/{post_id}', 'panel\panel_view@post_edit')->name('edit_post');
-        Route::post('update/{post_id}', 'panel\blogs@update')->name('add_post_update');
-        Route::get('delete_post', 'panel\blogs@delete')->name('delete_post');
-        Route::get('delete_category', 'panel\blogs@delete_category')->name('delete_category');
+        Route::get('post_list', 'panel\panel_view@post_list')->name('post_list');
+        Route::get('post_edit_form/{post_id}', 'panel\panel_view@post_edit_form')->name('post_edit_form');
+        Route::post('post_update/{post_id}', 'panel\blogs@post_update')->name('post_update');
+        Route::get('post_delete', 'panel\blogs@post_delete')->name('post_delete');
+
+        Route::get('category_list', 'panel\panel_view@category_list')->name('category_list');
+        Route::get('category_add_form', 'panel\panel_view@category_add_form')->name('category_add_form');
+        Route::post('category_add', 'panel\blogs@category_add')->name('category_add');
+        Route::get('category_delete', 'panel\blogs@category_delete')->name('category_delete');
+        Route::get('category_edit_form/{cat_id}', 'panel\panel_view@category_edit_form')->name('category_edit_form');
+        Route::post('category_update/{cat_id}', 'panel\blogs@category_update')->name('category_update');
     });
 
     Route::prefix('setting')->group(function () {

@@ -15,21 +15,9 @@ class blogs extends Controller
 {
     //
 
-    public function category_add(Request $request)
+    public function post_add_store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required|unique:categories',
-        ]);
-        category::create([
-            'title' => $request->title
-        ]);
-        $message = trans("messages.item_created", ['item' => trans('messages.category')]);
-        return back_normal($request, $message);
-    }
-
-    public function add_post_store(Request $request)
-    {
-
+        $request['publish_time'] = shamsi_to_miladi(latin_num($request['publish_time']));
         $this->validate($request, [
             'image' => 'bail|image|mimes:jpeg,png,jpg,gif|max:5000|dimensions:min_width=200,min_height=100',
             'title' => 'required|min:3',
@@ -68,7 +56,7 @@ class blogs extends Controller
 
     }
 
-    public function update(Request $request)
+    public function post_update(Request $request)
     {
 
         $this->validate($request, [
@@ -89,8 +77,8 @@ class blogs extends Controller
             ]
         );
         $post_tags = blog_tag::where('blog_id', $request['post_id'])->get();
-        $tags=[];
-        if($request['tags']!="") {
+        $tags = [];
+        if ($request['tags'] != "") {
             $tags = explode(',', $request['tags']);
         }
         $tags_id = [];
@@ -112,7 +100,7 @@ class blogs extends Controller
                 }
             }
         }
-        if (sizeof($tags_id) >= 1 || $request['tags']=="") {
+        if (sizeof($tags_id) >= 1 || $request['tags'] == "") {
             blog_tag::whereNotIn('id', $tags_id)->delete();
         }
         $post_cats = blog_categories::where('blog_id', $request['post_id'])->get();
@@ -142,7 +130,7 @@ class blogs extends Controller
         return back_normal($request, $message);
     }
 
-    public function delete(Request $request)
+    public function post_delete(Request $request)
     {
         $blog = blog::find($request['post_id']);
         $blog->deleteAll();
@@ -150,12 +138,38 @@ class blogs extends Controller
         return back_normal($request, $message);
     }
 
-    public function delete_category(Request $request)
+    //Category
+    public function category_add(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|unique:categories|min:2',
+        ]);
+        category::create([
+            'title' => $request['title']
+        ]);
+        $message = trans("messages.item_created", ['item' => trans('messages.category')]);
+        return back_normal($request, $message);
+    }
+
+    public function category_delete(Request $request)
     {
         $cat = category::find($request['id']);
         $cat->deleteAll();
         $message = trans("messages.item_deleted", ['item' => trans('messages.category')]);
         return back_normal($request, $message);
     }
+
+    public function category_update(Request $request)
+    {
+
+        $this->validate($request, [
+            'title' => 'required|min:2|unique:categories',
+            'cat_id' => 'required',
+        ]);
+        category::where('id', $request['cat_id'])->update(["title" => $request['title']]);
+        $message = trans("messages.item_updated", ['item' => trans('messages.category')]);
+        return back_normal($request, $message);
+    }
+    //End Category
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\blog;
+use App\blog_categories;
 use App\caravan_host;
 use App\category;
 use App\city;
@@ -45,9 +47,9 @@ class panel_view extends Controller
     public function user_permission_assign($user_id)
     {
         $user = user::with('permissions', 'roles')->find($user_id);
-        $checked_permissions =[];
-        foreach ($user['permissions'] as $permission){
-            $checked_permissions[]=$permission['id'];
+        $checked_permissions = [];
+        foreach ($user['permissions'] as $permission) {
+            $checked_permissions[] = $permission['id'];
         }
         $categories = Permission::groupBy('category')->get(['category']);
         $categories_permissions = [];
@@ -56,7 +58,7 @@ class panel_view extends Controller
             $categories_permissions[$category['category']] = $category_permissions;
         }
 
-        return view('panel.user_manager.user_permission_page', compact('user','categories_permissions','checked_permissions'));
+        return view('panel.user_manager.user_permission_page', compact('user', 'categories_permissions', 'checked_permissions'));
     }
 
     public function assign_user_to_permission_form($permission_id)
@@ -65,38 +67,38 @@ class panel_view extends Controller
         return view('panel.user_manager.assign_user_to_permission_form', compact('permission_id', 'users'));
     }
 
-    public function assign_role_to_permission_form($permission_id,$old=null,$team_id = null)
+    public function assign_role_to_permission_form($permission_id, $old = null, $team_id = null)
     {
         $roles = Role::get();
         $teams = Team::all();
-        $checked_roles=[];
+        $checked_roles = [];
         $current_roles = Permission::with('roles')->find($permission_id);
         $checked_team = null;
         $old_team = [];
-        if ($old and !empty($current_roles['roles'])){
-            $checked_team= (empty($team_id) ? "0" : $team_id);
-            foreach ($current_roles['roles'] as $current_role){
+        if ($old and !empty($current_roles['roles'])) {
+            $checked_team = (empty($team_id) ? "0" : $team_id);
+            foreach ($current_roles['roles'] as $current_role) {
 
-                if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id){
-                    $checked_roles[]= $current_role['id'];
-                    $old_team[] = $team_id."-".$current_role['id'];
+                if ($current_role['pivot'][Config::get('laratrust.foreign_keys.team')] == $team_id) {
+                    $checked_roles[] = $current_role['id'];
+                    $old_team[] = $team_id . "-" . $current_role['id'];
 
                 }
             }
         }
-        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_team','old_team'));
+        return view('panel.user_manager.assign_role_to_permission_form', compact('permission_id', 'roles', 'teams', 'checked_roles', 'checked_team', 'old_team'));
     }
 
     public function assign_role_to_user_form($user_id)
     {
         $roles = Role::get();
         $user = user::with('permissions', 'roles')->find($user_id);
-        $checked_roles=[];
+        $checked_roles = [];
 
-        foreach ($user['roles']as $role){
-            $checked_roles[]=$role['id'];
+        foreach ($user['roles'] as $role) {
+            $checked_roles[] = $role['id'];
         }
-        return view('panel.user_manager.assign_role_to_user_form', compact('user_id', 'roles','checked_roles'));
+        return view('panel.user_manager.assign_role_to_user_form', compact('user_id', 'roles', 'checked_roles'));
     }
 
     public function register_form()
@@ -159,39 +161,47 @@ class panel_view extends Controller
             }
 
         }
-        return view('panel.user_manager.teams_list_permissions',compact('teams_roles'));
+        return view('panel.user_manager.teams_list_permissions', compact('teams_roles'));
     }
 //end users module
 
 //blog module
-    public function add_post()
+    public function post_add()
     {
         $cats = category::all();
-        return view('panel.blog.add_post',compact('cats'));
+        return view('panel.blog.post_add', compact('cats'));
     }
 
     public function post_list()
     {
         $posts = \App\blog::with('blog_categories.category')->get();
-        return view('panel.blog.post_list',compact('posts'));
+        $postCount = blog::count();
+        return view('panel.blog.post_list', compact('posts','postCount'));
     }
-    public function post_edit(Request $request)
+
+    public function post_edit_form(Request $request)
     {
 
-        $post = \App\blog::with(['blog_categories.category','blog_tag'])->find($request['post_id']);
+        $post = \App\blog::with(['blog_categories.category', 'blog_tag'])->find($request['post_id']);
         $cats = category::all();
-        return view('panel.blog.edit_post',compact('post','cats'));
+        return view('panel.blog.post_edit', compact('post', 'cats'));
     }
 
-    public function category()
+    public function category_list()
     {
         $cats = category::all();
-
-        return view('panel.blog.category',compact('cats'));
+        return view('panel.blog.category_list', compact('cats'));
     }
+
     public function category_add_form()
     {
-        return view('panel.blog.add_category');
+        return view('panel.blog.category_add');
+    }
+
+    public function category_edit_form(Request $request)
+    {
+        $cat_info = category::find($request['cat_id']);
+        return view('panel.blog.category_edit',compact('cat_info'));
     }
 //end blog module
 
@@ -206,15 +216,14 @@ class panel_view extends Controller
     {
         $hosts = caravan_host::with('media')->get();
 
-        return view('panel.caravan.hosts_list',compact('hosts'));
+        return view('panel.caravan.hosts_list', compact('hosts'));
     }
 
     public function load_host_form($host_id = null)
     {
-        if ($host_id){
+        if ($host_id) {
             $host = caravan_host::find($host_id);
-        }
-        else{
+        } else {
             $host = null;
         }
         return view('panel.caravan.materials.add_new_host_form', compact('host'));
@@ -222,39 +231,39 @@ class panel_view extends Controller
 
     public function add_caravan_page($caravan_id = null)
     {
-        if ($caravan_id){
+        if ($caravan_id) {
             $caravan = caravan::find($caravan_id);
-        }
-        else{
+        } else {
             $caravan = null;
         }
 
         $caravan_hosts = caravan_host::get();
         $users = User::get();
-        return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users'));
+        return view('panel.caravan.add_caravan_page', compact('caravan', 'caravan_hosts', 'users'));
     }
 
     public function caravans_list()
     {
         $caravans = caravan::get();
-        return view('panel.caravan.caravans_list',compact('caravans'));
+        return view('panel.caravan.caravans_list', compact('caravans'));
     }
+
     public function caravan($caravan_id)
     {
-        $caravan = caravan::with('host','workflow')->find($caravan_id);
-        return view('panel.caravan.view_caravan',compact('caravan'));
+        $caravan = caravan::with('host', 'workflow')->find($caravan_id);
+        return view('panel.caravan.view_caravan', compact('caravan'));
     }
 
     public function register_to_caravan($caravan_id)
     {
         $caravan = caravan::find($caravan_id);
-        return view('panel.caravan.register_to_caravan_form',compact('caravan'));
+        return view('panel.caravan.register_to_caravan_form', compact('caravan'));
     }
 
     public function register_to_caravan_national_code($caravan_id)
     {
         $caravan = caravan::find($caravan_id);
-        return view('panel.caravan.materials.register_to_caravan_national_code',compact('caravan'));
+        return view('panel.caravan.materials.register_to_caravan_national_code', compact('caravan'));
     }
 //end caravan module
 
@@ -262,8 +271,8 @@ class panel_view extends Controller
 //setting module
     public function cities_list()
     {
-        $cities = city::where('parent','0')->orderBy('name')->paginate(32);
-        return view('panel.setting.cities_list',compact('cities'));
+        $cities = city::where('parent', '0')->orderBy('name')->paginate(32);
+        return view('panel.setting.cities_list', compact('cities'));
     }
 //end setting module
 

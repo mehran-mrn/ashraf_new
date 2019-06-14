@@ -1,5 +1,6 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
     <script src="{{URL::asset('/node_modules/ckeditor/ckeditor.js')}}"></script>
 
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tagsinput.min.js')}}"></script>
@@ -28,6 +29,12 @@
                 $("#slug").val(res);
             });
 
+
+            $('#publish_time').MdPersianDateTimePicker({
+                targetTextSelector: '#publish_time',
+                enableTimePicker:true,
+                disableBeforeToday:true
+            });
 
 
         });
@@ -129,12 +136,15 @@
         });
     </script>
 @endsection
+@section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
+@endsection
 @section('content')
     <?php
-    $active_sidbare = ['blog', 'add_post']
+    $active_sidbare = ['blog', 'post_add']
     ?>
     <div class="content">
-        <form action="{{route('add_post_update',$post['id'])}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('post_add_store')}}" method="post" enctype="multipart/form-data">
             @csrf
         <div class="row">
             <div class="col-md-9">
@@ -148,19 +158,19 @@
                                 <div class="form-group">
                                     <label for="title">{{__('messages.title')}}</label>
                                     <input type="text" class="form-control" name="title" id="title"
-                                           placeholder="{{__('messages.enter_title')}}" value="{{$post['title']}}">
+                                           placeholder="{{__('messages.enter_title')}}" value="{{old('title')}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="slug">{{__('messages.slug')}}</label>
-                                    <input type="text" class="form-control" readonly="readonly" name="slug" id="slug" value="{{$post['slug']}}">
+                                    <input type="text" class="form-control" readonly="readonly" name="slug" id="slug" value="{{old('slug')}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="text">{{__('messages.text')}}</label>
-                                    <textarea name="text" id="text" class="textarea" cols="30" rows="10">{{$post['text']}}</textarea>
+                                    <textarea name="text" id="text" class="textarea" cols="30" rows="10">{{old('text')}}</textarea>
                                 </div>
                             </div>
 
@@ -168,7 +178,7 @@
                                 <div class="form-group">
                                     <label for="description">{{__('messages.description')}}</label>
                                     <textarea name="description" id="description" class="form-control" cols="30"
-                                              rows="3">{{$post['description']}}</textarea>
+                                              rows="3">{{old('description')}}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -182,7 +192,7 @@
                                     <label for="tages">{{__('messages.tages')}}</label>
                                     <input type="text" class="form-control tokenfield"
                                            placeholder="{{__('messages.enter_text')}}"
-                                           data-fouc name="tags" id="tags" value="@foreach($post['blog_tag'] as $tag){{$tag['tag'].","}}@endforeach">
+                                           data-fouc name="tags" id="tags" value="{{old('tags')}}">
                                 </div>
                             </div>
 
@@ -199,13 +209,7 @@
                     <div class="card-body">
                         @foreach($cats as $cat)
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input"
-                                       @foreach($post['blog_categories'] as $catInfo)
-                                           @if($catInfo['category_id']===$cat['id'])
-                                           checked
-                                           @endif
-                                       @endforeach
-                                       value="{{$cat->id}}" id="cat_{{$cat->id}}" name="cats[]">
+                                <input type="checkbox" class="custom-control-input"  value="{{$cat->id}}" id="cat_{{$cat->id}}" name="cats[]">
                                 <label class="custom-control-label"
                                        for="cat_{{$cat->id}}">{{$cat->title}}</label>
                             </div>
@@ -218,8 +222,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="publish_time" id="publish_time"
-                                   value="{{$post['publish_time']}}" >
+                            <input type="text" class="form-control" name="publish_time" id="publish_time" readonly
+                                   value="{{jdate("Y-m-d H:i:s",strtotime("+15 min",time()))}}" >
                         </div>
                     </div>
                 </div>
@@ -230,8 +234,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <select name="publish_status" id="publish_status" class="form-control">
-                                <option value="published" {{ $post['publish_status']==="published"?'selected':'' }} {{old('publish_status')=='published'?'selected':''}}>{{__('messages.published')}}</option>
-                                <option value="draft" {{ $post['publish_status']==="draft"?'selected':'' }} {{old('publish_status')=='draft'?'selected':''}}>{{__('messages.draft')}}</option>
+                                <option value="published" {{old('publish_status')=='published'?'selected':''}}>{{__('messages.published')}}</option>
+                                <option value="draft" {{old('publish_status')=='draft'?'selected':''}}>{{__('messages.draft')}}</option>
                             </select>
                             <div class="form-group pt-2">
                                 <button class="btn btn-success btn-block">{{__('messages.publish')}}</button>

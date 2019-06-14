@@ -240,6 +240,9 @@ function shamsi_to_miladi($input)
     // yyyy-mm-dd
     // yyyy-mm-dd hh:MM:ss
 
+    $input = str_replace("    "," ",$input);
+    $input = str_replace("   "," ",$input);
+    $input = str_replace("  "," ",$input);
     $date_array = explode(" ",$input);
     $date =$date_array[0];
     $time = (empty($date_array[1]) ? "00:00:00" : $date_array[1]);
