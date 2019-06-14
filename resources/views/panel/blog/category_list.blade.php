@@ -35,6 +35,13 @@
                                         <i class="icon-blogger"></i> <span class="text-black"><b>{{$cat['title']}}</b></span>
                                     </div>
                                     <div class="card-footer">
+                                        <button type="button"
+                                                class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
+                                                data-ajax-link="{{route('category_edit_form',['cat_id'=>$cat['id']])}}"
+                                                data-toggle="modal"
+                                                data-modal-title="{{trans('messages.edit',['item'=>trans('messages.category')])}}"
+                                                data-target="#general_modal"><i class="icon-database-edit2"></i>
+                                        </button>
                                         <button
                                             class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
                                             data-ajax-link="{{route('category_delete',['id'=>$cat['id']])}}"
@@ -48,13 +55,7 @@
                                             data-cancel-text="{{trans('messages.cancel')}}">
                                             <i class="icon-trash"></i>
                                         </button>
-                                        <button type="button"
-                                                class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
-                                                data-ajax-link="{{route('category_edit_form',['cat_id'=>$cat['id']])}}"
-                                                data-toggle="modal"
-                                                data-modal-title="{{trans('messages.edit',['item'=>trans('messages.category')])}}"
-                                                data-target="#general_modal"><i class="icon-database-edit2"></i>
-                                        </button>
+
 
                                     </div>
                                 </div>

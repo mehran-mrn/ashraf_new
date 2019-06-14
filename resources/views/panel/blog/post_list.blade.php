@@ -34,10 +34,10 @@
                             </td>
                             <td class="table-inbox-image">
                             </td>
-                            <td class="table-inbox-name">
+                            <td class="table-inbox-message">
                                 <div class="letter-icon-title text-default">{{$post['title']}}</div>
                             </td>
-                            <td class="table-inbox-message">
+                            <td class="table-inbox-name">
                                 <span class="table-inbox-subject"></span>
                                 <span
                                     class="text-muted font-weight-normal">{{__('messages.'.$post['publish_status'])}}</span>
@@ -50,7 +50,7 @@
                             <td class="table-inbox-name"><span class="text-muted">{{jdate("Y/m/d-H:i",strtotime($post['publish_time']))}}</span></td>
                             <td class="table-inbox-name">
                                 <a href="{{route('post_edit_form',$post['id'])}}"
-                                   class="legitRipple float-right btn alpha-success border-success-400 text-success-800 btn-icon rounded-round ml-2">
+                                   class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2">
                                     <i class="icon-database-edit2"></i>
                                 </a>
                                 <button
