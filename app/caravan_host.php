@@ -10,6 +10,11 @@ class caravan_host extends Model
         'name', 'city_name', 'capacity', 'gender', 'media_id'
     ];
 
+    public function caravan()
+    {
+        return $this->hasMany('App\caravan','caravan_host_id');
+    }
+
     public function media()
     {
         return $this->belongsTo('App\media','media_id');

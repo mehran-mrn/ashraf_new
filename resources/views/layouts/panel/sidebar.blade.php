@@ -109,8 +109,8 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
                                                 class="nav-link {{in_array("caravans_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.dashboard')}} {{trans('messages.caravans')}}</a>
                         </li>
-                        <li class="nav-item"><a href="{{route('post_list')}}"
-                                                class="nav-link {{in_array("caravan_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.caravan_list')}}</a>
+                        <li class="nav-item"><a href="{{route('caravans_list')}}"
+                                                class="nav-link {{in_array("caravans_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.caravans_list')}}</a>
 
                         </li>
                         <li class="nav-item"><a href="{{route('hosts_list')}}"

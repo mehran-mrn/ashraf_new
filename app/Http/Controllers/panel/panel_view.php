@@ -219,6 +219,7 @@ class panel_view extends Controller
         }
         return view('panel.caravan.materials.add_new_host_form', compact('host'));
     }
+
     public function add_caravan_page($caravan_id = null)
     {
         if ($caravan_id){
@@ -231,6 +232,29 @@ class panel_view extends Controller
         $caravan_hosts = caravan_host::get();
         $users = User::get();
         return view('panel.caravan.add_caravan_page',compact('caravan','caravan_hosts','users'));
+    }
+
+    public function caravans_list()
+    {
+        $caravans = caravan::get();
+        return view('panel.caravan.caravans_list',compact('caravans'));
+    }
+    public function caravan($caravan_id)
+    {
+        $caravan = caravan::with('host','workflow')->find($caravan_id);
+        return view('panel.caravan.view_caravan',compact('caravan'));
+    }
+
+    public function register_to_caravan($caravan_id)
+    {
+        $caravan = caravan::find($caravan_id);
+        return view('panel.caravan.register_to_caravan_form',compact('caravan'));
+    }
+
+    public function register_to_caravan_national_code($caravan_id)
+    {
+        $caravan = caravan::find($caravan_id);
+        return view('panel.caravan.materials.register_to_caravan_national_code',compact('caravan'));
     }
 //end caravan module
 
