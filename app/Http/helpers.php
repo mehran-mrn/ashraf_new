@@ -222,6 +222,20 @@ function get_provinces($id = null)
     return $provinces;
 }
 
+function national_code_validation($natinoal_code){
+    if(!preg_match('/^[0-9]{10}$/',$natinoal_code))
+        return false;
+    for($i=0;$i<10;$i++)
+        if(preg_match('/^'.$i.'{10}$/',$natinoal_code))
+            return false;
+    for($i=0,$sum=0;$i<9;$i++)
+        $sum+=((10-$i)*intval(substr($natinoal_code, $i,1)));
+    $ret=$sum%11;
+    $parity=intval(substr($natinoal_code, 9,1));
+    if(($ret<2 && $ret==$parity) || ($ret>=2 && $ret==11-$parity))
+        return true;
+    return false;
+}
 function get_hosts($id = null)
 {
     if ($id){
@@ -266,6 +280,28 @@ function shamsi_to_miladi($input)
 
     $date_gregorian = $date_gregorian . " " . $time;
     return $date_gregorian;
+
+}
+
+function miladi_to_shamsi_date($date = null,$be_array=null)
+{  //2017-01-01 20:30:00
+    if (!isset($date)){
+        $date = date("Y-m-d");
+    }
+    $new_date = explode(" ", $date);
+    $this_date = date("Y-m-d", strtotime($date));
+    $new_date = explode("-", $new_date[0]);
+    $new_date_day = $new_date[2];
+    $new_date_month = $new_date[1];
+    $new_date_year = $new_date[0];
+    if (!empty($be_array)){
+        $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day);
+
+    }
+    else{
+        $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day, "-");
+    }
+    return $date_jalali;
 
 }
 

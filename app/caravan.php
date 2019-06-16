@@ -15,4 +15,9 @@ class caravan extends Model
     {
         return $this->hasMany('App\caravan_workflow','caravan_id');
     }
+
+    public function persons()
+    {
+        return $this->hasMany('App\person_caravan','caravan_id');
+    }
 }

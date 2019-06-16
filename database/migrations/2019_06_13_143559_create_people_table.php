@@ -18,10 +18,12 @@ class CreatePeopleTable extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedInteger('image_id')->nullable();
             $table->string('name');
+            $table->string('father_name')->nullable();
             $table->string('family');
             $table->string('known')->nullable();
             $table->string('en_name')->nullable();
             $table->string('en_family')->nullable();
+            $table->string('en_father_name')->nullable();
             $table->string('en_known')->nullable();
             $table->dateTime('birth_date')->nullable();
             $table->string('national_code')->unique();

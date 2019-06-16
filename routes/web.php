@@ -68,8 +68,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('caravans_list', 'panel\panel_view@caravans_list')->name('caravans_list');
         Route::get('caravan/{caravan_id}', 'panel\panel_view@caravan')->name('caravan');
         Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
-        Route::get('register_to_caravan/{caravan_id}', 'panel\panel_view@register_to_caravan')->name('register_to_caravan');
-        Route::get('register_to_caravan/national_code/{caravan_id}', 'panel\panel_view@register_to_caravan_national_code')->name('register_to_caravan_national_code');
+        Route::post('add_person_to_caravan', 'panel\caravan@add_person_to_caravan')->name('add_person_to_caravan');
     });
 
     Route::prefix('blog')->group(function () {
@@ -106,6 +105,9 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/delete_role_from_user/{role_id}/{user_id}', 'panel\user_manager@delete_role_from_user')->name('delete_role_from_user');
         Route::get('/host_form/{host_id?}', 'panel\panel_view@load_host_form')->name('load_host_form');
         Route::post('/delete_caravan_host/{host_id}', 'panel\caravan@delete_caravan_host')->name('delete_caravan_host');
+        Route::get('register_to_caravan/{caravan_id}', 'panel\panel_view@register_to_caravan')->name('register_to_caravan');
+        Route::post('register_to_caravan}', 'panel\panel_view@register_to_caravan_post')->name('register_to_caravan_post');
+        Route::post('/validate_national_code', 'panel\caravan@validate_national_code')->name('validate_national_code');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

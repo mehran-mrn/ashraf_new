@@ -8,6 +8,7 @@ use App\caravan_host;
 use App\category;
 use App\city;
 use App\Permission;
+use App\person;
 use App\Role;
 use App\Team;
 use App\User;
@@ -250,7 +251,7 @@ class panel_view extends Controller
 
     public function caravan($caravan_id)
     {
-        $caravan = caravan::with('host', 'workflow')->find($caravan_id);
+        $caravan = caravan::with('host', 'workflow','persons.person')->find($caravan_id);
         return view('panel.caravan.view_caravan', compact('caravan'));
     }
 
@@ -260,11 +261,25 @@ class panel_view extends Controller
         return view('panel.caravan.register_to_caravan_form', compact('caravan'));
     }
 
-    public function register_to_caravan_national_code($caravan_id)
+    public function register_to_caravan_post(Request $request)
     {
-        $caravan = caravan::find($caravan_id);
-        return view('panel.caravan.materials.register_to_caravan_national_code', compact('caravan'));
+        $this->validate($request, [
+            'caravan_id' => 'required',
+            'national_code' => 'required',
+        ]);
+        $national_validate = national_code_validation($request['national_code']);
+        if (!$national_validate){
+            $errors[] = trans('messages.national_code_error');
+            return back_error($request ,$errors);
+        }
+        $caravan = caravan::find($request['caravan_id']);
+        $national_code = $request['national_code'];
+        $person = person::where('national_code',$national_code)->first();
+
+        return view('panel.caravan.register_to_caravan_form', compact('caravan','national_code','person'));
     }
+
+
 //end caravan module
 
 

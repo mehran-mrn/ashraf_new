@@ -1,7 +1,12 @@
 @extends('layouts.panel.panel_layout')
-@section('js')
-
+@section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
 @endsection
+
+@section('js')
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+@endsection
+
 @section('content')
     <?php
     $active_sidbare = ['caravans']
@@ -9,25 +14,34 @@
     <!-- Content area -->
     <div class="content">
         <div class="row">
+
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header bg-indigo">
                         <span class="card-title">{{__('messages.persons_list')}}</span>
                     </div>
                     <div class="card-body">
-
+                        @foreach($caravan['persons'] as $person)
+                            <span class="text-danger">{{$person['person']['name']}}</span>
+                        @endforeach
                     </div>
                 </div>
 
             </div>
             <div class="col-md-3">
 
-                <a  target="_blank" href="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}" class="btn bg-danger btn-block btn-float btn-float-lg "
-                        data-popup="tooltip"  data-placement="bottom"
-                        data-container="body" data-original-title="{{trans('messages.new_register')}}">
+                <button class="btn bg-danger btn-block btn-float btn-float-lg modal-ajax-load"
+                        data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}"
+                        data-toggle="modal"
+                        data-modal-title="{{trans('messages.register_form_title')}}"
+                        data-target="#general_modal"
+                        data-popup="tooltip"
+                        data-placement="bottom"
+                        data-container="body"
+                        data-original-title="{{trans('messages.new_register')}}">
                     <i class="icon-user-plus icon-3x"></i>
                     <span>{{trans('messages.new_register')}}</span>
-                </a>
+                </button>
                 <span class="divider"><hr></span>
                 <div class="card">
                     <div class="card-header bg-primary">

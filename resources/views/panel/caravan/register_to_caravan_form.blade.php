@@ -1,48 +1,78 @@
-@extends('layouts.panel.panel_layout')
-@section('js')
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/wizards/steps.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/inputmask.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/extensions/cookie.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/form_wizard_rtl.js') }}"></script>
+<form id="register_national_code">
+@csrf
+<input type="hidden" id="caravan_id" name="caravan_id" value="{{$caravan['id']}}">
+<div class="form-group row">
 
-@endsection
-@section('content')
-    <?php
-    $active_sidbare = ['caravans']
-    ?>
-<?php $rand_id = rand(1, 8000); ?>
-    <!-- Remote content source -->
-    <div class="content">
-        <div class="row">
-            <div class="col-md-12">
+        <label for="national_code"
+               class="col-md-3 text-muted col-form-label ">{{ __('messages.national_code') }}</label>
 
-            <div class="card">
-        <div class="card-header bg-white header-elements-inline">
-            <h6 class="card-title">{{trans('messages.new_register')}}</h6>
-
-        </div>
-
-        <form class="wizard-form steps-async" action="#" data-fouc>
-            <h6>{{trans('messages.national_code')}}</h6>
-            <fieldset data-mode="async" data-url="{{route('register_to_caravan_national_code',['caravan_id'=>'2'])}}"></fieldset>
-
-            <h6>{{trans('messages.additional_info')}}</h6>
-            <fieldset data-mode="async" data-url="{{route('register_to_caravan_national_code',['caravan_id'=>'2'])}}"></fieldset>
-
-            <h6>{{trans('messages.doc_upload')}}</h6>
-            <fieldset data-mode="async" data-url="../../../../global_assets/demo_data/wizard/experience.html"></fieldset>
-
-            <h6>{{trans('messages.final_submit')}}</h6>
-            <fieldset data-mode="async" data-url="../../../../global_assets/demo_data/wizard/additional.html"></fieldset>
-        </form>
-    </div>
-    <!-- /remote content source -->
+        <input id="national_code" type="text" class="col-md-5 form-control"
+               name="national_code"
+               value="{{empty($national_code)?"":$national_code}}" autocomplete="national_code" autofocus>
 
 
-        </div>
-        </div>
-    </div>
+    <button type="button"
+            class="col-md-2 btn btn-outline-info modal-ajax-load-from "
+            data-ajax-link="{{route('register_to_caravan_post')}}"
+            data-form-id="register_national_code"
+            data-method="POST"
+            data-modal-title="{{trans('messages.register_form_title')}}"
+            data-target="#general_modal">
+            <i class="icon-spinner9 mr-2"></i>
+        {{trans('messages.check')}}
+    </button>
 
-@endsection
+</div>
+
+</form>
+@if(!empty($person))
+    <hr>
+
+    @include('panel.caravan.materials.register_to_caravan_subform')
+@elseif(!empty($national_code))
+    <hr>
+
+    @include('panel.caravan.materials.register_to_caravan_subform')
+@endif
+<script type="text/javascript">
+    $("#register_national_code").validate({
+        lang: "fa",
+        rules: {
+
+            national_code: {
+                required: true,
+                maxlength: 10,
+                remote:{
+                    url:"{{route('validate_national_code')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').attr('value'),
+                        'national_code': $('input[name="caravan_id"]').attr('value'),
+                    },
+                    type:"post"
+                }
+            },
+        },
+        submitHandler: function (form) {
+            var form_btn = $(form).find('button[type="submit"]');
+            var form_result_div = '#form-result';
+            $(form_result_div).remove();
+            form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+            var form_btn_old_msg = form_btn.html();
+            form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+            $(form).ajaxSubmit({
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 'true') {
+                        $(form).find('.form-control').val('');
+                    }
+                    form_btn.prop('disabled', false).html(form_btn_old_msg);
+                    $(form_result_div).html(data.message).fadeIn('slow');
+                    setTimeout(function () {
+                        $(form_result_div).fadeOut('slow')
+                    }, 6000);
+                }
+            });
+        }
+    });
+</script>
