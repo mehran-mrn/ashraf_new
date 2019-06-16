@@ -57,6 +57,7 @@ return [
     'home'=>'خانه',
     'register'=>'عضویت',
     'new_register'=>'ثبت نام جدید',
+    'final_register'=>'ثبت نهایی',
     'submit'=>'ثبت',
     'delete'=>'حذف',
     'edit'=>'ویرایش',
@@ -121,6 +122,8 @@ return [
     'mr'=>"آقا",
     'mrs'=>"خانم",
     'no_limit'=>"بدون محدودیت",
+    'count'=>"تعداد",
+    'action'=>"اعمال",
 
     'user_created'=>'حساب کاربری با موفقیت ایجاد شد',
     'please_waite'=>'منتظر بمانید...',

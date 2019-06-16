@@ -102,6 +102,7 @@ $(document).ready(function(){
         var form_id = this.getAttribute("data-form-id");
         var method = this.getAttribute("data-method");
         // $(target+" .modal-body").load(ajax_link);
+
         $.ajax({
             url:ajax_link,
             type: method,
