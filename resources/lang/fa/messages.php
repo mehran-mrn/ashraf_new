@@ -169,5 +169,17 @@ return [
     'slug'=>'اسلاگ',
     'tages'=>'تگ ها',
     'enter_title'=>'عنوان را وارد نمایید...',
-    'categories_list'=>'لیست دسته بندی ها'
+    'categories_list'=>'لیست دسته بندی ها',
+    'gateway'=>'درگاه',
+    'gateway_pay'=>'درگاه پرداخت',
+    'branch'=>'شعبه',
+    'sheba_number'=>'شماره شبا',
+    'bank_name'=>'نام بانک',
+    'account_number'=>'شماره حساب',
+    'bank_information'=>'اطلاعات بانک',
+    'card_number'=>'شماره کارت',
+    'gateway_pay_info'=>'اطلاعات درگاه پرداخت',
+    'merchent_id'=>'مرچنت آی دی',
+    'public_key'=>'کلید عمومی',
+    'terminal_id'=>'کلید ترمینال'
 ];

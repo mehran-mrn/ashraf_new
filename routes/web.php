@@ -90,6 +90,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     Route::prefix('setting')->group(function () {
         Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
+        Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
+        Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
     });
 
     Route::prefix('ajax')->group(function () {
@@ -247,3 +249,10 @@ Route::group(compact('prefix', 'as', 'namespace'), function () {
 //=========================================
 
 
+Route::get('glide/{path}', function($path){
+    $server = \League\Glide\ServerFactory::create([
+        'source' => app('filesystem')->disk('public')->getDriver(),
+        'cache' => storage_path('glide'),
+    ]);
+    return $server->getImageResponse($path, Input::query());
+})->where('path', '.+');

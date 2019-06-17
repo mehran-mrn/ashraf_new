@@ -131,6 +131,10 @@ if (!isset($active_sidbare)) {
                                                 class="nav-link {{in_array("cities_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.cities')}}</a>
                         </li>
 
+                        <li class="nav-item"><a href="{{route('gateway_setting')}}"
+                                                class="nav-link {{in_array("gateway_setting", $active_sidbare) ? 'active' : '' }}">{{trans('messages.gateway_pay')}}</a>
+                        </li>
+
                     </ul>
                 </li>
 

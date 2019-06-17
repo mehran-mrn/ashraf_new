@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.9.0",
         "axios": "^0.18",
         "bootstrap": "^4.1.0",
         "cross-env": "^5.1",
@@ -19,12 +20,11 @@
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.21.0",
-        "sass-loader": "^7.1.0",
-        "vue": "^2.5.17"
+        "sass-loader": "^7.1.0"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-decoupled-document": "^12.2.0",
-        "ckeditor": "^4.11.4",
+        "jquery-colorbox": "^1.6.4",
+        "laravel-file-manager": "^2.3.1",
         "md.bootstrappersiandatetimepicker": "^3.4.7",
         "nestable2": "^1.6.0",
         "pnotify": "^4.0.0",

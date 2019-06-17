@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\bank;
 use App\blog;
 use App\blog_categories;
 use App\caravan_host;
@@ -288,6 +289,17 @@ class panel_view extends Controller
     {
         $cities = city::where('parent', '0')->orderBy('name')->paginate(32);
         return view('panel.setting.cities_list', compact('cities'));
+    }
+
+    public function gateway_setting()
+    {
+        return view('panel.setting.gateway_setting');
+    }
+
+    public function gateway_add()
+    {
+        $banks = bank::get();
+        return view('panel.setting.gateway_add',compact('banks'));
     }
 //end setting module
 
