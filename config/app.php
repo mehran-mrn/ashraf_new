@@ -166,8 +166,6 @@ return [
         Laratrust\LaratrustServiceProvider::class,
         Nestable\NestableServiceProvider::class,
 
-
-        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
         /*

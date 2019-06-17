@@ -70,20 +70,11 @@
         <div class="col-md-6">
             <div class="input-group">
                 <span class="input-group-btn">
-                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                    <i class="fa fa-picture-o"></i> انتخاب لوگو
-                    </a>
+                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i class="fa fa-picture-o"></i> انتخاب لوگو</a>
                 </span>
                 <input id="thumbnail" class="form-control" type="text" name="filepath">
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="logo">{{__('messages.logo')}}</label>
-            <input type="text" name="logo" id="logo" class="form-control">
-        </div>
-    </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -122,10 +113,8 @@
 <script>
     $('.form-check-input-styled').uniform();
     var route_prefix = {{env('url')}}"/laravel-filemanager";
-    (function ($) {
         $.fn.filemanager = function (type, options) {
             type = type || 'file';
-
             this.on('click', function (e) {
                 var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
                 localStorage.setItem('target_input', $(this).data('input'));
@@ -134,8 +123,6 @@
                 return false;
             });
         }
-    })(jQuery);
-
 
     function SetUrl(url, file_path) {
         //set the value of the desired input to image url

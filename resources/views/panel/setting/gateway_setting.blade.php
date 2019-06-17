@@ -4,6 +4,7 @@
 @endsection
 @section('js')
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+
 @endsection
 @section('css')
 @endsection
