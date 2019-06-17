@@ -8,6 +8,7 @@ use App\blog_categories;
 use App\caravan_host;
 use App\category;
 use App\city;
+use App\gateway;
 use App\Permission;
 use App\person;
 use App\Role;
@@ -178,7 +179,7 @@ class panel_view extends Controller
     {
         $posts = \App\blog::with('blog_categories.category')->get();
         $postCount = blog::count();
-        return view('panel.blog.post_list', compact('posts','postCount'));
+        return view('panel.blog.post_list', compact('posts', 'postCount'));
     }
 
     public function post_edit_form(Request $request)
@@ -203,7 +204,7 @@ class panel_view extends Controller
     public function category_edit_form(Request $request)
     {
         $cat_info = category::find($request['cat_id']);
-        return view('panel.blog.category_edit',compact('cat_info'));
+        return view('panel.blog.category_edit', compact('cat_info'));
     }
 //end blog module
 
@@ -252,7 +253,7 @@ class panel_view extends Controller
 
     public function caravan($caravan_id)
     {
-        $caravan = caravan::with('host', 'workflow','persons.person')->find($caravan_id);
+        $caravan = caravan::with('host', 'workflow', 'persons.person')->find($caravan_id);
         return view('panel.caravan.view_caravan', compact('caravan'));
     }
 
@@ -269,15 +270,15 @@ class panel_view extends Controller
             'national_code' => 'required',
         ]);
         $national_validate = national_code_validation($request['national_code']);
-        if (!$national_validate){
+        if (!$national_validate) {
             $errors[] = trans('messages.national_code_error');
-            return back_error($request ,$errors);
+            return back_error($request, $errors);
         }
         $caravan = caravan::find($request['caravan_id']);
         $national_code = $request['national_code'];
-        $person = person::where('national_code',$national_code)->first();
+        $person = person::where('national_code', $national_code)->first();
 
-        return view('panel.caravan.register_to_caravan_form', compact('caravan','national_code','person'));
+        return view('panel.caravan.register_to_caravan_form', compact('caravan', 'national_code', 'person'));
     }
 
 
@@ -293,14 +294,39 @@ class panel_view extends Controller
 
     public function gateway_setting()
     {
-        return view('panel.setting.gateway_setting');
+        $gateways = gateway::get();
+        return view('panel.setting.gateway_setting', compact('gateways'));
     }
 
     public function gateway_add()
     {
-        $banks = bank::get();
-        return view('panel.setting.gateway_add',compact('banks'));
+        $banks = bank::groupBy('name')->get();
+        return view('panel.setting.gateway_add', compact('banks'));
     }
+
 //end setting module
+
+//store module
+    public function product_add()
+    {
+        return view('panel.store.product_add');
+    }
+    public function product_list()
+    {
+        return view('panel.store.product_list');
+    }
+    public function discount_code()
+    {
+        return view('panel.store.discount_code');
+    }
+    public function manage_orders()
+    {
+        return view('panel.store.manage_orders');
+    }
+    public function store_setting()
+    {
+        return view('panel.store.store_setting');
+    }
+//end store module
 
 }

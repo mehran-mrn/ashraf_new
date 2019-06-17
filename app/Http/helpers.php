@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 /**
@@ -84,7 +85,7 @@ function get_team($team_id = null)
     return $team;
 }
 
-function image_saver($image_input, $folder, $module, $custom_size = [],$image_name=null)
+function image_saver($image_input, $folder = 'photos', $module = 'none', $custom_size = [], $image_name = null)
 {
 //    $request->validate([
 //        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
@@ -99,11 +100,10 @@ function image_saver($image_input, $folder, $module, $custom_size = [],$image_na
 //    $image = $request->file('image');
     $image = $image_input;
     $destinationPath = 'public/images/' . $folder;
-    if (empty($image_name)){
+    if (empty($image_name)) {
         $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
-    }
-    else{
-        $image_name =  pathinfo($image_name)['filename'] .'.' . $image->getClientOriginalExtension();
+    } else {
+        $image_name = pathinfo($image_name)['filename'] . '.' . $image->getClientOriginalExtension();
 
     }
 
@@ -128,7 +128,7 @@ function image_saver($image_input, $folder, $module, $custom_size = [],$image_na
             'mime' => $image->getClientMimeType(),
             'module' => $module,
             'size' => "1",
-            'type'=>"image"
+            'type' => "image"
         ]);
     }
 
@@ -141,13 +141,43 @@ function image_saver($image_input, $folder, $module, $custom_size = [],$image_na
         'mime' => $image->getClientMimeType(),
         'module' => $module,
         'size' => "1",
-        'type'=>"image"
+        'type' => "image"
     ]);
     $media_id = $media_info->id;
 
     return $media_id;
 }
-function private_image_saver($image_input, $folder, $module,$image_name=null)
+
+function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_size = [], $image_name = null)
+{
+
+//    $image = $request->file('image');
+    $image = $image_input;
+    $p = explode("public/", $folder);
+    $destinationPath = 'public/' . $p[1];
+    $id = \App\media::create([
+        'name' => ' ',
+        'url' => ' ',
+        'path' => $destinationPath,
+        'org_name' => $image->getClientOriginalName(),
+        'mime' => $image->getClientMimeType(),
+        'module' => $module,
+        'size' => "1",
+        'type' => "image"
+    ]);
+    $image_name = $id->id . '__' . $image->getClientOriginalName() . $image->getClientOriginalExtension();
+    \App\media::where('id', $id->id)->update(
+        [
+            'name' => $image_name,
+            'url' => $destinationPath,
+        ]
+    );
+    $media_id = $id->id;
+
+    return $media_id;
+}
+
+function private_image_saver($image_input, $folder, $module, $image_name = null)
 {
 //    $request->validate([
 //        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
@@ -161,11 +191,10 @@ function private_image_saver($image_input, $folder, $module,$image_name=null)
 //    $image = $request->file('image');
     $image = $image_input;
     $destinationPath = 'storage/user_doc/' . $folder;
-    if (empty($image_name)){
+    if (empty($image_name)) {
         $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
-    }
-    else{
-        $image_name =  pathinfo($image_name)['filename'] .'.' . $image->getClientOriginalExtension();
+    } else {
+        $image_name = pathinfo($image_name)['filename'] . '.' . $image->getClientOriginalExtension();
 
     }
     $image->move($destinationPath, $image_name);
@@ -202,46 +231,45 @@ function user_information($type)
 
 function get_cites($id = null)
 {
-    if ($id){
+    if ($id) {
         $cities = \App\city::find($id);
-    }
-    else{
-        $cities = \App\city::where('parent','!=','0')->get();
+    } else {
+        $cities = \App\city::where('parent', '!=', '0')->get();
     }
     return $cities;
 }
 
 function get_provinces($id = null)
 {
-    if ($id){
+    if ($id) {
         $provinces = \App\city::find($id);
-    }
-    else{
-        $provinces = \App\city::where('parent','0')->get();
+    } else {
+        $provinces = \App\city::where('parent', '0')->get();
     }
     return $provinces;
 }
 
-function national_code_validation($natinoal_code){
-    if(!preg_match('/^[0-9]{10}$/',$natinoal_code))
+function national_code_validation($natinoal_code)
+{
+    if (!preg_match('/^[0-9]{10}$/', $natinoal_code))
         return false;
-    for($i=0;$i<10;$i++)
-        if(preg_match('/^'.$i.'{10}$/',$natinoal_code))
+    for ($i = 0; $i < 10; $i++)
+        if (preg_match('/^' . $i . '{10}$/', $natinoal_code))
             return false;
-    for($i=0,$sum=0;$i<9;$i++)
-        $sum+=((10-$i)*intval(substr($natinoal_code, $i,1)));
-    $ret=$sum%11;
-    $parity=intval(substr($natinoal_code, 9,1));
-    if(($ret<2 && $ret==$parity) || ($ret>=2 && $ret==11-$parity))
+    for ($i = 0, $sum = 0; $i < 9; $i++)
+        $sum += ((10 - $i) * intval(substr($natinoal_code, $i, 1)));
+    $ret = $sum % 11;
+    $parity = intval(substr($natinoal_code, 9, 1));
+    if (($ret < 2 && $ret == $parity) || ($ret >= 2 && $ret == 11 - $parity))
         return true;
     return false;
 }
+
 function get_hosts($id = null)
 {
-    if ($id){
+    if ($id) {
         $host = \App\caravan_host::find($id);
-    }
-    else{
+    } else {
         $host = \App\caravan_host::get();
     }
     return $host;
@@ -254,25 +282,23 @@ function shamsi_to_miladi($input)
     // yyyy-mm-dd
     // yyyy-mm-dd hh:MM:ss
 
-    $input = str_replace("    "," ",$input);
-    $input = str_replace("   "," ",$input);
-    $input = str_replace("  "," ",$input);
-    $date_array = explode(" ",$input);
-    $date =$date_array[0];
+    $input = str_replace("    ", " ", $input);
+    $input = str_replace("   ", " ", $input);
+    $input = str_replace("  ", " ", $input);
+    $date_array = explode(" ", $input);
+    $date = $date_array[0];
     $time = (empty($date_array[1]) ? "00:00:00" : $date_array[1]);
-    if (strpos($date,'-') > 0 and strpos($date,'/') == false){
+    if (strpos($date, '-') > 0 and strpos($date, '/') == false) {
         $new_date = explode("-", $date);
-    }
-    elseif (strpos($date,"-") == false and strpos($date,"/") > 0){
+    } elseif (strpos($date, "-") == false and strpos($date, "/") > 0) {
         $new_date = explode("/", $date);
-    }
-    else{
+    } else {
         return false;
     }
     $new_date_day = $new_date[2];
     $new_date_month = $new_date[1];
     $new_date_year = $new_date[0];
-    if ($new_date_year > 1800){//if input is not shamsi date
+    if ($new_date_year > 1800) {//if input is not shamsi date
         return false;
     }
 
@@ -283,9 +309,9 @@ function shamsi_to_miladi($input)
 
 }
 
-function miladi_to_shamsi_date($date = null,$be_array=null)
+function miladi_to_shamsi_date($date = null, $be_array = null)
 {  //2017-01-01 20:30:00
-    if (!isset($date)){
+    if (!isset($date)) {
         $date = date("Y-m-d");
     }
     $new_date = explode(" ", $date);
@@ -294,11 +320,10 @@ function miladi_to_shamsi_date($date = null,$be_array=null)
     $new_date_day = $new_date[2];
     $new_date_month = $new_date[1];
     $new_date_year = $new_date[0];
-    if (!empty($be_array)){
+    if (!empty($be_array)) {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day);
 
-    }
-    else{
+    } else {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day, "-");
     }
     return $date_jalali;
@@ -327,5 +352,11 @@ function latin_num($string)
     return $string;
 }
 
+function get_file_id($fileName)
+{
+    $exe = explode('/', $fileName);
+    $fileInfo = explode("__", $exe[sizeof($exe) - 1]);
+    return $fileInfo[0];
+}
 
 

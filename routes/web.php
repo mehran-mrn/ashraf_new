@@ -92,6 +92,20 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
         Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
+        Route::post('gateway_add', 'panel\setting@gateway_add')->name('gateway_add_store');
+        Route::get('gateway_edit', 'panel\panel_view@gateway_edit')->name('gateway_edit');
+        Route::post('gateway_update', 'panel\setting@gateway_update')->name('gateway_update');
+        Route::get('gateway_delete/{gateway_id}', 'panel\setting@gateway_delete')->name('gateway_delete');
+    });
+
+
+
+    Route::prefix('store')->group(function () {
+        Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
+        Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
+        Route::get('discount_code', 'panel\panel_view@discount_code')->name('discount_code');
+        Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
+        Route::get('store_setting', 'panel\panel_view@store_setting')->name('store_setting');
     });
 
     Route::prefix('ajax')->group(function () {

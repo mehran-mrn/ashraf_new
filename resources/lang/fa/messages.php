@@ -184,5 +184,12 @@ return [
     'gateway_pay_info'=>'اطلاعات درگاه پرداخت',
     'merchent_id'=>'مرچنت آی دی',
     'public_key'=>'کلید عمومی',
-    'terminal_id'=>'کلید ترمینال'
+    'terminal_id'=>'کلید ترمینال',
+
+    'store'=>'فروشگاه',
+    'product_add'=>'افزودن محصول',
+    'product_list'=>'لیست محصولات',
+    'store_setting'=>'تنظیمات فروشگاه',
+    'manage_orders'=>'مدیریت سفارشات',
+    'discount_code'=>'کد تخفیف'
 ];

@@ -1,4 +1,5 @@
-<form action="" method="post">
+<form action="{{route('gateway_add_store')}}" method="post" id="frm_gateway_add">
+    @csrf
     <div class="row">
         <div class="col-md-12">
             <h5>{{__('messages.bank_information')}}</h5>
@@ -15,7 +16,7 @@
         <div class="col-md-6">
             <label for="account_number">{{__('messages.account_number')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
-                <input type="number" class="form-control text-right" name="account_number" id="account_number">
+                <input type="number" class="form-control text-right" maxlength="15" name="account_number" id="account_number">
                 <div class="form-control-feedback form-control-feedback-lg">
                     <i class="icon-check"></i>
                 </div>
@@ -24,7 +25,7 @@
         <div class="col-md-6">
             <label for="account_sheba">{{__('messages.sheba_number')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
-                <input type="text" class="form-control text-right" name="account_sheba" id="account_sheba">
+                <input type="number" class="form-control text-right" maxlength="24" name="account_sheba" id="account_sheba">
                 <div class="form-control-feedback form-control-feedback-lg">
                     IR
                 </div>
@@ -34,7 +35,7 @@
             <div class="form-group">
                 <label for="bank_branch">{{__('messages.branch')}}</label>
                 <div class="form-group form-group-feedback form-group-feedback-right">
-                    <input type="number" name="bank_branch" id="bank_branch" class="form-control">
+                    <input type="text" name="bank_branch" id="bank_branch" class="form-control">
                     <div class="form-control-feedback form-control-feedback-lg">
                         <i class="icon-git-branch"></i>
                     </div>
@@ -65,14 +66,6 @@
                            data-fouc>
                     <span class="text-danger">غیر فعال</span>
                 </label>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i class="fa fa-picture-o"></i> انتخاب لوگو</a>
-                </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath">
             </div>
         </div>
     </div>
@@ -107,34 +100,155 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i
+                            class="fa fa-picture-o"></i> انتخاب لوگو</a>
+                </span>
+                <input id="thumbnail" class="form-control" type="text" name="filepath">
+                <img id="holder" style="margin-top:15px;max-height:100px;">
+            </div>
+        </div>
     </div>
-
+    <div class="d-flex justify-content-center">
+        <div class="p-3">
+            <button type="submit" class="btn btn-primary px-5">{{__('messages.submit')}}</button>
+        </div>
+    </div>
 </form>
 <script>
     $('.form-check-input-styled').uniform();
+
+
     var route_prefix = {{env('url')}}"/laravel-filemanager";
+
+    (function ($) {
+
         $.fn.filemanager = function (type, options) {
             type = type || 'file';
+
             this.on('click', function (e) {
                 var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-                localStorage.setItem('target_input', $(this).data('input'));
-                localStorage.setItem('target_preview', $(this).data('preview'));
+                var target_input = $('#' + $(this).data('input'));
+                var target_preview = $('#' + $(this).data('preview'));
                 window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
+                window.SetUrl = function (items) {
+                    var file_path = items.map(function (item) {
+                        console.log(item.url);
+                        return item.url;
+                    }).join(',');
+
+                    // set the value of the desired input to image url
+                    target_input.val('').val(file_path).trigger('change');
+
+                    // clear previous preview
+                    target_preview.html('');
+
+                    // set or change the preview image src
+                    items.forEach(function (item) {
+                        target_preview.append(
+                            $('<img>').css('height', '5rem').attr('src', item.thumb_url)
+                        );
+                    });
+
+                    // trigger change event
+                    target_preview.trigger('change');
+                };
                 return false;
             });
         }
 
-    function SetUrl(url, file_path) {
-        //set the value of the desired input to image url
-        var target_input = $('#' + localStorage.getItem('target_input'));
-        target_input.val(file_path);
+    })(jQuery);
 
-        //set or change the preview image src
-        var target_preview = $('#' + localStorage.getItem('target_preview'));
-        target_preview.attr('src', url);
-    }
 
     $('#lfm').filemanager('image', {prefix: route_prefix});
 
+
+    $("#frm_gateway_add").validate({
+        lang: "fa",
+        rules: {
+            name: {
+                required: true,
+            },
+            account_number: {
+                required: false,
+                number: true,
+                minlength: 5,
+                maxlength: 100,
+            },
+            account_sheba: {
+                required: false,
+                number: true,
+                minlength: 24,
+                maxlength: 24,
+            },
+            bank_branch: {
+                required: false,
+            },
+            card_number: {
+                required: false,
+                minlength: 16,
+                maxlength: 16
+            },
+            merchent_id: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+                number: true,
+            },
+            public_key: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            terminal_id: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+                number: true,
+            }
+        },
+        submitHandler: function (form) {
+            var form_btn = $(form).find('button[type="submit"]');
+            var form_result_div = '#form-result';
+            $(form_result_div).remove();
+            form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+            var form_btn_old_msg = form_btn.html();
+            form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+            $(form).ajaxSubmit({
+                dataType: '',
+                success: function (data) {
+                    PNotify.success({
+                        text: data.message,
+                        delay: 3000,
+                    });
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
+                    $(form).find('.form-control').val('');
+                    $(form_btn).html(form_btn_old_msg);
+                    $(form_result_div).html(data.message).fadeIn('slow');
+                    setTimeout(function () {
+                        $(form_result_div).fadeOut('slow')
+                    }, 3000);
+                }, error: function (response) {
+                    var errors = response.responseJSON.errors;
+                    $.each(errors, function (index, value) {
+                        PNotify.error({
+                            delay: 3000,
+                            title: index,
+                            text: value,
+                        });
+                    });
+                    setTimeout(function () {
+                        $('[type="submit"]').prop('disabled', false);
+                    }, 2500);
+                    $(form_btn).html(form_btn_old_msg);
+
+                }
+            });
+        }
+    });
 </script>
 <?php

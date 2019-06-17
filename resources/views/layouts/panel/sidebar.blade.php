@@ -61,26 +61,7 @@ if (!isset($active_sidbare)) {
                     </a>
                 </li>
 
-                <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i>
-                        <span>{{trans('messages.users_management')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
-                        style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
-                        <li class="nav-item"><a href="{{route('users_list')}}"
-                                                class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a>
-                        </li>
-                        <li class="nav-item"><a href="{{route('permissions_list')}}"
-                                                class="nav-link {{in_array("permissions_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.permissions_list')}}</a>
-                        </li>
-                        <li class="nav-item"><a href="{{route('roles_list')}}"
-                                                class="nav-link {{in_array("roles_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.roles_list')}}</a>
-                        </li>
-                        <li class="nav-item"><a href="{{route('teams_list')}}"
-                                                class="nav-link {{in_array("teams_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.teams_list')}}</a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
@@ -99,7 +80,34 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+                <li class="nav-item nav-item-submenu {{in_array("store", $active_sidbare) ? ' nav-item-open' : '' }}">
+                    <a href="#" class=" nav-link"><i class="icon-cart"></i>
+                        <span>{{trans('messages.store')}}</span></a>
 
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("store", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('product_add')}}"
+                                                class="nav-link {{in_array("product_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_add')}}</a>
+                        </li>
+
+                        <li class="nav-item"><a href="{{route('product_list')}}"
+                                                class="nav-link {{in_array("product_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_list')}}</a>
+                        </li>
+
+                        <li class="nav-item"><a href="{{route('discount_code')}}"
+                                                class="nav-link {{in_array("discount_code", $active_sidbare) ? 'active' : '' }}">{{trans('messages.discount_code')}}</a>
+                        </li>
+
+                        <li class="nav-item"><a href="{{route('manage_orders')}}"
+                                                class="nav-link {{in_array("manage_orders", $active_sidbare) ? 'active' : '' }}">{{trans('messages.manage_orders')}}</a>
+                        </li>
+
+                        <li class="nav-item"><a href="{{route('store_setting')}}"
+                                                class="nav-link {{in_array("store_setting", $active_sidbare) ? 'active' : '' }}">{{trans('messages.store_setting')}}</a>
+                        </li>
+
+                    </ul>
+                </li>
                 <li class="nav-item nav-item-submenu {{in_array("caravans", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>
@@ -120,7 +128,26 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+                <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-users4"></i>
+                        <span>{{trans('messages.users_management')}}</span></a>
 
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('users_list')}}"
+                                                class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('permissions_list')}}"
+                                                class="nav-link {{in_array("permissions_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.permissions_list')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('roles_list')}}"
+                                                class="nav-link {{in_array("roles_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.roles_list')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('teams_list')}}"
+                                                class="nav-link {{in_array("teams_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.teams_list')}}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item nav-item-submenu {{in_array("setting", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-gear"></i>
                         <span>{{trans('messages.setting')}}</span></a>
