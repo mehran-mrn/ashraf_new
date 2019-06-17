@@ -1,10 +1,18 @@
 @extends('layouts.panel.panel_layout')
 @section('css')
-    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
 @endsection
 
 @section('js')
+    <!-- Theme JS files -->
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/extensions/jquery_ui/widgets.min.js')}}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/natural_sort.js')}}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/task_manager_list.js')}}"></script>
+
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <!-- /theme JS files -->
 @endsection
 
 @section('content')
@@ -21,27 +29,78 @@
                         <span class="card-title">{{__('messages.persons_list')}}</span>
                     </div>
                     <div class="card-body">
-                        @foreach($caravan['persons'] as $person)
-                            <span class="text-danger">{{$person['person']['name']}}</span>
-                        @endforeach
+
+                        <table class="table tasks-list table-lg">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Period</th>
+                                <th>{{trans('messages.name')}}</th>
+                                <th>{{trans('messages.national_code')}}</th>
+                                <th>{{trans('messages.birth_date')}}</th>
+                                <th>{{trans('messages.count')}}</th>
+                                <th>{{trans('messages.action')}}</th>
+                                <th class="text-center text-muted" style="width: 30px;"><i class="icon-checkmark3"></i>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach($caravan['persons'] as $person)
+                                <tr>
+                                    <td></td>
+                                    <td>{{$person['parent_id']}}</td>
+                                    <td>{{$person['person']['name'] ." - ". $person['person']['family']}}</td>
+                                    <td>{{$person['person']['national_code']}}</td>
+                                    <td>{{miladi_to_shamsi_date($person['person']['birth_date'])}} </td>
+                                    <td><span class="badge badge-success">1</span></td>
+                                    <td>
+                                        <button class="float-right btn alpha-info border-info-400 text-info-800 btn-icon  ml-2">
+                                            <i class="icon-list"></i>
+                                        </button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
             </div>
             <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-6">
 
-                <button class="btn bg-danger btn-block btn-float btn-float-lg modal-ajax-load"
-                        data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}"
-                        data-toggle="modal"
-                        data-modal-title="{{trans('messages.register_form_title')}}"
-                        data-target="#general_modal"
-                        data-popup="tooltip"
-                        data-placement="bottom"
-                        data-container="body"
-                        data-original-title="{{trans('messages.new_register')}}">
-                    <i class="icon-user-plus icon-3x"></i>
-                    <span>{{trans('messages.new_register')}}</span>
-                </button>
+                        <button class="btn bg-danger btn-block btn-float btn-float-lg modal-ajax-load"
+                                data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}"
+                                data-toggle="modal"
+                                data-modal-title="{{trans('messages.register_form_title')}}"
+                                data-target="#general_modal"
+                                data-popup="tooltip"
+                                data-placement="bottom"
+                                data-container="body"
+                                data-original-title="{{trans('messages.new_register')}}">
+                            <i class="icon-user-plus icon-3x"></i>
+                            <span>{{trans('messages.new_register')}}</span>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+
+                        <button class="btn bg-info btn-block btn-float btn-float-lg modal-ajax-load"
+                                data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}"
+                                data-toggle="modal"
+                                data-modal-title="{{trans('messages.register_form_title')}}"
+                                data-target="#general_modal"
+                                data-popup="tooltip"
+                                data-placement="bottom"
+                                data-container="body"
+                                data-original-title="{{trans('messages.final_register')}}">
+                            <i class="icon-checkmark5 icon-3x"></i>
+                            <span>{{trans('messages.final_register')}}</span>
+                        </button>
+                    </div>
+                </div>
                 <span class="divider"><hr></span>
                 <div class="card">
                     <div class="card-header bg-primary">

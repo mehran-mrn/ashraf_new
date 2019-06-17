@@ -17,6 +17,7 @@ class CreatePersonCaravansTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('caravan_id');
             $table->unsignedInteger('person_id');
+            $table->unsignedInteger('parent_id')->nullable();
             $table->dateTime('exit_date')->nullable();
             $table->string('comment')->nullable();
             $table->boolean('accepted')->default('0');
