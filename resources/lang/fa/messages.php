@@ -191,5 +191,11 @@ return [
     'product_list'=>'لیست محصولات',
     'store_setting'=>'تنظیمات فروشگاه',
     'manage_orders'=>'مدیریت سفارشات',
-    'discount_code'=>'کد تخفیف'
+    'discount_code'=>'کد تخفیف',
+    'expire_date'=>'تاریخ انتضاء',
+    'discount_persent'=>'درصد تخفیف',
+    'discount_maximum'=>'حداکثر تخفیف',
+    'usage_count_per_user'=>'تعداد استفاده هر کاربر',
+    'add_discount_code'=>'افزودن کد تخفیف',
+    'product_category'=>'دسته بندی محصولات'
 ];

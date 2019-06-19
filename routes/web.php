@@ -103,9 +103,16 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
-        Route::get('discount_code', 'panel\panel_view@discount_code')->name('discount_code');
+        Route::get('product_category', 'panel\panel_view@product_category')->name('product_category');
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
         Route::get('store_setting', 'panel\panel_view@store_setting')->name('store_setting');
+
+        Route::get('discount_code', 'panel\panel_view@discount_code')->name('discount_code');
+        Route::get('discount_add_form', 'panel\panel_view@discount_add_form')->name('discount_add_form');
+        Route::post('discount_add', 'panel\store@discount_add')->name('discount_add');
+        Route::post('check_discount_code', 'panel\store@check_discount_code')->name('check_discount_code');
+
+
     });
 
     Route::prefix('ajax')->group(function () {

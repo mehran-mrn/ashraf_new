@@ -327,6 +327,16 @@ class panel_view extends Controller
     {
         return view('panel.store.store_setting');
     }
+
+    public function discount_add_form()
+    {
+        return view('panel.store.discount.discount_add_form');
+    }
+
+    public function product_category()
+    {
+        return view('panel.store.product_category');
+    }
 //end store module
 
 }
