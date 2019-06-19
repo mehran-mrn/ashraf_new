@@ -17,7 +17,7 @@
             <div class="form-group">
             <span class="input-group-btn">
                     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i
-                            class="fa fa-picture-o"></i> انتخاب لوگو</a>
+                            class="fa fa-picture-o"></i>{{__('messages.select_image')}}</a>
                 </span>
                 <input id="thumbnail" class="form-control" type="text" name="filepath">
                 <img id="holder" style="margin-top:15px;max-height:100px;">
@@ -29,7 +29,6 @@
     </div>
 </form>
 <script>
-    $('.form-check-input-styled').uniform();
 
     var route_prefix = {{env('url')}}"/laravel-filemanager";
 

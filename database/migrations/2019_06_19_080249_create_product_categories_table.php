@@ -19,6 +19,8 @@ class CreateProductCategoriesTable extends Migration
             $table->string('description')->nullable();
             $table->integer('icon_id');
             $table->string('icon');
+            $table->integer('parent_id')->default(0);
+            $table->integer('sort')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

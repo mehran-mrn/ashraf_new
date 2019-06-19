@@ -41,4 +41,11 @@ class store extends Controller
         $message = trans("messages.category_added");
         return back_normal($request, $message);
     }
+
+    public function product_category_delete(Request $request)
+    {
+        $car = product_category::find($request['cat_id']);
+        $car->delete();
+
+    }
 }

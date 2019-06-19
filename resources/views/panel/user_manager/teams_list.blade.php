@@ -20,7 +20,7 @@
                             $.ajax({
                                 url: "{{route('update_nestable_teams')}}",
                                 type: "post",
-                                data: {sortval: $("#nestable_list_ajax_output_1").val()},
+                                data: {sortval: $("#nestable_list_ajax_output_1").val(),table:"teams"},
                                 headers: {
                                     'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                                 },
@@ -76,7 +76,7 @@
             <div class="card-body">
                 {{csrf_field()}}
                 <div class="dd" id="nestable_ajax_1">
-                    {!! NestableTableGetData(1)!!}
+                    {!! NestableTableGetData(1,0,'','','teams',true)!!}
                 </div>
                 <div id="nestable_sort_result_1"></div>
                 <textarea title="nestable_list_ajax_output_1" id="nestable_list_ajax_output_1"

@@ -74,6 +74,7 @@ class user_manager extends Controller
          Team::create([
             'name' => $request->name ,
             'display_name' => $request->display_name ,
+            'parent_id'=>0,
             'description' =>  $request->description ,
         ]);
         $message =trans("messages.item_created",['item'=>trans('messages.team')]);
@@ -169,7 +170,7 @@ class user_manager extends Controller
     public function teams_list_update(Request $request)
     {
         $jde = json_decode($request->sortval, true);
-        NesatableUpdateSort(0, $jde);
+        NesatableUpdateSort(0, $jde,$request->table);
 
         $message =trans("messages.item_created",['item'=>trans('messages.team_sorted')]);
         return back_normal($request,"ok");
