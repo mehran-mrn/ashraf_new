@@ -197,5 +197,6 @@ return [
     'discount_maximum'=>'حداکثر تخفیف',
     'usage_count_per_user'=>'تعداد استفاده هر کاربر',
     'add_discount_code'=>'افزودن کد تخفیف',
-    'product_category'=>'دسته بندی محصولات'
+    'product_category'=>'دسته بندی محصولات',
+    'add_product_category'=>'افزودن دسته بندی محصولات'
 ];

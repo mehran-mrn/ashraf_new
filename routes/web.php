@@ -103,7 +103,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
+
         Route::get('product_category', 'panel\panel_view@product_category')->name('product_category');
+        Route::get('product_category_add_form', 'panel\panel_view@product_category_add')->name('product_category_add_form');
+        Route::post('product_category_add', 'panel\store@product_category_add')->name('product_category_add');
+
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
         Route::get('store_setting', 'panel\panel_view@store_setting')->name('store_setting');
 
