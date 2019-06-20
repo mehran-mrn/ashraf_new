@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use App\Team;
 
 /**
  * Created by PhpStorm.
@@ -32,14 +33,19 @@ function back_normal($request, $message = null)
     return back()->with('message', $message);
 }
 
-function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
+function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "", $table, $addOne = false)
 {
     $html = '';
-    $selects = \App\Team::where('parent_id', $parent)->get();
+//    $selects = Team::where('parent_id', $parent)->get();
+    $selects = \Illuminate\Support\Facades\DB::table($table)->where('parent_id', $parent)->get();
     if (sizeof($selects) >= 1) {
         $html .= '<ol class="dd-list dd-list-rtl" id="nestable_dd_list_' . $id . '">';
         foreach ($selects as $select) {
-            $title = $select->display_name;
+            if (key_exists('display_name', $select)) {
+                $title = $select->display_name;
+            } elseif (key_exists('title', $select)) {
+                $title = $select->title;
+            }
             $html .= '
             <li class="dd-item dd3-item" data-id="' . $select->id . '">
                 <div class="dd-handle dd3-handle"></div>
@@ -48,10 +54,12 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
             if (isset($extra_float[$select->id])) {
                 $html .= $extra_float[$select->id];
             }
-            $html .= '
-                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>
-                </span></div>';
-            $html .= NestableTableGetData($id, $select->id, $extra_float, $module);
+            if ($addOne == true) {
+                $html .= '
+                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
+            }
+            $html .= '</span></div>';
+            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table,$addOne);
             $html .= '</li>';
         }
         $html .= '</ol>';
@@ -59,14 +67,15 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "")
     return $html;
 }
 
-function NesatableUpdateSort($sub, $jde)
+function NesatableUpdateSort($sub, $jde, $table)
 {
     $js = 0;
     foreach ($jde as $j) {
-        \App\Team::where('id', $j['id'])->update(['parent_id' => $sub]);
+        \Illuminate\Support\Facades\DB::table($table)->where('id', $j['id'])->update(['parent_id' => $sub]);
+//        \App\Team::where('id', $j['id'])->update(['parent_id' => $sub]);
         $js++;
         if (isset($j['children']) && is_array($j['children'])) {
-            NesatableUpdateSort($j['id'], $j['children']);
+            NesatableUpdateSort($j['id'], $j['children'], $table);
         }
 
     }
@@ -424,6 +433,40 @@ function get_file_id($fileName)
     $exe = explode('/', $fileName);
     $fileInfo = explode("__", $exe[sizeof($exe) - 1]);
     return $fileInfo[0];
+}
+
+
+function get_parent_child_checkbox($id, $parent = 0, $extra_float = "", $module = "", $table, $addOne = false)
+{
+    $html = '';
+    $selects = \Illuminate\Support\Facades\DB::table($table)->where('parent_id', $parent)->get();
+    if (sizeof($selects) >= 1) {
+        $html .= '<ol class="dd-list dd-list-rtl" id="nestable_dd_list_' . $id . '">';
+        foreach ($selects as $select) {
+            if (key_exists('display_name', $select)) {
+                $title = $select->display_name;
+            } elseif (key_exists('title', $select)) {
+                $title = $select->title;
+            }
+            $html .= '
+            <li class="dd-item dd3-item" data-id="' . $select->id . '">
+                <div class="dd-handle dd3-handle"></div>
+                <div class="dd3-content">' . $title . '
+                <span class="float-right" style="margin-top: -5px;">';
+            if (isset($extra_float[$select->id])) {
+                $html .= $extra_float[$select->id];
+            }
+            if ($addOne == true) {
+                $html .= '
+                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
+            }
+            $html .= '</span></div>';
+            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table,$addOne);
+            $html .= '</li>';
+        }
+        $html .= '</ol>';
+    }
+    return $html;
 }
 
 

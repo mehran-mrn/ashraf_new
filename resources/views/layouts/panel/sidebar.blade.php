@@ -94,6 +94,12 @@ if (!isset($active_sidbare)) {
                                                 class="nav-link {{in_array("product_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_list')}}</a>
                         </li>
 
+
+                        <li class="nav-item"><a href="{{route('product_category')}}"
+                                                class="nav-link {{in_array("product_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_category')}}</a>
+                        </li>
+
+
                         <li class="nav-item"><a href="{{route('discount_code')}}"
                                                 class="nav-link {{in_array("discount_code", $active_sidbare) ? 'active' : '' }}">{{trans('messages.discount_code')}}</a>
                         </li>

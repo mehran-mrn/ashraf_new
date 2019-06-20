@@ -11,6 +11,7 @@ use App\city;
 use App\gateway;
 use App\Permission;
 use App\person;
+use App\product_category;
 use App\person_caravan;
 use App\Role;
 use App\Team;
@@ -376,6 +377,23 @@ class panel_view extends Controller
     public function store_setting()
     {
         return view('panel.store.store_setting');
+    }
+
+    public function discount_add_form()
+    {
+        return view('panel.store.discount.discount_add_form');
+    }
+
+    public function product_category()
+    {
+        $product_categories = product_category::get();
+        return view('panel.store.product_category',compact('product_categories'));
+    }
+
+    public function product_category_add()
+    {
+        return view('panel.store.category.product_category_add');
+
     }
 //end store module
 
