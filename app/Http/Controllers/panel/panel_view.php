@@ -11,6 +11,7 @@ use App\city;
 use App\gateway;
 use App\Permission;
 use App\person;
+use App\person_caravan;
 use App\Role;
 use App\Team;
 use App\User;
@@ -212,7 +213,10 @@ class panel_view extends Controller
 //caravan module
     public function caravan_dashboard()
     {
-        return view('panel.caravan.dashboard');
+        $caravans_query = caravan::query();
+        $caravans_query->whereIn('status', [1, 2, 3,4]);
+        $caravans = $caravans_query->get();
+        return view('panel.caravan.dashboard',compact('caravans'));
     }
 
     public function hosts_list()
@@ -245,9 +249,21 @@ class panel_view extends Controller
         return view('panel.caravan.add_caravan_page', compact('caravan', 'caravan_hosts', 'users'));
     }
 
-    public function caravans_list()
+    public function caravans_list(Request $request)
     {
-        $caravans = caravan::get();
+        $caravans_query = caravan::query();
+
+        $status_array = $request->input('status');
+
+        if (is_array($status_array)){
+            foreach ($status_array as $status){
+                $caravans_query->where('status',$status);
+            }
+        }
+        elseif (is_numeric($status_array)){
+            $caravans_query->where('status',$status_array);
+        }
+        $caravans = $caravans_query->get();
         return view('panel.caravan.caravans_list', compact('caravans'));
     }
 
@@ -257,10 +273,14 @@ class panel_view extends Controller
         return view('panel.caravan.view_caravan', compact('caravan'));
     }
 
-    public function register_to_caravan($caravan_id)
+    public function register_to_caravan($caravan_id,$person_caravan_id =null)
     {
         $caravan = caravan::find($caravan_id);
-        return view('panel.caravan.register_to_caravan_form', compact('caravan'));
+        $person_caravan = null;
+        if (!empty($person_caravan_id)){
+            $person_caravan = person_caravan::with('person')->find($person_caravan_id);
+        }
+        return view('panel.caravan.register_to_caravan_form', compact('caravan','person_caravan'));
     }
 
     public function register_to_caravan_post(Request $request)
@@ -279,6 +299,36 @@ class panel_view extends Controller
         $person = person::where('national_code', $national_code)->first();
 
         return view('panel.caravan.register_to_caravan_form', compact('caravan', 'national_code', 'person'));
+    }
+
+    public function change_caravan_status_form($caravan_id,$status)
+    {
+        //$status "back" "next" "cancel"
+        $caravan = caravan::find($caravan_id);
+        return view('panel.caravan.materials.change_caravan_status', compact('caravan','status'));
+    }
+
+    public function caravans_echart_data()
+    {
+        $hosts = caravan_host::get();
+        $now_date = date('Y-m-d H:i:s');
+        $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
+        $first_date = $start_date;
+        $this_end = $start_date;
+        $info=[];
+        foreach ($hosts as $host){
+            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
+//            if ($host_count>0) {
+                for ($i = 1; $i <= 12; $i++) {
+                    $this_start = $this_end;
+                    $this_end = date('Y-m-d H:i:s', strtotime('+1 months', strtotime($this_start)));
+                    $caravans_count = caravan::where('caravan_host_id', $host['id'])->whereBetween('start', [$this_start, $this_end])->where('status', '5')->count();
+                    $info[$host['name']][jdate('Y F',strtotime($this_start))] = $caravans_count;
+//                }
+            }
+        }
+//        return response()->json($info);
+        return $info;
     }
 
 

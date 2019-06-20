@@ -9,6 +9,7 @@ use App\person_caravan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Image;
+use Illuminate\Support\Facades\Auth;
 
 class caravan extends Controller
 {
@@ -114,7 +115,6 @@ class caravan extends Controller
 
     public function add_person_to_caravan(Request $request)
     {
-
         $request['caravan_id'] = latin_num($request['caravan_id']);
         $request['birth_date'] = latin_num($request['birth_date']);
         $request['national_code'] = latin_num($request['national_code']);
@@ -129,10 +129,15 @@ class caravan extends Controller
             'father_name' => 'required',
             'birth_date' => ['required', 'regex:/' . $regex_date . '/'],
         ]);
+        $caravan = \App\caravan::find($request['caravan_id']);
+        if (!in_array($caravan['status'],['1'])){
+            $errors[] =trans('errors.caravan_is_not_open');
+            return back_error($request,$errors);
+        }
 
         if ($request['person_id']) {
             $this->validate($request, [
-                'person_id' => 'required|unique:people,id',
+                'person_id' => 'required|exists:people,id',
             ]);
             $person = person::find($request['person_id']);
         } else {
@@ -150,12 +155,46 @@ class caravan extends Controller
             $person->birth_date = shamsi_to_miladi($request['birth_date']);
             $person->save();
         }
-        $person_caravan = new person_caravan();
-        $person_caravan->caravan_id = $request['caravan_id'];
-        $person_caravan->person_id = $person->id;
-        $person_caravan->save();
+        $check_duplicate = person_caravan::where('caravan_id',$request['caravan_id'])->where('person_id',$person->id)->exists();
+        if (!$check_duplicate){
+            $person_caravan = new person_caravan();
+            $person_caravan->caravan_id = $request['caravan_id'];
+            $person_caravan->person_id = $person->id;
+            $person_caravan->save();
+        }
+        else{
+            $errors[] = trans('errors.person_already_exists');
+            return back_error($request,$errors);
+        }
 
         return redirect(route('caravan', ['caravan_id' => $request['caravan_id']]));
+    }
+
+    public function action_to_person_caravan_status(Request $request)
+    {
+        $currentUser = Auth::user();
+        $this->validate($request, [
+            'person_caravan_id' => 'required|exists:person_caravans,id',
+        ]);
+        $person_caravan = person_caravan::find($request['person_caravan_id']);
+        $caravan = \App\caravan::find($person_caravan['caravan_id']);
+        if (!in_array($caravan['status'],['1'])){
+            $errors[] =trans('errors.caravan_is_not_open');
+            return back_error($request,$errors);
+        }
+        if ($request['accept']) {
+            $person_caravan->accepted = $currentUser['id'];
+            $person_caravan->save();
+        }
+        elseif ($request['reject']){
+
+            $person_caravan->accepted = 0;
+            $person_caravan->save();
+        }
+        else{
+
+        }
+        return back_normal($request);
     }
 
     public function validate_national_code(Request $request)
@@ -170,5 +209,73 @@ class caravan extends Controller
         return 'true';
     }
 
+    public function change_caravan_status(Request $request)
+    {
+        $this->validate($request, [
+            'caravan_id' => 'required|exists:caravans,id',
+        ]);
+        $caravan = \App\caravan::find($request['caravan_id']);
+        if ($caravan['status'] == "1"){
+            $pending_exists = person_caravan::where('accepted',null)->where('caravan_id',$request['caravan_id'])->exists();
+            if ($pending_exists){
+                $errors[] = trans('errors.pending_person_exists');
+                return back_error($request,$errors);
+            }
+        }
+        if (in_array($caravan['status'],["1","2","3","4"])){
+            $caravan['status'] = $caravan['status']+1;
+        }
+        $caravan->save();
+        $workflow = new caravan_workflow();
+        $workflow->caravan_id = $caravan['id'];
+        $workflow->status = $caravan['status'];
+        $workflow->small_description = "";
+        $workflow->save();
+        return back_normal($request);
+    }
+
+    public function cancel_caravan_status(Request $request)
+    {
+        $this->validate($request, [
+            'caravan_id' => 'required|exists:caravans,id',
+        ]);
+        person_caravan::where('caravan_id',$request['caravan_id'])->update(['accepted' => null]);
+
+        $caravan = \App\caravan::find($request['caravan_id']);
+        $caravan['status'] = 0;
+        $caravan->save();
+
+        $workflow = new caravan_workflow();
+        $workflow->caravan_id = $caravan['id'];
+        $workflow->status = $caravan['status'];
+        $workflow->small_description = "";
+        $workflow->save();
+        return back_normal($request);
+    }
+
+    public function back_caravan_status(Request $request)
+    {
+        $this->validate($request, [
+            'caravan_id' => 'required|exists:caravans,id',
+        ]);
+        $this->validate($request, [
+            'caravan_id' => 'required|exists:caravans,id',
+        ]);
+        $caravan = \App\caravan::find($request['caravan_id']);
+        if ($caravan['status']  == 0 ){
+            $caravan['status'] = 1;
+        }
+        elseif (in_array($caravan['status'],["2","3","4","5"])){
+            $caravan['status'] = $caravan['status']-1;
+        }
+        $caravan->save();
+        $workflow = new caravan_workflow();
+        $workflow->caravan_id = $caravan['id'];
+        $workflow->status = $caravan['status'];
+        $workflow->small_description = "";
+        $workflow->save();
+        return back_normal($request);
+
+    }
 
 }

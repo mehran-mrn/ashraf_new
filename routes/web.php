@@ -69,6 +69,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('caravan/{caravan_id}', 'panel\panel_view@caravan')->name('caravan');
         Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
         Route::post('add_person_to_caravan', 'panel\caravan@add_person_to_caravan')->name('add_person_to_caravan');
+        Route::post('action_to_person_caravan_status', 'panel\caravan@action_to_person_caravan_status')->name('action_to_person_caravan_status');
+        Route::post('/change_caravan_status', 'panel\caravan@change_caravan_status')->name('change_caravan_status');
+        Route::post('/cancel_caravan_status', 'panel\caravan@cancel_caravan_status')->name('cancel_caravan_status');
+        Route::post('/back_caravan_status', 'panel\caravan@back_caravan_status')->name('back_caravan_status');
     });
 
     Route::prefix('blog')->group(function () {
@@ -121,9 +125,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/delete_role_from_user/{role_id}/{user_id}', 'panel\user_manager@delete_role_from_user')->name('delete_role_from_user');
         Route::get('/host_form/{host_id?}', 'panel\panel_view@load_host_form')->name('load_host_form');
         Route::post('/delete_caravan_host/{host_id}', 'panel\caravan@delete_caravan_host')->name('delete_caravan_host');
-        Route::get('register_to_caravan/{caravan_id}', 'panel\panel_view@register_to_caravan')->name('register_to_caravan');
+        Route::get('register_to_caravan/{caravan_id}/{person_caravan_id?}', 'panel\panel_view@register_to_caravan')->name('register_to_caravan');
         Route::post('register_to_caravan}', 'panel\panel_view@register_to_caravan_post')->name('register_to_caravan_post');
         Route::post('/validate_national_code', 'panel\caravan@validate_national_code')->name('validate_national_code');
+        Route::get('/change_caravan_status/{caravan_id}/{status}', 'panel\panel_view@change_caravan_status_form')->name('change_caravan_status_form');
+        Route::get('/caravans_echart_data', 'panel\panel_view@caravans_echart_data')->name('caravans_echart_data');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

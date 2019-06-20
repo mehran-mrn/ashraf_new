@@ -109,5 +109,9 @@ if(!isset($active_sidbare)){
     </div>
 </div>
 <!-- /info modal -->
+
+
+@yield('footer_js')
+
 </body>
 </html>

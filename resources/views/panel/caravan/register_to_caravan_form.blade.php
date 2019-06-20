@@ -1,3 +1,4 @@
+@if(empty($person_caravan))
 <form id="register_national_code">
 @csrf
 <input type="hidden" id="caravan_id" name="caravan_id" value="{{$caravan['id']}}">
@@ -76,3 +77,57 @@
         }
     });
 </script>
+@else
+    <div class="row">
+        <div class="col-md-6">
+            <li class="list">
+                <span class="text-muted">{{trans('messages.name')}} :</span>
+                <span class="text-black">{{$person_caravan['person']['name']}} </span>
+            </li>
+            <li class="list">
+                <span class="text-muted">{{trans('messages.family')}} :</span>
+                <span class="text-black">{{$person_caravan['person']['family']}} </span>
+            </li>
+            <li class="list">
+                <span class="text-muted">{{trans('messages.father_name')}} :</span>
+                <span class="text-black">{{$person_caravan['person']['father_name']}} </span>
+            </li>
+        </div>
+        <div class="col-md-6">
+            <li class="list">
+                <span class="text-muted">{{trans('messages.age')}} :</span>
+                <span class="text-black">{{get_age($person_caravan['person']['birth_date'])}} </span>
+            </li>
+            <li class="list">
+                <span class="text-muted">{{trans('messages.use_count')}} :</span>
+                <span class="text-black">{{count_caravan_useage_history($person_caravan['person']['id'],$person_caravan['caravan_id'])}} </span>
+            </li>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+
+<div class="col-md-6">
+    <form method="post" action="{{route('action_to_person_caravan_status')}}">
+        @csrf
+        <input type="hidden" name="accept" value="1">
+        <input type="hidden" name="person_caravan_id" value="{{$person_caravan['id']}}">
+    <button type="submit" class="btn btn-outline-success btn-lg"><i
+                class="icon-checkmark mr-2"></i> {{trans('messages.accept')}}
+    </button>
+        </form>
+</div>
+<div class="col-md-6">
+    <form method="post" action="{{route('action_to_person_caravan_status')}}">
+        @csrf
+        <input type="hidden" name="reject" value="1">
+        <input type="hidden" name="person_caravan_id" value="{{$person_caravan['id']}}">
+        <button type="submit" class="btn btn-outline-danger btn-lg"><i
+                class="icon-cross2 mr-2"></i> {{trans('messages.reject')}}
+    </button>
+    </form>
+
+</div>
+</div>
+@endif
