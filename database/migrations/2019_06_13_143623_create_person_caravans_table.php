@@ -20,8 +20,8 @@ class CreatePersonCaravansTable extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->dateTime('exit_date')->nullable();
             $table->string('comment')->nullable();
-            $table->boolean('accepted')->default('0');
-            $table->string('status')->nullable();
+            $table->unsignedInteger('accepted')->nullable(); //null = pending // 0 reject // >=1 acceptor use id
+            $table->string('status')->nullable();// 1 فرد حاظر بوده و سفر انجام شده
             $table->timestamps();
         });
     }

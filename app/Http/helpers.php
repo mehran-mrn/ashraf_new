@@ -318,6 +318,73 @@ function shamsi_to_miladi($input)
 
 }
 
+
+
+function count_caravan_useage_history($person_id,$current_caravan_id = null){
+    $count_query = \App\person_caravan::query();
+    $count_query->where('person_id',$person_id);
+    $count_query->where('status',"5");
+    if ($current_caravan_id){
+        $count_query->where('caravan_id',"!=",$current_caravan_id);
+    }
+    $count = $count_query->count();
+    return $count;
+}
+
+function get_caravan_usage_status($caravan_id){
+    $capacity = \App\caravan::find($caravan_id)['capacity'];
+    $accepteds = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',">=","1")->count();
+    $pendings = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',null)->count();
+    $rejected = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',"0")->count();
+    $response = [];
+    $response['capacity']=$capacity;
+    $response['accepted']=$accepteds;
+    $response['pending']=$pendings;
+    $response['rejected']=$rejected;
+    return $response;
+}
+
+function get_caravans_statistics(){
+    $pending = \App\caravan::where('status','1')->count();
+    $response=[];
+    $response['pending']=$pending;
+    return $response;
+}
+
+function get_caravans_status_text($status){
+    switch ($status) {
+        case "0";
+            $response = trans('messages.canceled');
+            break;
+        case "1";
+            $response = trans('messages.registering');
+            break;
+        case "2";
+            $response = trans('messages.ready');
+            break;
+        case "3";
+            $response = trans('messages.arrived');
+            break;
+        case "4";
+            $response = trans('messages.exited');
+            break;
+        case "5";
+            $response = trans('messages.archived');
+            break;
+        default:
+            $response = "";
+    }
+    return $response;
+}
+
+function get_age($date){
+    $birthdate = new DateTime(date("Y-m-d", strtotime($date)));
+    $today= new DateTime(date("Y-m-d"));
+    $age = $birthdate->diff($today)->y;
+    return $age;
+}
+
+
 function miladi_to_shamsi_date($date = null, $be_array = null)
 {  //2017-01-01 20:30:00
     if (!isset($date)) {

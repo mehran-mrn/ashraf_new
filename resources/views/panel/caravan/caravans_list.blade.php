@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <?php
-    $active_sidbare = ['caravans','caravans_list']
+    $active_sidbare = ['caravans', 'caravans_list']
     ?>
 
     <!-- Content area -->
@@ -44,60 +44,85 @@
                 </thead>
                 <tbody>
                 @foreach($caravans as $caravan)
-                <tr>
-                    <td>#25</td>
-                    <td>{{$caravan['caravan_host_id']['status']}}</td>
-                    <td>
-                        <div class="font-weight-semibold"><a href="{{route('caravan',['caravan_id'=>$caravan->id])}}">{{get_cites($caravan['dep_city'])['name']}} | {{get_provinces($caravan['dep_province'])['name']}}</a></div>
-                        <div class="text-muted">{{get_hosts($caravan['caravan_host_id'])['name']." - ".get_hosts($caravan['caravan_host_id'])['city_name']}}</div>
-                    </td>
-                    <td>
-                        <div class="btn-group">
+                    <tr>
+                        <td>#25</td>
+                        <td>{{$caravan['caravan_host_id']['status']}}</td>
+                        <td>
+                            <div class="font-weight-semibold"><a
+                                        href="{{route('caravan',['caravan_id'=>$caravan->id])}}">{{get_cites($caravan['dep_city'])['name']}}
+                                    | {{get_provinces($caravan['dep_province'])['name']}}</a></div>
+                            <div class="text-muted">{{get_hosts($caravan['caravan_host_id'])['name']." - ".get_hosts($caravan['caravan_host_id'])['city_name']}}</div>
+                        </td>
+                        <td>
+                            <div class="btn-group">
 
-                            <span class="badge bg-warning font-size-lg "> 12 / 20 <i class="icon-spinner4 spinner"></i></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="d-inline-flex align-items-center">
-                            <i class="icon-calendar2 mr-2"></i>
-                            <span class="text-black">{{jdate('j F Y',strtotime($caravan['start']))}}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge bg-info font-size ">
-                            @if($caravan['status'] == 0 )
-                                {{trans('messages.registering')}}
-                            @endif
-                        </span>
+                                <span class="badge badge-dark font-size-lg ">
+                                    {{get_caravan_usage_status($caravan['id'])['capacity']}}
+                                    /
+                                    {{get_caravan_usage_status($caravan['id'])['pending'] + get_caravan_usage_status($caravan['id'])['accepted']}}
 
-                    </td>
-                    <td>
-                        <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg"
-                                         class="rounded-circle" width="32" height="32" alt=""></a>
-                        <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg"
-                                         class="rounded-circle" width="32" height="32" alt=""></a>
-                        <a href="#"
-                           class="btn btn-icon bg-transparent btn-sm border-slate-300 text-slate rounded-round border-dashed"><i
-                                    class="icon-person"></i></a>
-                    </td>
-                    <td class="text-center">
-                        <div class="list-icons">
-                            <div class="list-icons-item dropdown">
-                                <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i
-                                            class="icon-menu9"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
-                                </div>
-                                </li>
+                                </span>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            <div class="d-inline-flex align-items-center">
+                                <i class="icon-calendar2 mr-2"></i>
+                                <span class="text-black">{{jdate('j F Y',strtotime($caravan['start']))}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            @switch($caravan['status'])
+                                @case("0")<span class="badge bg-danger font-size ">
+                                {{trans('messages.canceled')}}</span>
+                                @break
+                                @case("1")<span class="badge bg-info font-size ">
+                                {{trans('messages.registering')}}</span>
+                                @break
+                                @case("2")<span class="badge bg-violet font-size ">
+                                {{trans('messages.ready')}}</span>
+                                @break
+                                @case("3")<span class="badge bg-success font-size ">
+                                {{trans('messages.arrived')}}</span>
+                                @break
+                                @case("4")<span class="badge bg-indigo font-size ">
+                                {{trans('messages.exited')}}</span>
+                                @break
+                                @case("5")<span class="badge bg-teal font-size ">
+                                {{trans('messages.archived')}}</span>
+                                @break
+                            @endswitch
+
+
+                        </td>
+                        <td>
+                            <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg"
+                                             class="rounded-circle" width="32" height="32" alt=""></a>
+                            <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg"
+                                             class="rounded-circle" width="32" height="32" alt=""></a>
+                            <a href="#"
+                               class="btn btn-icon bg-transparent btn-sm border-slate-300 text-slate rounded-round border-dashed"><i
+                                        class="icon-person"></i></a>
+                        </td>
+                        <td class="text-center">
+                            <div class="list-icons">
+                                <div class="list-icons-item dropdown">
+                                    <a href="#" class="list-icons-item dropdown-toggle caret-0"
+                                       data-toggle="dropdown"><i
+                                                class="icon-menu9"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                        <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach
+                                            screenshot</a>
+                                        <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                        <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                    </div>
+                                    </li>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
