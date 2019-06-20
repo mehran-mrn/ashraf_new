@@ -312,13 +312,14 @@ class panel_view extends Controller
     public function caravans_echart_data()
     {
         $hosts = caravan_host::get();
-        $now_date = date('Y-m-d H:i:s');
-        $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
-        $first_date = $start_date;
-        $this_end = $start_date;
+
         $info=[];
         foreach ($hosts as $host){
-            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
+            $now_date = date('Y-m-d H:i:s');
+            $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
+            $first_date = $start_date;
+            $this_end = $start_date;
+//            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
 //            if ($host_count>0) {
                 for ($i = 1; $i <= 12; $i++) {
                     $this_start = $this_end;
