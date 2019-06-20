@@ -77,6 +77,10 @@ return [
     'password'=>"کلمه عبور",
     're-password'=>"ورود مجدد رمز عبور",
 
+    'saye_rezvan'=>"سایه رضوان",
+    'rezvan_dashboard'=>"میز کار",
+
+
     'last_login'=>"آخرین لاگین",
     'register_date'=>"تاریخ ثبت نام",
     'status'=>"وضعیت",

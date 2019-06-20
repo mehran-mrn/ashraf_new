@@ -134,6 +134,17 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+                <li class="nav-item nav-item-submenu {{in_array("saye_rezvan", $active_sidbare) ? ' nav-item-open' : '' }}">
+                    <a href="#" class=" nav-link"><i class="icon-quill4"></i>
+                        <span>{{trans('messages.saye_rezvan')}}</span></a>
+
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                        style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
+                                                class="nav-link {{in_array("rezvan_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.rezvan_dashboard')}}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-users4"></i>
                         <span>{{trans('messages.users_management')}}</span></a>
