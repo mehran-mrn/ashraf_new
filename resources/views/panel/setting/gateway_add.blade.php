@@ -74,9 +74,9 @@
             <h5>{{__('messages.gateway_pay_info')}}</h5>
         </div>
         <div class="col-md-6">
-            <label for="merchent_id">{{__('messages.merchent_id')}}</label>
+            <label for="merchant_id">{{__('messages.merchant_id')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
-                <input type="number" name="merchent" id="merchent_id" class="form-control text-right">
+                <input type="number" name="merchant" id="merchant_id" class="form-control text-right">
                 <div class="form-control-feedback form-control-feedback-lg">
                     <i class="icon-atom"></i>
                 </div>
@@ -191,7 +191,7 @@
                 minlength: 16,
                 maxlength: 16
             },
-            merchent_id: {
+            merchant_id: {
                 required: true,
                 minlength: 5,
                 maxlength: 50,

@@ -35,10 +35,10 @@
                                         <div class="card-body">
                                             <div class="row pt-2">
                                                 <div class="col-4">
-                                                    <h6 class="text-left text-muted">{{__('messages.merchent_id')}}</h6>
+                                                    <h6 class="text-left text-muted">{{__('messages.merchant_id')}}</h6>
                                                 </div>
                                                 <div class="col-8">
-                                                    <h6 class="text-right">{{$gateway['merchent']}}</h6>
+                                                    <h6 class="text-right">{{$gateway['merchant']}}</h6>
                                                 </div>
                                             </div>
                                             <div class="row bg-light pt-2">

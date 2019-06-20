@@ -103,19 +103,24 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
 
-        Route::get('product_category', 'panel\panel_view@product_category')->name('product_category');
-        Route::get('product_category_add_form', 'panel\panel_view@product_category_add')->name('product_category_add_form');
-        Route::post('product_category_add', 'panel\store@product_category_add')->name('product_category_add');
-        Route::get('product_category_edit/{cat_id}', 'panel\panel_view@product_category_edit')->name('product_category_edit');
-        Route::get('product_category_delete/{cat_id}', 'panel\store@product_category_delete')->name('product_category_delete');
+        Route::get('store_category', 'panel\panel_view@store_category')->name('store_category');
+        Route::post('store_category_add', 'panel\store@store_category_add')->name('store_category_add');
+        Route::get('store_category_add_form', 'panel\panel_view@store_category_add')->name('store_category_add_form');
+        Route::get('store_category_edit_form/{cat_id}', 'panel\panel_view@store_category_edit_form')->name('store_category_edit_form');
+        Route::post('store_category_update/{cat_id}', 'panel\store@store_category_update')->name('store_category_update');
+        Route::get('store_category_delete/{cat_id}', 'panel\store@store_category_delete')->name('store_category_delete');
+        Route::post('store_category_check', 'panel\store@store_category_check')->name('store_category_check');
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
         Route::get('store_setting', 'panel\panel_view@store_setting')->name('store_setting');
 
         Route::get('discount_code', 'panel\panel_view@discount_code')->name('discount_code');
         Route::get('discount_add_form', 'panel\panel_view@discount_add_form')->name('discount_add_form');
+        Route::get('discount_code_edit_form/{dis_id}', 'panel\panel_view@discount_code_edit_form')->name('discount_code_edit_form');
+        Route::post('discount_update/{dis_id}', 'panel\store@discount_code_update')->name('discount_update');
+        Route::get('discount_code_delete/{dis_id}', 'panel\store@discount_code_delete')->name('discount_code_delete');
         Route::post('discount_add', 'panel\store@discount_add')->name('discount_add');
-        Route::post('check_discount_code', 'panel\store@check_discount_code')->name('check_discount_code');
+        Route::post('discount_code_check', 'panel\store@discount_code_check')->name('discount_code_check');
 
 
     });

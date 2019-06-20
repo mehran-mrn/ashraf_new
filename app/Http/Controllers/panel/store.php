@@ -5,7 +5,10 @@ namespace App\Http\Controllers\panel;
 use App\discount_code;
 use App\Http\Controllers\Controller;
 use App\product_category;
+use App\store_category;
+use App\store_discount_code;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 
 class store extends Controller
 {
@@ -13,39 +16,130 @@ class store extends Controller
 
     public function discount_add(Request $request)
     {
-        dd($request->all());
+
+//        return $request->all();
+        \Illuminate\Support\Facades\Validator::extend('valid_discount_code', function ($attr, $value) {
+            return preg_match('/^\S*$/u', $value);
+        });
+        $request['expire_date'] = shamsi_to_miladi(latin_num($request['expire_date']));
+        $this->validate($request,
+            [
+                "discount_code" => 'required|valid_discount_code|min:3|unique:store_discount_codes,code',
+                'expire_date' => 'required',
+                'discount_persent' => 'required|numeric|min:1|digits_between:1,100',
+                'discount_max' => 'required|numeric|min:2|digits_between:1,1000000000',
+                'count' => 'required|numeric|min:1|digits_between:1,100000',
+                'usage_count' => 'required|numeric|min:1|digits_between:1,100',
+            ]);
+        store_discount_code::create([
+            'code' => $request['discount_code'],
+            'expire_date' => $request['expire_date'],
+            'discount_persent' => $request['discount_persent'],
+            'max_discount' => $request['discount_max'],
+            'count' => $request['count'],
+            'usage_count' => $request['usage_count'],
+        ]);
+        $message = trans("messages.item_created", ['item' => trans('messages.discount_code')]);
+        return back_normal($request, $message);
     }
 
-    public function check_discount_code(Request $request)
+    public function discount_code_update(Request $request)
     {
-        if (discount_code::where('code', $request['discount_code'])->exists()) {
-            echo "true";
-        } else {
+
+        \Illuminate\Support\Facades\Validator::extend('valid_discount_code', function ($attr, $value) {
+            return preg_match('/^\S*$/u', $value);
+        });
+        $request['expire_date'] = shamsi_to_miladi(latin_num($request['expire_date']));
+        $this->validate($request,
+            [
+//                "discount_code" => 'required|valid_discount_code|min:3',
+                'expire_date' => 'required',
+                'discount_persent' => 'required|numeric|min:1|digits_between:1,100',
+                'discount_max' => 'required|numeric|min:2|digits_between:1,1000000000',
+                'count' => 'required|numeric|min:1|digits_between:1,100000',
+                'usage_count' => 'required|numeric|min:1|digits_between:1,100',
+            ]);
+        store_discount_code::where(
+            "id", $request['dis_id'])->update([
+//            'code' => $request['discount_code'],
+            'expire_date' => $request['expire_date'],
+            'discount_persent' => $request['discount_persent'],
+            'max_discount' => $request['discount_max'],
+            'count' => $request['count'],
+            'usage_count' => $request['usage_count'],
+        ]);
+        $message = trans("messages.item_edited", ['item' => trans('messages.discount_code')]);
+        return back_normal($request, $message);
+
+
+    }
+
+    public function discount_code_delete(Request $request)
+    {
+        $dis_info = store_discount_code::find($request['dis_id']);
+        $dis_info->delete();
+        $message = trans("messages.discount_code_delete");
+        return back_normal($request, $message);
+    }
+
+    public function discount_code_check(Request $request)
+    {
+        if (store_discount_code::where('code', $request['discount_code'])->exists()) {
             echo "false";
+        } else {
+            echo "true";
         }
     }
 
-    public function product_category_add(Request $request)
+    public function store_category_add(Request $request)
     {
         $this->validate($request,
             [
-                'title' => 'required|min:2|unique:product_categories,title',
+                'title' => 'required|min:2|unique:store_categories,title',
                 'filepath' => 'required',
             ]);
-        product_category::create([
+        store_category::create([
             'title' => $request['title'],
             'description' => $request['description'],
             'icon_id' => get_file_id($request['filepath']),
             'icon' => $request['filepath'],
         ]);
-        $message = trans("messages.category_added");
+        $message = trans("messages.item_added", ['item' => trans('messages.category')]);
         return back_normal($request, $message);
     }
 
-    public function product_category_delete(Request $request)
+    public function store_category_update(Request $request)
     {
-        $car = product_category::find($request['cat_id']);
+        $this->validate($request,
+            [
+                'title' => 'required|min:2|unique:store_categories,title',
+//            'filepath' => 'required',
+            ]);
+        store_category::where('id', $request['cat_id'])->update([
+            'title' => $request['title'],
+            'description' => $request['description'],
+//            'icon_id' => get_file_id($request['filepath']),
+//            'icon' => $request['filepath'],
+        ]);
+        $message = trans("messages.item_updated", ['item' => trans('messages.category')]);
+        return back_normal($request, $message);
+    }
+
+    public function store_category_check(Request $request)
+    {
+        if (store_category::where('title', $request['title'])->exists()) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+    }
+
+    public function store_category_delete(Request $request)
+    {
+        $car = store_category::find($request['cat_id']);
         $car->delete();
+        $message = trans("messages.category_delete");
+        return back_normal($request, $message);
 
     }
 }

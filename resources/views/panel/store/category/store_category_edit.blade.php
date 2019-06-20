@@ -1,16 +1,16 @@
-<form action="{{route('product_category_add')}}" method="post" id="frm_product_category_add">
+<form action="{{route('store_category_update',['cat_id'=>$cat_info['id']])}}" method="post" id="frm_store_category_edit">
     @csrf
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="title">{{__('messages.title')}}</label>
-                <input type="text" class="form-control" name="title" id="title">
+                <input type="text" class="form-control" name="title" id="title" value="{{$cat_info['title']}}">
             </div>
         </div>
         <div class="col-12">
             <div class="form-group">
                 <label for="description">{{__('messages.description')}}</label>
-                <input type="text" class="form-control" name="description" id="description">
+                <input type="text" class="form-control" name="description" id="description" value="{{$cat_info['description']}}">
             </div>
         </div>
         <div class="col-12">
@@ -19,15 +19,17 @@
                     <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i
                             class="fa fa-picture-o"></i>{{__('messages.select_image')}}</a>
                 </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath">
-                <img id="holder" style="margin-top:15px;max-height:100px;">
+                <input id="thumbnail" value="{{$cat_info['icon']}}" readonly="readonly" class="form-control" type="text" name="filepath">
+                <img id="holder" style="margin-top:15px;max-height:100px;" src="">
             </div>
         </div>
         <div class="col-12 pt-2">
-            <button class="btn btn-primary btn-block" type="submit">{{__('messages.submit')}}</button>
+            <button class="btn btn-primary btn-block" type="submit">{{__('messages.edit')}}</button>
         </div>
     </div>
 </form>
+<script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotify.js"></script>
+
 <script>
 
     var route_prefix = {{env('url')}}"/laravel-filemanager";
@@ -73,7 +75,7 @@
     $('#lfm').filemanager('image', {prefix: route_prefix});
 
 
-    $("#frm_product_category_add").validate({
+    $("#frm_store_category_edit").validate({
         lang: "fa",
         rules: {
             title: {
@@ -83,7 +85,8 @@
                 required: true,
             },
         },
-        submitHandler: function (form) {
+        submitHandler: function (form,e) {
+            e.preventDefault();
             var form_btn = $(form).find('button[type="submit"]');
             var form_result_div = '#form-result';
             $(form_result_div).remove();
@@ -115,13 +118,12 @@
                             text: value,
                         });
                     });
-                    setTimeout(function () {
-                        $('[type="submit"]').prop('disabled', false);
-                    }, 2500);
-                    $(form_btn).html(form_btn_old_msg);
-
                 }
             });
+            setTimeout(function () {
+                $('[type="submit"]').prop('disabled', false);
+            }, 2500);
+            $(form_btn).html(form_btn_old_msg);
         }
     });
 </script>
