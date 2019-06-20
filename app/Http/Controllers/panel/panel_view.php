@@ -14,6 +14,8 @@ use App\person;
 use App\product_category;
 use App\person_caravan;
 use App\Role;
+use App\store_category;
+use App\store_discount_code;
 use App\Team;
 use App\User;
 use App\caravan;
@@ -365,12 +367,26 @@ class panel_view extends Controller
     }
     public function product_list()
     {
+        dd(store_category::all());
+
         return view('panel.store.product_list');
     }
+
     public function discount_code()
     {
-        return view('panel.store.discount_code');
+        $codes = store_discount_code::get();
+        return view('panel.store.discount_code',compact('codes'));
     }
+    public function discount_add_form()
+    {
+        return view('panel.store.discount.discount_add_form');
+    }
+    public function discount_code_edit_form(Request $request)
+    {
+        $dis_info = store_discount_code::find($request['dis_id']);
+        return view('panel.store.discount.discount_edit_form',compact('dis_info'));
+    }
+
     public function manage_orders()
     {
         return view('panel.store.manage_orders');
@@ -380,21 +396,21 @@ class panel_view extends Controller
         return view('panel.store.store_setting');
     }
 
-    public function discount_add_form()
+    public function store_category()
     {
-        return view('panel.store.discount.discount_add_form');
+
+        $product_categories = store_category::get();
+        return view('panel.store.store_category',compact('product_categories'));
+    }
+    public function store_category_add()
+    {
+        return view('panel.store.category.store_category_add');
     }
 
-    public function product_category()
+    public function store_category_edit_form(Request $request)
     {
-        $product_categories = product_category::get();
-        return view('panel.store.product_category',compact('product_categories'));
-    }
-
-    public function product_category_add()
-    {
-        return view('panel.store.category.product_category_add');
-
+        $cat_info = store_category::find($request['cat_id']);
+        return view('panel.store.category.store_category_edit',compact('cat_info'));
     }
 //end store module
 

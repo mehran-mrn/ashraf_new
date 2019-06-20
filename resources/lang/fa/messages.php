@@ -210,7 +210,7 @@ return [
     'bank_information'=>'اطلاعات بانک',
     'card_number'=>'شماره کارت',
     'gateway_pay_info'=>'اطلاعات درگاه پرداخت',
-    'merchent_id'=>'مرچنت آی دی',
+    'merchant_id'=>'مرچنت آی دی',
     'public_key'=>'کلید عمومی',
     'terminal_id'=>'کلید ترمینال',
 
@@ -225,10 +225,13 @@ return [
     'discount_maximum'=>'حداکثر تخفیف',
     'usage_count_per_user'=>'تعداد استفاده هر کاربر',
     'add_discount_code'=>'افزودن کد تخفیف',
-    'product_category'=>'دسته بندی محصولات',
+    'store_category'=>'دسته بندی فروشگاه',
     'add_product_category'=>'افزودن دسته بندی محصولات',
+    'product_category'=>'دسته بندی محصولات',
     'product_title'=>'عنوان محصول',
     'select_image'=>'انتخاب عکس',
     'active'=>'فعال',
-    'inactive'=>'غیر فعال'
+    'inactive'=>'غیر فعال',
+    'discount_code_delete'=>'کد تخفیف حذف گردید.',
+    'duplicate_discount_code'=>'کد تخفیف در سیستم موجود میباشد.'
     ];

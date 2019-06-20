@@ -95,8 +95,8 @@ if (!isset($active_sidbare)) {
                         </li>
 
 
-                        <li class="nav-item"><a href="{{route('product_category')}}"
-                                                class="nav-link {{in_array("product_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_category')}}</a>
+                        <li class="nav-item"><a href="{{route('store_category')}}"
+                                                class="nav-link {{in_array("store_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.store_category')}}</a>
                         </li>
 
 

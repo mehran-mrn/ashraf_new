@@ -15,7 +15,7 @@ class setting extends Controller
     {
 
         $this->validate($request, [
-            'merchent' => 'required|min:3|numeric',
+            'merchant' => 'required|min:3|numeric',
             'public_key' => 'required|min:3',
             'terminal_id' => '',
             'filepath' => 'required',
@@ -28,7 +28,7 @@ class setting extends Controller
             "bank_branch" => $request['bank_branch'],
             "card_number" => $request['card_number'],
             "status" => $request['status'],
-            "merchent" => $request['merchent'],
+            "merchant" => $request['merchant'],
             "public_key" => $request['public_key'],
             "terminal_id" => $request['terminal_id'],
             "logo" => $request['filepath'],
