@@ -97,15 +97,17 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
         Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
         Route::post('gateway_add', 'panel\setting@gateway_add')->name('gateway_add_store');
-        Route::get('gateway_edit', 'panel\panel_view@gateway_edit')->name('gateway_edit');
-        Route::post('gateway_update', 'panel\setting@gateway_update')->name('gateway_update');
+        Route::get('gateway_edit/{gat_id}', 'panel\panel_view@gateway_edit')->name('gateway_edit');
+        Route::post('gateway_update/{gat_id}', 'panel\setting@gateway_update')->name('gateway_update');
         Route::get('gateway_delete/{gateway_id}', 'panel\setting@gateway_delete')->name('gateway_delete');
     });
 
 
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
+        Route::post('store_product_add', 'panel\store@product_add')->name('store_product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
+        Route::get('store_items', 'panel\panel_view@store_items')->name('store_items');
 
         Route::get('store_category', 'panel\panel_view@store_category')->name('store_category');
         Route::post('store_category_add', 'panel\store@store_category_add')->name('store_category_add');
@@ -114,6 +116,15 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('store_category_update/{cat_id}', 'panel\store@store_category_update')->name('store_category_update');
         Route::get('store_category_delete/{cat_id}', 'panel\store@store_category_delete')->name('store_category_delete');
         Route::post('store_category_check', 'panel\store@store_category_check')->name('store_category_check');
+
+
+        Route::get('store_category_tree_view','panel\store@store_category_tree_view')->name('store_category_tree_view');
+        Route::get('store_items_category_add_form','panel\panel_view@store_items_category_add_form')->name('store_items_category_add_form');
+        Route::post('store_items_category_add','panel\store@store_items_category_add')->name('store_items_category_add');
+        Route::get('store_items_add_form','panel\panel_view@store_items_add_form')->name('store_items_add_form');
+        Route::post('store_items_add','panel\store@store_items_add')->name('store_items_add');
+
+
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
         Route::get('store_setting', 'panel\panel_view@store_setting')->name('store_setting');

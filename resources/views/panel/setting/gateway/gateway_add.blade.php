@@ -5,10 +5,21 @@
             <h5>{{__('messages.bank_information')}}</h5>
         </div>
         <div class="col-md-6">
-            <div class="form-group"><label for="name">{{__('messages.bank_name')}}</label>
+            <label for="title">{{__('messages.title')}}</label>
+            <div class="form-group form-group-feedback form-group-feedback-right">
+                <input type="text" class="form-control" name="title" id="title">
+                <div class="form-control-feedback form-control-feedback-lg">
+                    <i class="icon-ticket"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="name">{{__('messages.bank_name')}}</label>
                 <select name="name" id="name" class="form-control">
+                    <option value="">{{__('messages.please_select')}}</option>
                     @foreach($banks as $bank)
-                        <option value="{{$bank['id']}}">{{$bank['name']}}</option>
+                        <option value="{{$bank['id']}}" data-logo="{{$bank['logo']}}">{{$bank['name']}}</option>
                     @endforeach
                 </select>
             </div>
@@ -16,7 +27,8 @@
         <div class="col-md-6">
             <label for="account_number">{{__('messages.account_number')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
-                <input type="number" class="form-control text-right" maxlength="15" name="account_number" id="account_number">
+                <input type="number" class="form-control text-right" maxlength="15" name="account_number"
+                       id="account_number">
                 <div class="form-control-feedback form-control-feedback-lg">
                     <i class="icon-check"></i>
                 </div>
@@ -25,7 +37,8 @@
         <div class="col-md-6">
             <label for="account_sheba">{{__('messages.sheba_number')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
-                <input type="number" class="form-control text-right" maxlength="24" name="account_sheba" id="account_sheba">
+                <input type="number" class="form-control text-right" maxlength="24" name="account_sheba"
+                       id="account_sheba">
                 <div class="form-control-feedback form-control-feedback-lg">
                     IR
                 </div>
@@ -52,23 +65,32 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h6 for="status">{{__('messages.status')}}</h6>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input-styled" name="status" id="status" value="active" checked
-                           data-fouc>
-                    <span class="text-success">{{__('messages.active')}}</span>
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input-styled" name="status" id="status2" value="inactive"
-                           data-fouc>
-                    <span class="text-danger">{{__('messages.inactive')}}</span>
-                </label>
+            <label for="status">{{__('messages.status')}}</label><br>
+            <div class="d-flex justify-content-center">
+                <div class="p-3">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" name="status" id="status" value="active"
+                               checked data-fouc>
+                        <label class="custom-control-label text-success" for="status">{{__('messages.active')}}
+                        </label>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" name="status" id="status2" value="inactive">
+                        <label class="custom-control-label text-danger"
+                               for="status2">{{__('messages.inactive')}}</label>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <center>
+                <div id="bank_logo_htm"></div>
+            </center>
+        </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-12">
             <h5>{{__('messages.gateway_pay_info')}}</h5>
@@ -92,6 +114,15 @@
             </div>
         </div>
         <div class="col-md-6">
+            <label for="private_key">{{__('messages.private_key')}}</label>
+            <div class="form-group form-group-feedback form-group-feedback-right">
+                <input type="text" name="private_key" id="private_key" class="form-control text-right">
+                <div class="form-control-feedback form-control-feedback-lg">
+                    <i class="icon-key"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
             <label for="terminal_id">{{__('messages.terminal_id')}}</label>
             <div class="form-group form-group-feedback form-group-feedback-right">
                 <input type="number" name="terminal_id" id="terminal_id" class="form-control text-right">
@@ -100,70 +131,73 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary"><i
-                            class="fa fa-picture-o"></i>{{__('messages.select_image')}}</a>
-                </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath">
-                <img id="holder" style="margin-top:15px;max-height:100px;">
+        <div class="col-md-6">
+            <label for="username">{{__('messages.username')}}</label>
+            <div class="form-group form-group-feedback form-group-feedback-right">
+                <input type="text" name="username" id="username" class="form-control text-right">
+                <div class="form-control-feedback form-control-feedback-lg">
+                    <i class="icon-user-tie"></i>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="p-3">
-            <button type="submit" class="btn btn-primary px-5">{{__('messages.submit')}}</button>
+        <div class="col-md-6">
+            <label for="password">{{__('messages.password')}}</label>
+            <div class="form-group form-group-feedback form-group-feedback-right">
+                <input type="text" name="password" id="password" class="form-control text-right">
+                <div class="form-control-feedback form-control-feedback-lg">
+                    <i class="icon-star-full2"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="d-flex justify-content-center">
+                <div class="p-3">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" class="custom-control-input" id="pay_online" name="pay_online" value="1" checked>
+                        <label class="custom-control-label" for="pay_online">{{__('messages.online')}}</label>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" class="custom-control-input" id="pay_cart" name="pay_cart" value="1" checked>
+                        <label class="custom-control-label" for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input type="checkbox" class="custom-control-input" id="pay_account" name="pay_account" value="1" checked>
+                        <label class="custom-control-label" for="pay_account">{{__('messages.send_to_account')}}</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <input type="hidden" name="logo" id="logo" value="">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="p-3">
+                <button type="submit" class="btn btn-primary btn-block px-5">{{__('messages.submit')}}</button>
+            </div>
         </div>
     </div>
 </form>
 <script>
-    $('.form-check-input-styled').uniform();
 
 
-    var route_prefix = {{env('url')}}"/laravel-filemanager";
+    $("#name").on("change", function () {
+        var logo = $(this).find(':selected').data('logo');
+        console.log(logo);
+        logo = logo.replace("ibl64","ibl128");
+        $("#bank_logo_htm").html(logo);
+    })
 
-    (function ($) {
-
-        $.fn.filemanager = function (type, options) {
-            type = type || 'file';
-
-            this.on('click', function (e) {
-                var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-                var target_input = $('#' + $(this).data('input'));
-                var target_preview = $('#' + $(this).data('preview'));
-                window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
-                window.SetUrl = function (items) {
-                    var file_path = items.map(function (item) {
-                        console.log(item.url);
-                        return item.url;
-                    }).join(',');
-
-                    // set the value of the desired input to image url
-                    target_input.val('').val(file_path).trigger('change');
-
-                    // clear previous preview
-                    target_preview.html('');
-
-                    // set or change the preview image src
-                    items.forEach(function (item) {
-                        target_preview.append(
-                            $('<img>').css('height', '5rem').attr('src', item.thumb_url)
-                        );
-                    });
-
-                    // trigger change event
-                    target_preview.trigger('change');
-                };
-                return false;
-            });
-        }
-
-    })(jQuery);
-
-
-    $('#lfm').filemanager('image', {prefix: route_prefix});
-
+    $("#card_number").on('keyup', function () {
+        var num = $("#card_number").val();
+        $("#card_number").val(numberWithDash(num));
+    });
 
     $("#frm_gateway_add").validate({
         lang: "fa",
@@ -188,28 +222,44 @@
             },
             card_number: {
                 required: false,
-                minlength: 16,
-                maxlength: 16
+                minlength: 19,
+                maxlength: 19
             },
             merchant_id: {
-                required: true,
+                required: false,
                 minlength: 5,
                 maxlength: 50,
                 number: true,
             },
             public_key: {
-                required: true,
+                required: false,
                 minlength: 5,
                 maxlength: 50
             },
             terminal_id: {
-                required: true,
+                required: false,
                 minlength: 5,
                 maxlength: 50,
                 number: true,
+            },
+            username: {
+                required: false,
+                minlength: 1,
+                maxlength: 50,
+            },
+            private_key: {
+                required: false,
+                minlength: 1,
+                maxlength: 50,
+            },
+            password: {
+                required: false,
+                minlength: 1,
+                maxlength: 50,
             }
         },
-        submitHandler: function (form) {
+        submitHandler: function (e, form) {
+            e.preventDefault();
             var form_btn = $(form).find('button[type="submit"]');
             var form_result_div = '#form-result';
             $(form_result_div).remove();

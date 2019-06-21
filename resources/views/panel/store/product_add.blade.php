@@ -27,6 +27,18 @@
             $('.tokenfield').tokenfield();
         });
 
+        function deleteGatewayOnline(id) {
+            $("#g_row_online_" + id).html("");
+        }
+
+        function deleteGatewayCart(id) {
+            $("#g_row_cart_" + id).html("");
+        }
+
+        function deleteGatewayAccount(id) {
+            $("#g_row_account_" + id).html("");
+        }
+
         var route_prefix = {{env('url')}}"/laravel-filemanager";
 
         (function ($) {
@@ -68,7 +80,6 @@
         })(jQuery);
 
         $('#lfm').filemanager('image', {prefix: route_prefix});
-
 
         var FileUpload = function () {
             var _componentFileUpload = function () {
@@ -168,63 +179,178 @@
     </script>
 @endsection
 @section('css')
+    <link rel="stylesheet" href="{{URL::asset('/public/assets/panel/css/iranBanks/ibl.css')}}">
 @endsection
 @section('content')
     @php
         $active_sidbare = ['store', 'product_add']
     @endphp
     <div class="content">
-
-        <div class="row-">
-            <div class="col-12 col-md-9">
-                <div class="card">
-                    <div class="card-header text-center bg-light"><span class="card-title">{{__('messages.product_add')}}</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="title">{{__('messages.product_title')}}</label>
-                                    <input type="text" name="title" id="title" class="form-control">
+        <form action="{{route('store_product_add')}}" method="post">
+            @csrf
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="card">
+                        <div class="card-header text-center bg-light"><span
+                                class="card-title">{{__('messages.product_add')}}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="title">{{__('messages.product_title')}}</label>
+                                        <input type="text" name="title" id="title" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="description">{{__('messages.description')}}</label>
-                                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">{{__('messages.description')}}</label>
+                                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
+                                <div class="col-12">
+                                    <div class="form-group">
                                     <span class="input-group-btn">
                                         <a id="lfm" data-input="thumbnail" data-preview="holder"
                                            class="btn btn-primary"><i
                                                 class="fa fa-picture-o"></i>{{__('messages.select_image')}}</a>
                                     </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="filepath">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                                        <input id="thumbnail" class="form-control" type="text" name="filepath">
+                                        <img id="holder" style="margin-top:15px;max-height:100px;">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="image">{{__('messages.image')}}</label>
-                                    <input type="file" class="file-input-ajax" multiple="multiple" id="image"
-                                           name="image" data-fouc>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="image">{{__('messages.image')}}</label>
+                                        <input type="file" class="file-input-ajax" multiple="multiple" id="image"
+                                               name="image" data-fouc>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="tages">{{__('messages.tages')}}</label>
-                                    <input type="text" class="form-control tokenfield"
-                                           placeholder="{{__('messages.enter_text')}}"
-                                           data-fouc name="tags" id="tags" value="{{old('tags')}}">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="tages">{{__('messages.tages')}}</label>
+                                        <input type="text" class="form-control tokenfield"
+                                               placeholder="{{__('messages.enter_text')}}"
+                                               data-fouc name="tags" id="tags" value="{{old('tags')}}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <div class="card-header text-center bg-light"><span
+                                class="panel-title">{{__('messages.category')}}</span></div>
+                        <div class="card-body">
+                            {!! treeView() !!}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center bg-light"><span
+                                class="card-title">{{__('messages.pay_gateway')}}</span></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center pb-3">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" id="pay_online"
+                                               checked>
+                                        <label class="custom-control-label"
+                                               for="pay_online">{{__('messages.online')}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    @foreach($gateways as $gateway)
+                                        @php
+                                            $logo = $gateway->bank->logo;
+                                        if($gateway['online']==1){
+                                        echo '<div class="row" id="g_row_online_'.$gateway['id'].'"><div class="col-12 col-md-6">';
+                                        echo $logo;
+                                        echo '<input type="hidden" name="online_gateway_online_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '</div><div class="col-12 col-md-6">';
+                                        echo '<button type="button" onclick="deleteGatewayOnline('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
+                                        echo '</div></div>';
+                                        }
+                                        @endphp
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" id="pay_cart"
+                                               checked>
+                                        <label class="custom-control-label"
+                                               for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12">
+
+                                    @foreach($gateways as $gateway)
+                                        @php
+                                            $logo = $gateway->bank->logo;
+                                        if($gateway['cart']==1){
+                                        echo '<div class="row" id="g_row_cart_'.$gateway['id'].'"><div class="col-12 col-md-6">';
+                                          echo $logo;
+                                        echo '<input type="hidden" name="online_gateway_cart_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '</div><div class="col-md-6">';
+                                        echo '<button type="button" onclick="deleteGatewayCart('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
+                                        echo '</div></div>';
+                                        }
+                                        @endphp
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" id="pay_account"
+                                               checked>
+                                        <label class="custom-control-label"
+                                               for="pay_account">{{__('messages.send_to_account')}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    @foreach($gateways as $gateway)
+                                        @php
+                                            $logo = $gateway->bank->logo;
+                                        if($gateway['account']==1){
+                                        echo '<div class="row" id="g_row_account_'.$gateway['id'].'"><div class="col-12 col-md-6">';
+                                          echo $logo;
+                                        echo '<input type="hidden" name="online_gateway_account_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '</div><div class="col-md-6">';
+                                        echo '<button type="button" onclick="deleteGatewayAccount('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
+                                        echo '</div></div>';
+                                        }
+                                        @endphp
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" id="pay_place"
+                                               checked>
+                                        <label class="custom-control-label"
+                                               for="pay_place">{{__('messages.pay_on_place')}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center bg-light"><span class="card-title">{{__('messages.action')}}</span>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-primary btn-block" type="submit">{{__('messages.submit')}}</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="col-12 col-md-3"></div>
-        </div>
+        </form>
     </div>
 @endsection

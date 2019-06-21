@@ -7,6 +7,8 @@
         src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
 @endsection
 @section('css')
+    <link rel="stylesheet" href="{{URL::asset('/public/assets/panel/css/iranBanks/ibl.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('/public/assets/panel/global_assets/css/extras/animate.min.css')}}">
 @endsection
 @section('content')
     <?php
@@ -27,13 +29,24 @@
                     <div class="card-body">
                         <div class="row">
                             @foreach($gateways as $gateway)
-                                <div class="col-4">
+                                @php
+                                    $logo = $gateway->bank->logo;
+                                    $logo = str_replace('ibl64','ibl128',$logo);
+                                @endphp
+                                <div class="col-md-6">
                                     <div class="card">
-                                        <div class="card-header bg-slate">
-                                            <h6 class="card-title text-center">{{$gateway->bank->name}}</h6>
-                                        </div>
                                         <div class="card-body">
-                                            <div class="row pt-2">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    {!! $logo !!}
+                                                </div>
+                                                <div class="col-md-7 pt-3">
+                                                    <h5 class="pt-2 text-center">{{$gateway->bank->name}}</h5>
+                                                    <h5 class="pt-3 text-center">{{$gateway->title}}</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
                                                 <div class="col-4">
                                                     <h6 class="text-left text-muted">{{__('messages.merchant_id')}}</h6>
                                                 </div>
@@ -57,13 +70,6 @@
                                                     <h6 class="text-right">{{$gateway['public_key']}}</h6>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="row pt-2">
-                                                <div class="col-12 text-center">
-                                                    <img src="{{$gateway['logo']}}" width="100" alt="">
-                                                </div>
-                                            </div>
-                                            <hr>
                                             <div class="row pt-2">
                                                 <div class="col-6">
                                                     <h6 class="text-left text-muted">{{__('messages.sheba_number')}}</h6>
@@ -95,10 +101,14 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <a href="{{route('gateway_edit',$gateway['id'])}}"
-                                               class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2">
-                                                <i class="icon-database-edit2"></i>
-                                            </a>
+                                            <button type="button"
+                                                    class="egitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
+                                                    data-ajax-link="{{route('gateway_edit',['gat_id'=>$gateway['id']])}}"
+                                                    data-toggle="modal"
+                                                    data-modal-title="{{trans('messages.edit',['item'=>trans('messages.gateway')])}}"
+                                                    data-target="#general_modal">
+                                                <i class="icon-pencil7"></i>
+                                            </button>
                                             <button
                                                 class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
                                                 data-ajax-link="{{route('gateway_delete',['gateway_id'=>$gateway['id']])}}"

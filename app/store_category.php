@@ -10,4 +10,8 @@ class store_category extends Model
     //
     use SoftDeletes;
     protected $guarded=[];
+
+    public function childs() {
+        return $this->hasMany('App\store_category','parent_id','id') ;
+    }
 }

@@ -15,27 +15,31 @@ class CreateGatewaysTable extends Migration
     {
         Schema::create('gateways', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
             $table->integer('bank_id');
-            $table->integer('account_number')->nullable();
-            $table->integer('account_sheba')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('account_sheba')->nullable();
             $table->string('card_number')->nullable();
             $table->string('bank_branch')->nullable();
             $table->string('status')->nullable();
             $table->integer('merchant')->nullable();
-            $table->text('public_key')->nullable();
-            $table->text('private_key')->nullable();
+            $table->string('public_key')->nullable();
+            $table->string('private_key')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->integer('terminal_id')->nullable();
-            $table->text('logo')->nullable();
+            $table->string('logo')->nullable();
             $table->integer('logo_id')->nullable();
+            $table->integer('online')->nullable();
+            $table->integer('cart')->nullable();
+            $table->integer('account')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
 
-
         DB::table('gateways')->insert(
             array(
+                'title' => 'درگاه آنلاین',
                 'bank_id' => '35',
                 'account_number' => '0302470888002',
                 'account_sheba' => '000000000000302470888002',
@@ -45,10 +49,12 @@ class CreateGatewaysTable extends Migration
                 'merchant' => '000000140329876',
                 'public_key' => 'RnszP6AYaaZCF4PoGnsCTQAOhAmMdYWZ',
                 'terminal_id' => '24042986',
+                'logo'=>'<i class="ibl64 ibl-bmi"></i>'
             )
         );
         DB::table('gateways')->insert(
             array(
+                'title' => 'درگاه پرداخت',
                 'bank_id' => '17',
                 'account_number' => '4026505639',
                 'account_sheba' => '0000000000004026505639',
@@ -57,10 +63,13 @@ class CreateGatewaysTable extends Migration
                 'status' => 'active',
                 'merchant' => '3013',
                 'password' => Hash::make('9542264'),
+                'logo'=>'<i class="ibl64 ibl-sb"></i>'
+
             )
         );
         DB::table('gateways')->insert(
             array(
+                'title' => 'درگاه آنلاین',
                 'bank_id' => '22',
                 'account_number' => '302910299901',
                 'account_sheba' => '000000000000302910299901',
@@ -69,6 +78,7 @@ class CreateGatewaysTable extends Migration
                 'status' => 'active',
                 'terminal_id' => '69000443',
                 'merchant' => '693408839800106',
+                'logo'=>'<i class="ibl64 ibl-bsi"></i>'
             )
         );
     }
