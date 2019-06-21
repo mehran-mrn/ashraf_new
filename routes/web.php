@@ -103,7 +103,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
 
 
-    Route::prefix('store')->group(function () {
+        Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
 
@@ -129,7 +129,14 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     });
 
-    Route::prefix('ajax')->group(function () {
+        Route::prefix('building')->group(function () {
+            Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
+            Route::get('add_new_building', 'panel\panel_view@add_new_building')->name('add_new_building');
+            Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
+            Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
+        });
+
+        Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
         Route::get('/register_role', 'panel\panel_view@register_role_form')->name('panel_register_role_form');

@@ -134,14 +134,23 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-                <li class="nav-item nav-item-submenu {{in_array("saye_rezvan", $active_sidbare) ? ' nav-item-open' : '' }}">
+                <li class="nav-item nav-item-submenu {{in_array("building", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-quill4"></i>
-                        <span>{{trans('messages.saye_rezvan')}}</span></a>
+                        <span>{{trans('messages.building_projects')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts"
-                        style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
-                        <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
-                                                class="nav-link {{in_array("rezvan_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.rezvan_dashboard')}}</a>
+                        style="display:{{in_array("building", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('building_dashboard')}}"
+                                                class="nav-link {{in_array("building_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_dashboard')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('add_new_building')}}"
+                                                class="nav-link {{in_array("add_new_building", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_new_building')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('building_types')}}"
+                                                class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_types')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('building_archive')}}"
+                                                class="nav-link {{in_array("building_archive", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_archive')}}</a>
                         </li>
                     </ul>
                 </li>

@@ -339,6 +339,31 @@ class panel_view extends Controller
 //end caravan module
 
 
+//building module
+    public function building_dashboard()
+    {
+        $hosts = caravan_host::with('media')->get();
+
+        return view('panel.building.dashboard', compact('hosts'));
+    }
+
+    public function add_new_building()
+    {
+        return view('panel.building.add_new_building');
+    }
+
+    public function building_types()
+    {
+        return view('panel.building.building_types');
+    }
+
+    public function building_archive()
+    {
+        return view('panel.building.building_archive');
+    }
+
+//end building module
+
 //setting module
     public function cities_list()
     {

@@ -77,8 +77,11 @@ return [
     'password'=>"کلمه عبور",
     're-password'=>"ورود مجدد رمز عبور",
 
-    'saye_rezvan'=>"سایه رضوان",
-    'rezvan_dashboard'=>"میز کار",
+    'building_projects'=>"سایه رضوان",
+    'building_dashboard'=>"میز کار",
+    'add_new_building'=>"تعریف پروژه جدید",
+    'building_types'=>"تیپ ساختمان ها",
+    'building_archive'=>"آرشیو پروژه ها",
 
 
     'last_login'=>"آخرین لاگین",
