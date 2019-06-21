@@ -1,5 +1,6 @@
 <?php
 
+use App\store_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -59,7 +60,7 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "",
                     <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
             }
             $html .= '</span></div>';
-            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table,$addOne);
+            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table, $addOne);
             $html .= '</li>';
         }
         $html .= '</ol>';
@@ -319,39 +320,42 @@ function shamsi_to_miladi($input)
 }
 
 
-
-function count_caravan_useage_history($person_id,$current_caravan_id = null){
+function count_caravan_useage_history($person_id, $current_caravan_id = null)
+{
     $count_query = \App\person_caravan::query();
-    $count_query->where('person_id',$person_id);
-    $count_query->where('status',"5");
-    if ($current_caravan_id){
-        $count_query->where('caravan_id',"!=",$current_caravan_id);
+    $count_query->where('person_id', $person_id);
+    $count_query->where('status', "5");
+    if ($current_caravan_id) {
+        $count_query->where('caravan_id', "!=", $current_caravan_id);
     }
     $count = $count_query->count();
     return $count;
 }
 
-function get_caravan_usage_status($caravan_id){
+function get_caravan_usage_status($caravan_id)
+{
     $capacity = \App\caravan::find($caravan_id)['capacity'];
-    $accepteds = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',">=","1")->count();
-    $pendings = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',null)->count();
-    $rejected = \App\person_caravan::where('caravan_id',$caravan_id)->where('accepted',"0")->count();
+    $accepteds = \App\person_caravan::where('caravan_id', $caravan_id)->where('accepted', ">=", "1")->count();
+    $pendings = \App\person_caravan::where('caravan_id', $caravan_id)->where('accepted', null)->count();
+    $rejected = \App\person_caravan::where('caravan_id', $caravan_id)->where('accepted', "0")->count();
     $response = [];
-    $response['capacity']=$capacity;
-    $response['accepted']=$accepteds;
-    $response['pending']=$pendings;
-    $response['rejected']=$rejected;
+    $response['capacity'] = $capacity;
+    $response['accepted'] = $accepteds;
+    $response['pending'] = $pendings;
+    $response['rejected'] = $rejected;
     return $response;
 }
 
-function get_caravans_statistics(){
-    $pending = \App\caravan::where('status','1')->count();
-    $response=[];
-    $response['pending']=$pending;
+function get_caravans_statistics()
+{
+    $pending = \App\caravan::where('status', '1')->count();
+    $response = [];
+    $response['pending'] = $pending;
     return $response;
 }
 
-function get_caravans_status_text($status){
+function get_caravans_status_text($status)
+{
     switch ($status) {
         case "0";
             $response = trans('messages.canceled');
@@ -377,9 +381,10 @@ function get_caravans_status_text($status){
     return $response;
 }
 
-function get_age($date){
+function get_age($date)
+{
     $birthdate = new DateTime(date("Y-m-d", strtotime($date)));
-    $today= new DateTime(date("Y-m-d"));
+    $today = new DateTime(date("Y-m-d"));
     $age = $birthdate->diff($today)->y;
     return $age;
 }
@@ -436,12 +441,15 @@ function get_file_id($fileName)
 }
 
 
-function get_parent_child_checkbox($id, $parent = 0, $extra_float = "", $module = "", $table, $addOne = false)
+function get_parent_child_checkbox($id, $parent = 0, $table)
 {
     $html = '';
     $selects = \Illuminate\Support\Facades\DB::table($table)->where('parent_id', $parent)->get();
     if (sizeof($selects) >= 1) {
-        $html .= '<ol class="dd-list dd-list-rtl" id="nestable_dd_list_' . $id . '">';
+        $html .= '<ul class="nav nav-sidebar mb-2">
+<li class="nav-item nav-item-submenu nav-item-expanded nav-item-open">
+            <a href="#" class="nav-link">Street wear</a>
+            <ul class="nav nav-group-sub">';
         foreach ($selects as $select) {
             if (key_exists('display_name', $select)) {
                 $title = $select->display_name;
@@ -449,24 +457,65 @@ function get_parent_child_checkbox($id, $parent = 0, $extra_float = "", $module 
                 $title = $select->title;
             }
             $html .= '
-            <li class="dd-item dd3-item" data-id="' . $select->id . '">
-                <div class="dd-handle dd3-handle"></div>
-                <div class="dd3-content">' . $title . '
-                <span class="float-right" style="margin-top: -5px;">';
-            if (isset($extra_float[$select->id])) {
-                $html .= $extra_float[$select->id];
-            }
-            if ($addOne == true) {
-                $html .= '
-                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
-            }
-            $html .= '</span></div>';
-            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table,$addOne);
+            <li class="nav-item">
+             <div class="custom-control custom-checkbox custom-control-inline">
+    <input type="checkbox" class="custom-control-input" value="' . $select->id . '" id="cat_' . $select->id . '" checked>
+    <label class="custom-control-label" for="custom_checkbox_inline_unchecked">' . $title . '</label>
+</div>  
+</li>
+           ';
+            $html .= get_parent_child_checkbox($id, $select->id, $table);
             $html .= '</li>';
         }
-        $html .= '</ol>';
+        $html .= '</li></a></ul></ul>';
     }
     return $html;
 }
 
 
+function treeView()
+{
+    $Categorys = store_category::where('parent_id', '=', 0)->get();
+    $tree = '<ul id="browser" class="list-unstyled"><li class="pt-2"></li>';
+    foreach ($Categorys as $Category) {
+        $tree .= '<li class="pt-2 closed"<a class="tree-name">
+<div class="custom-control custom-checkbox custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$Category->id.'">
+    <label class="custom-control-label" for="cat_'.$Category->id.'">' . $Category->title . '</label>
+</div></a>';
+        if (count($Category->childs)) {
+            $tree .= childView($Category);
+        }
+    }
+    $tree .= '<ul>';
+    // return $tree;
+    return $tree;
+}
+
+function childView($Category)
+{
+    $html = '<ul>';
+    foreach ($Category->childs as $arr) {
+        if (count($arr->childs)) {
+            $html .= '<li class="pt-2 closed list-unstyled">
+<a class="tree-name">
+<div class="custom-control custom-checkbox custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'">
+    <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
+</div>
+</a>';
+            $html .= childView($arr);
+        } else {
+            $html .= '<li class="pt-2 list-unstyled">
+<div class="custom-control custom-checkbox custom-control-inline">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'">
+    <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
+</div>';
+            $html .= "</li>";
+        }
+
+    }
+
+    $html .= "</ul>";
+    return $html;
+}

@@ -99,6 +99,10 @@ if (!isset($active_sidbare)) {
                                                 class="nav-link {{in_array("store_category", $active_sidbare) ? 'active' : '' }}">{{trans('messages.store_category')}}</a>
                         </li>
 
+                        <li class="nav-item"><a href="{{route('store_items')}}"
+                                                class="nav-link {{in_array("store_items", $active_sidbare) ? 'active' : '' }}">{{trans('messages.store_items')}}</a>
+                        </li>
+
 
                         <li class="nav-item"><a href="{{route('discount_code')}}"
                                                 class="nav-link {{in_array("discount_code", $active_sidbare) ? 'active' : '' }}">{{trans('messages.discount_code')}}</a>

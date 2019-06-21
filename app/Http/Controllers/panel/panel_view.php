@@ -314,14 +314,13 @@ class panel_view extends Controller
     public function caravans_echart_data()
     {
         $hosts = caravan_host::get();
-
+        $now_date = date('Y-m-d H:i:s');
+        $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
+        $first_date = $start_date;
+        $this_end = $start_date;
         $info=[];
         foreach ($hosts as $host){
-            $now_date = date('Y-m-d H:i:s');
-            $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
-            $first_date = $start_date;
-            $this_end = $start_date;
-//            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
+            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
 //            if ($host_count>0) {
                 for ($i = 1; $i <= 12; $i++) {
                     $this_start = $this_end;
@@ -380,7 +379,14 @@ class panel_view extends Controller
     public function gateway_add()
     {
         $banks = bank::groupBy('name')->get();
-        return view('panel.setting.gateway_add', compact('banks'));
+        return view('panel.setting.gateway.gateway_add', compact('banks'));
+    }
+
+    public function gateway_edit(Request $request)
+    {
+        $banks = bank::groupBy('name')->get();
+        $info = gateway::find($request['gat_id']);
+        return view('panel.setting.gateway.gateway_edit', compact('banks', 'info'));
     }
 
 //end setting module
@@ -388,7 +394,8 @@ class panel_view extends Controller
 //store module
     public function product_add()
     {
-        return view('panel.store.product_add');
+        $gateways= gateway::get();
+        return view('panel.store.product_add',compact('gateways'));
     }
     public function product_list()
     {
@@ -400,7 +407,7 @@ class panel_view extends Controller
     public function discount_code()
     {
         $codes = store_discount_code::get();
-        return view('panel.store.discount_code',compact('codes'));
+        return view('panel.store.discount_code', compact('codes'));
     }
     public function discount_add_form()
     {
@@ -409,7 +416,7 @@ class panel_view extends Controller
     public function discount_code_edit_form(Request $request)
     {
         $dis_info = store_discount_code::find($request['dis_id']);
-        return view('panel.store.discount.discount_edit_form',compact('dis_info'));
+        return view('panel.store.discount.discount_edit_form', compact('dis_info'));
     }
 
     public function manage_orders()
@@ -425,7 +432,7 @@ class panel_view extends Controller
     {
 
         $product_categories = store_category::get();
-        return view('panel.store.store_category',compact('product_categories'));
+        return view('panel.store.store_category', compact('product_categories'));
     }
     public function store_category_add()
     {
@@ -435,7 +442,22 @@ class panel_view extends Controller
     public function store_category_edit_form(Request $request)
     {
         $cat_info = store_category::find($request['cat_id']);
-        return view('panel.store.category.store_category_edit',compact('cat_info'));
+        return view('panel.store.category.store_category_edit', compact('cat_info'));
+    }
+
+    public function store_items()
+    {
+        return view('panel.store.store_items');
+    }
+
+    public function store_items_add_form()
+    {
+        return view('panel.store.items.store_items_add');
+    }
+
+    public function store_items_category_add_form()
+    {
+
     }
 //end store module
 

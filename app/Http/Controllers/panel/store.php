@@ -8,7 +8,6 @@ use App\product_category;
 use App\store_category;
 use App\store_discount_code;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
 
 class store extends Controller
 {
@@ -142,4 +141,20 @@ class store extends Controller
         return back_normal($request, $message);
 
     }
+
+    public function product_add(Request $request)
+    {
+        dd($request->all());
+    }
+
+    public function store_items_add(Request $request)
+    {
+        dd($request->all());
+    }
+
+    public function store_items_category_add(Request $request)
+    {
+        dd($request->all());
+    }
+
 }

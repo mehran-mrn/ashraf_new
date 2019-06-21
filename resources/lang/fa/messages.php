@@ -223,7 +223,7 @@ return [
     'store_setting'=>'تنظیمات فروشگاه',
     'manage_orders'=>'مدیریت سفارشات',
     'discount_code'=>'کد تخفیف',
-    'expire_date'=>'تاریخ انتضاء',
+    'expire_date'=>'تاریخ انقضاء',
     'discount_persent'=>'درصد تخفیف',
     'discount_maximum'=>'حداکثر تخفیف',
     'usage_count_per_user'=>'تعداد استفاده هر کاربر',
@@ -236,5 +236,12 @@ return [
     'active'=>'فعال',
     'inactive'=>'غیر فعال',
     'discount_code_delete'=>'کد تخفیف حذف گردید.',
-    'duplicate_discount_code'=>'کد تخفیف در سیستم موجود میباشد.'
+    'duplicate_discount_code'=>'کد تخفیف در سیستم موجود میباشد.',
+    'please_select'=>'لطفاْ انتخاب نمایید.',
+    'private_key'=>'کلید خصوصی',
+    'pay_gateway'=>'درگاه های پرداخت',
+    'online'=>'آنلاین',
+    'cart_to_cart'=>'کارت به کارت',
+    'send_to_account'=>'واریز به حساب',
+    'pay_on_place'=>'پرداخت در محل',
     ];
