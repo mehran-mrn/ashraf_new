@@ -1,10 +1,10 @@
-<form action="{{route('store_items_category_add')}}" method="post" id="frm_store_items_category_add">
+<form action="{{route('store_items_category_update')}}" method="post" id="frm_store_items_category_add">
     @csrf
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="title">{{__('messages.title')}}</label>
-                <input type="text" class="form-control" name="title" id="title">
+                <input type="text" class="form-control" name="title" id="title" value="{{$info['title']}}">
             </div>
         </div>
         <div class="col-12 pt-2">

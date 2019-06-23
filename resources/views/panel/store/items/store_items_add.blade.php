@@ -7,16 +7,32 @@
                 <input type="text" class="form-control" name="title" id="title">
             </div>
         </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="prefix">{{__('messages.prefix')}}</label>
+                <input type="text" class="form-control" name="prefix" id="prefix">
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="suffix">{{__('messages.suffix')}}</label>
+                <input type="text" class="form-control" name="suffix" id="suffix">
+            </div>
+        </div>
         <div class="col-12">
             <div class="form-group">
-                <label for="description">{{__('messages.prefix')}}</label>
-                <input type="text" class="form-control" name="prefix" id="prefix">
+                <label for="category">{{__('messages.category')}}</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    @foreach($items_category as $cat)
+                        <option value="{{$cat['id']}}">{{$cat['title']}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="col-12">
             <div class="form-group">
                 <label for="description">{{__('messages.suffix')}}</label>
-                <input type="text" class="form-control" name="suffix" id="suffix">
+                <textarea name="description" id="description" cols="30" rows="5" class="form-control"></textarea>
             </div>
         </div>
         <div class="col-12 pt-2">
@@ -33,15 +49,7 @@
         rules: {
             title: {
                 required: true,
-                remote: {
-                    url: "{{route('store_category_check')}}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-                    },
-                    type: "post"
-                },
             },
-
         },
         submitHandler: function (form, e) {
             e.preventDefault();

@@ -49,7 +49,8 @@ class CreateGatewaysTable extends Migration
                 'merchant' => '000000140329876',
                 'public_key' => 'RnszP6AYaaZCF4PoGnsCTQAOhAmMdYWZ',
                 'terminal_id' => '24042986',
-                'logo'=>'<i class="ibl64 ibl-bmi"></i>'
+                'logo'=>'<i class="ibl64 ibl-bmi"></i>',
+                'online'=>'1'
             )
         );
         DB::table('gateways')->insert(
@@ -63,7 +64,8 @@ class CreateGatewaysTable extends Migration
                 'status' => 'active',
                 'merchant' => '3013',
                 'password' => Hash::make('9542264'),
-                'logo'=>'<i class="ibl64 ibl-sb"></i>'
+                'logo'=>'<i class="ibl64 ibl-sb"></i>',
+                'cart'=>'1'
 
             )
         );
@@ -78,7 +80,9 @@ class CreateGatewaysTable extends Migration
                 'status' => 'active',
                 'terminal_id' => '69000443',
                 'merchant' => '693408839800106',
-                'logo'=>'<i class="ibl64 ibl-bsi"></i>'
+                'logo'=>'<i class="ibl64 ibl-bsi"></i>',
+                'account'=>'1',
+                'cart'=>'1'
             )
         );
     }

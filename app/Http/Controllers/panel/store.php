@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\product_category;
 use App\store_category;
 use App\store_discount_code;
+use App\store_item;
+use App\store_item_category;
 use Illuminate\Http\Request;
 
 class store extends Controller
@@ -149,12 +151,58 @@ class store extends Controller
 
     public function store_items_add(Request $request)
     {
-        dd($request->all());
+        $this->validate($request, [
+            'title' => 'required|min:1',
+            'category_id' => 'required|min:1'
+        ]);
+        store_item::create(
+            [
+                'title' => $request['title'],
+                'prefix' => $request['prefix'],
+                'suffix' => $request['suffix'],
+                'description' => $request['description'],
+                'category_id' => $request['category_id'],
+            ]);
+        $message = trans("messages.added", ['item' => trans('messages.item')]);
+        return back_normal($request, $message);
+    }
+
+    public function store_items_update(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|min:1',
+            'category_id' => 'required|min:1'
+        ]);
+        store_item::where('id', $request['item_id'])->update(
+            [
+                'title' => $request['title'],
+                'prefix' => $request['prefix'],
+                'suffix' => $request['suffix'],
+                'description' => $request['description'],
+                'category_id' => $request['category_id'],
+            ]
+        );
+        $message = trans("messages.updated", ['item' => trans('messages.item')]);
+        return back_normal($request, $message);
+    }
+
+    public function store_item_delete(Request $request)
+    {
+        $item = store_item::find($request['item_id']);
+        $item->delete();
+        $message = trans("messages.deleted", ['item' => trans('messages.item')]);
+        return back_normal($request, $message);
     }
 
     public function store_items_category_add(Request $request)
     {
-        dd($request->all());
+        store_item_category::create(
+            [
+                'title' => $request['title']
+            ]
+        );
+        $message = trans("messages.added", ['item' => trans('messages.category')]);
+        return back_normal($request, $message);
     }
 
 }

@@ -103,7 +103,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
 
 
-        Route::prefix('store')->group(function () {
+    Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::post('store_product_add', 'panel\store@product_add')->name('store_product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
@@ -118,12 +118,15 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('store_category_check', 'panel\store@store_category_check')->name('store_category_check');
 
 
-        Route::get('store_category_tree_view','panel\store@store_category_tree_view')->name('store_category_tree_view');
-        Route::get('store_items_category_add_form','panel\panel_view@store_items_category_add_form')->name('store_items_category_add_form');
-        Route::post('store_items_category_add','panel\store@store_items_category_add')->name('store_items_category_add');
-        Route::get('store_items_add_form','panel\panel_view@store_items_add_form')->name('store_items_add_form');
-        Route::post('store_items_add','panel\store@store_items_add')->name('store_items_add');
-
+        Route::get('store_category_tree_view', 'panel\store@store_category_tree_view')->name('store_category_tree_view');
+        Route::get('store_items_category_add_form', 'panel\panel_view@store_items_category_add_form')->name('store_items_category_add_form');
+        Route::post('store_items_category_add', 'panel\store@store_items_category_add')->name('store_items_category_add');
+        Route::get('store_items_add_form', 'panel\panel_view@store_items_add_form')->name('store_items_add_form');
+        Route::post('store_items_add', 'panel\store@store_items_add')->name('store_items_add');
+        Route::get('store_items_delete', 'panel\store@store_item_delete')->name('store_item_delete');
+        Route::get('store_items_edit_form', 'panel\panel_view@store_items_edit_form')->name('store_items_edit_form');
+        Route::post('store_items_update/{item_id}', 'panel\store@store_items_update')->name('store_items_update');
+        Route::get('store_items_category_edit_form', 'panel\panel_view@store_items_category_edit_form')->name('store_items_category_edit_form');
 
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
@@ -140,14 +143,14 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     });
 
-        Route::prefix('building')->group(function () {
-            Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
-            Route::get('add_new_building', 'panel\panel_view@add_new_building')->name('add_new_building');
-            Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
-            Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
-        });
+    Route::prefix('building')->group(function () {
+        Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
+        Route::get('add_new_building', 'panel\panel_view@add_new_building')->name('add_new_building');
+        Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
+        Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
+    });
 
-        Route::prefix('ajax')->group(function () {
+    Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
         Route::get('/register_role', 'panel\panel_view@register_role_form')->name('panel_register_role_form');

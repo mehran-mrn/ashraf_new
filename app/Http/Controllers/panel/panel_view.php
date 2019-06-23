@@ -16,6 +16,8 @@ use App\person_caravan;
 use App\Role;
 use App\store_category;
 use App\store_discount_code;
+use App\store_item;
+use App\store_item_category;
 use App\Team;
 use App\User;
 use App\caravan;
@@ -438,7 +440,6 @@ class panel_view extends Controller
     {
         return view('panel.store.category.store_category_add');
     }
-
     public function store_category_edit_form(Request $request)
     {
         $cat_info = store_category::find($request['cat_id']);
@@ -447,18 +448,34 @@ class panel_view extends Controller
 
     public function store_items()
     {
-        return view('panel.store.store_items');
+        $items_category = store_item_category::get();
+        $items = store_item::get();
+        return view('panel.store.store_items',compact('items_category','items'));
     }
-
     public function store_items_add_form()
     {
-        return view('panel.store.items.store_items_add');
+        $items_category = store_item_category::get();
+        return view('panel.store.items.store_items_add',compact('items_category'));
+    }
+    public function store_items_edit_form(Request $request)
+    {
+        $info = store_item::find($request['item_id']);
+        $items_category = store_item_category::get();
+        return view('panel.store.items.store_items_edit',compact('info','items_category'));
     }
 
     public function store_items_category_add_form()
     {
-
+        return view('panel.store.items.store_items_category_add');
     }
+    public function store_items_category_edit_form(Request $request)
+    {
+        $info = store_item_category::find($request['cat_id']);
+        return view('panel.store.items.store_items_category_edit',compact('info'));
+    }
+
+
+
 //end store module
 
 }

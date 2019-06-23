@@ -1,21 +1,51 @@
-<form action="{{route('store_items_category_add')}}" method="post" id="frm_store_items_category_add">
+<form action="{{route('store_items_update',['item_id'=>$info['id']])}}" method="post" id="frm_store_items_add">
     @csrf
     <div class="row">
         <div class="col-12">
             <div class="form-group">
                 <label for="title">{{__('messages.title')}}</label>
-                <input type="text" class="form-control" name="title" id="title">
+                <input type="text" class="form-control" name="title" id="title" value="{{$info['title']}}">
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="prefix">{{__('messages.prefix')}}</label>
+                <input type="text" class="form-control" name="prefix" id="prefix" value="{{$info['prefix']}}">
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="suffix">{{__('messages.suffix')}}</label>
+                <input type="text" class="form-control" name="suffix" id="suffix" value="{{$info['suffix']}}">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="category">{{__('messages.category')}}</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    @foreach($items_category as $cat)
+                        <option value="{{$cat['id']}}" {{$info['category_id']==$cat['id']?'selected':''}} >{{$cat['title']}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="description">{{__('messages.suffix')}}</label>
+                <textarea name="description" id="description" cols="30" rows="5"
+                          class="form-control">{{$info['description']}}</textarea>
             </div>
         </div>
         <div class="col-12 pt-2">
-            <button class="btn btn-primary btn-block" type="submit">{{__('messages.add')}}</button>
+            <button class="btn btn-primary btn-block" type="submit">{{__('messages.edit')}}</button>
         </div>
     </div>
 </form>
 <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotify.js"></script>
+
 <script>
 
-    $("#frm_store_items_category_add").validate({
+    $("#frm_store_items_add").validate({
         lang: "fa",
         rules: {
             title: {

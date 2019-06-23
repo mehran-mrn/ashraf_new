@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="egitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
+                                    <button type="button" class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
                                             data-ajax-link="{{route('store_category_edit_form',['cat_id'=>$cat['id']])}}" data-toggle="modal"
                                             data-modal-title="{{trans('messages.edit',['item'=>trans('messages.store_category')])}}"
                                             data-target="#general_modal">

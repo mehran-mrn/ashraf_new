@@ -19,6 +19,7 @@ return [
     'item_deleted' => ':item‌حذف شد !',
     'delete_item_text'=>'آیا از حذف :item اطمینان دارید؟',
     'add_category'=>'افزودن :item',
+    'updated'=>':item ویرایش شد.',
 
 
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
@@ -244,4 +245,8 @@ return [
     'cart_to_cart'=>'کارت به کارت',
     'send_to_account'=>'واریز به حساب',
     'pay_on_place'=>'پرداخت در محل',
+    'item'=>'ایتم',
+    'items'=>'ایتم ها',
+    'prefix'=>'پیشوند',
+    'suffix'=>'پسوند',
     ];
