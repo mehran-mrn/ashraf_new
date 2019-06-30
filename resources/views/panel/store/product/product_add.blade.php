@@ -22,9 +22,9 @@
                 filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
             });
             $('.tokenfield').tokenfield();
-            $("[id^='box_']").on('click',function () {
+            $("[id^='box_']").on('click', function () {
                 var id = $(this).data("id");
-                $(this).parent().parent().parent().parent().after("<div id='boxSel_"+id+"'>").fadeOut().appendTo("#forms-target-right").fadeIn();
+                $(this).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
             });
             // $("[id^='cards-target-left']").each(function (index) {
             //     console.log(index);
@@ -39,6 +39,49 @@
             document.addEventListener('DOMContentLoaded', function () {
                 DragAndDrop.init();
             });
+
+
+            var route_prefix = {{env('url')}}"/laravel-filemanager";
+
+            (function ($) {
+
+                $.fn.filemanager = function (type, options) {
+                    type = type || 'file';
+
+                    this.on('click', function (e) {
+                        var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+                        var target_input = $('#' + $(this).data('input'));
+                        var target_preview = $('#' + $(this).data('preview'));
+                        window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
+                        window.SetUrl = function (items) {
+                            var file_path = items.map(function (item) {
+                                console.log(item.url);
+                                return item.url;
+                            }).join(',');
+
+                            // set the value of the desired input to image url
+                            target_input.val('').val(file_path).trigger('change');
+
+                            // clear previous preview
+                            target_preview.html('');
+
+                            // set or change the preview image src
+                            items.forEach(function (item) {
+                                target_preview.append(
+                                    $('<img>').css('height', '5rem').attr('src', item.thumb_url)
+                                );
+                            });
+
+                            // trigger change event
+                            target_preview.trigger('change');
+                        };
+                        return false;
+                    });
+                }
+
+            })(jQuery);
+
+            $('#lfmMain').filemanager('image', {prefix: route_prefix});
         });
 
         function deleteGatewayOnline(id) {
@@ -53,47 +96,6 @@
             $("#g_row_account_" + id).html("");
         }
 
-        var route_prefix = {{env('url')}}"/laravel-filemanager";
-
-        (function ($) {
-
-            $.fn.filemanager = function (type, options) {
-                type = type || 'file';
-
-                this.on('click', function (e) {
-                    var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-                    var target_input = $('#' + $(this).data('input'));
-                    var target_preview = $('#' + $(this).data('preview'));
-                    window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
-                    window.SetUrl = function (items) {
-                        var file_path = items.map(function (item) {
-                            console.log(item.url);
-                            return item.url;
-                        }).join(',');
-
-                        // set the value of the desired input to image url
-                        target_input.val('').val(file_path).trigger('change');
-
-                        // clear previous preview
-                        target_preview.html('');
-
-                        // set or change the preview image src
-                        items.forEach(function (item) {
-                            target_preview.append(
-                                $('<img>').css('height', '5rem').attr('src', item.thumb_url)
-                            );
-                        });
-
-                        // trigger change event
-                        target_preview.trigger('change');
-                    };
-                    return false;
-                });
-            }
-
-        })(jQuery);
-
-        $('#lfm').filemanager('image', {prefix: route_prefix});
 
         var FileUpload = function () {
             var _componentFileUpload = function () {
@@ -206,14 +208,14 @@
                 <div class="col-12 col-md-8">
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.product_add')}}</span>
+                                    class="card-title">{{__('messages.product_add')}}</span>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="title">{{__('messages.product_title')}}</label>
-                                        <input type="text" name="title" id="title" class="form-control">
+                                        <input type="text" name="title" id="title" class="form-control" value="{{old('title')}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -224,17 +226,18 @@
                                 </div>
                                 <div class="col-12">
                                     <span class="input-group-btn">
-                                        <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                        <a id="lfmMain" data-input="thumbnail" data-preview="holder"
                                            class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
                                     </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="filepath" readonly="readonly">
+                                    <input id="thumbnail" class="form-control" type="text" name="filepath"
+                                           readonly="readonly">
                                     <img id="holder" style="margin-top:15px;max-height:100px;">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="image">{{__('messages.image')}}</label>
                                         <input type="file" class="file-input-ajax" multiple="multiple" id="image"
-                                               name="image" data-fouc>
+                                               name="image[]" data-fouc>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -250,7 +253,7 @@
                                         <div class="card-header header-elements-inline">
                                             <h6 class="card-title">{{__('messages.items')}}</h6>
                                         </div>
-                                        <div class="card-body" >
+                                        <div class="card-body">
                                             <div class="row" id="forms-target-right"><br><br><br></div>
                                         </div>
                                     </div>
@@ -262,19 +265,19 @@
                 <div class="col-12 col-md-4">
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="panel-title">{{__('messages.category')}}</span></div>
+                                    class="panel-title">{{__('messages.category')}}</span></div>
                         <div class="card-body">
                             {!! treeView() !!}
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.pay_gateway')}}</span></div>
+                                    class="card-title">{{__('messages.pay_gateway')}}</span></div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 text-center pb-3">
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_online"
+                                        <input type="checkbox" class="custom-control-input" id="pay_online" name="pay_online"
                                                checked>
                                         <label class="custom-control-label"
                                                for="pay_online">{{__('messages.online')}}</label>
@@ -287,7 +290,7 @@
                                         if($gateway['online']==1){
                                         echo '<div class="row" id="g_row_online_'.$gateway['id'].'"><div class="col-12 col-md-6">';
                                         echo $logo;
-                                        echo '<input type="hidden" name="online_gateway_online_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '<input type="hidden" name="online_gateway_online[]" value="'.$gateway['id'].'">';
                                         echo '</div><div class="col-12 col-md-6">';
                                         echo '<button type="button" onclick="deleteGatewayOnline('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
                                         echo '</div></div>';
@@ -300,7 +303,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_cart"
+                                        <input type="checkbox" class="custom-control-input" id="pay_cart" name="pay_cart"
                                                checked>
                                         <label class="custom-control-label"
                                                for="pay_cart">{{__('messages.cart_to_cart')}}</label>
@@ -314,7 +317,7 @@
                                         if($gateway['cart']==1){
                                         echo '<div class="row" id="g_row_cart_'.$gateway['id'].'"><div class="col-12 col-md-6">';
                                           echo $logo;
-                                        echo '<input type="hidden" name="online_gateway_cart_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '<input type="hidden" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
                                         echo '</div><div class="col-md-6">';
                                         echo '<button type="button" onclick="deleteGatewayCart('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
                                         echo '</div></div>';
@@ -327,7 +330,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_account"
+                                        <input type="checkbox" class="custom-control-input" id="pay_account" name="pay_account"
                                                checked>
                                         <label class="custom-control-label"
                                                for="pay_account">{{__('messages.send_to_account')}}</label>
@@ -340,7 +343,7 @@
                                         if($gateway['account']==1){
                                         echo '<div class="row" id="g_row_account_'.$gateway['id'].'"><div class="col-12 col-md-6">';
                                           echo $logo;
-                                        echo '<input type="hidden" name="online_gateway_account_'.$gateway['id'].'" value="'.$gateway['id'].'">';
+                                        echo '<input type="hidden" name="online_gateway_account[]" value="'.$gateway['id'].'">';
                                         echo '</div><div class="col-md-6">';
                                         echo '<button type="button" onclick="deleteGatewayAccount('.$gateway['id'].')" class="btn float-right mt-2 btn-xs btn-outline-dark"><i class="icon-trash"></i></button>';
                                         echo '</div></div>';
@@ -354,6 +357,7 @@
                                 <div class="col-md-12 text-center">
                                     <div class="custom-control custom-checkbox custom-control-inline">
                                         <input type="checkbox" class="custom-control-input" id="pay_place"
+                                               name="pay_place"
                                                checked>
                                         <label class="custom-control-label"
                                                for="pay_place">{{__('messages.pay_on_place')}}</label>
@@ -364,9 +368,45 @@
                     </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.action')}}</span>
+                                    class="card-title">{{__('messages.action')}}</span>
                         </div>
                         <div class="card-body">
+                            <div class="d-flex flex-column">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <label for="ready">{{__('messages.ready_for_send')}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="number" class="form-control" id="ready" name="ready" min="0"
+                                                   max="60">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <label for="price">{{__('messages.price')}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="text" class="form-control" id="price" name="price" min="0"
+                                                   max="60">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <label for="off">{{__('messages.off')}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="number" class="form-control" id="off" name="off" min="0"
+                                                   max="100">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <button class="btn btn-primary btn-block" type="submit">{{__('messages.submit')}}</button>
                         </div>
                     </div>
@@ -378,10 +418,10 @@
                 <div class="row" id="forms-target-left">
                     @foreach($items_cats as $item)
                         @php $child = $item->getChild() @endphp
-                            <div class="col-md-6" id="boxSel_{{$item['id']}}">
-                                <div class="form-group">
-                                <div class="card" >
-                                    <div class="card-header bg-info header-elements-inline" >
+                        <div class="col-md-6" id="boxSel_{{$item['id']}}">
+                            <div class="form-group">
+                                <div class="card card-collapsed">
+                                    <div class="card-header bg-info header-elements-inline">
                                         <h6 class="card-title text-center">{{$item->title}}</h6>
                                         <div class="header-elements">
                                             <div class="list-icons">
@@ -391,7 +431,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body" >
+                                    <div class="card-body">
                                         @foreach($child as $ch)
                                             <label class="cursor-move">{{$ch->title}}</label>
                                             <div class="input-group">
@@ -400,7 +440,9 @@
                                                             <span class="input-group-text">{{$ch['prefix']}}</span>
                                                         </span>
                                                 @endif
-                                                <input type="text" class="form-control" name="item_{{$ch['id']}}">
+                                                <input type="text" class="form-control" name="items_{{$ch['id']}}">
+                                                <input type="hidden" class="form-control" name="items_id[]"
+                                                       value="{{$ch['id']}}">
                                                 @if($ch['suffix']!='')
                                                     <span class="input-group-append">
                                                             <span class="input-group-text">{{$ch['suffix']}}</span>
@@ -410,7 +452,9 @@
                                         @endforeach
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-outline-dark float-right" data-id="{{$item['id']}}" id="box_{{$item['id']}}">{{__('messages.select')}}</button>
+                                        <button type="button" class="btn btn-outline-dark float-right"
+                                                data-id="{{$item['id']}}"
+                                                id="box_{{$item['id']}}">{{__('messages.select')}}</button>
                                     </div>
                                 </div>
                             </div>

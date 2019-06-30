@@ -18,6 +18,7 @@ use App\store_category;
 use App\store_discount_code;
 use App\store_item;
 use App\store_item_category;
+use App\store_product;
 use App\Team;
 use App\User;
 use App\caravan;
@@ -219,9 +220,9 @@ class panel_view extends Controller
     public function caravan_dashboard()
     {
         $caravans_query = caravan::query();
-        $caravans_query->whereIn('status', [1, 2, 3,4]);
+        $caravans_query->whereIn('status', [1, 2, 3, 4]);
         $caravans = $caravans_query->get();
-        return view('panel.caravan.dashboard',compact('caravans'));
+        return view('panel.caravan.dashboard', compact('caravans'));
     }
 
     public function hosts_list()
@@ -260,13 +261,12 @@ class panel_view extends Controller
 
         $status_array = $request->input('status');
 
-        if (is_array($status_array)){
-            foreach ($status_array as $status){
-                $caravans_query->where('status',$status);
+        if (is_array($status_array)) {
+            foreach ($status_array as $status) {
+                $caravans_query->where('status', $status);
             }
-        }
-        elseif (is_numeric($status_array)){
-            $caravans_query->where('status',$status_array);
+        } elseif (is_numeric($status_array)) {
+            $caravans_query->where('status', $status_array);
         }
         $caravans = $caravans_query->get();
         return view('panel.caravan.caravans_list', compact('caravans'));
@@ -278,14 +278,14 @@ class panel_view extends Controller
         return view('panel.caravan.view_caravan', compact('caravan'));
     }
 
-    public function register_to_caravan($caravan_id,$person_caravan_id =null)
+    public function register_to_caravan($caravan_id, $person_caravan_id = null)
     {
         $caravan = caravan::find($caravan_id);
         $person_caravan = null;
-        if (!empty($person_caravan_id)){
+        if (!empty($person_caravan_id)) {
             $person_caravan = person_caravan::with('person')->find($person_caravan_id);
         }
-        return view('panel.caravan.register_to_caravan_form', compact('caravan','person_caravan'));
+        return view('panel.caravan.register_to_caravan_form', compact('caravan', 'person_caravan'));
     }
 
     public function register_to_caravan_post(Request $request)
@@ -306,11 +306,11 @@ class panel_view extends Controller
         return view('panel.caravan.register_to_caravan_form', compact('caravan', 'national_code', 'person'));
     }
 
-    public function change_caravan_status_form($caravan_id,$status)
+    public function change_caravan_status_form($caravan_id, $status)
     {
         //$status "back" "next" "cancel"
         $caravan = caravan::find($caravan_id);
-        return view('panel.caravan.materials.change_caravan_status', compact('caravan','status'));
+        return view('panel.caravan.materials.change_caravan_status', compact('caravan', 'status'));
     }
 
     public function caravans_echart_data()
@@ -320,15 +320,15 @@ class panel_view extends Controller
         $start_date = date('Y-m-d H:i:s', strtotime('-1 years'));
         $first_date = $start_date;
         $this_end = $start_date;
-        $info=[];
-        foreach ($hosts as $host){
-            $host_count = caravan::where('caravan_host_id',$host['id'])->whereBetween('start',[$first_date,$now_date])->where('status','5')->count();
+        $info = [];
+        foreach ($hosts as $host) {
+            $host_count = caravan::where('caravan_host_id', $host['id'])->whereBetween('start', [$first_date, $now_date])->where('status', '5')->count();
 //            if ($host_count>0) {
-                for ($i = 1; $i <= 12; $i++) {
-                    $this_start = $this_end;
-                    $this_end = date('Y-m-d H:i:s', strtotime('+1 months', strtotime($this_start)));
-                    $caravans_count = caravan::where('caravan_host_id', $host['id'])->whereBetween('start', [$this_start, $this_end])->where('status', '5')->count();
-                    $info[$host['name']][jdate('Y F',strtotime($this_start))] = $caravans_count;
+            for ($i = 1; $i <= 12; $i++) {
+                $this_start = $this_end;
+                $this_end = date('Y-m-d H:i:s', strtotime('+1 months', strtotime($this_start)));
+                $caravans_count = caravan::where('caravan_host_id', $host['id'])->whereBetween('start', [$this_start, $this_end])->where('status', '5')->count();
+                $info[$host['name']][jdate('Y F', strtotime($this_start))] = $caravans_count;
 //                }
             }
         }
@@ -397,25 +397,36 @@ class panel_view extends Controller
     public function product_add()
     {
         $items_cats = store_item_category::all();
-        $gateways= gateway::get();
-        return view('panel.store.product_add',compact('gateways','items_cats'));
+        $gateways = gateway::get();
+        return view('panel.store.product.product_add', compact('gateways', 'items_cats'));
     }
+
+    public function store_product_edit(Request $request)
+    {
+        $items_cats = store_item_category::all();
+        $gateways = gateway::get();
+        $product = store_product::find($request['pro_id']);
+        return view('panel.store.product.product_add', compact('gateways', 'items_cats', 'product'));
+    }
+
     public function product_list()
     {
-        dd(store_category::all());
-
-        return view('panel.store.product_list');
+        $products = store_product::get();
+        return view('panel.store.product_list', compact('products'));
     }
+
 
     public function discount_code()
     {
         $codes = store_discount_code::get();
         return view('panel.store.discount_code', compact('codes'));
     }
+
     public function discount_add_form()
     {
         return view('panel.store.discount.discount_add_form');
     }
+
     public function discount_code_edit_form(Request $request)
     {
         $dis_info = store_discount_code::find($request['dis_id']);
@@ -426,6 +437,7 @@ class panel_view extends Controller
     {
         return view('panel.store.manage_orders');
     }
+
     public function store_setting()
     {
         return view('panel.store.store_setting');
@@ -437,10 +449,12 @@ class panel_view extends Controller
         $product_categories = store_category::get();
         return view('panel.store.store_category', compact('product_categories'));
     }
+
     public function store_category_add()
     {
         return view('panel.store.category.store_category_add');
     }
+
     public function store_category_edit_form(Request $request)
     {
         $cat_info = store_category::find($request['cat_id']);
@@ -451,30 +465,32 @@ class panel_view extends Controller
     {
         $items_category = store_item_category::get();
         $items = store_item::get();
-        return view('panel.store.store_items',compact('items_category','items'));
+        return view('panel.store.store_items', compact('items_category', 'items'));
     }
+
     public function store_items_add_form()
     {
         $items_category = store_item_category::get();
-        return view('panel.store.items.store_items_add',compact('items_category'));
+        return view('panel.store.items.store_items_add', compact('items_category'));
     }
+
     public function store_items_edit_form(Request $request)
     {
         $info = store_item::find($request['item_id']);
         $items_category = store_item_category::get();
-        return view('panel.store.items.store_items_edit',compact('info','items_category'));
+        return view('panel.store.items.store_items_edit', compact('info', 'items_category'));
     }
 
     public function store_items_category_add_form()
     {
         return view('panel.store.items.store_items_category_add');
     }
+
     public function store_items_category_edit_form(Request $request)
     {
         $info = store_item_category::find($request['cat_id']);
-        return view('panel.store.items.store_items_category_edit',compact('info'));
+        return view('panel.store.items.store_items_category_edit', compact('info'));
     }
-
 
 
 //end store module

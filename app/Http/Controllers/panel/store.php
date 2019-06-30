@@ -9,6 +9,12 @@ use App\store_category;
 use App\store_discount_code;
 use App\store_item;
 use App\store_item_category;
+use App\store_product;
+use App\store_product_category;
+use App\store_product_gateway;
+use App\store_product_image;
+use App\store_product_item;
+use App\store_product_tag;
 use Illuminate\Http\Request;
 
 class store extends Controller
@@ -146,7 +152,129 @@ class store extends Controller
 
     public function store_product_add(Request $request)
     {
-        dd($request->all());
+
+        $this->validate($request,
+            [
+                'title' => 'required|min:1',
+                'description' => 'required|min:1',
+                'filepath' => 'required',
+            ]);
+        $mainFileID = get_file_id($request['filepath']);
+        $product_info = store_product::create([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'main_image' => $request['filepath'],
+            'main_image_id' => $mainFileID,
+            'price' => $request['price'],
+            'off' => $request['off'],
+            'ready' => $request['ready']
+        ]);
+        $product_id = $product_info->id;
+
+        if ($request['tags'] != "") {
+            $tags = explode(',', $request['tags']);
+            if (sizeof($tags) >= 1) {
+                foreach ($tags as $tag) {
+                    store_product_tag::create([
+                        'product_id' => $product_id,
+                        'tag' => $tag
+                    ]);
+                }
+            }
+        }
+        if (sizeof($request['cats']) >= 1) {
+            foreach ($request['cats'] as $cat) {
+                store_product_category::create(
+                    [
+                        'product_id' => $product_id,
+                        'category_id' => $cat
+                    ]
+                );
+            }
+        }
+        if (sizeof($request['items_id']) >= 1) {
+            foreach ($request['items_id'] as $item) {
+                store_product_item::create(
+                    [
+                        "product_id" => $product_id,
+                        "item_id" => $item,
+                        'value' => $request['items_' . $item]
+                    ]
+                );
+            }
+        }
+
+        if (isset($request['pay_online'])) {
+            if (sizeof($request['online_gateway_online']) >= 1) {
+                foreach ($request['online_gateway_online'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'online'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_cart'])) {
+            if (sizeof($request['online_gateway_cart']) >= 1) {
+                foreach ($request['online_gateway_cart'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'cart'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_account'])) {
+            if (sizeof($request['online_gateway_account']) >= 1) {
+                foreach ($request['online_gateway_account'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'account'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_place'])) {
+            store_product_gateway::create(
+                [
+                    'product_id' => $product_id,
+                    'gateway_id' => "0",
+                    'type' => 'place'
+                ]
+            );
+        }
+
+//        if (sizeof($request['image']) >= 1) {
+//            foreach ($request['image'] as $item) {
+//                $file_id = file_saver($request['image']);
+//                store_product_image::create(
+//                    [
+//                        'product_id' => $product_id,
+//                        'media_id' => $file_id,
+//                    ]
+//                );
+//            }
+//        }
+
+        $message = trans("messages.added", ['item' => trans('messages.product')]);
+        return back_normal($request, $message);
+    }
+
+    public function store_product_delete(Request $request)
+    {
+        $product = store_product::find($request['pro_id']);
+        $product->deleteAll();
+        $message = trans("messages.item_deleted", ['item' => trans('messages.product')]);
+        return back_normal($request, $message);
     }
 
     public function store_items_add(Request $request)

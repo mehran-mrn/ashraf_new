@@ -164,7 +164,7 @@ function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_
 //    $image = $request->file('image');
     $image = $image_input;
     $p = explode("public/", $folder);
-    $destinationPath = 'public/' . $p[1];
+    $destinationPath = $folder;
     $id = \App\media::create([
         'name' => ' ',
         'url' => ' ',
@@ -440,7 +440,6 @@ function get_file_id($fileName)
     return $fileInfo[0];
 }
 
-
 function get_parent_child_checkbox($id, $parent = 0, $table)
 {
     $html = '';
@@ -472,7 +471,6 @@ function get_parent_child_checkbox($id, $parent = 0, $table)
     return $html;
 }
 
-
 function treeView()
 {
     $Categorys = store_category::where('parent_id', '=', 0)->get();
@@ -480,7 +478,7 @@ function treeView()
     foreach ($Categorys as $Category) {
         $tree .= '<li class="pt-2 closed"<a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$Category->id.'">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$Category->id.'" name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$Category->id.'">' . $Category->title . '</label>
 </div></a>';
         if (count($Category->childs)) {
@@ -500,7 +498,7 @@ function childView($Category)
             $html .= '<li class="pt-2 closed list-unstyled">
 <a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
 </div>
 </a>';
@@ -508,7 +506,7 @@ function childView($Category)
         } else {
             $html .= '<li class="pt-2 list-unstyled">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'">
+    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
 </div>';
             $html .= "</li>";

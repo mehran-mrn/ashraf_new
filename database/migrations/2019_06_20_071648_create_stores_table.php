@@ -94,7 +94,7 @@ class CreateStoresTable extends Migration
         DB::table('store_items')->insert(
             array(
                 'title' => 'وزن',
-                'category_id'=>'2',
+                'category_id'=>'1',
                 'suffix'=>'کیلوگرم'
             )
         );
@@ -102,9 +102,13 @@ class CreateStoresTable extends Migration
 
         Schema::create('store_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->unique();
-            $table->text('description');
-            $table->integer('price');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('main_image')->nullable();
+            $table->string('main_image_id')->nullable();
+            $table->string('price')->default('0');
+            $table->string('off')->default('0');
+            $table->integer('ready')->default('1');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -118,8 +122,8 @@ class CreateStoresTable extends Migration
         Schema::create('store_product_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('product_id');
-            $table->integer('media_id');
-            $table->string('url');
+            $table->integer('media_id')->nullable();
+            $table->string('url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -135,6 +139,14 @@ class CreateStoresTable extends Migration
             $table->integer('product_id');
             $table->string('item_id');
             $table->string('value');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+        Schema::create('store_product_gateways', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('product_id');
+            $table->integer('gateway_id');
+            $table->string('type');
             $table->softDeletes();
             $table->timestamps();
         });

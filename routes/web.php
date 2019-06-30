@@ -105,8 +105,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
-        Route::post('store_product_add', 'panel\store@product_add')->name('store_product_add');
+        Route::post('store_product_add', 'panel\store@store_product_add')->name('store_product_add');
         Route::get('product_list', 'panel\panel_view@product_list')->name('product_list');
+        Route::get('store_product_edit/{pro_id}', 'panel\panel_view@store_product_edit')->name('store_product_edit');
+        Route::get('store_product_delete/{pro_id}', 'panel\store@store_product_delete')->name('store_product_delete');
         Route::get('store_items', 'panel\panel_view@store_items')->name('store_items');
 
         Route::get('store_category', 'panel\panel_view@store_category')->name('store_category');
