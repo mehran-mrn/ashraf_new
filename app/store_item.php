@@ -14,6 +14,6 @@ class store_item extends Model
 
     public function store_item_category()
     {
-        return $this->belongsTo('App\store_item_category', 'category_id');
+        return $this->hasOne('App\store_item_category','id','category_id');
     }
 }

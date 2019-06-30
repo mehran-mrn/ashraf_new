@@ -396,8 +396,9 @@ class panel_view extends Controller
 //store module
     public function product_add()
     {
+        $items_cats = store_item_category::all();
         $gateways= gateway::get();
-        return view('panel.store.product_add',compact('gateways'));
+        return view('panel.store.product_add',compact('gateways','items_cats'));
     }
     public function product_list()
     {

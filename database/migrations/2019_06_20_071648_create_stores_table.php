@@ -56,17 +56,49 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::table('store_item_categories')->insert(
+            array(
+                'title' => 'وزن',
+            )
+        );
+        DB::table('store_item_categories')->insert(
+            array(
+                'title' => 'ابعاد',
+            )
+        );
 
         Schema::create('store_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
-            $table->string('prefix');
-            $table->string('suffix');
-            $table->string('description');
+            $table->string('prefix')->nullable();
+            $table->string('suffix')->nullable();
+            $table->string('description')->nullable();
             $table->integer('category_id');
             $table->softDeletes();
             $table->timestamps();
         });
+        DB::table('store_items')->insert(
+            array(
+                'title' => 'طول',
+                'category_id'=>'2',
+                'suffix'=>'سانتی متر'
+            )
+        );
+        DB::table('store_items')->insert(
+            array(
+                'title' => 'عرض',
+                'category_id'=>'2',
+                'suffix'=>'سانتی متر'
+            )
+        );
+        DB::table('store_items')->insert(
+            array(
+                'title' => 'وزن',
+                'category_id'=>'2',
+                'suffix'=>'کیلوگرم'
+            )
+        );
+
 
         Schema::create('store_products', function (Blueprint $table) {
             $table->bigIncrements('id');

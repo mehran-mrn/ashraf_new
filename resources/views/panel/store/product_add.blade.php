@@ -3,15 +3,12 @@
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tagsinput.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tokenfield.min.js')}}"></script>
-    <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/ui/prism.min.js')}}"></script>
-    <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
-    <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
-    <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/ui/dragula.min.js')}}"></script>
     <script>
 
         $(document).ready(function () {
@@ -25,6 +22,23 @@
                 filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
             });
             $('.tokenfield').tokenfield();
+            $("[id^='box_']").on('click',function () {
+                var id = $(this).data("id");
+                $(this).parent().parent().parent().parent().after("<div id='boxSel_"+id+"'>").fadeOut().appendTo("#forms-target-right").fadeIn();
+            });
+            // $("[id^='cards-target-left']").each(function (index) {
+            //     console.log(index);
+            //     var id = $(this).attr("id");
+            //     console.log(id);
+            //     dragula([document.getElementById(id), document.getElementById('cards-target-right')]);
+            //     dragula([document.getElementById('cards-target-main'), document.getElementById(id)]);
+            // })
+
+            dragula([document.getElementById('forms-target-left'), document.getElementById('forms-target-right')]);
+
+            document.addEventListener('DOMContentLoaded', function () {
+                DragAndDrop.init();
+            });
         });
 
         function deleteGatewayOnline(id) {
@@ -209,15 +223,12 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-group">
                                     <span class="input-group-btn">
                                         <a id="lfm" data-input="thumbnail" data-preview="holder"
-                                           class="btn btn-primary"><i
-                                                class="fa fa-picture-o"></i>{{__('messages.select_image')}}</a>
+                                           class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
                                     </span>
-                                        <input id="thumbnail" class="form-control" type="text" name="filepath">
-                                        <img id="holder" style="margin-top:15px;max-height:100px;">
-                                    </div>
+                                    <input id="thumbnail" class="form-control" type="text" name="filepath" readonly="readonly">
+                                    <img id="holder" style="margin-top:15px;max-height:100px;">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -232,6 +243,16 @@
                                         <input type="text" class="form-control tokenfield"
                                                placeholder="{{__('messages.enter_text')}}"
                                                data-fouc name="tags" id="tags" value="{{old('tags')}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline">
+                                            <h6 class="card-title">{{__('messages.items')}}</h6>
+                                        </div>
+                                        <div class="card-body" >
+                                            <div class="row" id="forms-target-right"><br><br><br></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -342,15 +363,63 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header text-center bg-light"><span class="card-title">{{__('messages.action')}}</span>
+                        <div class="card-header text-center bg-light"><span
+                                class="card-title">{{__('messages.action')}}</span>
                         </div>
                         <div class="card-body">
                             <button class="btn btn-primary btn-block" type="submit">{{__('messages.submit')}}</button>
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
+        <div class="card">
+            <div class="card-body">
+                <div class="row" id="forms-target-left">
+                    @foreach($items_cats as $item)
+                        @php $child = $item->getChild() @endphp
+                            <div class="col-md-6" id="boxSel_{{$item['id']}}">
+                                <div class="form-group">
+                                <div class="card" >
+                                    <div class="card-header bg-info header-elements-inline" >
+                                        <h6 class="card-title text-center">{{$item->title}}</h6>
+                                        <div class="header-elements">
+                                            <div class="list-icons">
+                                                <a class="list-icons-item" data-action="collapse"></a>
+                                                <a class="list-icons-item" data-action="reload"></a>
+                                                <a class="list-icons-item" data-action="remove"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" >
+                                        @foreach($child as $ch)
+                                            <label class="cursor-move">{{$ch->title}}</label>
+                                            <div class="input-group">
+                                                @if($ch['prefix']!='')
+                                                    <span class="input-group-prepend">
+                                                            <span class="input-group-text">{{$ch['prefix']}}</span>
+                                                        </span>
+                                                @endif
+                                                <input type="text" class="form-control" name="item_{{$ch['id']}}">
+                                                @if($ch['suffix']!='')
+                                                    <span class="input-group-append">
+                                                            <span class="input-group-text">{{$ch['suffix']}}</span>
+                                                        </span>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" class="btn btn-outline-dark float-right" data-id="{{$item['id']}}" id="box_{{$item['id']}}">{{__('messages.select')}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <br>
+                <hr>
+            </div>
+        </div>
     </div>
 @endsection

@@ -123,10 +123,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('store_items_category_add', 'panel\store@store_items_category_add')->name('store_items_category_add');
         Route::get('store_items_add_form', 'panel\panel_view@store_items_add_form')->name('store_items_add_form');
         Route::post('store_items_add', 'panel\store@store_items_add')->name('store_items_add');
-        Route::get('store_items_delete', 'panel\store@store_item_delete')->name('store_item_delete');
+        Route::get('store_items_delete', 'panel\store@store_item_delete')->name('store_items_delete');
         Route::get('store_items_edit_form', 'panel\panel_view@store_items_edit_form')->name('store_items_edit_form');
         Route::post('store_items_update/{item_id}', 'panel\store@store_items_update')->name('store_items_update');
         Route::get('store_items_category_edit_form', 'panel\panel_view@store_items_category_edit_form')->name('store_items_category_edit_form');
+        Route::get('store_items_category_delete/{cat_id}', 'panel\store@store_items_category_delete')->name('store_items_category_delete');
 
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');

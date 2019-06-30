@@ -144,7 +144,7 @@ class store extends Controller
 
     }
 
-    public function product_add(Request $request)
+    public function store_product_add(Request $request)
     {
         dd($request->all());
     }
@@ -203,6 +203,12 @@ class store extends Controller
         );
         $message = trans("messages.added", ['item' => trans('messages.category')]);
         return back_normal($request, $message);
+    }
+
+    public function store_items_category_delete(Request $request)
+    {
+        $item_category = store_item_category::find($request['cat_id']);
+        $item_category->deleteAllItems();
     }
 
 }

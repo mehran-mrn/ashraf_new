@@ -8,7 +8,7 @@
     <title>{{trans('messages.html_title')}}</title>
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+{{--    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">--}}
     <link href="{{ URL::asset('/public/assets/panel/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/global_assets/css/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
