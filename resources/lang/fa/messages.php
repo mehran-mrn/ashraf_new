@@ -79,10 +79,17 @@ return [
     're-password'=>"ورود مجدد رمز عبور",
 
     'building_projects'=>"سایه رضوان",
+    'project_title'=>"عنوان پروژه",
+    'start_date'=>"تاریخ شروع",
+    'end_date'=>"تاریخ پایان",
+    'coordination'=>"مختصات مکانی",
     'building_dashboard'=>"میز کار",
     'add_new_building'=>"تعریف پروژه جدید",
     'building_types'=>"تیپ ساختمان ها",
     'building_archive'=>"آرشیو پروژه ها",
+    'address'=>"آدرس",
+    'lat'=>"عرض جغرافیایی",
+    'long'=>"طول جغرافیایی",
 
 
     'last_login'=>"آخرین لاگین",

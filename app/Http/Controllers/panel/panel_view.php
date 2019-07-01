@@ -350,7 +350,8 @@ class panel_view extends Controller
 
     public function add_new_building()
     {
-        return view('panel.building.add_new_building');
+        $project =[];
+        return view('panel.building.add_new_building',compact('project'));
     }
 
     public function building_types()

@@ -115,6 +115,7 @@ class caravan extends Controller
 
     public function add_person_to_caravan(Request $request)
     {
+
         $request['caravan_id'] = latin_num($request['caravan_id']);
         $request['birth_date'] = latin_num($request['birth_date']);
         $request['national_code'] = latin_num($request['national_code']);
