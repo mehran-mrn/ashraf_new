@@ -471,18 +471,22 @@ function get_parent_child_checkbox($id, $parent = 0, $table)
     return $html;
 }
 
-function treeView()
+function treeView($checked=[])
 {
     $Categorys = store_category::where('parent_id', '=', 0)->get();
     $tree = '<ul id="browser" class="list-unstyled"><li class="pt-2"></li>';
     foreach ($Categorys as $Category) {
+        $check='';
+        if(in_array($Category->id,$checked)){
+            $check="checked='checked'";
+        }
         $tree .= '<li class="pt-2 closed"<a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$Category->id.'" name="cats[]" value="'.$Category->id.'">
+    <input type="checkbox" '.$check.' class="custom-control-input" id="cat_'.$Category->id.'" name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$Category->id.'">' . $Category->title . '</label>
 </div></a>';
         if (count($Category->childs)) {
-            $tree .= childView($Category);
+            $tree .= childView($Category,$checked);
         }
     }
     $tree .= '<ul>';
@@ -490,15 +494,20 @@ function treeView()
     return $tree;
 }
 
-function childView($Category)
+function childView($Category,$checked=[])
 {
     $html = '<ul>';
     foreach ($Category->childs as $arr) {
+        $check='';
+        if(in_array($arr->id,$checked)){
+            $check="checked='checked'";
+        }
         if (count($arr->childs)) {
+
             $html .= '<li class="pt-2 closed list-unstyled">
 <a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
+    <input type="checkbox" class="custom-control-input" '.$check.' id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
 </div>
 </a>';
@@ -506,7 +515,7 @@ function childView($Category)
         } else {
             $html .= '<li class="pt-2 list-unstyled">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
+    <input type="checkbox" '.$check.' class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
     <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
 </div>';
             $html .= "</li>";

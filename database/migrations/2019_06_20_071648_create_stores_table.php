@@ -109,6 +109,8 @@ class CreateStoresTable extends Migration
             $table->string('price')->default('0');
             $table->string('off')->default('0');
             $table->integer('ready')->default('1');
+            $table->string('status')->default('active');
+            $table->integer('website_id')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
