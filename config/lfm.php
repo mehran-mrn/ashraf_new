@@ -84,9 +84,9 @@ return [
 
     'disk'                     => 'images',
 
-    'rename_file'              => true,
+    'rename_file'              => false,
 
-    'alphanumeric_filename'    => true,
+    'alphanumeric_filename'    => false,
 
     'alphanumeric_directory'   => false,
 

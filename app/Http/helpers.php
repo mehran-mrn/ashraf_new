@@ -158,13 +158,15 @@ function image_saver($image_input, $folder = 'photos', $module = 'none', $custom
     return $media_id;
 }
 
+
+
 function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_size = [], $image_name = null)
 {
 
 //    $image = $request->file('image');
     $image = $image_input;
-    $p = explode("public/", $folder);
-    $destinationPath = $folder;
+    $p = explode("public/images/", $folder);
+    $destinationPath = 'public/images/' . $folder;
     $id = \App\media::create([
         'name' => ' ',
         'url' => ' ',
@@ -242,21 +244,42 @@ function user_information($type)
 function get_cites($id = null)
 {
     if ($id) {
-        $cities = \App\city::find($id);
+        $cities = \App\city::with('province')->find($id);
     } else {
-        $cities = \App\city::where('parent', '!=', '0')->get();
+        $cities = \App\city::with(['province'=>function($q){$q->with('province');}])->where('parent', '!=', '0')->get();
     }
     return $cities;
 }
+function get_cites_parent($id)
+{
 
+    $this_city = \App\city::find($id);
+    if ($this_city['parent']!=0){
+        $parent = \App\city::find($this_city['parent']);
+    }
+    else{
+        $parent =false;
+    }
+
+    return $parent;
+}
 function get_provinces($id = null)
 {
     if ($id) {
-        $provinces = \App\city::find($id);
+        $provinces = \App\city::with('city')->find($id);
     } else {
-        $provinces = \App\city::where('parent', '0')->get();
+        $provinces = \App\city::with('city')->where('parent', '0')->get();
     }
     return $provinces;
+}
+function get_building_type($id = null)
+{
+    if ($id) {
+        $types = \App\building_type::find($id);
+    } else {
+        $types = \App\building_type::get();
+    }
+    return $types;
 }
 
 function national_code_validation($natinoal_code)

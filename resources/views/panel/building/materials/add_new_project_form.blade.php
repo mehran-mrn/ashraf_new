@@ -1,67 +1,21 @@
 <?php $rand_id = rand(1, 8000); ?>
-<script>
-    $( document ).ready(function() {
-
-        var route_prefix = {{env('url')}}"/laravel-filemanager";
-
-    (function ($) {
-
-        $.fn.filemanager = function (type, options) {
-            type = type || 'file';
-
-            this.on('click', function (e) {
-                var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
-                var target_input = $('#' + $(this).data('input'));
-                var target_preview = $('#' + $(this).data('preview'));
-                window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
-                window.SetUrl = function (items) {
-                    var file_path = items.map(function (item) {
-                        console.log(item.url);
-                        return item.url;
-                    }).join(',');
-
-                    // set the value of the desired input to image url
-                    target_input.val('').val(file_path).trigger('change');
-
-                    // clear previous preview
-                    target_preview.html('');
-
-                    // set or change the preview image src
-                    items.forEach(function (item) {
-                        target_preview.append(
-                            $('<img>').css('height', '5rem').attr('src', item.thumb_url)
-                        );
-                    });
-
-                    // trigger change event
-                    target_preview.trigger('change');
-                };
-                return false;
-            });
-        }
-
-    })(jQuery);
-
-    $('#lfmMain').filemanager('image', {prefix: route_prefix});
-    });
-
-</script>
-<form method="POST" id="" class="" action="{{route('submit_project_data')}}"
+<form method="POST" id="" class="form-ajax-submit" action="{{route('submit_project_data')}}"
       autocomplete="off">
     @csrf
     @if(!empty($project))
         <input type="hidden" name="project_id" value="{{$project['id']}}">
     @endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="form-group row">
 
                 <label for="project_title"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.project_title') }}</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <input id="project_title" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="project_title"
-                           value="" autocomplete="capacity" autofocus>
+                           value="{{$project['title']}}" autocomplete="capacity" autofocus>
 
                     @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -75,10 +29,11 @@
 
                 <label for="start_date_{{$rand_id}}"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.start_date') }}</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <input id="start_date_{{$rand_id}}" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="start_date"
-                           value="" autocomplete="capacity" autofocus>
+                           value="{{$project['start_date']? miladi_to_shamsi_date($project['start_date']):""}}" autocomplete="capacity" autofocus>
+
 
                     @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -92,10 +47,10 @@
 
                 <label for="end_date_{{$rand_id}}"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.end_date') }}</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <input id="end_date_{{$rand_id}}" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="end_date"
-                           value="" autocomplete="capacity" autofocus>
+                           value="{{$project['end_date_prediction'] ? miladi_to_shamsi_date($project['end_date_prediction']):""}}" autocomplete="capacity" autofocus>
 
                     @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -109,10 +64,9 @@
 
                 <label for="description"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.description') }}</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <textarea id="description" class="form-control @error('capacity') is-invalid @enderror"
-                           name="description"
-                              value=""  autofocus></textarea>
+                           name="description" >{{$project['description']}}</textarea>
 
                     @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -126,69 +80,64 @@
             <div class="form-group row">
                 <label for="image" class="col-md-3 col-form-label text-md-right" >{{ __('messages.image') }}</label>
 
-                <span id="image" class="col-lg-6 input-group-btn">
-                    <a id="lfmMain" data-input="thumbnail" data-preview="holder"
-                       class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
-                </span>
-                <input id="thumbnail" class="form-control" type="text" name="filepath"
-                       readonly="readonly">
+                <div class="col-lg-6">
+                    <input class="form-control form-control-file" type="file" name="image" id="fileToUpload">
+                </div>
+            </div>
+                <div class="form-group row">
+
+                <div class="col-lg-6">
+
+
+                </div>
                 <img id="holder" style="margin-top:15px;max-height:100px;">
             </div>
-
 
             <div class="form-group row">
 
                 <label for="type_selection_{{$rand_id}}"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.building_types') }}</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <select id="type_selection_{{$rand_id}}" name="project_type" class="form-control select-search"
                             data-fouc>
-                        @foreach(get_provinces() as $province)
-                            <option value="{{$province['id']}}">{{$province['name']}}</option>
+                        @foreach(get_building_type() as $type)
+                            <option {{$type['id'] == $project['project_type_id']?"selected":""}} value="{{$type['id']}}">{{$type['title']}} - {{$type['description']}}</option>
                         @endforeach
                     </select>
                 </div>
 
 
             </div>
-            <div class="form-group row">
 
-                <label for="select_province_{{$rand_id}}"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.province') }}</label>
-                <div class="col-md-6">
-                    <select id="select_province_{{$rand_id}}" name="province_id" class="form-control select-search"
-                            data-fouc>
-                        @foreach(get_provinces() as $province)
-                            <option value="{{$province['id']}}">{{$province['name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-
-            </div>
             <div class="form-group row">
 
                 <label for="select_city_{{$rand_id}}"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.city') }}</label>
-                <div class="col-md-6">
-                    <select id="select_city_{{$rand_id}}" name="city_id" class="form-control select-search" data-fouc>
+                <div class="col-md-9">
+                    <select id="select_city_{{$rand_id}}" name="{{isset($city_name)?$city_name:"city_id"}}" class="form-control select-search" data-fouc>
                         @foreach(get_cites() as $city)
-                            <option value="{{$city['id']}}">{{$city['name']}}</option>
+                            <option {{$city['id'] == $project['city_id']?"selected":""}} value="{{$city['id']}}">{{$city['name']."  "}}
+                                <div class="text-muted">
+                            <?php $parent =  get_cites_parent($city['id']) ?>
+                            @while($parent)
+                                {{" > ".$parent['name']}}
+                                    <?php $parent =  get_cites_parent($parent['id']) ?>
+                            @endwhile
+                                </div>
+                            </option>
                         @endforeach
                     </select>
                 </div>
-
             </div>
             <div class="form-group row">
 
                 <label for="address"
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.address') }}</label>
-                <div class="col-md-6">
-                    <textarea id="address" type="text" class="form-control @error('capacity') is-invalid @enderror"
-                              name="address"
-                              value=""  autofocus></textarea>
+                <div class="col-md-9">
+                    <textarea id="address" type="text" class="form-control @error('address') is-invalid @enderror"
+                              name="address" > {{$project['address']}}</textarea>
 
-                    @error('name')
+                    @error('address')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
             </span>
@@ -201,9 +150,9 @@
                        class="col-md-3 col-form-label text-md-right">{{ __('messages.lat') }}</label>
                 <div class="col-md-3">
 
-                    <input id="lat" type="number" class="form-control "
+                    <input id="lat" type="text" class="form-control "
                            name="lat"
-                           value=""  autofocus>
+                           value="{{$project['lat']}}"  autofocus>
                 </div>
 
             </div>
@@ -215,7 +164,7 @@
 
                 <input id="long" type="text" class="form-control "
                        name="long"
-                       value="" autocomplete="capacity" autofocus>
+                       value="{{$project['long']}}" autocomplete="capacity" autofocus>
                 </div>
             </div>
             <div class="form-group row">
@@ -246,11 +195,70 @@
         </div>
     </div>
 </form>
+<script>
+    $( document ).ready(function() {
 
+        var route_prefix = {{env('url')}}"/laravel-filemanager";
+
+        (function ($) {
+
+            $.fn.filemanager = function (type, options) {
+                type = type || 'file';
+
+                this.on('click', function (e) {
+                    var route_prefix = (options && options.prefix) ? options.prefix : '/laravel-filemanager';
+                    var target_input = $('#' + $(this).data('input'));
+                    var target_preview = $('#' + $(this).data('preview'));
+                    window.open(route_prefix + '?type=' + type, 'FileManager', 'width=900,height=600');
+                    window.SetUrl = function (items) {
+                        var file_path = items.map(function (item) {
+                            console.log(item.url);
+                            return item.url;
+                        }).join(',');
+
+                        // set the value of the desired input to image url
+                        target_input.val('').val(file_path).trigger('change');
+
+                        // clear previous preview
+                        target_preview.html('');
+
+                        // set or change the preview image src
+                        items.forEach(function (item) {
+                            target_preview.append(
+                                $('<img>').css('height', '5rem').attr('src', item.thumb_url)
+                            );
+                        });
+
+                        // trigger change event
+                        target_preview.trigger('change');
+                    };
+                    return false;
+                });
+            }
+
+        })(jQuery);
+
+        $('#lfmMain').filemanager('image', {prefix: route_prefix});
+    });
+
+</script>
+<script>
+    $(function(){
+        var locationPicker = $('.location-picker').locationPicker({
+            zoomControl:false,
+            locationChanged : function(data){
+                $('#long').val(JSON.stringify(data.location.long));
+                $('#lat').val(JSON.stringify(data.location.lat));
+            },
+            init :{ current_location: true,
+
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         $("#type_selection_{{$rand_id}}").select2();
-        $("#select_province_{{$rand_id}}").select2();
         $("#select_city_{{$rand_id}}").select2();
 
 

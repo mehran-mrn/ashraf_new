@@ -66,6 +66,8 @@ $(document).ready(function(){
         var target = this.getAttribute("data-target");
         var title = this.getAttribute("data-modal-title");
         var size = this.getAttribute("data-modal-size");
+        $(target+" .modal-body").html("<div class='row'><div class=\"col-md-6\"></div><div class=\"col-md-1\"><i class=\"icon-3x icon-spinner2 spinner\"></i> </div><div class=\"col-md-5\"></div> </div> ");
+
         // $(target+" .modal-body").load(ajax_link);
         $.ajax({
             url:ajax_link,
@@ -110,6 +112,9 @@ $(document).ready(function(){
 
             success: function (response){
                 $(target+" .modal-body").html(response);
+                setTimeout(function(){
+                    location.reload();
+                }, 1000)
             },
 
             error:function (response){

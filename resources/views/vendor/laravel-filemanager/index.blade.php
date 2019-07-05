@@ -202,12 +202,12 @@
       //   label: 'Confirm',
       //   multiple: true
       // },
-      {
-        name: 'rename',
-        icon: 'edit',
-        label: lang['menu-rename'],
-        multiple: false
-      },
+      // {
+      //   name: 'rename',
+      //   icon: 'edit',
+      //   label: lang['menu-rename'],
+      //   multiple: false
+      // },
       {
         name: 'download',
         icon: 'download',

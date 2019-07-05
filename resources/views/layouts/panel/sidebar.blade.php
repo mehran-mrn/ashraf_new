@@ -147,9 +147,6 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{route('building_dashboard')}}"
                                                 class="nav-link {{in_array("building_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_dashboard')}}</a>
                         </li>
-                        <li class="nav-item"><a href="{{route('add_new_building')}}"
-                                                class="nav-link {{in_array("add_new_building", $active_sidbare) ? 'active' : '' }}">{{trans('messages.add_new_building')}}</a>
-                        </li>
                         <li class="nav-item"><a href="{{route('building_types')}}"
                                                 class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_types')}}</a>
                         </li>
