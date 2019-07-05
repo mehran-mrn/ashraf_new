@@ -85,6 +85,8 @@ return [
     'end_date'=>"تاریخ پایان",
     'coordination'=>"مختصات مکانی",
     'building_dashboard'=>"میز کار",
+    'certain'=>"قطعی",
+    'not_verified'=>"تایید نشده",
     'add_new_building'=>"تعریف پروژه جدید",
     'building_types'=>"تیپ ساختمان ها",
     'building_type'=>"تیپ ساختمان",
@@ -93,6 +95,7 @@ return [
     'lat'=>"عرض جغرافیایی",
     'long'=>"طول جغرافیایی",
     'percent'=>"درصد",
+    'progress_percent'=>"درصد پیشرفت",
 
 
     'last_login'=>"آخرین لاگین",
@@ -232,6 +235,7 @@ return [
     'product_add'=>'افزودن محصول',
     'product_list'=>'لیست محصولات',
     'store_setting'=>'تنظیمات فروشگاه',
+    'store_items'=>'آیتم های فروشگاه',
     'manage_orders'=>'مدیریت سفارشات',
     'discount_code'=>'کد تخفیف',
     'expire_date'=>'تاریخ انقضاء',

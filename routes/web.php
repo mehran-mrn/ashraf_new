@@ -148,6 +148,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
         Route::prefix('building')->group(function () {
             Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
+            Route::get('building_project/{project_id}', 'panel\panel_view@building_project')->name('building_project');
             Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
             Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
             Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');

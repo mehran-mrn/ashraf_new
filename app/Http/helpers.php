@@ -282,6 +282,14 @@ function get_building_type($id = null)
     return $types;
 }
 
+function get_images()
+{
+
+    $images = \App\media::get();
+
+    return $images;
+}
+
 function national_code_validation($natinoal_code)
 {
     if (!preg_match('/^[0-9]{10}$/', $natinoal_code))

@@ -57,8 +57,10 @@
                                             </div>
 
                                             <div class="card-body">
-                                                <h6 class="font-weight-semibold"><b>{{$project['title']}}</b></h6>
-                                                {{$project['description']}} |
+                                                <a href="{{route('building_project',['project_id'=>$project['id']])}}" class="text-teal-800 font-weight-semibold">
+
+                                                    <b>{{$project['title']}}</b></a><br>
+                                                {{$project['description']}}
                                                 <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
                                              modal-ajax-load"
                                                         data-ajax-link="{{route('load_new_building_form',['project_id'=>$project['id']])}}"

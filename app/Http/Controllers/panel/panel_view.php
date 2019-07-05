@@ -351,6 +351,12 @@ class panel_view extends Controller
         return view('panel.building.dashboard', compact('projects'));
     }
 
+    public function building_project($project_id)
+    {
+        $projects = building_project::with('media')->find($project_id);
+
+        return view('panel.building.building_project_page', compact('projects'));
+    }
 
     public function building_types()
     {
