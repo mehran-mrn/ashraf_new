@@ -443,7 +443,7 @@ class panel_view extends Controller
         $items_cats = store_item_category::all();
         $gateways = gateway::get();
         $product = store_product::find($request['pro_id']);
-        return view('panel.store.product.product_add', compact('gateways', 'items_cats', 'product'));
+        return view('panel.store.product.product_edit', compact('gateways', 'items_cats', 'product'));
     }
 
     public function product_list()

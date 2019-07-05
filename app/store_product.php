@@ -18,11 +18,31 @@ class store_product extends Model
 
     public function store_product_category()
     {
-        return $this->hasMany('App\store_procudt_category','product_id');
+        return $this->hasMany('App\store_product_category','product_id');
+    }
+    public function store_product_gateway()
+    {
+        return $this->hasMany('App\store_product_gateway','product_id');
+    }
+    public function store_product_image()
+    {
+        return $this->hasMany('App\store_product_image','product_id');
+    }
+    public function store_product_item()
+    {
+        return $this->hasMany('App\store_product_item','product_id');
+    }
+    public function store_product_tag()
+    {
+        return $this->hasMany('App\store_product_tag','product_id');
     }
     public function deleteAll()
     {
-        $this->store_category()->delete();
+        $this->store_product_category()->delete();
+        $this->store_product_gateway()->delete();
+        $this->store_product_image()->delete();
+        $this->store_product_item()->delete();
+        $this->store_product_tag()->delete();
         return parent::delete();
     }
 }
