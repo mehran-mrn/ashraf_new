@@ -19,6 +19,7 @@ class caravan extends Controller
         $this->validate($request, [
             'name' => 'required|unique:caravan_hosts,name' . (isset($request['host_id']) ? ',' . $request['host_id'] : ""),
             'city' => 'required',
+            'image' => 'required_without_all:host_id|nullable|bail|image|mimes:jpeg,png,jpg,gif|max:5000|dimensions:min_width=200,min_height=100',
         ]);
         $host = null;
 

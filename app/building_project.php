@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class building_project extends Model
 {
     //
+    public function media()
+    {
+        return $this->belongsTo('App\media','media_id');
+    }
+
 }

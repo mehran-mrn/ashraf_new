@@ -149,10 +149,16 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
         Route::prefix('building')->group(function () {
             Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
-            Route::get('add_new_building', 'panel\panel_view@add_new_building')->name('add_new_building');
+            Route::get('building_project/{project_id}', 'panel\panel_view@building_project')->name('building_project');
             Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
             Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
             Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');
+            Route::post('submit_project_type_data', 'panel\building@submit_project_type_data')->name('submit_project_type_data');
+            Route::get('building_type_page/{building_type_id}', 'panel\panel_view@building_type_page')->name('building_type_page');
+            Route::get('building_type_item_add_form/{type_id}/{item_id?}', 'panel\panel_view@building_type_item_add_form')->name('building_type_item_add_form');
+            Route::post('submit_building_type_item', 'panel\building@submit_building_type_item')->name('submit_building_type_item');
+            Route::post('delete_building_type_item/{building_type_item_id}', 'panel\building@delete_building_type_item')->name('delete_building_type_item');
+            Route::get('load_new_building_form/{project_id?}', 'panel\panel_view@load_new_building_form')->name('load_new_building_form');
 
         });
 
@@ -174,6 +180,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/validate_national_code', 'panel\caravan@validate_national_code')->name('validate_national_code');
         Route::get('/change_caravan_status/{caravan_id}/{status}', 'panel\panel_view@change_caravan_status_form')->name('change_caravan_status_form');
         Route::get('/caravans_echart_data', 'panel\panel_view@caravans_echart_data')->name('caravans_echart_data');
+        Route::get('/building_type_form/{building_type_id?}', 'panel\panel_view@load_building_type_form')->name('load_building_type_form');
+        Route::post('/delete_building_type/{building_type_id}', 'panel\building@delete_building_type')->name('delete_building_type');
 
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 

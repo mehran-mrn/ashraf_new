@@ -5,6 +5,9 @@ namespace App\Http\Controllers\panel;
 use App\bank;
 use App\blog;
 use App\blog_categories;
+use App\building_project;
+use App\building_type;
+use App\building_type_itme;
 use App\caravan_host;
 use App\category;
 use App\city;
@@ -343,25 +346,64 @@ class panel_view extends Controller
 //building module
     public function building_dashboard()
     {
-        $hosts = caravan_host::with('media')->get();
+        $projects = building_project::with('media')->get();
 
-        return view('panel.building.dashboard', compact('hosts'));
+        return view('panel.building.dashboard', compact('projects'));
     }
 
-    public function add_new_building()
+    public function building_project($project_id)
     {
-        $project =[];
-        return view('panel.building.add_new_building',compact('project'));
+        $projects = building_project::with('media')->find($project_id);
+
+        return view('panel.building.building_project_page', compact('projects'));
     }
 
     public function building_types()
     {
-        return view('panel.building.building_types');
+        $building_types = building_type::get();
+        return view('panel.building.building_types', compact('building_types'));
+    }
+
+    public function building_type_page($building_type_id)
+    {
+
+        $building_type = building_type::with('building_type_items')->find($building_type_id);
+        return view('panel.building.building_type_page', compact('building_type'));
     }
 
     public function building_archive()
     {
         return view('panel.building.building_archive');
+    }
+
+    public function load_building_type_form($building_type_id = null)
+    {
+        if ($building_type_id ) {
+            $building_type = building_type::find($building_type_id);
+        } else {
+            $building_type = null;
+        }
+        return view('panel.building.materials.add_new_building_type_form', compact('building_type'));
+    }
+
+    public function load_new_building_form($project_id = null)
+    {
+        if ($project_id ) {
+            $project = building_project::find($project_id);
+        } else {
+            $project = null;
+        }
+        return view('panel.building.materials.add_new_project_form', compact('project'));
+    }
+
+    public function building_type_item_add_form($type_id,$item_id = null)
+    {
+        if ($item_id ) {
+            $type_item = building_type_itme::find($item_id);
+        } else {
+            $type_item = null;
+        }
+        return view('panel.building.materials.add_new_type_item_form', compact('type_id','type_item'));
     }
 
 //end building module
