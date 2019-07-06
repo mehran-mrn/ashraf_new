@@ -260,5 +260,8 @@ return [
     'price'=>'مبلغ',
     'ready_for_send'=>'مدت زمان ارسال',
     'off'=>'تخفیف',
-    'day'=>'روز'
+    'day'=>'روز',
+    'without_color'=>'بدون رنگ',
+    'by_color'=>'با رنگ',
+    'inventories'=>'موجودی'
     ];

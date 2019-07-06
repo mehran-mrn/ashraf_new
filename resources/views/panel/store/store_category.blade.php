@@ -78,8 +78,7 @@
                     {!! NestableTableGetData(1,0,'','','store_categories')!!}
                 </div>
                 <div id="nestable_sort_result_1"></div>
-                <textarea title="nestable_list_ajax_output_1" id="nestable_list_ajax_output_1"
-                          class="d-none"></textarea>
+                <textarea title="nestable_list_ajax_output_1" id="nestable_list_ajax_output_1" class="d-none"></textarea>
                 <div class="row pt-3">
                     @foreach($product_categories as $cat)
                         <div class="col-12 col-md-4">

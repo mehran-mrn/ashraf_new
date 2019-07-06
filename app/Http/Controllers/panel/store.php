@@ -12,7 +12,6 @@ use App\store_item_category;
 use App\store_product;
 use App\store_product_category;
 use App\store_product_gateway;
-use App\store_product_image;
 use App\store_product_item;
 use App\store_product_tag;
 use Illuminate\Http\Request;
@@ -274,6 +273,119 @@ class store extends Controller
         $product = store_product::find($request['pro_id']);
         $product->deleteAll();
         $message = trans("messages.item_deleted", ['item' => trans('messages.product')]);
+        return back_normal($request, $message);
+    }
+
+    public function store_product_update(Request $request)
+    {
+
+        $this->validate($request,
+            [
+                'title' => 'required|min:1',
+                'description' => 'required|min:1',
+                'filepath' => 'required',
+            ]);
+
+        $mainFileID = get_file_id($request['filepath']);
+        store_product::where('id', $request['pro_id'])->update([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'main_image' => $request['filepath'],
+            'main_image_id' => $mainFileID,
+            'price' => $request['price'],
+            'off' => $request['off'],
+            'ready' => $request['ready'],
+            'status' => $request['status']
+        ]);
+
+        $product_id = $request['pro_id'];
+        if ($request['tags'] != "") {
+            $tags = explode(',', $request['tags']);
+            if (sizeof($tags) >= 1) {
+                store_product_tag::where('product_id', $product_id)->forceDelete();
+                foreach ($tags as $tag) {
+                    store_product_tag::create([
+                        'product_id' => $product_id,
+                        'tag' => $tag
+                    ]);
+                }
+            }
+        }
+        if (sizeof($request['cats']) >= 1) {
+            store_product_category::where('product_id', $product_id)->forceDelete();
+            foreach ($request['cats'] as $cat) {
+                store_product_category::create(
+                    [
+                        'product_id' => $product_id,
+                        'category_id' => $cat
+                    ]
+                );
+            }
+        }
+        if (sizeof($request['items_id']) >= 1) {
+            store_product_item::where('product_id', $product_id)->forceDelete();
+            foreach ($request['items_id'] as $item) {
+                store_product_item::create(
+                    [
+                        "product_id" => $product_id,
+                        "item_id" => $item,
+                        'value' => $request['items_' . $item]
+                    ]
+                );
+            }
+        }
+
+        store_product_gateway::where('product_id', $product_id)->forceDelete();
+        if (isset($request['pay_online'])) {
+            if (sizeof($request['online_gateway_online']) >= 1) {
+                foreach ($request['online_gateway_online'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'online'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_cart'])) {
+            if (sizeof($request['online_gateway_cart']) >= 1) {
+                foreach ($request['online_gateway_cart'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'cart'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_account'])) {
+            if (sizeof($request['online_gateway_account']) >= 1) {
+                foreach ($request['online_gateway_account'] as $item) {
+                    store_product_gateway::create(
+                        [
+                            'product_id' => $product_id,
+                            'gateway_id' => $item,
+                            'type' => 'account'
+                        ]
+                    );
+                }
+            }
+        }
+        if (isset($request['pay_place'])) {
+            store_product_gateway::create(
+                [
+                    'product_id' => $product_id,
+                    'gateway_id' => "0",
+                    'type' => 'place'
+                ]
+            );
+        }
+
+        $message = trans("messages.updated", ['item' => trans('messages.product')]);
         return back_normal($request, $message);
     }
 

@@ -111,6 +111,8 @@ class CreateStoresTable extends Migration
             $table->integer('ready')->default('1');
             $table->string('status')->default('active');
             $table->integer('website_id')->default(0);
+            $table->string('model')->nullable()->unique();
+            $table->string('code')->nullable()->unique();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -150,6 +152,11 @@ class CreateStoresTable extends Migration
             $table->integer('gateway_id');
             $table->string('type');
             $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('store_product_inventories',function (Blueprint $table){
+            $table->bigIncrements('id');
             $table->timestamps();
         });
     }

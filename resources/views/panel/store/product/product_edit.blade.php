@@ -26,6 +26,9 @@
                 var id = $(this).data("id");
                 $(this).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
             });
+
+
+
             // $("[id^='cards-target-left']").each(function (index) {
             //     console.log(index);
             //     var id = $(this).attr("id");
@@ -39,7 +42,6 @@
             document.addEventListener('DOMContentLoaded', function () {
                 DragAndDrop.init();
             });
-
 
             var route_prefix = {{env('url')}}"/laravel-filemanager";
 
@@ -96,7 +98,9 @@
             $("#g_row_account_" + id).html("");
         }
 
-
+        function activeItem(id){
+            $("#box_"+id).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
+        }
         var FileUpload = function () {
             var _componentFileUpload = function () {
                 if (!$().fileinput) {
@@ -242,9 +246,10 @@
             }
         }
     }
+    $activeItems=[];
     @endphp
     <div class="content">
-        <form action="{{route('store_product_add')}}" method="post">
+        <form action="{{route('store_product_update',$product['id'])}}" method="post">
             @csrf
             <div class="row">
                 <div class="col-12 col-md-8">
@@ -274,7 +279,7 @@
                                            class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="filepath"
-                                           readonly="readonly">
+                                           readonly="readonly" value="{{$product['main_image']}}">
                                     <img id="holder" style="margin-top:15px;max-height:100px;"
                                          src="{{$product['main_image']}}">
                                 </div>
@@ -314,6 +319,27 @@
                                     class="panel-title">{{__('messages.category')}}</span></div>
                         <div class="card-body">
                             {!! treeView($cats) !!}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center bg-light"><span class="panel title">{{__('messages.count')}}</span></div>
+                        <div class="card-body">
+                            <div class="form-group mb-3 mb-md-2">
+                                <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input-styled" name="radio-inline-left" checked data-fouc>
+                                        {{__("messages.without_color")}}
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc>
+                                        {{__("messages.by_color")}}
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
@@ -379,6 +405,7 @@
                                 </div>
                             </div>
                             <hr>
+
                             <div class="row">
                                 <div class="col-md-12 text-center pb-3">
                                     <div class="custom-control custom-checkbox custom-control-inline">
@@ -462,13 +489,35 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-12 col-md-6">
+                                            <label for="off">{{__('messages.model')}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="text" class="form-control" id="model" name="model" value="{{$product['model']}}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <label for="off">{{__('messages.code')}}</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="text" class="form-control" id="code" name="code" value="{{$product['code']}}">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
                                             <label for="off">{{__('messages.status')}}</label>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <select name="status" id="status" class="form-control">
-                                                <option value="">{{__('messages.please_select')}}</option>
-                                                <option value="active">{{__('messages.active')}}</option>
-                                                <option value="inactive">{{__('messages.inactive')}}</option>
+                                                <option value="active" @if($product['status']=="active") selected @endif>{{__('messages.active')}}</option>
+                                                <option value="inactive" @if($product['status']=="inactive") selected @endif>{{__('messages.inactive')}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -508,7 +557,14 @@
                                                             <span class="input-group-text">{{$ch['prefix']}}</span>
                                                         </span>
                                                 @endif
-                                                <input type="text" class="form-control" name="items_{{$ch['id']}}">
+                                                <input type="text" class="form-control" name="items_{{$ch['id']}}"
+                                                   @foreach($product->store_product_item as $itemMain)
+                                                        @if($ch['id']==$itemMain['item_id'])
+                                                            value="{{$itemMain['value']}}"
+                                                    @php array_push($activeItems,$item['id']) @endphp
+                                                    @endif
+                                                    @endforeach
+                                                    >
                                                 <input type="hidden" class="form-control" name="items_id[]"
                                                        value="{{$ch['id']}}">
                                                 @if($ch['suffix']!='')
@@ -534,4 +590,13 @@
             </div>
         </div>
     </div>
+    @php
+        $activeItems = array_unique($activeItems);
+    @endphp
+    @foreach($activeItems as $item)
+        <script>
+            activeItem({{$item}});
+            console.log({{$item}});
+        </script>
+    @endforeach
 @endsection
