@@ -12,9 +12,12 @@ use App\store_item_category;
 use App\store_product;
 use App\store_product_category;
 use App\store_product_gateway;
+use App\store_product_inventory;
 use App\store_product_item;
 use App\store_product_tag;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class store extends Controller
 {
@@ -152,6 +155,8 @@ class store extends Controller
     public function store_product_add(Request $request)
     {
 
+
+        dd($request->all());
         $this->validate($request,
             [
                 'title' => 'required|min:1',
@@ -170,6 +175,31 @@ class store extends Controller
         ]);
         $product_id = $product_info->id;
 
+        if ($request['inv_type'] == "bycolor") {
+            if (isset($request['color-name']) && sizeof($request['color-name']) >= 1) {
+                foreach ($request['color-name'] as $val) {
+                    store_product_inventory::create(
+                        [
+                            'product_id' => $product_id,
+                            'color_code' => $val[0],
+                            'count' => $val[1],
+                            'type' => 'p',
+                            'user_id' => Auth::id(),
+                        ]
+                    );
+
+                }
+            }
+        } elseif ($request['inv_type'] == "withoutcolor") {
+            store_product_inventory::create(
+                [
+                    'product_id' => $product_id,
+                    'count' => $request['inventories'],
+                    'type' => 'p',
+                    'user_id' => Auth::id(),
+                ]
+            );
+        }
         if ($request['tags'] != "") {
             $tags = explode(',', $request['tags']);
             if (sizeof($tags) >= 1) {

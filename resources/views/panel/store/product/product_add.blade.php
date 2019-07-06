@@ -4,18 +4,37 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tagsinput.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/tags/tokenfield.min.js')}}"></script>
     <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js')}}"></script>
+            src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/ui/prism.min.js')}}"></script>
     <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
+            src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js')}}"></script>
     <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
-    <script
-        src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
+            src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/ui/dragula.min.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/pickers/color/spectrum.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
     <script>
 
         $(document).ready(function () {
+
+            $('input:radio[name="inv_type"]').change(
+                function () {
+                    if ($(this).is(':checked') && $(this).val() === 'bycolor') {
+                        $(".inv-box").html("");
+                        $(".inventoriesW").addClass("d-none");
+                        $(".inventoriesC").removeClass("d-none");
+                    } else if ($(this).is(':checked') && $(this).val() === 'withoutcolor') {
+                        $(".color-box").html("");
+                        $(".inventoriesW").removeClass("d-none");
+                        $(".inventoriesC").addClass("d-none");
+                        $(".inv-box").html('' +
+                            '<label for="inventories">{{__("messages.inventories")}}</label>\n' +
+                            '<input type="number" class="form-control" required="required" name="inventories" id="inventories">');
+
+                    }
+                });
+
             CKEDITOR.replace('description', {
                 language: 'fa',
                 uiColor: '#9AB8F3',
@@ -30,13 +49,6 @@
                 var id = $(this).data("id");
                 $(this).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
             });
-            // $("[id^='cards-target-left']").each(function (index) {
-            //     console.log(index);
-            //     var id = $(this).attr("id");
-            //     console.log(id);
-            //     dragula([document.getElementById(id), document.getElementById('cards-target-right')]);
-            //     dragula([document.getElementById('cards-target-main'), document.getElementById(id)]);
-            // })
 
             dragula([document.getElementById('forms-target-left'), document.getElementById('forms-target-right')]);
 
@@ -86,7 +98,28 @@
             })(jQuery);
 
             $('#lfmMain').filemanager('image', {prefix: route_prefix});
+
+
+            $(".add-color").on('click', function () {
+                var x = +$("#randomNumber").val() + 1;
+                $(".color-box").append(
+                    '<div class="row pt-2 counter-row-' + x + '"><div class="col-md-4">' +
+                    '<div class="d-inline-block"><input type="text" data-preferred-format="hex" class="form-control colorpicker-palette" value="#27ADCA" data-fouc name="color-name[' + x + '][]">' +
+                    '</div></div><div class="col-md-6">' +
+                    '<input type="number" min="0" max="10000000" placeholder="{{__('messages.count')}}" required="required" class="form-control" name="color-name[' + x + '][]"></div>' +
+                    '<div class="col-md-2"><button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button></div></div>'
+                );
+                $("#randomNumber").val(x);
+                ColorPicker.init();
+            })
+
+
         });
+
+        function removeRow(x) {
+            var rowID = x;
+            $(".counter-row-" + rowID).remove();
+        };
 
         function deleteGatewayOnline(id) {
             $("#g_row_online_" + id).html("");
@@ -98,10 +131,6 @@
 
         function deleteGatewayAccount(id) {
             $("#g_row_account_" + id).html("");
-        }
-
-        function btn_add_color() {
-            
         }
 
         var FileUpload = function () {
@@ -196,11 +225,59 @@
                 }
             }
         }();
+        var ColorPicker = function () {
+            var _componentColorPicker = function () {
+                if (!$().spectrum) {
+                    console.warn('Warning - spectrum.js is not loaded.');
+                    return;
+                }
+                var demoPalette = [
+                    ["#000", "#444", "#666", "#999", "#ccc", "#eee", "#f3f3f3", "#fff"],
+                    ["#f00", "#f90", "#ff0", "#0f0", "#0ff", "#00f", "#90f", "#f0f"],
+                    ["#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d0e0e3", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+                    ["#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+                    ["#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+                    ["#c00", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3d85c6", "#674ea7", "#a64d79"],
+                    ["#900", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#0b5394", "#351c75", "#741b47"],
+                    ["#600", "#783f04", "#7f6000", "#274e13", "#0c343d", "#073763", "#20124d", "#4c1130"]
+                ]
+                $('.colorpicker-palette').spectrum({
+                    showPalette: true,
+                    palette: demoPalette,
+                    showInput: true
+                });
+            }
+            var _componentSwitchery = function () {
+                if (typeof Switchery == 'undefined') {
+                    console.warn('Warning - switchery.min.js is not loaded.');
+                    return;
+                }
+
+                // Initialization
+                var toggleState = document.querySelector('.form-input-switchery');
+                var toggleStateInit = new Switchery(toggleState);
+
+                // Toggle navbar type state toggle
+                toggleState.onchange = function () {
+                    if (toggleState.checked) {
+                        $('.colorpicker-disabled').spectrum('enable');
+                    } else {
+                        $('.colorpicker-disabled').spectrum('disable');
+                    }
+                }
+            };
+            return {
+                init: function () {
+                    _componentColorPicker();
+                    _componentSwitchery();
+                }
+            }
+        }();
+
         document.addEventListener('DOMContentLoaded', function () {
+            ColorPicker.init();
             FileUpload.init();
         });
-
-
     </script>
 @endsection
 @section('css')
@@ -217,7 +294,7 @@
                 <div class="col-12 col-md-8">
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.product_add')}}</span>
+                                    class="card-title">{{__('messages.product_add')}}</span>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -275,20 +352,20 @@
                 <div class="col-12 col-md-4">
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="panel-title">{{__('messages.category')}}</span></div>
+                                    class="panel-title">{{__('messages.category')}}</span></div>
                         <div class="card-body">
                             {!! treeView() !!}
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="panel title">{{__('messages.count')}}</span></div>
+                                    class="panel title">{{__('messages.count')}}</span></div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 text-center">
                                     <div class="form-group mb-3 mb-md-2">
                                         <label
-                                            class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
+                                                class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input type="radio" class="custom-control-input" name="inv_type"
                                                    id="custom_radio_inline_unchecked" checked value="withoutcolor">
@@ -304,16 +381,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="inventories">{{__('messages.inventories')}}</label>
-                                        <input type="number" class="form-control" name="inventories" id="inventories">
+                                <div class="col-md-12 inventoriesW">
+                                    <div class="form-group inv-box">
+                                        <label for="inventories">{{__("messages.inventories")}}</label>
+                                        <input type="number" class="form-control" required="required" name="inventories"
+                                               id="inventories">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal_backdrop">{{__('messages.add_color')}}</button>
-
+                                <div class="col-md-12 inventoriesC d-none">
+                                    <button type="button" class="btn btn-outline-info add-color float-right"><i
+                                                class="icon-plus2"></i> {{__('messages.add_color')}}</button>
+                                    <div class="clearfix"></div>
+                                    <hr>
+                                    <input type="hidden" value="1" id="randomNumber">
+                                    <div class="color-box">
+                                    </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -322,7 +406,7 @@
 
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.pay_gateway')}}</span></div>
+                                    class="card-title">{{__('messages.pay_gateway')}}</span></div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 text-center pb-3">
@@ -421,7 +505,7 @@
                     </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
-                                class="card-title">{{__('messages.action')}}</span>
+                                    class="card-title">{{__('messages.action')}}</span>
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-column">

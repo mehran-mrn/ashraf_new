@@ -157,6 +157,13 @@ class CreateStoresTable extends Migration
 
         Schema::create('store_product_inventories',function (Blueprint $table){
             $table->bigIncrements('id');
+            $table->integer('product_id');
+            $table->string('color_code')->nullable();
+            $table->integer('count')->default(0);
+            $table->string('type')->default('p');
+            $table->string('user_id')->default(0);
+            $table->string('buy_number')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

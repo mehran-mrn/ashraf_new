@@ -270,5 +270,6 @@ return [
     'day'=>'روز',
     'without_color'=>'بدون رنگ',
     'by_color'=>'با رنگ',
-    'inventories'=>'موجودی'
+    'inventories'=>'موجودی',
+    'add_color'=>'افزودن رنگ'
     ];
