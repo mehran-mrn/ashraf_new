@@ -201,12 +201,16 @@ Route::prefix('ajax')->group(function () {
     Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
 
     Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
+    Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
+    Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
 });
 
 Route::prefix('page')->group(function () {
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-
+    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+    Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+    Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
 });
 //=========================================
 

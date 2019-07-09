@@ -69,4 +69,15 @@ class global_controller extends Controller
     {
         back_normal($request);
     }
+
+    public function update_information(Request $request)
+    {
+        dd($request->all());
+
+    }
+
+    public function update_password(Request $request)
+    {
+        dd($request->all());
+    }
 }

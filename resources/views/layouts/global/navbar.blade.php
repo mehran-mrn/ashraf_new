@@ -737,6 +737,10 @@
                     <ul class="list-inline pull-right flip hidden-sm hidden-xs">
                         @if (Auth::check())
                             <li>
+                                <a class="btn btn-colored btn-flat btn-theme-colored mt-15"
+                                   href="{{route('global_profile')}}">{{trans('messages.account')}}</a>
+                            </li>
+                            <li>
                                 <a class="btn btn-colored btn-flat btn-theme-colored mt-15 ajaxload-popup"
                                    href="{{route('logout')}}">{{trans('messages.logout')}}</a>
                             </li>
