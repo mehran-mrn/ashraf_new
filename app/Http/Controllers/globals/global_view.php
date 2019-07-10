@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\store;
+use App\store_product;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +21,7 @@ class global_view extends Controller
     {
         return view('global.materials.register');
     }
+
     public function register_form_store(Request $request)
     {
         return response()->json($request);
@@ -44,13 +47,28 @@ class global_view extends Controller
         Artisan::call("cache:clear");
         return view('global.profile');
     }
+
     public function change_password()
     {
         return view('global.materials.change_password');
     }
+
     public function edit_information()
     {
         $userInfo = User::find(Auth::id());
-        return view('global.materials.edit_information',compact('userInfo'));
+        return view('global.materials.edit_information', compact('userInfo'));
+    }
+
+    public function shop_page()
+    {
+
+        $products = store_product::all();
+        return view('global.store', compact('products'));
+    }
+
+    public function detail_product(Request $request)
+    {
+        $proInfo = store_product::find($request['pro_id']);
+        return view('global.details',compact('proInfo'));
     }
 }

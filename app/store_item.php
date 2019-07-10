@@ -16,4 +16,10 @@ class store_item extends Model
     {
         return $this->hasOne('App\store_item_category','id','category_id');
     }
+
+    public function store_product_items()
+    {
+        return $this->hasOne('App\store_product_item','item_id');
+    }
+
 }

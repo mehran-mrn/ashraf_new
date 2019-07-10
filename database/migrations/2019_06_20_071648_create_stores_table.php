@@ -104,6 +104,7 @@ class CreateStoresTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->text('properties')->nullable();
             $table->string('main_image')->nullable();
             $table->string('main_image_id')->nullable();
             $table->string('price')->default('0');
@@ -160,6 +161,8 @@ class CreateStoresTable extends Migration
             $table->integer('product_id');
             $table->string('color_code')->nullable();
             $table->integer('count')->default(0);
+            $table->string('price')->default(0);
+            $table->integer('off')->default(0);
             $table->string('type')->default('p');
             $table->string('user_id')->default(0);
             $table->string('buy_number')->default(0);

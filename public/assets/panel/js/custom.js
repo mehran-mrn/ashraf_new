@@ -6,8 +6,8 @@
  *
  * ---------------------------------------------------------------------------- */
 
-$(document).ready(function(){
-    $(".swal-alert").on('click',function(e) {
+$(document).ready(function () {
+    $(".swal-alert").on('click', function (e) {
         e.preventDefault();
         var bt = $(".swal-alert");
         var ajax_link = this.getAttribute("data-ajax-link");
@@ -32,24 +32,24 @@ $(document).ready(function(){
             if (result.value) {
 
                 $.ajax({
-                    url:ajax_link,
+                    url: ajax_link,
                     type: method,
                     data: {_token: csrf},
 
-                    success: function (response){
+                    success: function (response) {
                         new PNotify({
                             title: '',
                             text: response.message,
                             type: 'success'
                         });
-                        setTimeout(function(){
+                        setTimeout(function () {
                             location.reload();
                         }, 1000)
                     },
-                    error:function (response){
+                    error: function (response) {
                         new PNotify({
                             title: 'oops',
-                            text:' Unable to load',
+                            text: ' Unable to load',
                             type: 'error'
                         });
 
@@ -59,29 +59,29 @@ $(document).ready(function(){
             }
         })
     });
-    $(document).on('click', '.modal-ajax-load', function(e){
+    $(document).on('click', '.modal-ajax-load', function (e) {
 
         e.preventDefault();
         var ajax_link = this.getAttribute("data-ajax-link");
         var target = this.getAttribute("data-target");
         var title = this.getAttribute("data-modal-title");
         var size = this.getAttribute("data-modal-size");
-        $(target+" .modal-body").html("<div class='row'><div class=\"col-md-6\"></div><div class=\"col-md-1\"><i class=\"icon-3x icon-spinner2 spinner\"></i> </div><div class=\"col-md-5\"></div> </div> ");
+        $(target + " .modal-body").html("<div class='row'><div class=\"col-md-6\"></div><div class=\"col-md-1\"><i class=\"icon-3x icon-spinner2 spinner\"></i> </div><div class=\"col-md-5\"></div> </div> ");
 
         // $(target+" .modal-body").load(ajax_link);
         $.ajax({
-            url:ajax_link,
-            type:'GET',
+            url: ajax_link,
+            type: 'GET',
             // data: $(this).serialize(),
 
-            success: function (response){
-                $(target+" .modal-body").html(response);
+            success: function (response) {
+                $(target + " .modal-body").html(response);
             },
 
-            error:function (response){
+            error: function (response) {
                 new PNotify({
                     title: 'oops',
-                    text:' Unable to load',
+                    text: ' Unable to load',
                     type: 'error'
                 });
 
@@ -89,12 +89,12 @@ $(document).ready(function(){
         });
 
 
-        $(target+" .modal-title").html(title);
-        $(target+" .modal-dialog").removeClass().addClass("modal-dialog");
-        $(target+" .modal-dialog").addClass(size);
+        $(target + " .modal-title").html(title);
+        $(target + " .modal-dialog").removeClass().addClass("modal-dialog");
+        $(target + " .modal-dialog").addClass(size);
 
     });
-    $(document).on('click', '.modal-ajax-load-from', function(e){
+    $(document).on('click', '.modal-ajax-load-from', function (e) {
 
         e.preventDefault();
         var ajax_link = this.getAttribute("data-ajax-link");
@@ -106,27 +106,27 @@ $(document).ready(function(){
         // $(target+" .modal-body").load(ajax_link);
 
         $.ajax({
-            url:ajax_link,
+            url: ajax_link,
             type: method,
-            data: $('#'+form_id).serialize(),
+            data: $('#' + form_id).serialize(),
 
-            success: function (response){
-                $(target+" .modal-body").html(response);
-                setTimeout(function(){
+            success: function (response) {
+                $(target + " .modal-body").html(response);
+                setTimeout(function () {
                     location.reload();
                 }, 1000)
             },
 
-            error:function (response){
+            error: function (response) {
                 var errors = response.responseJSON.errors;
-                $.each( errors, function( index, value ) {
+                $.each(errors, function (index, value) {
                     new PNotify({
                         title: index,
                         text: value,
                         type: 'error'
                     });
                 });
-                setTimeout(function(){
+                setTimeout(function () {
                     $('[type="submit"]').prop('disabled', false);
 
                 }, 2500);
@@ -135,13 +135,13 @@ $(document).ready(function(){
         });
 
 
-        $(target+" .modal-title").html(title);
-        $(target+" .modal-dialog").removeClass().addClass("modal-dialog");
-        $(target+" .modal-dialog").addClass(size);
+        $(target + " .modal-title").html(title);
+        $(target + " .modal-dialog").removeClass().addClass("modal-dialog");
+        $(target + " .modal-dialog").addClass(size);
 
     });
 
-    $(document).on("submit", "form.form-ajax-submit", function(e){
+    $(document).on("submit", "form.form-ajax-submit", function (e) {
         e.preventDefault();
 
         var target = this.getAttribute("action");
@@ -150,34 +150,34 @@ $(document).ready(function(){
 
 
         $.ajax({
-            url:target,
-            type:method,
+            url: target,
+            type: method,
             contentType: false,
             processData: false,
             // data: $(this).serialize(),
             data: formData,
 
-            success: function (response){
+            success: function (response) {
                 new PNotify({
                     title: '',
                     text: response.message,
                     type: 'success'
                 });
-                setTimeout(function(){
+                setTimeout(function () {
                     location.reload();
                 }, 1000)
             },
 
-            error:function (response){
+            error: function (response) {
                 var errors = response.responseJSON.errors;
-                $.each( errors, function( index, value ) {
+                $.each(errors, function (index, value) {
                     new PNotify({
                         title: index,
                         text: value,
                         type: 'error'
                     });
                 });
-                setTimeout(function(){
+                setTimeout(function () {
                     $('[type="submit"]').prop('disabled', false);
 
                 }, 2500);
@@ -190,9 +190,9 @@ $(document).ready(function(){
 
 
 });
+
+
 function numberWithDash(number) {
-
-
     number = number.replace("-", "");
     number = number.replace("-", "");
     number = number.replace("-", "");
@@ -205,13 +205,10 @@ function numberWithDash(number) {
 
 var
     persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-    arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
-    fixNumbers = function (str)
-    {
-        if(typeof str === 'string')
-        {
-            for(var i=0; i<10; i++)
-            {
+    arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+    fixNumbers = function (str) {
+        if (typeof str === 'string') {
+            for (var i = 0; i < 10; i++) {
                 str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
             }
         }

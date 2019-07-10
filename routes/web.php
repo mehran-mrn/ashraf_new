@@ -26,8 +26,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->prefix('panel')->group(function () {
 
+    //======================================
+    //--------------Panel View-------------
+    //======================================
     Route::get('dashboard', 'panel\panel_view@dashboard')->name('dashboard');
-
     Route::get('images/users/{media_id}', [
         'as' => 'images.show',
         'uses' => 'private_doc@show',
@@ -59,7 +61,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('register_team', 'panel\user_manager@register_team')->name('panel_register_team');
 
     });
-
     Route::prefix('caravan')->group(function () {
         Route::get('dashboard', 'panel\panel_view@caravan_dashboard')->name('caravan_dashboard');
         Route::get('hosts_list', 'panel\panel_view@hosts_list')->name('hosts_list');
@@ -74,7 +75,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/cancel_caravan_status', 'panel\caravan@cancel_caravan_status')->name('cancel_caravan_status');
         Route::post('/back_caravan_status', 'panel\caravan@back_caravan_status')->name('back_caravan_status');
     });
-
     Route::prefix('blog')->group(function () {
         Route::get('post_add', 'panel\panel_view@post_add')->name('post_add');
         Route::post('post_add', 'panel\blogs@post_add_store')->name('post_add_store');
@@ -91,7 +91,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('category_edit_form/{cat_id}', 'panel\panel_view@category_edit_form')->name('category_edit_form');
         Route::post('category_update/{cat_id}', 'panel\blogs@category_update')->name('category_update');
     });
-
     Route::prefix('setting')->group(function () {
         Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
@@ -101,8 +100,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('gateway_update/{gat_id}', 'panel\setting@gateway_update')->name('gateway_update');
         Route::get('gateway_delete/{gateway_id}', 'panel\setting@gateway_delete')->name('gateway_delete');
     });
-
-
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
         Route::post('store_product_add', 'panel\store@store_product_add')->name('store_product_add');
@@ -146,22 +143,20 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
 
     });
+    Route::prefix('building')->group(function () {
+        Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
+        Route::get('building_project/{project_id}', 'panel\panel_view@building_project')->name('building_project');
+        Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
+        Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
+        Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');
+        Route::post('submit_project_type_data', 'panel\building@submit_project_type_data')->name('submit_project_type_data');
+        Route::get('building_type_page/{building_type_id}', 'panel\panel_view@building_type_page')->name('building_type_page');
+        Route::get('building_type_item_add_form/{type_id}/{item_id?}', 'panel\panel_view@building_type_item_add_form')->name('building_type_item_add_form');
+        Route::post('submit_building_type_item', 'panel\building@submit_building_type_item')->name('submit_building_type_item');
+        Route::post('delete_building_type_item/{building_type_item_id}', 'panel\building@delete_building_type_item')->name('delete_building_type_item');
+        Route::get('load_new_building_form/{project_id?}', 'panel\panel_view@load_new_building_form')->name('load_new_building_form');
 
-        Route::prefix('building')->group(function () {
-            Route::get('dashboard', 'panel\panel_view@building_dashboard')->name('building_dashboard');
-            Route::get('building_project/{project_id}', 'panel\panel_view@building_project')->name('building_project');
-            Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
-            Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
-            Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');
-            Route::post('submit_project_type_data', 'panel\building@submit_project_type_data')->name('submit_project_type_data');
-            Route::get('building_type_page/{building_type_id}', 'panel\panel_view@building_type_page')->name('building_type_page');
-            Route::get('building_type_item_add_form/{type_id}/{item_id?}', 'panel\panel_view@building_type_item_add_form')->name('building_type_item_add_form');
-            Route::post('submit_building_type_item', 'panel\building@submit_building_type_item')->name('submit_building_type_item');
-            Route::post('delete_building_type_item/{building_type_item_id}', 'panel\building@delete_building_type_item')->name('delete_building_type_item');
-            Route::get('load_new_building_form/{project_id?}', 'panel\panel_view@load_new_building_form')->name('load_new_building_form');
-
-        });
-
+    });
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');
@@ -186,7 +181,20 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 
     });
+    //======================================
+    //-----------End Panel View------------
+    //======================================
 
+
+    //======================================
+    //--------------Global View-------------
+    //======================================
+    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+    Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+    Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+    //======================================
+    //-----------End Global View------------
+    //======================================
 });
 //=========================================
 
@@ -208,9 +216,9 @@ Route::prefix('ajax')->group(function () {
 Route::prefix('page')->group(function () {
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
-    Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
-    Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+    Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
+    Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
+
 });
 //=========================================
 

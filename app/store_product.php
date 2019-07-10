@@ -16,6 +16,17 @@ class store_product extends Model
         return $this->belongsToMany('App\store_category','store_product_categories','product_id','category_id');
     }
 
+    public function store_product_item()
+    {
+        return $this->belongsToMany('App\store_item','store_product_items','product_id','item_id');
+    }
+
+    public function store_product_item2()
+    {
+        return $this->hasMany('App\store_product_item','product_id');
+    }
+
+
     public function store_product_category()
     {
         return $this->hasMany('App\store_product_category','product_id');
@@ -28,10 +39,7 @@ class store_product extends Model
     {
         return $this->hasMany('App\store_product_image','product_id');
     }
-    public function store_product_item()
-    {
-        return $this->hasMany('App\store_product_item','product_id');
-    }
+
     public function store_product_tag()
     {
         return $this->hasMany('App\store_product_tag','product_id');

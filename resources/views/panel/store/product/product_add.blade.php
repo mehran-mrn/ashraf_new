@@ -16,6 +16,19 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
     <script>
 
+        $(document).on("keyup", '.price', function (event) {
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
+
+            // format number
+            $(this).val(function (index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    ;
+            });
+        });
+
         $(document).ready(function () {
 
             $('input:radio[name="inv_type"]').change(
@@ -29,9 +42,11 @@
                         $(".inventoriesW").removeClass("d-none");
                         $(".inventoriesC").addClass("d-none");
                         $(".inv-box").html('' +
-                            '<label for="inventories">{{__("messages.inventories")}}</label>\n' +
-                            '<input type="number" class="form-control" required="required" name="inventories" id="inventories">');
-
+                            '<div class="d-flex">' +
+                            '<div class="p-2"><input type="number" class="form-control" required="required" name="inventories" id="inventories" placeholder={{__('messages.inventories')}}></div>' +
+                            '<div class="p-2"><input type="text" class="form-control" required="required" name="price" id="price" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
+                            '<div class="p-2"><input type="text" class="form-control price" required="required" name="off" id="off" placeholder="{{__('messages.off')}}"></div>' +
+                            '</div>');
                     }
                 });
 
@@ -103,11 +118,15 @@
             $(".add-color").on('click', function () {
                 var x = +$("#randomNumber").val() + 1;
                 $(".color-box").append(
-                    '<div class="row pt-2 counter-row-' + x + '"><div class="col-md-4">' +
+                    '<div class="row pt-2 counter-row-' + x + '"><div class="col-md-2">' +
                     '<div class="d-inline-block"><input type="text" data-preferred-format="hex" class="form-control colorpicker-palette" value="#27ADCA" data-fouc name="color-name[' + x + '][]">' +
-                    '</div></div><div class="col-md-6">' +
+                    '</div></div><div class="col-md-3">' +
                     '<input type="number" min="0" max="10000000" placeholder="{{__('messages.count')}}" required="required" class="form-control" name="color-name[' + x + '][]"></div>' +
-                    '<div class="col-md-2"><button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button></div></div>'
+                    '<div class="col-md-3">' +
+                    '<input type="text" class="form-control price" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="number" min="0" max="100" value="0" class="form-control" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.off')}}"></div>' +
+                    '<div class="col-md-1"><button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button></div></div>'
                 );
                 $("#randomNumber").val(x);
                 ColorPicker.init();
@@ -278,6 +297,8 @@
             ColorPicker.init();
             FileUpload.init();
         });
+
+
     </script>
 @endsection
 @section('css')
@@ -312,6 +333,13 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="properties">{{__('messages.properties')}}</label>
+                                        <textarea name="properties" id="properties" cols="30" rows="5"
+                                                  class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <span class="input-group-btn">
                                         <a id="lfmMain" data-input="thumbnail" data-preview="holder"
                                            class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
@@ -335,6 +363,75 @@
                                                data-fouc name="tags" id="tags" value="{{old('tags')}}">
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header text-center bg-light"><span
+                                                    class="panel title">{{__('messages.count')}}</span></div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <div class="form-group mb-3 mb-md-2">
+                                                        <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" class="custom-control-input"
+                                                                   name="inv_type"
+                                                                   id="custom_radio_inline_unchecked" checked
+                                                                   value="withoutcolor">
+                                                            <label class="custom-control-label"
+                                                                   for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>
+                                                        </div>
+
+                                                        <div class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" class="custom-control-input"
+                                                                   name="inv_type"
+                                                                   id="custom_radio_inline_checked" value="bycolor">
+                                                            <label class="custom-control-label"
+                                                                   for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 inventoriesW">
+                                                    <div class="form-group inv-box">
+                                                        <div class="d-flex">
+                                                            <div class="p-2">
+                                                                <input type="number" class="form-control"
+                                                                       required="required"
+                                                                       name="inventories" id="inventories"
+                                                                       placeholder="{{__('messages.inventories')}}">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <input type="text" class="form-control price"
+                                                                       required="required" name="price"
+                                                                       id="price"
+                                                                       placeholder="{{__('messages.price')." ".__('messages.toman')}}">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <input type="text" class="form-control price"
+                                                                       required="required" name="off"
+                                                                       id="off"
+                                                                       placeholder="{{__('messages.off')}}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 inventoriesC d-none">
+                                                    <button type="button"
+                                                            class="btn btn-outline-info add-color float-right"><i
+                                                                class="icon-plus2"></i> {{__('messages.add_color')}}
+                                                    </button>
+                                                    <div class="clearfix"></div>
+                                                    <hr>
+                                                    <input type="hidden" value="1" id="randomNumber">
+                                                    <div class="color-box">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header header-elements-inline">
@@ -355,51 +452,6 @@
                                     class="panel-title">{{__('messages.category')}}</span></div>
                         <div class="card-body">
                             {!! treeView() !!}
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header text-center bg-light"><span
-                                    class="panel title">{{__('messages.count')}}</span></div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <div class="form-group mb-3 mb-md-2">
-                                        <label
-                                                class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" name="inv_type"
-                                                   id="custom_radio_inline_unchecked" checked value="withoutcolor">
-                                            <label class="custom-control-label"
-                                                   for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>
-                                        </div>
-
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" name="inv_type"
-                                                   id="custom_radio_inline_checked" value="bycolor">
-                                            <label class="custom-control-label"
-                                                   for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 inventoriesW">
-                                    <div class="form-group inv-box">
-                                        <label for="inventories">{{__("messages.inventories")}}</label>
-                                        <input type="number" class="form-control" required="required" name="inventories"
-                                               id="inventories">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 inventoriesC d-none">
-                                    <button type="button" class="btn btn-outline-info add-color float-right"><i
-                                                class="icon-plus2"></i> {{__('messages.add_color')}}</button>
-                                    <div class="clearfix"></div>
-                                    <hr>
-                                    <input type="hidden" value="1" id="randomNumber">
-                                    <div class="color-box">
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
                     </div>
 

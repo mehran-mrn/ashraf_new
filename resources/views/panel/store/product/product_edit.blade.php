@@ -28,7 +28,6 @@
             });
 
 
-
             // $("[id^='cards-target-left']").each(function (index) {
             //     console.log(index);
             //     var id = $(this).attr("id");
@@ -98,9 +97,10 @@
             $("#g_row_account_" + id).html("");
         }
 
-        function activeItem(id){
-            $("#box_"+id).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
+        function activeItem(id) {
+            $("#box_" + id).parent().parent().parent().parent().after("<div id='boxSel_" + id + "'>").fadeOut().appendTo("#forms-target-right").fadeIn();
         }
+
         var FileUpload = function () {
             var _componentFileUpload = function () {
                 if (!$().fileinput) {
@@ -274,6 +274,13 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="properties">{{__('messages.properties')}}</label>
+                                        <textarea name="properties" id="properties" cols="30" rows="5"
+                                                  class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <span class="input-group-btn">
                                         <a id="lfmMain" data-input="thumbnail" data-preview="holder"
                                            class="btn btn-outline-primary m-2"><i class="icon-image2"></i> {{__('messages.select_image')}}</a>
@@ -321,26 +328,45 @@
                             {!! treeView($cats) !!}
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header text-center bg-light"><span class="panel title">{{__('messages.count')}}</span></div>
-                        <div class="card-body">
-                            <div class="form-group mb-3 mb-md-2">
-                                <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input-styled" name="radio-inline-left" checked data-fouc>
-                                        {{__("messages.without_color")}}
-                                    </label>
-                                </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="form-group mb-3 mb-md-2">
+                                    <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="inv_type"
+                                               id="custom_radio_inline_unchecked" checked value="withoutcolor">
+                                        <label class="custom-control-label"
+                                               for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>
+                                    </div>
 
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc>
-                                        {{__("messages.by_color")}}
-                                    </label>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="inv_type"
+                                               id="custom_radio_inline_checked" value="bycolor">
+                                        <label class="custom-control-label"
+                                               for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 inventoriesW">
+                                <div class="form-group inv-box">
+                                    <label for="inventories">{{__("messages.inventories")}}</label>
+                                    <input type="number" class="form-control" required="required" name="inventories"
+                                           id="inventories">
+                                </div>
+                            </div>
+                            <div class="col-md-12 inventoriesC d-none">
+                                <button type="button" class="btn btn-outline-info add-color float-right"><i
+                                            class="icon-plus2"></i> {{__('messages.add_color')}}</button>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <input type="hidden" value="1" id="randomNumber">
+                                <div class="color-box">
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
@@ -352,26 +378,27 @@
                                         <input type="checkbox" class="custom-control-input" id="pay_online"
                                                name="pay_online"
                                                @if($online) checked @endif>
-                                        <label class="custom-control-label" for="pay_online">{{__('messages.online')}}</label>
+                                        <label class="custom-control-label"
+                                               for="pay_online">{{__('messages.online')}}</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="row">
-                                    @foreach($gateways as $gateway)
-                                        @php
-                                            $logo = $gateway->bank->logo;
-                                            $checked = '';
-                                            if(in_array($gateway['id'],$gatewayEdit['online'])){
-                                                $checked='checked';
-                                            }
-                                            if($gateway['online']==1){
-                                                echo '<div class="col-4 col-md-4">';
-                                                echo '<div class="custom-control custom-checkbox custom-control-inline border-right-1">';
-                                                echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_online_'.$gateway['id'].'" name="online_gateway_online[]" value="'.$gateway['id'].'">';
-                                                echo '<label class="custom-control-label" for="online_gateway_online_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                            }
-                                        @endphp
-                                    @endforeach
+                                        @foreach($gateways as $gateway)
+                                            @php
+                                                $logo = $gateway->bank->logo;
+                                                $checked = '';
+                                                if(in_array($gateway['id'],$gatewayEdit['online'])){
+                                                    $checked='checked';
+                                                }
+                                                if($gateway['online']==1){
+                                                    echo '<div class="col-4 col-md-4">';
+                                                    echo '<div class="custom-control custom-checkbox custom-control-inline border-right-1">';
+                                                    echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_online_'.$gateway['id'].'" name="online_gateway_online[]" value="'.$gateway['id'].'">';
+                                                    echo '<label class="custom-control-label" for="online_gateway_online_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                }
+                                            @endphp
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -381,26 +408,27 @@
                                     <div class="custom-control custom-checkbox custom-control-inline">
                                         <input type="checkbox" class="custom-control-input" id="pay_cart"
                                                name="pay_cart" @if($cart) checked @endif>
-                                        <label class="custom-control-label" for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                                        <label class="custom-control-label"
+                                               for="pay_cart">{{__('messages.cart_to_cart')}}</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="row">
-                                    @foreach($gateways as $gateway)
-                                        @php
-                                            $checked = '';
-                                            if(isset($gatewayEdit['cart']) && in_array($gateway['id'],$gatewayEdit['cart'])){
-                                                $checked='checked';
-                                            }
-                                            $logo = $gateway->bank->logo;
-                                            if($gateway['cart']==1){
-                                            echo '<div class="col-4 col-md-4 border-right-1">';
-                                            echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                            echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
-                                            echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                            }
-                                        @endphp
-                                    @endforeach
+                                        @foreach($gateways as $gateway)
+                                            @php
+                                                $checked = '';
+                                                if(isset($gatewayEdit['cart']) && in_array($gateway['id'],$gatewayEdit['cart'])){
+                                                    $checked='checked';
+                                                }
+                                                $logo = $gateway->bank->logo;
+                                                if($gateway['cart']==1){
+                                                echo '<div class="col-4 col-md-4 border-right-1">';
+                                                echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                                                echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
+                                                echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                }
+                                            @endphp
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -412,26 +440,27 @@
                                         <input type="checkbox" class="custom-control-input" id="pay_account"
                                                name="pay_account"
                                                @if($account) checked @endif>
-                                        <label class="custom-control-label" for="pay_account">{{__('messages.send_to_account')}}</label>
+                                        <label class="custom-control-label"
+                                               for="pay_account">{{__('messages.send_to_account')}}</label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="row">
-                                    @foreach($gateways as $gateway)
-                                        @php
-                                            $checked = '';
-                                            if(isset($gatewayEdit['account']) && in_array($gateway['id'],$gatewayEdit['account'])){
-                                                $checked='checked';
-                                            }
-                                            $logo = $gateway->bank->logo;
-                                            if($gateway['account']==1){
-                                                echo '<div class="col-4 col-md-4 border-right-1">';
-                                                echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                                echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_account_'.$gateway['id'].'" name="online_gateway_account[]" value="'.$gateway['id'].'">';
-                                                echo '<label class="custom-control-label" for="online_gateway_account_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                            }
-                                        @endphp
-                                    @endforeach
+                                        @foreach($gateways as $gateway)
+                                            @php
+                                                $checked = '';
+                                                if(isset($gatewayEdit['account']) && in_array($gateway['id'],$gatewayEdit['account'])){
+                                                    $checked='checked';
+                                                }
+                                                $logo = $gateway->bank->logo;
+                                                if($gateway['account']==1){
+                                                    echo '<div class="col-4 col-md-4 border-right-1">';
+                                                    echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                                                    echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_account_'.$gateway['id'].'" name="online_gateway_account[]" value="'.$gateway['id'].'">';
+                                                    echo '<label class="custom-control-label" for="online_gateway_account_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                }
+                                            @endphp
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -439,16 +468,19 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_place" name="pay_place"
+                                        <input type="checkbox" class="custom-control-input" id="pay_place"
+                                               name="pay_place"
                                                @if($place) checked @endif>
-                                        <label class="custom-control-label" for="pay_place">{{__('messages.pay_on_place')}}</label>
+                                        <label class="custom-control-label"
+                                               for="pay_place">{{__('messages.pay_on_place')}}</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header text-center bg-light"><span class="card-title">{{__('messages.action')}}</span></div>
+                        <div class="card-header text-center bg-light"><span
+                                    class="card-title">{{__('messages.action')}}</span></div>
                         <div class="card-body">
                             <div class="d-flex flex-column">
                                 <div class="form-group">
@@ -492,7 +524,8 @@
                                             <label for="off">{{__('messages.model')}}</label>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="model" name="model" value="{{$product['model']}}">
+                                            <input type="text" class="form-control" id="model" name="model"
+                                                   value="{{$product['model']}}">
                                         </div>
                                     </div>
 
@@ -503,7 +536,8 @@
                                             <label for="off">{{__('messages.code')}}</label>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="code" name="code" value="{{$product['code']}}">
+                                            <input type="text" class="form-control" id="code" name="code"
+                                                   value="{{$product['code']}}">
                                         </div>
                                     </div>
 
@@ -516,8 +550,10 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <select name="status" id="status" class="form-control">
-                                                <option value="active" @if($product['status']=="active") selected @endif>{{__('messages.active')}}</option>
-                                                <option value="inactive" @if($product['status']=="inactive") selected @endif>{{__('messages.inactive')}}</option>
+                                                <option value="active"
+                                                        @if($product['status']=="active") selected @endif>{{__('messages.active')}}</option>
+                                                <option value="inactive"
+                                                        @if($product['status']=="inactive") selected @endif>{{__('messages.inactive')}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -558,13 +594,13 @@
                                                         </span>
                                                 @endif
                                                 <input type="text" class="form-control" name="items_{{$ch['id']}}"
-                                                   @foreach($product->store_product_item as $itemMain)
-                                                        @if($ch['id']==$itemMain['item_id'])
-                                                            value="{{$itemMain['value']}}"
-                                                    @php array_push($activeItems,$item['id']) @endphp
-                                                    @endif
-                                                    @endforeach
-                                                    >
+                                                       @foreach($product->store_product_item as $itemMain)
+                                                       @if($ch['id']==$itemMain['item_id'])
+                                                       value="{{$itemMain['value']}}"
+                                                        @php array_push($activeItems,$item['id']) @endphp
+                                                        @endif
+                                                        @endforeach
+                                                >
                                                 <input type="hidden" class="form-control" name="items_id[]"
                                                        value="{{$ch['id']}}">
                                                 @if($ch['suffix']!='')

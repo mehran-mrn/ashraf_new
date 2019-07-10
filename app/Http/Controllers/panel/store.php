@@ -155,8 +155,6 @@ class store extends Controller
     public function store_product_add(Request $request)
     {
 
-
-        dd($request->all());
         $this->validate($request,
             [
                 'title' => 'required|min:1',
@@ -167,6 +165,7 @@ class store extends Controller
         $product_info = store_product::create([
             'title' => $request['title'],
             'description' => $request['description'],
+            'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
             'price' => $request['price'],
@@ -183,6 +182,8 @@ class store extends Controller
                             'product_id' => $product_id,
                             'color_code' => $val[0],
                             'count' => $val[1],
+                            'price' => str_replace(",", "", $val[2]),
+                            'off' => $val[3],
                             'type' => 'p',
                             'user_id' => Auth::id(),
                         ]
@@ -195,6 +196,7 @@ class store extends Controller
                 [
                     'product_id' => $product_id,
                     'count' => $request['inventories'],
+                    'price' => str_replace(",", "", $request['price']),
                     'type' => 'p',
                     'user_id' => Auth::id(),
                 ]
@@ -320,6 +322,7 @@ class store extends Controller
         store_product::where('id', $request['pro_id'])->update([
             'title' => $request['title'],
             'description' => $request['description'],
+            'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
             'price' => $request['price'],
