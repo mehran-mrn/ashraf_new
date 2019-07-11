@@ -44,6 +44,11 @@ class store_product extends Model
     {
         return $this->hasMany('App\store_product_tag','product_id');
     }
+
+    public function store_product_inventory_size()
+    {
+        return $this->hasMany('App\store_product_inventory_size','product_id','id');
+    }
     public function deleteAll()
     {
         $this->store_product_category()->delete();

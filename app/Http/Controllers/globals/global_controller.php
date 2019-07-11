@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\store_product_inventory_size;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -93,5 +94,12 @@ class global_controller extends Controller
             return back_error($request, $message);
         }
 
+    }
+
+    public function product_size_info(Request $request)
+    {
+
+        $info = store_product_inventory_size::find($request['size_id']);
+        return json_encode($info);
     }
 }

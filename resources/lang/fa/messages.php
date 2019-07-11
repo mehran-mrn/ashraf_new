@@ -298,5 +298,6 @@ return [
     'properties'=>'ویژگی ها',
     'product_description'=>'توضیحات محصول',
     'user_reviews'=>'نظرات کاربران',
-
+    'add_size'=>'افزودن سایز',
+    'size'=>'اندازه'
 ];

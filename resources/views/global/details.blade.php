@@ -1,5 +1,46 @@
 @extends('layouts.global.global_layout')
+
+@section('js')
+    <script>
+        $(document).on('ready', function () {
+            var html = '<del><span class="amount off"></span></del>' +
+                ' <ins>' +
+                ' <span class="amount priceFinal"></span>' +
+                ' <small class="text-gray">{{__('messages.toman')}}</small>' +
+                '</ins>';
+            $(".select-size").on('change', function () {
+                $(".price").html("<i class='fa fa-spin fa-spinner fa-3x'></i>");
+                $.ajax({
+                    url: "{{route('product_size_info')}}",
+                    type: "post",
+                    data: {size_id: $(this).val()},
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+                    },
+                    success: function (response) {
+                        $(".price").html(html);
+                        var info = JSON.parse(response);
+                        console.log(info);
+                        if (info.off > 0) {
+                            $(".off").html(info.price);
+                            $(".priceFinal").html(info.price - (info.price * info.off / 100));
+                        } else {
+                            $(".off").html("");
+                            $(".priceFinal").html(info.price)
+                        }
+
+                    }, error: function () {
+                    }
+                });
+            })
+
+            $(".select-size").change();
+        })
+
+    </script>
+@endsection
 @section('content')
+    @csrf
     <div class="main-content">
 
         <!-- Section: inner-header -->
@@ -44,16 +85,11 @@
                                     {{--                                        </ul>--}}
                                     {{--                                    </div>--}}
                                     <div class="price">
-                                        @if($proInfo['off']>=1)
-                                            <del><span class="amount">{{number_format($proInfo['price'])}}</span></del>
-                                            <ins>
-                                                <span class="amount">{{number_format($proInfo['price']-($proInfo['price']*$proInfo['off']/100))}}</span>
-                                                <small class="text-gray">{{__('messages.toman')}}</small>
-                                            </ins>
-                                        @else
-                                            <ins><span class="amount">{{number_format($proInfo['price'])}}</span></ins>
+                                        <del><span class="amount off">{{number_format($proInfo['price'])}}</span></del>
+                                        <ins>
+                                            <span class="amount priceFinal">{{number_format($proInfo['price']-($proInfo['price']*$proInfo['off']/100))}}</span>
                                             <small class="text-gray">{{__('messages.toman')}}</small>
-                                        @endif
+                                        </ins>
                                     </div>
                                 </div>
                                 <div class="short-description pt-20">
@@ -81,21 +117,25 @@
                                 <div class="cart-form-wrapper mt-30">
                                     <form enctype="multipart/form-data" method="post" class="cart">
                                         <input type="hidden" value="productID" name="add-to-cart">
+                                        @php
+                                            $sizes = $proInfo->store_product_inventory_size;
+                                        @endphp
                                         <table class="table variations no-border">
                                             <tbody>
+                                            @if(sizeof($sizes)>=1)
+                                                <tr>
+                                                    <td class="name">{{__('messages.size')}}</td>
+                                                    <td class="value">
+                                                        <select class="form-control select-size">
+                                                            @foreach($sizes as $size)
+                                                                <option value="{{$size['id']}}">{{$size['size']}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                             <tr>
-                                                <td class="name">Size</td>
-                                                <td class="value">
-                                                    <select class="form-control">
-                                                        <option value="">Choose an option...</option>
-                                                        <option value="large">Large</option>
-                                                        <option selected="selected" value="medium">Medium</option>
-                                                        <option value="small">Small</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="name">Amount</td>
+                                                <td class="name">{{__('messages.count')}}</td>
                                                 <td class="value">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" class="minus" value="-">
@@ -138,13 +178,13 @@
                                                         <th>{{$po['title']}}</th>
                                                         <td>
                                                             <p>
-                                                            @if(isset($po['prefix']))
-                                                                <small>{{$po['prefix']}}</small>
-                                                            @endif
-                                                            {{$po->store_product_items['value']}}
-                                                            @if(isset($po['suffix']))
-                                                                <small>{{$po['suffix']}}</small>
-                                                            @endif
+                                                                @if(isset($po['prefix']))
+                                                                    <small>{{$po['prefix']}}</small>
+                                                                @endif
+                                                                {{$po->store_product_items['value']}}
+                                                                @if(isset($po['suffix']))
+                                                                    <small>{{$po['suffix']}}</small>
+                                                                @endif
                                                             </p>
                                                         </td>
                                                     </tr>
@@ -276,6 +316,6 @@
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
 @endsection

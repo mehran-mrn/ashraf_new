@@ -4,6 +4,7 @@ namespace App\Http\Controllers\globals;
 
 use App\store;
 use App\store_product;
+use App\store_product_inventory_size;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,7 +63,8 @@ class global_view extends Controller
     public function shop_page()
     {
 
-        $products = store_product::all();
+        $products = store_product_inventory_size::where('count','>','1')->get();
+//        $products = store_product::all();
         return view('global.store', compact('products'));
     }
 

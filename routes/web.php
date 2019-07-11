@@ -211,6 +211,9 @@ Route::prefix('ajax')->group(function () {
     Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
     Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
     Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
+
+
+    Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
 });
 
 Route::prefix('page')->group(function () {
