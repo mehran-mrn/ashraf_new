@@ -2,7 +2,63 @@
 
 @section('js')
     <script>
+
+        $(document).on("change", '.priceFinal', function (event) {
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
+            // format number
+            $(this).val(function (index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    ;
+            });
+        });
+
+        function comma(val) {
+            return val.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+
         $(document).on('ready', function () {
+            $(document).on('click', '.single_add_to_cart_button', function () {
+                $(".single_add_to_cart_button").attr("disabled","disabled");
+                $(".single_add_to_cart_button").html("<i class='fa fa-spin fa-spinner fa-1x'></i> {{__('messages.please_waite')}}...");
+
+                var pro_id = '{{$proInfo['id']}}';
+                var inventory_id = 0;
+                var inventory_size_id = 0;
+                var qty = $(".qty").val();
+                if ($(".inventory")) {
+                    inventory_id = $(".inventory").val();
+                }
+                if ($(".select-size")) {
+                    inventory_size_id = $(".select-size").val();
+                }
+                $.ajax({
+                    url: "{{route('add_to_cart')}}",
+                    type: "post",
+                    data: {
+                        pro_id: pro_id,
+                        inventory_id: inventory_id,
+                        inventory_size_id: inventory_size_id,
+                        count: qty
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+                    },
+                    success: function (response) {
+                        PNotify.success({
+                            text: response.message,
+                            delay: 3000,
+                        });
+                        $(".single_add_to_cart_button").removeAttr("disabled");
+                        $(".single_add_to_cart_button").html("{{__('messages.add_to_cart')}}");
+                    }, error: function () {
+                    }
+                });
+            })
+
             var html = '<del><span class="amount off"></span></del>' +
                 ' <ins>' +
                 ' <span class="amount priceFinal"></span>' +
@@ -20,20 +76,20 @@
                     success: function (response) {
                         $(".price").html(html);
                         var info = JSON.parse(response);
-                        console.log(info);
                         if (info.off > 0) {
-                            $(".off").html(info.price);
-                            $(".priceFinal").html(info.price - (info.price * info.off / 100));
+                            $(".off").html(comma(info.price));
+                            var final = info.price - (info.price * info.off / 100);
+                            $(".priceFinal").html(comma(final.toFixed()));
                         } else {
                             $(".off").html("");
-                            $(".priceFinal").html(info.price)
+                            $(".priceFinal").html(comma(info.price))
                         }
+                        $(".priceFinal").change();
 
                     }, error: function () {
                     }
                 });
-            })
-
+            });
             $(".select-size").change();
         })
 
@@ -41,6 +97,9 @@
 @endsection
 @section('content')
     @csrf
+    @php
+        $sizes = $proInfo->store_product_inventory_size;
+    @endphp
     <div class="main-content">
 
         <!-- Section: inner-header -->
@@ -85,11 +144,17 @@
                                     {{--                                        </ul>--}}
                                     {{--                                    </div>--}}
                                     <div class="price">
-                                        <del><span class="amount off">{{number_format($proInfo['price'])}}</span></del>
-                                        <ins>
-                                            <span class="amount priceFinal">{{number_format($proInfo['price']-($proInfo['price']*$proInfo['off']/100))}}</span>
-                                            <small class="text-gray">{{__('messages.toman')}}</small>
-                                        </ins>
+                                        @if(sizeof($sizes)==0)
+                                            <input type="hidden" name="inventory" class="inventory"
+                                                   value="{{$proInfo->store_product_inventory['id']}}">
+                                            <del>
+                                                <span class="amount off">{{number_format($proInfo->store_product_inventory['price'])}}</span>
+                                            </del>
+                                            <ins>
+                                                <span class="amount priceFinal">{{number_format($proInfo->store_product_inventory['price']-($proInfo->store_product_inventory['price']*$proInfo->store_product_inventory['off']/100))}}</span>
+                                                <small class="text-gray">{{__('messages.toman')}}</small>
+                                            </ins>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="short-description pt-20">
@@ -117,9 +182,7 @@
                                 <div class="cart-form-wrapper mt-30">
                                     <form enctype="multipart/form-data" method="post" class="cart">
                                         <input type="hidden" value="productID" name="add-to-cart">
-                                        @php
-                                            $sizes = $proInfo->store_product_inventory_size;
-                                        @endphp
+
                                         <table class="table variations no-border">
                                             <tbody>
                                             @if(sizeof($sizes)>=1)
@@ -140,16 +203,15 @@
                                                     <div class="quantity buttons_added">
                                                         <input type="button" class="minus" value="-">
                                                         <input type="number" size="4" class="input-text qty text"
-                                                               title="Qty" value="1" name="quantity" min="1" step="1">
+                                                               title="count" value="1" name="count" min="1" step="1">
                                                         <input type="button" class="plus" value="+">
                                                     </div>
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <button class="single_add_to_cart_button btn btn-theme-colored" type="submit">
-                                            Add to cart
-                                        </button>
+                                        <button class="single_add_to_cart_button btn btn-theme-colored"
+                                                type="button">{{__('messages.add_to_cart')}}</button>
                                     </form>
                                 </div>
                             </div>
@@ -191,124 +253,7 @@
                                                 @endforeach
                                                 </tbody>
                                             </table>
-
                                         @endif
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-30">
-                        <h3 class="line-bottom">Related Products</h3>
-                        <div class="row multi-row-clearfix">
-                            <div class="products related">
-                                <div class="col-sm-6 col-md-3 col-lg-3 mb-30">
-                                    <div class="product pb-0">
-                                        <span class="tag-sale">Sale!</span>
-                                        <div class="product-thumb">
-                                            <img alt="" src="images/products/6.jpg"
-                                                 class="img-responsive img-fullwidth">
-                                            <div class="overlay">
-                                                <div class="btn-add-to-cart-wrapper">
-                                                    <a class="btn btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">Add To Cart</a>
-                                                </div>
-                                                <div class="btn-product-view-details">
-                                                    <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">View detail</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-details text-center bg-lighter pt-15 pb-10">
-                                            <a href="#"><h5 class="product-title mt-0">Vests</h5></a>
-                                            <div class="star-rating" title="Rated 3.50 out of 5"><span
-                                                        style="width: 80%;">3.50</span></div>
-                                            <div class="price">
-                                                <del><span class="amount">$165.00</span></del>
-                                                <ins><span class="amount">$160.00</span></ins>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 col-lg-3 mb-30">
-                                    <div class="product pb-0">
-                                        <span class="tag-sale">Sale!</span>
-                                        <div class="product-thumb">
-                                            <img alt="" src="images/products/3.jpg"
-                                                 class="img-responsive img-fullwidth">
-                                            <div class="overlay">
-                                                <div class="btn-add-to-cart-wrapper">
-                                                    <a class="btn btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">Add To Cart</a>
-                                                </div>
-                                                <div class="btn-product-view-details">
-                                                    <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">View detail</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-details text-center bg-lighter pt-15 pb-10">
-                                            <a href="#"><h5 class="product-title mt-0">Saddles</h5></a>
-                                            <div class="star-rating" title="Rated 3.50 out of 5"><span
-                                                        style="width: 60%;">3.50</span></div>
-                                            <div class="price">
-                                                <del><span class="amount">$70.00</span></del>
-                                                <ins><span class="amount">$55.00</span></ins>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-3 col-lg-3 mb-30">
-                                    <div class="product pb-0">
-                                        <div class="product-thumb">
-                                            <img alt="" src="images/products/4.jpg"
-                                                 class="img-responsive img-fullwidth">
-                                            <div class="overlay">
-                                                <div class="btn-add-to-cart-wrapper">
-                                                    <a class="btn btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">Add To Cart</a>
-                                                </div>
-                                                <div class="btn-product-view-details">
-                                                    <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">View detail</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-details text-center bg-lighter pt-15 pb-10">
-                                            <a href="#"><h5 class="product-title mt-0">Helmets</h5></a>
-                                            <div class="star-rating" title="Rated 3.50 out of 5"><span
-                                                        style="width: 75%;">3.50</span></div>
-                                            <div class="price">
-                                                <ins><span class="amount">$185.00</span></ins>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md3 col-lg-3 mb-30">
-                                    <div class="product pb-0">
-                                        <div class="product-thumb">
-                                            <img alt="" src="images/products/2.jpg"
-                                                 class="img-responsive img-fullwidth">
-                                            <div class="overlay">
-                                                <div class="btn-add-to-cart-wrapper">
-                                                    <a class="btn btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">Add To Cart</a>
-                                                </div>
-                                                <div class="btn-product-view-details">
-                                                    <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                       href="#">View detail</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product-details text-center bg-lighter pt-15 pb-10">
-                                            <a href="#"><h5 class="product-title mt-0">Saddles</h5></a>
-                                            <div class="star-rating" title="Rated 5.00 out of 5"><span
-                                                        style="width: 100%;">5.00</span></div>
-                                            <div class="price">
-                                                <ins><span class="amount">$480.00</span></ins>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

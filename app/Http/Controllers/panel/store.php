@@ -198,8 +198,8 @@ class store extends Controller
                             }
                             store_product_inventory_size::create([
                                 'size' => trim($valSize[0]),
-                                'price' => str_replace(",","",$valSize[1]),
                                 'count' => trim($valSize[2]),
+                                'price' => str_replace(",","",$valSize[3]),
                                 'off' => trim($off),
                                 'inventory_id' => $colorID,
                                 'product_id' => $product_id,
@@ -228,8 +228,8 @@ class store extends Controller
                     }
                     store_product_inventory_size::create([
                         'size' => trim($valSize[0]),
-                        'price' => str_replace(",","",$valSize[1]),
-                        'count' => trim($valSize[2]),
+                        'count' => trim($valSize[1]),
+                        'price' => str_replace(",","",$valSize[2]),
                         'off' => trim($off),
                         'inventory_id' => $colorID,
                         'product_id' => $product_id
