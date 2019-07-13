@@ -22,6 +22,7 @@
 
         $(document).on('ready', function () {
             $(document).on('click', '.single_add_to_cart_button', function () {
+                var btnContent = $(".cart-btn").html();
                 $(".single_add_to_cart_button").attr("disabled","disabled");
                 $(".single_add_to_cart_button").html("<i class='fa fa-spin fa-spinner fa-1x'></i> {{__('messages.please_waite')}}...");
 
@@ -52,6 +53,8 @@
                             text: response.message,
                             delay: 3000,
                         });
+                        $(".cart-btn").html('' +
+                            '<button class="btn btn-default">{{__('messages.view_basket')}}</button>');
                         $(".single_add_to_cart_button").removeAttr("disabled");
                         $(".single_add_to_cart_button").html("{{__('messages.add_to_cart')}}");
                     }, error: function () {
@@ -210,8 +213,10 @@
                                             </tr>
                                             </tbody>
                                         </table>
+                                        <div class="cart-btn">
                                         <button class="single_add_to_cart_button btn btn-theme-colored"
                                                 type="button">{{__('messages.add_to_cart')}}</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

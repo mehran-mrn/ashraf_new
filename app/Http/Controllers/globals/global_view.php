@@ -110,7 +110,8 @@ class global_view extends Controller
                 ]
             ];
             session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
+            $message = trans('messages.product_added_successfully');
+            return back_normal($request, $message);
         }
 
         // if cart not empty then check if this product exist then increment quantity
