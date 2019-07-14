@@ -420,6 +420,12 @@ class panel_view extends Controller
         return view('panel.building.subpages.new_ticket', compact('project_id'));
     }
 
+    public function ticket_page($ticket_id)
+    {
+
+        return view('panel.building.subpages.ticket_page', compact('ticket_id'));
+    }
+
 
 //end building module
 

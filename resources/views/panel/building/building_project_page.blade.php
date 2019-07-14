@@ -277,7 +277,7 @@
 
                 if (containerWidth) {
 
-                    var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth)-10;
+                    var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth)-20;
 
                     jssor_1_slider.$ScaleWidth(expectedWidth);
                 } else {
@@ -441,14 +441,14 @@
             <div class="col-md-8">
                 <div class="card ">
                     <div class="row">
-                        <div class="col-md-12 p-0">
+                        <div class="col-md-12">
                                 <div class="m-0" id="jssor_1"
                                      style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
                                     <!-- Loading Screen -->
                                     <div data-u="loading" class="jssorl-009-spin"
                                          style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
                                         <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;"
-                                             src="img/spin.svg"/>
+                                             src="{{url('public/assets/panel/images/spin.svg')}}"/>
                                     </div>
                                     <div data-u="slides"
                                          style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden;">
@@ -610,7 +610,7 @@
                                     <span class="badge-success badge-pill">{{$tickets['actual_percent']}} %</span>
                                 @endif
                             </td>
-                            <td>{{$tickets['title']}}  </td>
+                            <td><a href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">{{$tickets['title']}}  </a> </td>
                             <td>{{get_user($tickets['creator'])['name']}}</td>
                             </tr>
                         @endforeach
