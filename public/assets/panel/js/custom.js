@@ -7,18 +7,25 @@
  * ---------------------------------------------------------------------------- */
 
 $(document).ready(function () {
+    swal_alert();
+    modal_ajax_load();
+    modal_ajax_load_from();
+    form_form_ajax_submit();
+
+});
+var swal_alert = function () {
     $(".swal-alert").on('click', function (e) {
         e.preventDefault();
         var bt = $(".swal-alert");
         var ajax_link = this.getAttribute("data-ajax-link");
         var method = this.getAttribute("data-method");
         var csrf = this.getAttribute("data-csrf");
-        var target = bt.data("target");
-        var title = bt.data("title");
-        var text = bt.data("text");
-        var type = bt.data("type");
-        var cancel = bt.data("cancel");
-        var confirmText = bt.data("confirm-text");
+        var target = this.getAttribute("data-target");
+        var title = this.getAttribute("data-title");
+        var text = this.getAttribute("data-text");
+        var type = this.getAttribute("data-type");
+        var cancel = this.getAttribute("data-cancel");
+        var confirmText = this.getAttribute("data-confirm-text");
         Swal.fire({
             title: title,
             text: text,
@@ -59,6 +66,8 @@ $(document).ready(function () {
             }
         })
     });
+};
+var modal_ajax_load = function () {
     $(document).on('click', '.modal-ajax-load', function (e) {
 
         e.preventDefault();
@@ -94,6 +103,8 @@ $(document).ready(function () {
         $(target + " .modal-dialog").addClass(size);
 
     });
+};
+var modal_ajax_load_from = function () {
     $(document).on('click', '.modal-ajax-load-from', function (e) {
 
         e.preventDefault();
@@ -140,7 +151,8 @@ $(document).ready(function () {
         $(target + " .modal-dialog").addClass(size);
 
     });
-
+};
+var form_form_ajax_submit = function () {
     $(document).on("submit", "form.form-ajax-submit", function (e) {
         e.preventDefault();
 
@@ -186,11 +198,7 @@ $(document).ready(function () {
         });
 
     });
-
-
-
-});
-
+};
 
 function numberWithDash(number) {
     number = number.replace("-", "");

@@ -19,6 +19,7 @@
     {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/form_multiselect.js') }}"></script>--}}
 
     <!-- /theme JS files -->
+
     <script>
         var BootstrapMultiselect = function () {
             // Default file input style
@@ -294,7 +295,6 @@
     </script>
 
 @endsection
-
 @section('css')
     <style>
         /*jssor slider loading skin spin css*/
@@ -441,20 +441,7 @@
             <div class="col-md-8">
                 <div class="card ">
                     <div class="row">
-                        <div class="col-md-3 ">
-                            <div class="col-md-12 border-bottom-1 border-bottom-pink text-center ">
-                                <!-- Available hours -->
-                                <!-- Progress counter -->
-                                <div class="svg-center position-relative" id="hours-available-progress"></div>
-                                <!-- /progress counter -->
-                                <!-- Bars -->
-                                <div id="hours-available-bars"></div>
-                                <!-- /bars -->
-                                <!-- /available hours -->
-                            </div>
-                        </div>
-
-                        <div class="col-md-9 p-0">
+                        <div class="col-md-12 p-0">
                                 <div class="m-0" id="jssor_1"
                                      style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
                                     <!-- Loading Screen -->
@@ -466,44 +453,36 @@
                                     <div data-u="slides"
                                          style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden;">
                                         <div>
-                                            <img data-u="image" src="img/031.jpg"/>
-                                            <img data-u="thumb" src="img/031-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-1.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-1.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/032.jpg"/>
-                                            <img data-u="thumb" src="img/032-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-2.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-2.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/033.jpg"/>
-                                            <img data-u="thumb" src="img/033-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-3.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-3.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/034.jpg"/>
-                                            <img data-u="thumb" src="img/034-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-4.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-4.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/035.jpg"/>
-                                            <img data-u="thumb" src="img/035-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-5.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-5.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/036.jpg"/>
-                                            <img data-u="thumb" src="img/036-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-6.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-6.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/037.jpg"/>
-                                            <img data-u="thumb" src="img/037-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-7.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-7.jpg')}}"/>
                                         </div>
                                         <div>
-                                            <img data-u="image" src="img/038.jpg"/>
-                                            <img data-u="thumb" src="img/038-s190x90.jpg"/>
-                                        </div>
-                                        <div>
-                                            <img data-u="image" src="img/039.jpg"/>
-                                            <img data-u="thumb" src="img/039-s190x90.jpg"/>
-                                        </div>
-                                        <div>
-                                            <img data-u="image" src="img/040.jpg"/>
-                                            <img data-u="thumb" src="img/040-s190x90.jpg"/>
+                                            <img data-u="image" src="{{url('public/assets/panel/images/b-8.jpg')}}"/>
+                                            <img data-u="thumb" src="{{url('public/assets/panel/images/b-8.jpg')}}"/>
                                         </div>
                                     </div>
                                     <!-- Thumbnail Navigator -->
@@ -547,6 +526,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="card ">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -606,7 +593,28 @@
                         </div>
                     </div>
                     <div class="card-body">
-
+                        <table class="table">
+                        @foreach(get_building_tickets($projects['id']) as $tickets)
+                            <tr class="@switch ($tickets['ticket_type'])
+                                    @case(0)
+                                    border-left-3 border-danger
+                                    @case(1)
+                                    border-left-3 border-info
+                                    @default
+                                    @endswitch">
+                            <td>
+                                @if($tickets['predict_percent'])
+                                <span class="badge-warning badge-pill">{{$tickets['predict_percent']}} %</span>
+                                @endif
+                                @if($tickets['actual_percent'])
+                                    <span class="badge-success badge-pill">{{$tickets['actual_percent']}} %</span>
+                                @endif
+                            </td>
+                            <td>{{$tickets['title']}}  </td>
+                            <td>{{get_user($tickets['creator'])['name']}}</td>
+                            </tr>
+                        @endforeach
+                        </table>
                     </div>
                 </div>
             </div>
@@ -616,63 +624,31 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 mb-1">
 
-                                <button class="btn bg-success btn-block btn-float btn-float-lg modal-ajax-load"
-                                        data-toggle="modal"
-                                        data-modal-title="{{trans('messages.register_form_title')}}"
-                                        data-target="#general_modal"
-                                        data-popup="tooltip"
-                                        data-placement="bottom"
-                                        data-container="body"
-                                        data-original-title="{{trans('messages.new_register')}}">
-                                    <i class="icon-user-plus icon-3x"></i>
-                                    <span>{{trans('messages.new_register')}}</span>
-                                </button>
+                            <div class="col-md-6 ">
+                                <a type="button"
+                                        class="btn bg-success btn-block btn-float btn-float-lg "
+                                        href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
+                                        data-original-title="{{trans('messages.add_new',['item'=>__('messages.ticket')])}}">
+                                    <div class="row">
+                                    <div class="col-md-4"><i class="icon-ticket icon-2x"></i></div>
+                                    <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.ticket')])}}</span></div>
+                                    </div>
+                                </a>
                             </div>
-                                <div class="col-md-6 mb-1">
-
-                                    <button class="btn bg-info btn-block btn-float btn-float-lg modal-ajax-load"
-                                            data-toggle="modal"
-                                            data-modal-title="{{trans('messages.register_form_title')}}"
-                                            data-target="#general_modal"
-                                            data-popup="tooltip"
-                                            data-placement="bottom"
-                                            data-container="body"
-                                            data-original-title="{{trans('messages.next_step')}}">
-                                        <i class="icon-next icon-3x"></i>
-                                        <span>{{trans('messages.next_step')}}</span>
-                                    </button>
+                            <div class="col-md-6 ">
+                                <div class="col-md-12 border-bottom-1 border-bottom-pink text-center ">
+                                    <!-- Available hours -->
+                                    <!-- Progress counter -->
+                                    <div class="svg-center position-relative" id="hours-available-progress"></div>
+                                    <!-- /progress counter -->
+                                    <!-- Bars -->
+                                    <div id="hours-available-bars"></div>
+                                    <!-- /bars -->
+                                    <!-- /available hours -->
                                 </div>
-                                <div class="col-md-6 mb-1">
+                            </div>
 
-                                    <button class="btn bg-warning btn-block btn-float btn-float-lg modal-ajax-load"
-                                            data-toggle="modal"
-                                            data-modal-title="{{trans('messages.register_form_title')}}"
-                                            data-target="#general_modal"
-                                            data-popup="tooltip"
-                                            data-placement="bottom"
-                                            data-container="body"
-                                            data-original-title="{{trans('messages.previous_step')}}">
-                                        <i class="icon-reply icon-3x"></i>
-                                        <span>{{trans('messages.previous_step')}}</span>
-                                    </button>
-                                </div>
-                                <div class="col-md-6 mb-1">
-
-                                    <button class="btn bg-danger btn-block btn-float btn-float-lg modal-ajax-load"
-                                            data-toggle="modal"
-                                            data-modal-title="{{trans('messages.register_form_title')}}"
-                                            data-target="#general_modal"
-                                            data-popup="tooltip"
-                                            data-placement="bottom"
-                                            data-container="body"
-
-                                            data-original-title="{{trans('messages.cancel_caravan')}}">
-                                        <i class="icon-database-remove icon-3x"></i>
-                                        <span>{{trans('messages.cancel_caravan')}}</span>
-                                    </button>
-                                </div>
 
                         </div>
                     </div>
@@ -687,6 +663,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="float-right btn alpha-orange border-danger-400 text-danger-800 btn-icon rounded-round ml-2
+                                                     modal-ajax-load"
+                                data-ajax-link="{{route('load_building_items_form',['project_id'=>$projects['id']])}}"
+                                data-toggle="modal"
+                                data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.items')])}}"
+                                data-target="#general_modal">
+                            <i class="icon-pencil"></i>
+                        </button>
+
                     </div>
                 </div>
             </div>
@@ -1027,7 +1014,11 @@
                     // Progress charts
                     _RoundedProgressChart('#hours-available-progress', 60, 2, '#F06292', 0.68, 'icon-watch text-pink-400', '{{trans('messages.progress_percent')}}', '...');
                     // Bar charts
-                    _BarChart('#hours-available-bars', [2, 3, 2, 1, 4, 5, 20, 24, 21], 40, true, 'elastic', 2200, 250, '#EC407A', 'hours');
+                    _BarChart('#hours-available-bars', [
+                        @foreach($projects['building_items'] as $item)
+                            '{{rand(1,10)}}',
+                        @endforeach
+                    ],40, true, 'elastic', 2200, 250, '#EC407A', 'hours');
 
                 }
             }
@@ -1143,7 +1134,13 @@
                         // Vertical axis
                         yAxis: [{
                             type: 'category',
-                            data: ['پی سازی', 'آرماتور', 'بتن ریزی', 'دیوار', 'سقف', 'در و پنجره'],
+                            data:
+                                [
+                                    @foreach($projects['building_items'] as $item)
+                                    '{{$item['title']}}',
+                                    @endforeach
+
+                                ],
                             axisLabel: {
                                 color: '#333'
                             },
@@ -1184,7 +1181,12 @@
                                         }
                                     }
                                 },
-                                data: [20, 30, 5, 80, 50, 78]
+                                data: [
+                                    @foreach($projects['building_items'] as $item)
+                                    '{{rand(0,50)}}',
+                                    @endforeach
+
+                                ]
                             },
                             {
                                 name: '{{trans('messages.not_verified')}}',
@@ -1201,7 +1203,12 @@
                                         }
                                     }
                                 },
-                                data: [5, 10, 40, 3, 0, 15]
+                                data: [
+                                    @foreach($projects['building_items'] as $item)
+                                    '{{rand(0,50)}}',
+                                    @endforeach
+
+                                ]
                             },
                         ]
                     });

@@ -15,7 +15,7 @@ class CreateBuildingProjectsTable extends Migration
     {
         Schema::create('building_projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('description')->nullable();
             $table->string('icon')->nullable();
             $table->string('lat')->nullable();

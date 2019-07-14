@@ -5,6 +5,7 @@ namespace App\Http\Controllers\panel;
 use App\bank;
 use App\blog;
 use App\blog_categories;
+use App\building_item;
 use App\building_project;
 use App\building_type;
 use App\building_type_itme;
@@ -353,7 +354,7 @@ class panel_view extends Controller
 
     public function building_project($project_id)
     {
-        $projects = building_project::with('media')->find($project_id);
+        $projects = building_project::with('media','building_items')->find($project_id);
 
         return view('panel.building.building_project_page', compact('projects'));
     }
@@ -396,6 +397,14 @@ class panel_view extends Controller
         return view('panel.building.materials.add_new_project_form', compact('project'));
     }
 
+    public function load_building_items_form($project_id)
+    {
+
+        $building_items = building_item::where('building_id',$project_id)->get();
+
+        return view('panel.building.materials.project_items_form', compact('building_items','project_id'));
+    }
+
     public function building_type_item_add_form($type_id,$item_id = null)
     {
         if ($item_id ) {
@@ -405,6 +414,12 @@ class panel_view extends Controller
         }
         return view('panel.building.materials.add_new_type_item_form', compact('type_id','type_item'));
     }
+
+    public function new_ticket($project_id)
+    {
+        return view('panel.building.subpages.new_ticket', compact('project_id'));
+    }
+
 
 //end building module
 

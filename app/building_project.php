@@ -11,5 +11,9 @@ class building_project extends Model
     {
         return $this->belongsTo('App\media','media_id');
     }
+    public function building_items()
+    {
+        return $this->hasMany('App\building_item','building_id');
+    }
 
 }

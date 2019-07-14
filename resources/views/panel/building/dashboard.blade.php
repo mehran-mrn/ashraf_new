@@ -65,7 +65,7 @@
                                              modal-ajax-load"
                                                         data-ajax-link="{{route('load_new_building_form',['project_id'=>$project['id']])}}"
                                                         data-toggle="modal"
-                                                        data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.host')])}}"
+                                                        data-modal-title="{{trans('messages.edit_item',['item'=>$project['title']])}}"
                                                         data-target="#general_modal"
                                                         data-modal-size="modal-lg">
                                                     <i class="icon-pencil"></i>
@@ -75,8 +75,8 @@
                                                         data-ajax-link="{{route('delete_caravan_host',['host_id'=>$project['id']])}}"
                                                         data-method="POST"
                                                         data-csrf="{{csrf_token()}}"
-                                                        data-title="{{trans('messages.delete_item',['item'=>trans('messages.host')])}}"
-                                                        data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.host')])}}"
+                                                        data-title="{{trans('messages.delete_item',['item'=>$project['title']])}}"
+                                                        data-text="{{trans('messages.delete_item_text',['item'=>$project['title']])}}"
                                                         data-type="warning"
                                                         data-cancel="true"
                                                         data-confirm-text="{{trans('messages.delete')}}"
