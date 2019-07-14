@@ -302,5 +302,7 @@ return [
     'size'=>'اندازه',
     'product_added_successfully'=>'محصول با موفقیت به سبد خرید افزوده شد!',
     'buy_basket'=>'سبد خرید',
-    'view_basket'=>'مشاهده سبد خرید'
+    'view_basket'=>'مشاهده سبد خرید',
+    'sub_price'=>'جمع کل',
+    'continue_shopping'=>'ادامه ثبت سفارش'
 ];

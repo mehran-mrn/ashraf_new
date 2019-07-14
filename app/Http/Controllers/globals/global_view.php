@@ -66,79 +66,18 @@ class global_view extends Controller
 
         $products = store_product_inventory_size::where('count', '>', '1')->get();
         $productsInv = store_product_inventory::all();
-        return view('global.store', compact('products', 'productsInv'));
+        return view('global.store.store', compact('products', 'productsInv'));
     }
 
     public function detail_product(Request $request)
     {
         $proInfo = store_product::find($request['pro_id']);
-        return view('global.details', compact('proInfo'));
+        return view('global.store.details', compact('proInfo'));
     }
 
-
-    public function add_to_cart(Request $request)
+    public function store_cart(Request $request)
     {
-        $inventory_id = 0;
-        $inventory_size_id = 0;
-        $count = 1;
-        if (isset($request['inventory_id'])) {
-            $inventory_id = $request['inventory_id'];
-        }
-        if (isset($request['inventory_size_id'])) {
-            $inventory_size_id = $request['inventory_size_id'];
-        }
-        if (isset($request['count'])) {
-            $count = $request['count'];
-        }
-        $product = store_product::find($request['pro_id']);
-        if (!$product) {
-            abort(404);
-        }
-
-        $cart = session()->get('cart');
-
-        // if cart is empty then this the first product
-        if (!$cart) {
-
-            $cart = [
-                $request['id'] => [
-                    "name" => $product['title'],
-                    "product_id" => $product['id'],
-                    "inventory_id" => $inventory_id,
-                    "inventory_size_id" => $inventory_size_id,
-                    "count" => $count
-                ]
-            ];
-            session()->put('cart', $cart);
-            $message = trans('messages.product_added_successfully');
-            return back_normal($request, $message);
-        }
-
-        // if cart not empty then check if this product exist then increment quantity
-        if (isset($cart[$request['id']])) {
-
-            $cart[$request['id']]['count']++;
-
-            session()->put('cart', $cart);
-
-            $message = trans('messages.product_added_successfully');
-            return back_normal($request, $message);
-
-        }
-
-        // if item not exist in cart then add to cart with quantity = 1
-        $cart[$request['id']] = [
-            "name" => $product['title'],
-            "product_id" => $product['id'],
-            "inventory_id" => $inventory_id,
-            "inventory_size_id" => $inventory_size_id,
-            "count" => $count
-        ];
-
-        session()->put('cart', $cart);
-
-        $message = trans('messages.product_added_successfully');
-        return back_normal($request, $message);
+        return view('global.store.cart');
     }
 
 }
