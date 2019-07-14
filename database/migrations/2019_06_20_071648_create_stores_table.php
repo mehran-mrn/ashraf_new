@@ -13,7 +13,6 @@ class CreateStoresTable extends Migration
      */
     public function up()
     {
-
         Schema::create('store_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
@@ -25,19 +24,6 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        DB::table('store_categories')->insert(
-            array(
-                'title' => 'تاج گل',
-                'description' => 'سفارش تاج گل',
-            )
-        );
-        DB::table('store_categories')->insert(
-            array(
-                'title' => 'دسته گل',
-                'description' => 'دسته گل',
-            )
-        );
-
         Schema::create('store_discount_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique();
@@ -49,24 +35,12 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
         Schema::create('store_item_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
-        DB::table('store_item_categories')->insert(
-            array(
-                'title' => 'وزن',
-            )
-        );
-        DB::table('store_item_categories')->insert(
-            array(
-                'title' => 'ابعاد',
-            )
-        );
-
         Schema::create('store_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
@@ -77,29 +51,6 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        DB::table('store_items')->insert(
-            array(
-                'title' => 'طول',
-                'category_id'=>'2',
-                'suffix'=>'سانتی متر'
-            )
-        );
-        DB::table('store_items')->insert(
-            array(
-                'title' => 'عرض',
-                'category_id'=>'2',
-                'suffix'=>'سانتی متر'
-            )
-        );
-        DB::table('store_items')->insert(
-            array(
-                'title' => 'وزن',
-                'category_id'=>'1',
-                'suffix'=>'کیلوگرم'
-            )
-        );
-
-
         Schema::create('store_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
@@ -155,8 +106,7 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::create('store_product_inventories',function (Blueprint $table){
+        Schema::create('store_product_inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('product_id');
             $table->string('color_code')->nullable();
@@ -166,6 +116,17 @@ class CreateStoresTable extends Migration
             $table->string('type')->default('p');
             $table->string('user_id')->default(0);
             $table->string('buy_number')->default(0);
+            $table->softDeletes();
+            $table->timestamps();
+        });
+        Schema::create('store_product_inventory_sizes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('size');
+            $table->string('price')->default(0);
+            $table->integer('count')->default(0);
+            $table->integer('off')->default(0);
+            $table->integer('inventory_id')->default(0);
+            $table->integer('product_id')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

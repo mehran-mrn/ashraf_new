@@ -309,5 +309,9 @@ return [
     'properties'=>'ویژگی ها',
     'product_description'=>'توضیحات محصول',
     'user_reviews'=>'نظرات کاربران',
-
+    'add_size'=>'افزودن سایز',
+    'size'=>'اندازه',
+    'product_added_successfully'=>'محصول با موفقیت به سبد خرید افزوده شد!',
+    'buy_basket'=>'سبد خرید',
+    'view_basket'=>'مشاهده سبد خرید'
 ];

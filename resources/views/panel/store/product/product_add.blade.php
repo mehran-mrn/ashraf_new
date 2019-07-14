@@ -44,8 +44,13 @@
                         $(".inv-box").html('' +
                             '<div class="d-flex">' +
                             '<div class="p-2"><input type="number" class="form-control" required="required" name="inventories" id="inventories" placeholder={{__('messages.inventories')}}></div>' +
-                            '<div class="p-2"><input type="text" class="form-control" required="required" name="price" id="price" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
-                            '<div class="p-2"><input type="text" class="form-control price" required="required" name="off" id="off" placeholder="{{__('messages.off')}}"></div>' +
+                            '<div class="p-2"><input type="text" class="form-control price" required="required" name="price" id="price" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
+                            '<div class="p-2"><input type="number" min="0" max="100" class="form-control" required="required" name="off" id="off" placeholder="{{__('messages.off')}}"></div>' +
+                            '<div class="p-2"><button type="button" onclick="addSize2()" class="btn btn-outline-info"><i class="icon-plus2"></i></button></div>' +
+                            '</div>' +
+                            '<div class="col-md-12 pt-2">' +
+                            '<div class="d-flex-row size_counter">' +
+                            '</div>' +
                             '</div>');
                     }
                 });
@@ -59,6 +64,7 @@
                 filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
                 filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
             });
+
             $('.tokenfield').tokenfield();
             $("[id^='box_']").on('click', function () {
                 var id = $(this).data("id");
@@ -75,7 +81,6 @@
             var route_prefix = {{env('url')}}"/laravel-filemanager";
 
             (function ($) {
-
                 $.fn.filemanager = function (type, options) {
                     type = type || 'file';
 
@@ -109,7 +114,6 @@
                         return false;
                     });
                 }
-
             })(jQuery);
 
             $('#lfmMain').filemanager('image', {prefix: route_prefix});
@@ -118,15 +122,33 @@
             $(".add-color").on('click', function () {
                 var x = +$("#randomNumber").val() + 1;
                 $(".color-box").append(
-                    '<div class="row pt-2 counter-row-' + x + '"><div class="col-md-2">' +
-                    '<div class="d-inline-block"><input type="text" data-preferred-format="hex" class="form-control colorpicker-palette" value="#27ADCA" data-fouc name="color-name[' + x + '][]">' +
-                    '</div></div><div class="col-md-3">' +
-                    '<input type="number" min="0" max="10000000" placeholder="{{__('messages.count')}}" required="required" class="form-control" name="color-name[' + x + '][]"></div>' +
+                    '<div class="card counter-row-' + x + '">' +
+                    '<div class="card-header">' +
+                    '<span class=""card-title>{{__('messages.information')}}</span>' +
+                    '</div>' +
+                    '<div class="card-body">' +
+                    '<div class="row pt-2">' +
+                    '<div class="col-md-10">' +
+                    '<div class="row">' +
                     '<div class="col-md-3">' +
-                    '<input type="text" class="form-control price" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
+                    '<div class="d-inline-block"><input type="text" data-preferred-format="hex" class="form-control colorpicker-palette" value="#27ADCA" data-fouc name="color-name[' + x + '][]"></div>' +
+                    '</div>' +
                     '<div class="col-md-3">' +
-                    '<input type="number" min="0" max="100" value="0" class="form-control" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.off')}}"></div>' +
-                    '<div class="col-md-1"><button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button></div></div>'
+                    '<input type="number" min="0" max="10000000" placeholder="{{__('messages.count')}}" required="required" class="form-control" name="color-name[' + x + '][]">' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="text" class="form-control price" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.price')." ".__('messages.toman')}}">' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="number" min="0" max="100" class="form-control" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.off')}}">' +
+                    '</div>' +
+                    '<div class="col-md-12 pt-2">' +
+                    '<div class="d-flex-row size_counter_' + x + '">' +
+                    '</div></div></div></div>' +
+                    '<div class="col-md-2"><div class="btn-group">' +
+                    '<button type="button" data-row-id="' + x + '" onclick="addSize(' + x + ')" class="btn btn-outline-info btn-xs"><i class="icon-plus3"></i></button>' +
+                    '<button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button>' +
+                    '<div></div></div></div></div>'
                 );
                 $("#randomNumber").val(x);
                 ColorPicker.init();
@@ -135,9 +157,38 @@
 
         });
 
+        function addSize(x) {
+            var y = +$("#randomNumberSize").val() + 1;
+            $(".size_counter_" + x).append(
+                '<div class="d-flex size-row-'+y+'"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.count')}}"></div>' +
+                '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.price')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.off')}}"></div>' +
+                '<div class="m-1"><button class="btn btn-danger" type="button" onclick="removeSize(' + y + ')"><i class="icon-x"></i></button></div></div>'
+            );
+            $("#randomNumberSize").val(y);
+        }
+
+        function addSize2() {
+            var x = +$("#randomNumberSize").val() + 1;
+            $(".size_counter").append(
+                '<div class="d-flex size-row-'+x+'"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.count')}}"></div>' +
+                '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][]" placeholder="{{__('messages.price')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.off')}}"></div>'+
+                '<div class="m-1"><button class="btn btn-danger" type="button" onclick="removeSize(' + x + ')"><i class="icon-x"></i></button></div>'
+            );
+            $("#randomNumberSize").val(x);
+        }
+
         function removeRow(x) {
             var rowID = x;
             $(".counter-row-" + rowID).remove();
+        };
+
+        function removeSize(x) {
+            var rowID = x;
+            $(".size-row-" + rowID).remove();
         };
 
         function deleteGatewayOnline(id) {
@@ -302,6 +353,7 @@
     </script>
 @endsection
 @section('css')
+
     <link rel="stylesheet" href="{{URL::asset('/public/assets/panel/css/iranBanks/ibl.css')}}">
 @endsection
 @section('content')
@@ -357,7 +409,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="tages">{{__('messages.tages')}}</label>
+                                        <label for="tags">{{__('messages.tags')}}</label>
                                         <input type="text" class="form-control tokenfield"
                                                placeholder="{{__('messages.enter_text')}}"
                                                data-fouc name="tags" id="tags" value="{{old('tags')}}">
@@ -407,10 +459,19 @@
                                                                        placeholder="{{__('messages.price')." ".__('messages.toman')}}">
                                                             </div>
                                                             <div class="p-2">
-                                                                <input type="text" class="form-control price"
+                                                                <input type="number" class="form-control"
                                                                        required="required" name="off"
-                                                                       id="off"
+                                                                       id="off" min="0" max="100"
                                                                        placeholder="{{__('messages.off')}}">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button type="button" onclick="addSize2()"
+                                                                        class="btn btn-outline-info"><i
+                                                                            class="icon-plus2"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 pt-2">
+                                                            <div class="d-flex-row size_counter">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -426,6 +487,7 @@
                                                     <div class="color-box">
                                                     </div>
                                                 </div>
+                                                <input type="hidden" value="1" id="randomNumberSize">
 
                                             </div>
 
@@ -571,29 +633,6 @@
                                                    max="60">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <label for="price">{{__('messages.price')}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="price" name="price" min="0"
-                                                   max="60">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <label for="off">{{__('messages.off')}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <input type="number" class="form-control" id="off" name="off" min="0"
-                                                   max="100">
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="form-group">
                                     <div class="row">

@@ -220,15 +220,20 @@ Route::prefix('ajax')->group(function () {
     Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
     Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
     Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
+
+
+    Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
 });
 
 Route::prefix('page')->group(function () {
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-    Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
-    Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
+
 
 });
+Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
+Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
+Route::post('/add_to_cart', 'globals\global_view@add_to_cart')->name('add_to_cart');
 //=========================================
 
 

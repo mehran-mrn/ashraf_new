@@ -13,6 +13,7 @@ use App\store_product;
 use App\store_product_category;
 use App\store_product_gateway;
 use App\store_product_inventory;
+use App\store_product_inventory_size;
 use App\store_product_item;
 use App\store_product_tag;
 use http\Client\Curl\User;
@@ -168,39 +169,73 @@ class store extends Controller
             'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
-            'price' => $request['price'],
-            'off' => $request['off'],
+            'price' => 0,
+            'off' => 0,
             'ready' => $request['ready']
         ]);
         $product_id = $product_info->id;
 
         if ($request['inv_type'] == "bycolor") {
             if (isset($request['color-name']) && sizeof($request['color-name']) >= 1) {
-                foreach ($request['color-name'] as $val) {
-                    store_product_inventory::create(
+                foreach ($request['color-name'] as $item => $val) {
+                    $colorInfo = store_product_inventory::create(
                         [
                             'product_id' => $product_id,
-                            'color_code' => $val[0],
-                            'count' => $val[1],
-                            'price' => str_replace(",", "", $val[2]),
-                            'off' => $val[3],
+                            'color_code' => trim($val[0]),
+                            'count' => trim($val[1]),
+                            'price' => str_replace(",", "", trim($val[2])),
+                            'off' => trim($val[3]),
                             'type' => 'p',
                             'user_id' => Auth::id(),
                         ]
                     );
-
+                    $colorID = $colorInfo->id;
+                    if (isset($request['size'][$item]) && sizeof($request['size'][$item]) >= 1) {
+                        foreach ($request['size'][$item] as $valSize) {
+                            $off=0;
+                            if(isset($valSize[3])){
+                                $off =$valSize[3];
+                            }
+                            store_product_inventory_size::create([
+                                'size' => trim($valSize[0]),
+                                'count' => trim($valSize[2]),
+                                'price' => str_replace(",","",$valSize[3]),
+                                'off' => trim($off),
+                                'inventory_id' => $colorID,
+                                'product_id' => $product_id,
+                            ]);
+                        }
+                    }
                 }
             }
         } elseif ($request['inv_type'] == "withoutcolor") {
-            store_product_inventory::create(
+            $colorInfo=store_product_inventory::create(
                 [
                     'product_id' => $product_id,
                     'count' => $request['inventories'],
                     'price' => str_replace(",", "", $request['price']),
+                    'off' => $request['off'],
                     'type' => 'p',
                     'user_id' => Auth::id(),
                 ]
             );
+            $colorID = $colorInfo->id;
+            if (isset($request['size']) && sizeof($request['size']) >= 1) {
+                foreach ($request['size'] as $valSize) {
+                    $off=0;
+                    if(isset($valSize[3])){
+                        $off =$valSize[3];
+                    }
+                    store_product_inventory_size::create([
+                        'size' => trim($valSize[0]),
+                        'count' => trim($valSize[1]),
+                        'price' => str_replace(",","",$valSize[2]),
+                        'off' => trim($off),
+                        'inventory_id' => $colorID,
+                        'product_id' => $product_id
+                    ]);
+                }
+            }
         }
         if ($request['tags'] != "") {
             $tags = explode(',', $request['tags']);

@@ -117,12 +117,8 @@
     </div>
     <!-- header -->
     @include('layouts.global.navbar')
-
     @yield('content')
-
     @include('layouts.global.footer')
-
-
     @include('panel.materials.form_notification')
 
 </div>

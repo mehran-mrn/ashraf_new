@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
-                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="index-mp-layout1.html"><img
+                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="{{route('home')}}"><img
                                 src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt=""></a>
                     </div>
                 </div>
@@ -23,6 +23,10 @@
                             <li class="text-white">|</li>
                             <li>
                                 <a class="text-white" href="#">{{trans('messages.support')}}</a>
+                            </li>
+                            <li class="text-white">|</li>
+                            <li>
+                                <button class="btn btn-default btn-xs">{{__('messages.buy_basket')}}</button>
                             </li>
                         </ul>
                     </div>
