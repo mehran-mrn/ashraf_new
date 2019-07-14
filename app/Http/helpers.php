@@ -290,6 +290,17 @@ function get_images()
     return $images;
 }
 
+function get_building_items($project_id)
+{
+    $items = \App\building_item::where('building_id',$project_id)->get();
+    return $items;
+}
+function get_building_tickets($project_id)
+{
+    $tickets = \App\building_ticket::where('building_id',$project_id)->get();
+    return $tickets;
+}
+
 function national_code_validation($natinoal_code)
 {
     if (!preg_match('/^[0-9]{10}$/', $natinoal_code))
@@ -314,6 +325,12 @@ function get_hosts($id = null)
         $host = \App\caravan_host::get();
     }
     return $host;
+}
+
+function get_user($user_id)
+{
+    $user = \App\User::find($user_id);
+    return $user;
 }
 
 function shamsi_to_miladi($input)

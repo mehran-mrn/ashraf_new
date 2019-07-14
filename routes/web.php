@@ -155,6 +155,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('submit_building_type_item', 'panel\building@submit_building_type_item')->name('submit_building_type_item');
         Route::post('delete_building_type_item/{building_type_item_id}', 'panel\building@delete_building_type_item')->name('delete_building_type_item');
         Route::get('load_new_building_form/{project_id?}', 'panel\panel_view@load_new_building_form')->name('load_new_building_form');
+//        Route::get('ticket/{project_id?}', 'panel\panel_view@project_ticket')->name('project_ticket');
+        Route::get('load_building_items_form/{project_id}', 'panel\panel_view@load_building_items_form')->name('load_building_items_form');
+        Route::post('edit_project_items/{project_id}', 'panel\building@edit_project_items')->name('edit_project_items');
+        Route::post('/delete_project_item/{project_id}/{item_id}', 'panel\building@delete_project_item')->name('delete_project_item');
+        Route::get('/new_ticket/{project_id}', 'panel\panel_view@new_ticket')->name('building_new_ticket');
+        Route::post('/new_ticket/{project_id}', 'panel\building@new_ticket')->name('building_new_ticket_submit');
+        Route::get('/ticket/{ticket_id}', 'panel\panel_view@ticket_page')->name('ticket_page');
 
     });
     Route::prefix('ajax')->group(function () {
@@ -181,7 +188,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //        Route::get('/form_notification', 'panel\panel_view@form_notification')->name('panel_form_notification');
 
     });
-    //======================================
+    Route::prefix('media')->group(function () {
+        Route::post('/upload_files', 'panel\Media@upload_files')->name('upload_files');
+    });
+        //======================================
     //-----------End Panel View------------
     //======================================
 
