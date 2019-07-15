@@ -128,6 +128,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('store_items_update/{item_id}', 'panel\store@store_items_update')->name('store_items_update');
         Route::get('store_items_category_edit_form', 'panel\panel_view@store_items_category_edit_form')->name('store_items_category_edit_form');
         Route::get('store_items_category_delete/{cat_id}', 'panel\store@store_items_category_delete')->name('store_items_category_delete');
+        Route::get('store_how_to_send', 'panel\panel_view@store_how_to_send')->name('store_how_to_send');
 
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');
@@ -236,6 +237,7 @@ Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
 Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
 Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
 Route::get('/store_cart', 'globals\global_view@store_cart')->name('store_cart');
+Route::get('/store_order', 'globals\global_view@store_order')->name('store_order');
 Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
 Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
 //=========================================

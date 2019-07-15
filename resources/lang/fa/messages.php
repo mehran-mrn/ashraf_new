@@ -315,5 +315,8 @@ return [
     'buy_basket'=>'سبد خرید',
     'view_basket'=>'مشاهده سبد خرید',
     'sub_price'=>'جمع کل',
-    'continue_shopping'=>'ادامه ثبت سفارش'
+    'continue_shopping'=>'ادامه ثبت سفارش',
+    'fee'=>'قیمت واحد',
+    'pay_amount'=>'مبلغ قابل پرداخت',
+    'store_how_to_send'=>'نحوه ارسال'
 ];

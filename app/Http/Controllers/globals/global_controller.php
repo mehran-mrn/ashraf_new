@@ -109,23 +109,28 @@ class global_controller extends Controller
     //start cart actions
     public function add_to_cart(Request $request)
     {
+
         $inventory_id = 0;
         $inventory_size_id = 0;
         $count = 1;
         $product = store_product::find($request['pro_id']);
         $price = $product['price'];
         $off = $product['off'];
-        if (isset($request['inventory_id'])) {
+        $extra_title = "";
+        if (isset($request['inventory_id'])&& $request['inventory_id']!=0) {
             $inventory = store_product_inventory::find($request['inventory_id']);
             $price = $inventory['price'];
             $off = $inventory['off'];
             $inventory_id = $request['inventory_id'];
+            $extra_title = $inventory['color_code'];
         }
-        if (isset($request['inventory_size_id'])) {
+        if (isset($request['inventory_size_id']) && $request['inventory_size_id']!=0) {
             $inventory_size = store_product_inventory_size::find($request['inventory_size_id']);
             $price = $inventory_size['price'];
             $off = $inventory_size['off'];
             $inventory_size_id = $request['inventory_size_id'];
+            $extra_title = $inventory_size['size'];
+
         }
         if (isset($request['count'])) {
             $count = $request['count'];
@@ -140,7 +145,7 @@ class global_controller extends Controller
         if (!$cart) {
             $cart = [
                 $request['pro_id'] . $inventory_id . $inventory_size_id => [
-                    "title" => $product['title'],
+                    "title" => $product['title']." ".$extra_title,
                     "product_id" => $product['id'],
                     "inventory_id" => $inventory_id,
                     "inventory_size_id" => $inventory_size_id,
@@ -169,7 +174,7 @@ class global_controller extends Controller
 
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$request['pro_id'] . $inventory_id . $inventory_size_id] = [
-            "title" => $product['title'],
+            "title" => $product['title']." ".$extra_title,
             "product_id" => $product['id'],
             "inventory_id" => $inventory_id,
             "inventory_size_id" => $inventory_size_id,

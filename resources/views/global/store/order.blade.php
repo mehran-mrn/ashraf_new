@@ -1,45 +1,6 @@
 @extends('layouts.global.global_layout')
 @section('js')
     <script>
-        $(document).ready(function () {
-
-            $(".quantity").keyup(function (e) {
-                e.preventDefault();
-                var ele = $(this);
-                $.ajax({
-                    url: '{{ route('cart_update') }}',
-                    method: "patch",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: ele.attr("data-id"),
-                        count: ele.val(),
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
-            });
-
-            $(".remove-from-cart").click(function (e) {
-                e.preventDefault();
-
-                var ele = $(this);
-
-                $.ajax({
-                    url: '{{ route('cart_remove') }}',
-                    method: "DELETE",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: ele.attr("data-id"),
-                        quantity: ele.parents("tr").find(".quantity").val(),
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
-            });
-        })
-
     </script>
 @endsection
 @section('content')
@@ -63,6 +24,41 @@
 
         <section class="">
             <div class="container mt-30 mb-30 p-30">
+
+                <div class="_p_frame _m_registration_steps_container">
+                    <div class="_m_registration_steps_line _p_flex_around">
+                        <div class="_m_steps _m_step1 _m_active">
+                            <section class="_m_border"></section>
+                        </div>
+                        <div class="_m_steps _m_step1 _m_active">
+                            <a href="#">
+                                <section class="_m_icon_step"><span class="fa fa-registered"></span></section>
+                                <section class="_m_name_step">ورود / ثبت نام</section>
+                            </a>
+                        </div>
+                        <div class="_m_steps _m_step2">
+                            <section class="_m_border"></section>
+                        </div>
+                        <div class="_m_steps _m_step2">
+                            <a href="#">
+                                <section class="_m_icon_step"><span class="fa fa-truck"></span></section>
+                                <section class="_m_name_step">اطلاعات ارسال</section>
+                            </a>
+                        </div>
+                        <div class="_m_steps _m_step3">
+                            <section class="_m_border"></section>
+                        </div>
+                        <div class="_m_steps _m_step3">
+                            <a href="#">
+                                <section class="_m_icon_step"><span class="fa fa-paypal"></span></section>
+                                <section class="_m_name_step">اطلاعات پرداخت</section>
+                            </a>
+                        </div>
+                        <div class="_m_steps _m_step4">
+                            <section class="_m_border"></section>
+                        </div>
+                    </div>
+                </div>
                 <table id="cart" class="table table-bordered text-center table-condensed">
                     <thead class="">
                     <tr class="bg-light">
@@ -128,7 +124,7 @@
                     </tr>
                     </tfoot>
                 </table>
-                <a href="{{route('store_order')}}" class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}} <i class="fa fa-caret-left pr-10"></i></a>
+                <a href="" class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}} <i class="fa fa-caret-left pr-10"></i></a>
 
             </div>
         </section>

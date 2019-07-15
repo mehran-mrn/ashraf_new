@@ -49,6 +49,7 @@
                         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                     },
                     success: function (response) {
+                        $("#res").html(response);
                         PNotify.success({
                             text: response.message,
                             delay: 3000,
@@ -135,6 +136,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="product-summary">
+                                    <div id="res"></div>
                                     <h2 class="product-title">{{$proInfo['title']}}</h2>
                                     {{--                                    <div class="product_review">--}}
                                     {{--                                        <ul class="review_text list-inline">--}}

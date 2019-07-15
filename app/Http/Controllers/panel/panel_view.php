@@ -557,6 +557,11 @@ class panel_view extends Controller
     }
 
 
+    public function store_how_to_send()
+    {
+        return view('panel.store.how_to_send');
+    }
+
 //end store module
 
 }

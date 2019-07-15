@@ -75,9 +75,13 @@ class global_view extends Controller
         return view('global.store.details', compact('proInfo'));
     }
 
-    public function store_cart(Request $request)
+    public function store_cart()
     {
         return view('global.store.cart');
+    }
+    public function store_order()
+    {
+        return view('global.store.order');
     }
 
 }
