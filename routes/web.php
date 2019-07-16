@@ -99,6 +99,12 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('gateway_edit/{gat_id}', 'panel\panel_view@gateway_edit')->name('gateway_edit');
         Route::post('gateway_update/{gat_id}', 'panel\setting@gateway_update')->name('gateway_update');
         Route::get('gateway_delete/{gateway_id}', 'panel\setting@gateway_delete')->name('gateway_delete');
+
+
+        Route::get('setting_how_to_send', 'panel\panel_view@setting_how_to_send')->name('setting_how_to_send');
+        Route::get('setting_how_to_send_add', 'panel\panel_view@setting_how_to_send_add')->name('setting_how_to_send_add');
+        Route::post('setting_how_to_send_store', 'panel\setting@setting_how_to_send_store')->name('setting_how_to_send_store');
+
     });
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
@@ -235,7 +241,11 @@ Route::prefix('page')->group(function () {
 });
 Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
 Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
-Route::post('/add_to_cart', 'globals\global_view@add_to_cart')->name('add_to_cart');
+Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
+Route::get('/store_cart', 'globals\global_view@store_cart')->name('store_cart');
+Route::get('/store_order', 'globals\global_view@store_order')->name('store_order');
+Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
+Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
 //=========================================
 
 

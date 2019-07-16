@@ -188,6 +188,9 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{route('gateway_setting')}}"
                                                 class="nav-link {{in_array("gateway_setting", $active_sidbare) ? 'active' : '' }}">{{trans('messages.gateway_pay')}}</a>
                         </li>
+                        <li class="nav-item"><a href="{{route('setting_how_to_send')}}"
+                                                class="nav-link {{in_array("setting_how_to_send", $active_sidbare) ? 'active' : '' }}">{{trans('messages.how_to_send')}}</a>
+                        </li>
 
                     </ul>
                 </li>

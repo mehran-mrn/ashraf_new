@@ -23,17 +23,17 @@
         $(document).on('ready', function () {
             $(document).on('click', '.single_add_to_cart_button', function () {
                 var btnContent = $(".cart-btn").html();
-                $(".single_add_to_cart_button").attr("disabled","disabled");
+                $(".single_add_to_cart_button").attr("disabled", "disabled");
                 $(".single_add_to_cart_button").html("<i class='fa fa-spin fa-spinner fa-1x'></i> {{__('messages.please_waite')}}...");
 
                 var pro_id = '{{$proInfo['id']}}';
                 var inventory_id = 0;
                 var inventory_size_id = 0;
                 var qty = $(".qty").val();
-                if ($(".inventory")) {
+                if ($(".inventory").length) {
                     inventory_id = $(".inventory").val();
                 }
-                if ($(".select-size")) {
+                if ($(".select-size").length) {
                     inventory_size_id = $(".select-size").val();
                 }
                 $.ajax({
@@ -49,12 +49,13 @@
                         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                     },
                     success: function (response) {
+                        $("#res").html(response);
                         PNotify.success({
                             text: response.message,
                             delay: 3000,
                         });
                         $(".cart-btn").html('' +
-                            '<button class="btn btn-default">{{__('messages.view_basket')}}</button>');
+                            '<a href="{{route('store_cart')}}" class="btn btn-default">{{__('messages.view_basket')}}</a>');
                         $(".single_add_to_cart_button").removeAttr("disabled");
                         $(".single_add_to_cart_button").html("{{__('messages.add_to_cart')}}");
                     }, error: function () {
@@ -135,6 +136,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="product-summary">
+                                    <div id="res"></div>
                                     <h2 class="product-title">{{$proInfo['title']}}</h2>
                                     {{--                                    <div class="product_review">--}}
                                     {{--                                        <ul class="review_text list-inline">--}}
@@ -214,8 +216,8 @@
                                             </tbody>
                                         </table>
                                         <div class="cart-btn">
-                                        <button class="single_add_to_cart_button btn btn-theme-colored"
-                                                type="button">{{__('messages.add_to_cart')}}</button>
+                                            <button class="single_add_to_cart_button btn btn-theme-colored"
+                                                    type="button">{{__('messages.add_to_cart')}}</button>
                                         </div>
                                     </form>
                                 </div>

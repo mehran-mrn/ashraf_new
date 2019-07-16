@@ -21,7 +21,7 @@ return [
     'add_category' => 'افزودن :item',
     'updated' => ':item ویرایش شد.',
 
-
+    'transportation'=>'حمل و نقل',
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
     'permission_user_has' => 'دسترسی هایی که این کاربر دارد',
     'users_has_this_permission' => 'کاربرانی که این دسترسی را دارند',
@@ -333,5 +333,13 @@ return [
     'size'=>'اندازه',
     'product_added_successfully'=>'محصول با موفقیت به سبد خرید افزوده شد!',
     'buy_basket'=>'سبد خرید',
-    'view_basket'=>'مشاهده سبد خرید'
+    'view_basket'=>'مشاهده سبد خرید',
+    'sub_price'=>'جمع کل',
+    'continue_shopping'=>'ادامه ثبت سفارش',
+    'fee'=>'قیمت واحد',
+    'pay_amount'=>'مبلغ قابل پرداخت',
+    'how_to_send'=>'نحوه ارسال',
+    'add_transport'=>'افزودن حمل و نقل',
+    'cost'=>'هزینه',
+    'send_time'=>'زمان ارسال',
 ];
