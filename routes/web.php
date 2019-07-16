@@ -162,6 +162,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/new_ticket/{project_id}', 'panel\panel_view@new_ticket')->name('building_new_ticket');
         Route::post('/new_ticket/{project_id}', 'panel\building@new_ticket')->name('building_new_ticket_submit');
         Route::get('/ticket/{ticket_id}', 'panel\panel_view@ticket_page')->name('ticket_page');
+        Route::post('/ticket_note/{ticket_id}', 'panel\building@add_ticket_note')->name('add_ticket_note');
 
     });
     Route::prefix('ajax')->group(function () {

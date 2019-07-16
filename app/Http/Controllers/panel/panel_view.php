@@ -7,6 +7,7 @@ use App\blog;
 use App\blog_categories;
 use App\building_item;
 use App\building_project;
+use App\building_ticket;
 use App\building_type;
 use App\building_type_itme;
 use App\caravan_host;
@@ -422,8 +423,9 @@ class panel_view extends Controller
 
     public function ticket_page($ticket_id)
     {
-
-        return view('panel.building.subpages.ticket_page', compact('ticket_id'));
+        $ticket = building_ticket::with('histories.note.files')->find($ticket_id);
+        $project = building_project::find($ticket['building_id']);
+        return view('panel.building.subpages.ticket_page', compact('project','ticket','ticket_id'));
     }
 
 
