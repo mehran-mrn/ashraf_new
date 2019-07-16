@@ -103,7 +103,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
         Route::get('setting_how_to_send', 'panel\panel_view@setting_how_to_send')->name('setting_how_to_send');
         Route::get('setting_how_to_send_add', 'panel\panel_view@setting_how_to_send_add')->name('setting_how_to_send_add');
-        Route::post('setting_how_to_send_add', 'panel\setting@setting_how_to_send_add')->name('setting_how_to_send_add');
+        Route::post('setting_how_to_send_store', 'panel\setting@setting_how_to_send_store')->name('setting_how_to_send_store');
 
     });
     Route::prefix('store')->group(function () {

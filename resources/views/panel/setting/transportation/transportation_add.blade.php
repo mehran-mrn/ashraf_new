@@ -1,4 +1,4 @@
-<form action="{{route('setting_how_to_send_add')}}" method="post" id="frm_setting_how_to_send_add">
+<form action="{{route('setting_how_to_send_store')}}" method="post" id="frm_setting_how_to_send_add">
     @csrf
     <div class="row">
         <div class="col-6">

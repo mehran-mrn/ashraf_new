@@ -18,6 +18,7 @@ use App\person;
 use App\product_category;
 use App\person_caravan;
 use App\Role;
+use App\setting_transportation;
 use App\store_category;
 use App\store_discount_code;
 use App\store_item;
@@ -457,7 +458,8 @@ class panel_view extends Controller
 
     public function setting_how_to_send()
     {
-        return view('panel.setting.how_to_send');
+        $trans = setting_transportation::all();
+        return view('panel.setting.how_to_send',compact('trans'));
     }
 
     public function setting_how_to_send_add()

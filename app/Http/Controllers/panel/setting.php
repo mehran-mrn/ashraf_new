@@ -5,6 +5,7 @@ namespace App\Http\Controllers\panel;
 use App\gateway;
 use App\Http\Controllers\Controller;
 use App\setting_transportation;
+use App\setting_transportation_cost;
 use Illuminate\Http\Request;
 
 class setting extends Controller
@@ -83,18 +84,31 @@ class setting extends Controller
         return back_normal($request, $message);
     }
 
-    public function setting_how_to_send_add(Request $request)
+    public function setting_how_to_send_store(Request $request)
     {
         $this->validate($request, [
             'title' => 'required',
             'time' => 'required',
         ]);
-        setting_transportation::create([
+        $trans_info = setting_transportation::create([
             'title' => $request['title'],
             'time' => $request['time'],
             'status' => $request['status'],
         ]);
+        $trans_id = $trans_info->id;
+        foreach ($request->all() as $item => $value) {
+            if ((strpos($item, "city_") !== false) && $value != "") {
+                $pro_id = explode("_", $item);
+                setting_transportation_cost::create([
+                    't_id' => $trans_id,
+                    'c_id' => $pro_id[1],
+                    'cost' => str_replace(",", '', $value)
+                ]);
+            }
+        }
 
-        return back_normal($request, "OK");
+        $message = trans("messages.item_created", ['item' => trans('messages.transportation')]);
+
+        return back_normal($request, $message);
     }
 }

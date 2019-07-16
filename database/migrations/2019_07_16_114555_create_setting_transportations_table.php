@@ -21,7 +21,7 @@ class CreateSettingTransportationsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        Schema::create('setting_transportation_cost', function (Blueprint $table) {
+        Schema::create('setting_transportation_costs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('t_id');
             $table->integer('c_id');
