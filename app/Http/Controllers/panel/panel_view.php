@@ -354,7 +354,7 @@ class panel_view extends Controller
 
     public function building_project($project_id)
     {
-        $projects = building_project::with('media','building_items')->find($project_id);
+        $projects = building_project::with('media', 'building_items')->find($project_id);
 
         return view('panel.building.building_project_page', compact('projects'));
     }
@@ -379,7 +379,7 @@ class panel_view extends Controller
 
     public function load_building_type_form($building_type_id = null)
     {
-        if ($building_type_id ) {
+        if ($building_type_id) {
             $building_type = building_type::find($building_type_id);
         } else {
             $building_type = null;
@@ -389,7 +389,7 @@ class panel_view extends Controller
 
     public function load_new_building_form($project_id = null)
     {
-        if ($project_id ) {
+        if ($project_id) {
             $project = building_project::find($project_id);
         } else {
             $project = null;
@@ -400,19 +400,19 @@ class panel_view extends Controller
     public function load_building_items_form($project_id)
     {
 
-        $building_items = building_item::where('building_id',$project_id)->get();
+        $building_items = building_item::where('building_id', $project_id)->get();
 
-        return view('panel.building.materials.project_items_form', compact('building_items','project_id'));
+        return view('panel.building.materials.project_items_form', compact('building_items', 'project_id'));
     }
 
-    public function building_type_item_add_form($type_id,$item_id = null)
+    public function building_type_item_add_form($type_id, $item_id = null)
     {
-        if ($item_id ) {
+        if ($item_id) {
             $type_item = building_type_itme::find($item_id);
         } else {
             $type_item = null;
         }
-        return view('panel.building.materials.add_new_type_item_form', compact('type_id','type_item'));
+        return view('panel.building.materials.add_new_type_item_form', compact('type_id', 'type_item'));
     }
 
     public function new_ticket($project_id)
@@ -455,6 +455,16 @@ class panel_view extends Controller
         return view('panel.setting.gateway.gateway_edit', compact('banks', 'info'));
     }
 
+    public function setting_how_to_send()
+    {
+        return view('panel.setting.how_to_send');
+    }
+
+    public function setting_how_to_send_add()
+    {
+        $province  = city::where('parent',0)->get();
+        return view('panel.setting.transportation.transportation_add',compact('province'));
+    }
 //end setting module
 
 //store module
@@ -478,7 +488,6 @@ class panel_view extends Controller
         $products = store_product::get();
         return view('panel.store.product_list', compact('products'));
     }
-
 
     public function discount_code()
     {
@@ -556,11 +565,6 @@ class panel_view extends Controller
         return view('panel.store.items.store_items_category_edit', compact('info'));
     }
 
-
-    public function store_how_to_send()
-    {
-        return view('panel.store.how_to_send');
-    }
 
 //end store module
 

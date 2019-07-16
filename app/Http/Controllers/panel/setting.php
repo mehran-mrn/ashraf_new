@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\gateway;
 use App\Http\Controllers\Controller;
+use App\setting_transportation;
 use Illuminate\Http\Request;
 
 class setting extends Controller
@@ -41,6 +42,7 @@ class setting extends Controller
         $message = trans("messages.item_created", ['item' => trans('messages.gateway')]);
         return back_normal($request, $message);
     }
+
     public function gateway_update(Request $request)
     {
 
@@ -72,12 +74,27 @@ class setting extends Controller
         $message = trans("messages.item_edited", ['item' => trans('messages.gateway')]);
         return back_normal($request, $message);
     }
+
     public function gateway_delete(Request $request)
     {
         $gateway = gateway::find($request['gateway_id']);
         $gateway->delete();
         $message = trans("messages.item_deleted", ['item' => trans('messages.gateway')]);
         return back_normal($request, $message);
+    }
 
+    public function setting_how_to_send_add(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'time' => 'required',
+        ]);
+        setting_transportation::create([
+            'title' => $request['title'],
+            'time' => $request['time'],
+            'status' => $request['status'],
+        ]);
+
+        return back_normal($request, "OK");
     }
 }

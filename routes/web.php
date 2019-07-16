@@ -99,6 +99,12 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('gateway_edit/{gat_id}', 'panel\panel_view@gateway_edit')->name('gateway_edit');
         Route::post('gateway_update/{gat_id}', 'panel\setting@gateway_update')->name('gateway_update');
         Route::get('gateway_delete/{gateway_id}', 'panel\setting@gateway_delete')->name('gateway_delete');
+
+
+        Route::get('setting_how_to_send', 'panel\panel_view@setting_how_to_send')->name('setting_how_to_send');
+        Route::get('setting_how_to_send_add', 'panel\panel_view@setting_how_to_send_add')->name('setting_how_to_send_add');
+        Route::post('setting_how_to_send_add', 'panel\setting@setting_how_to_send_add')->name('setting_how_to_send_add');
+
     });
     Route::prefix('store')->group(function () {
         Route::get('product_add', 'panel\panel_view@product_add')->name('product_add');
@@ -128,7 +134,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('store_items_update/{item_id}', 'panel\store@store_items_update')->name('store_items_update');
         Route::get('store_items_category_edit_form', 'panel\panel_view@store_items_category_edit_form')->name('store_items_category_edit_form');
         Route::get('store_items_category_delete/{cat_id}', 'panel\store@store_items_category_delete')->name('store_items_category_delete');
-        Route::get('store_how_to_send', 'panel\panel_view@store_how_to_send')->name('store_how_to_send');
 
 
         Route::get('manage_orders', 'panel\panel_view@manage_orders')->name('manage_orders');

@@ -318,5 +318,8 @@ return [
     'continue_shopping'=>'ادامه ثبت سفارش',
     'fee'=>'قیمت واحد',
     'pay_amount'=>'مبلغ قابل پرداخت',
-    'store_how_to_send'=>'نحوه ارسال'
+    'how_to_send'=>'نحوه ارسال',
+    'add_transport'=>'افودن حمل و نقل',
+    'cost'=>'هزینه',
+    'send_time'=>'زمان ارسال'
 ];
