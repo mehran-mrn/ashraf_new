@@ -324,4 +324,48 @@ class building extends Controller
 
         return redirect()->route('building_project', ['project_id'=>$project_id]);
     }
+
+    public function add_ticket_note($ticket_id, Request $request)
+    {
+        $currentUser = Auth::user();
+        $now_time = date("Y-m-d H:i:s");
+        $this->validate($request, [
+            'description' => 'required',
+            'ticket_id' => 'required',
+        ]);
+        if ($request['ticket_id']!=$ticket_id){
+            $errors[]='oppss';
+            return back_error($request,$errors);
+        }
+        $item_id =null;
+        $progress =null;
+
+        $building_ticket = building_ticket::find($ticket_id);
+
+        $building_ticket_note = new building_ticket_note();
+        $building_ticket_note->description= $request['description'];
+        $building_ticket_note->building_ticket_id= $building_ticket['id'];
+        $building_ticket_note->save();
+
+        $building_ticket_history = new building_ticket_history();
+        $building_ticket_history->user_id= $currentUser['id'];
+        $building_ticket_history->time= $now_time;
+        $building_ticket_history->history_type= 1;
+        $building_ticket_history->building_ticket_id= $building_ticket['id'];
+        $building_ticket_history->building_ticket_note_id= $building_ticket_note['id'];
+        $building_ticket_history->save();
+
+        if (!empty($request['file_name'] )){
+        foreach ($request['file_name'] as $file_name){
+            $temp = explode('.', $file_name);
+            $building_ticket_file = new building_ticket_file();
+            $building_ticket_file->name= $file_name;
+            $building_ticket_file->mime= $temp[count($temp) - 1];
+            $building_ticket_file->ticket_note_id= $building_ticket_note['id'];
+            $building_ticket_file->save();
+        }
+        }
+
+        return redirect()->route('ticket_page', ['ticket_id'=>$ticket_id]);
+    }
 }

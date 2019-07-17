@@ -19,7 +19,8 @@ class CreateBuildingTicketHistoriesTable extends Migration
             $table->dateTime('time');
             $table->unsignedInteger('building_ticket_id');
             $table->unsignedInteger('building_ticket_note_id')->nullable();
-            $table->integer('history_type')->default(0); // 0 => with note
+            $table->integer('history_type')->default(0);
+            // 0 => created 1=> add note 2 =>refer 3=>assign to self 4=>close 5=> approve 6=> reject 7 => reOpen
             $table->timestamps();
         });
     }

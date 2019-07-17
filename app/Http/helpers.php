@@ -438,8 +438,12 @@ function get_age($date)
 }
 
 
-function miladi_to_shamsi_date($date = null, $be_array = null)
+function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false)
 {  //2017-01-01 20:30:00
+    $time="";
+    if ($with_time) {
+        $time = substr(explode(" ", $date)[1],0,5);
+    }
     if (!isset($date)) {
         $date = date("Y-m-d");
     }
@@ -455,7 +459,7 @@ function miladi_to_shamsi_date($date = null, $be_array = null)
     } else {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day, "-");
     }
-    return $date_jalali;
+    return $time."  ".$date_jalali ;
 
 }
 
