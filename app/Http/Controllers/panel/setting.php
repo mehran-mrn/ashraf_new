@@ -111,4 +111,42 @@ class setting extends Controller
 
         return back_normal($request, $message);
     }
+
+    public function setting_how_to_send_delete(Request $request)
+    {
+
+        $t = setting_transportation::find($request['t_id']);
+        $t->deleteAll();
+        $message = trans("messages.item_deleted", ['item' => trans('messages.transportation')]);
+        return back_normal($request, $message);
+    }
+
+    public function setting_how_to_send_update(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'time' => 'required',
+        ]);
+        setting_transportation::where('id', $request['t_id'])->update([
+            'title' => $request['title'],
+            'time' => $request['time'],
+            'status' => $request['status'],
+        ]);
+        $trans_id = $request['t_id'];
+        setting_transportation_cost::where('t_id', $trans_id)->delete();
+        foreach ($request->all() as $item => $value) {
+            if ((strpos($item, "city_") !== false) && $value != "") {
+                $pro_id = explode("_", $item);
+                setting_transportation_cost::create([
+                    't_id' => $trans_id,
+                    'c_id' => $pro_id[1],
+                    'cost' => str_replace(",", '', $value)
+                ]);
+            }
+        }
+
+        $message = trans("messages.item_updated", ['item' => trans('messages.transportation')]);
+
+        return back_normal($request, $message);
+    }
 }

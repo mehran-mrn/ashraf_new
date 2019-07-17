@@ -574,3 +574,8 @@ function childView($Category,$checked=[])
     $html .= "</ul>";
     return $html;
 }
+
+
+function get_inventory_size_max_time($pro_id){
+
+}

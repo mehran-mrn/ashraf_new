@@ -24,14 +24,14 @@
                         <i class="fa fa-user fa-3x mb-10"></i>
                         <h5>{{__('messages.login/register')}}</h5>
                     </div>
-                    <div class="col-md-4 bg-success text-center step_two">
+                    <div class="col-md-4 text-center step_two">
                         <h3 class="badge badge-danger">2</h3><br>
-                        <i class="fa fa-truck fa-3x text-success mb-10"></i>
+                        <i class="fa fa-truck fa-3x  mb-10"></i>
                         <h5>{{__('messages.send_information')}}</h5>
                     </div>
-                    <div class="col-md-4 text-center step_three">
+                    <div class="col-md-4 bg-success text-center step_three">
                         <h3 class="badge badge-danger">3</h3><br>
-                        <i class="fa fa-amazon fa-3x mb-10"></i>
+                        <i class="fa fa-amazon fa-3x text-success mb-10"></i>
                         <h5>{{__('messages.payment_information')}}</h5>
 
                     </div>
@@ -40,6 +40,21 @@
                 <hr>
 
                 <div class="row">
+                    <div class="col-md-12">
+                        <label><i class="fa fa-angle-left"></i> {{__('messages.order_title')}}</label>
+                        <div class="row">
+                            @if(session('cart'))
+                                @foreach(session('cart') as $id => $details)
+                                    <div class="col-md-6 col-xs-12 text-center">
+                                        <img src="{{$details['photo']}}" alt="{{$details['title']}}" width="100"
+                                             height="100"
+                                             class=" center text-center mr-auto ml-auto">
+                                        <h6 class="text-center">{{$details['title']}}</h6>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <label><i class="fa fa-angle-left"></i> {{__('messages.customer_information')}}</label>
                         <table class="table table-bordered border">
@@ -126,7 +141,7 @@
 
                 </div>
 
-                <a href="{{route('store_payment')}}" class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}} <i
+                <a href="" class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}} <i
                             class="fa fa-caret-left pr-10"></i></a>
 
             </div>
