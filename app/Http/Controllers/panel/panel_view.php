@@ -524,6 +524,14 @@ class panel_view extends Controller
         $province  = city::where('parent',0)->get();
         return view('panel.setting.transportation.transportation_add',compact('province'));
     }
+
+    public function setting_how_to_send_edit(Request $request)
+    {
+        $tran = setting_transportation::find($request['t_id']);
+        $province  = city::where('parent',0)->get();
+
+        return view('panel.setting.transportation.transportation_edit',compact('tran','province'));
+    }
 //end setting module
 
 //store module

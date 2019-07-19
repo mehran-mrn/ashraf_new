@@ -54,6 +54,28 @@
                                     </table>
 
                                 </div>
+                                <div class="card-footer">
+                                    <button type="button"
+                                            class="legitRipple float-right btn alpha-primary border-primary-400 text-primary-800 btn-icon rounded-round ml-2 modal-ajax-load"
+                                            data-ajax-link="{{route('setting_how_to_send_edit',['t_id'=>$tran['id']])}}"
+                                            data-toggle="modal"
+                                            data-modal-title="{{trans('messages.edit',['item'=>trans('messages.transportation')])}}"
+                                            data-target="#general_modal"><i class="icon-database-edit2"></i>
+                                    </button>
+                                    <button
+                                            class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                            data-ajax-link="{{route('setting_how_to_send_delete',['t_id'=>$tran['id']])}}"
+                                            data-method="get"
+                                            data-csrf="{{csrf_token()}}"
+                                            data-title="{{trans('messages.delete',['item'=>trans('messages.transportation')])}}"
+                                            data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.transportation')])}}"
+                                            data-type="warning"
+                                            data-cancel="true"
+                                            data-confirm-text="{{trans('messages.delete')}}"
+                                            data-cancel-text="{{trans('messages.cancel')}}">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @endforeach

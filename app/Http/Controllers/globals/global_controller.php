@@ -117,6 +117,7 @@ class global_controller extends Controller
         $price = $product['price'];
         $off = $product['off'];
         $extra_title = "";
+        $time = $product['ready'];
         if (isset($request['inventory_id'])&& $request['inventory_id']!=0) {
             $inventory = store_product_inventory::find($request['inventory_id']);
             $price = $inventory['price'];
@@ -152,7 +153,8 @@ class global_controller extends Controller
                     "price" => $price,
                     "off" => $off,
                     "count" => $count,
-                    "photo" => $product['main_image']
+                    "photo" => $product['main_image'],
+                    'time'=>$time
                 ]
             ];
             session()->put('cart', $cart);
@@ -181,7 +183,8 @@ class global_controller extends Controller
             "price" => $price,
             "off" => $off,
             "count" => $count,
-            "photo" => $product['main_image']
+            "photo" => $product['main_image'],
+            'time'=>$time
         ];
 
         session()->put('cart', $cart);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\setting_transportation;
 use App\store;
 use App\store_product;
 use App\store_product_inventory;
@@ -81,7 +82,16 @@ class global_view extends Controller
     }
     public function store_order()
     {
-        return view('global.store.order');
+        $tran = setting_transportation::where('status',"active")->get();
+        return view('global.store.order',compact('tran'));
+    }
+
+    public function store_payment()
+    {
+        $tran = setting_transportation::where('status',"active")->get();
+
+        return view('global.store.payment',compact('tran'));
+
     }
 
 }

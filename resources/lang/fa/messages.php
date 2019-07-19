@@ -15,6 +15,7 @@ return [
     'add_new' => 'ثبت :item جدید',
     'edit_item' => 'ویرایش :item ',
     'item_created' => ':item با موفقیت ایجاد شد.',
+    'item_updated' => ':item با موفقیت ویرایش شد.',
     'delete_item' => 'حذف :item',
     'item_deleted' => ':item‌حذف شد !',
     'delete_item_text' => 'آیا از حذف :item اطمینان دارید؟',
@@ -360,4 +361,14 @@ return [
     'add_transport'=>'افزودن حمل و نقل',
     'cost'=>'هزینه',
     'send_time'=>'زمان ارسال',
+    'customer_information'=>'اطلاعات مشتری',
+    'zip_code'=>'کد پستی',
+    'change_address'=>'افزودن آدرس',
+    'free'=>'رایگان',
+    'max_send_time_your_order'=>'حداکثر زمان ارسال سفارش شما',
+    'work_day'=>'روز کاری',
+    'login/register'=>'ورود/ثبت نام',
+    'send_information'=>'اطلاعات ارسال',
+    'payment_information'=>'اطلاعات پرداخت',
+    'order_title'=>'عنوان سفارش'
 ];
