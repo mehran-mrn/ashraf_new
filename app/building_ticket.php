@@ -16,4 +16,8 @@ class building_ticket extends Model
     {
         return $this->hasMany('App\building_ticket_history','building_ticket_id');
     }
+    public function building_item()
+    {
+        return $this->belongsTo('App\building_item','item_id');
+    }
 }

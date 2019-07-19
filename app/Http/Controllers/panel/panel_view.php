@@ -10,6 +10,7 @@ use App\building_project;
 use App\building_ticket;
 use App\building_type;
 use App\building_type_itme;
+use App\building_user;
 use App\caravan_host;
 use App\category;
 use App\city;
@@ -354,11 +355,51 @@ class panel_view extends Controller
         return view('panel.building.dashboard', compact('projects'));
     }
 
-    public function building_project($project_id)
+    public function building_project($project_id,Request $request)
     {
-        $projects = building_project::with('media', 'building_items')->find($project_id);
+        $ticket_item_checkbox = $request->input('ticket_item_checkbox');
+        $ticket_item_filter = $request->input('ticket_item_filter');
+        $ticket_status_checkbox = $request->input('ticket_status_checkbox');
+        $ticket_status_filter = $request->input('ticket_status_filter');
 
-        return view('panel.building.building_project_page', compact('projects'));
+
+        $projects = building_project::with('media', 'building_items','building_users')->find($project_id);
+        $progress_tickets = building_ticket::where('ticket_type','0')
+            ->where('building_id',$project_id)->get();
+        $building_items_obj = building_item::where('building_id',$project_id)->get();
+        $building_items=[];
+        foreach ($building_items_obj as $item){
+            $building_items[$item['id']]=$item->toArray();
+        }
+        $total_progress = 0;
+        $items_progress =[];
+        foreach ($progress_tickets as $progress_ticket){
+            if ($progress_ticket['closed']){
+                if ($progress_ticket['actual_percent']>0){
+                    $total_progress+= ($progress_ticket['actual_percent'] * $building_items[$progress_ticket['item_id']]['percent'] / 100);
+                    if (isset($items_progress[$progress_ticket['item_id']]['actual'])){
+                        $items_progress[$progress_ticket['item_id']]['actual'] += $progress_ticket['actual_percent'];
+                    }
+                    else{
+                        $items_progress[$progress_ticket['item_id']]['actual'] = $progress_ticket['actual_percent'];
+                    }
+                }
+            }
+            else{
+                if ($progress_ticket['predict_percent']>0){
+                    if (isset($items_progress[$progress_ticket['item_id']]['predict'])){
+                        $items_progress[$progress_ticket['item_id']]['predict'] += $progress_ticket['predict_percent'];
+
+                    }
+                    else{
+                        $items_progress[$progress_ticket['item_id']]['predict'] = $progress_ticket['predict_percent'];
+                    }
+                }
+            }
+        }
+
+        return view('panel.building.building_project_page', compact('projects','total_progress','items_progress',
+            'ticket_item_checkbox','ticket_item_filter','ticket_status_checkbox','ticket_status_filter'));
     }
 
     public function building_types()
@@ -407,6 +448,14 @@ class panel_view extends Controller
         return view('panel.building.materials.project_items_form', compact('building_items', 'project_id'));
     }
 
+    public function load_building_users_form($project_id)
+    {
+
+        $building_users = building_user::where('building_id', $project_id)->get();
+        $users = User::with(['building_users'=>function($q)use($project_id){$q->where('building_id',$project_id);}])->get();
+        return view('panel.building.materials.project_users_form', compact('building_users', 'project_id','users'));
+    }
+
     public function building_type_item_add_form($type_id, $item_id = null)
     {
         if ($item_id) {
@@ -427,6 +476,12 @@ class panel_view extends Controller
         $ticket = building_ticket::with('histories.note.files')->find($ticket_id);
         $project = building_project::find($ticket['building_id']);
         return view('panel.building.subpages.ticket_page', compact('project','ticket','ticket_id'));
+    }
+
+    public function load_building_ticket_close_form($ticket_id)
+    {
+        $ticket = building_ticket::find($ticket_id);
+        return view('panel.building.materials.close_ticket_form', compact('ticket_id','ticket'));
     }
 
 

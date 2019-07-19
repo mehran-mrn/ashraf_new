@@ -15,5 +15,8 @@ class building_project extends Model
     {
         return $this->hasMany('App\building_item','building_id');
     }
-
+    public function building_users()
+    {
+        return $this->hasMany('App\building_user','building_id');
+    }
 }

@@ -54,3 +54,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #00695C;
 }
+
+.card-body-icon {
+    position: absolute;
+    z-index: 0;
+    top: 6.25rem;
+    right: 2rem;
+    opacity: 0.4;
+    font-size: 5rem;
+    -webkit-transform: rotate(15deg);
+    transform: rotate(-30deg);
+}

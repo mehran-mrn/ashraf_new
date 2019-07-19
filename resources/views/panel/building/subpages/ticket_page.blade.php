@@ -199,41 +199,74 @@
                     </div>
                     <div class="card-body p-2">
                         <div class="row">
-                            <div class="col-sm-3 p-1">
-                                <button class="btn mt-1 p-1 bg-success btn-block btn-float btn-float-lg"
-                                        data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.accept_ticket')}}"
-                                ><i class="icon-xl icon-square-down"></i></button>
-                            </div>
-                            <div class="col-sm-3 p-1">
-                                <button class="btn mt-1 p-1 bg-orange btn-block btn-float btn-float-lg"
-                                        data-popup="tooltip" title="" data-placement="bottom"
+{{--                            <div class="col-sm-4 p-1">--}}
+{{--                                <button class="btn mt-1 p-1 bg-success btn-block btn-float btn-float-lg"--}}
+{{--                                        data-popup="tooltip" title="" data-placement="bottom"--}}
+{{--                                        data-container="body" data-original-title="{{trans('messages.accept_ticket')}}"--}}
+{{--                                ><i class="icon-xl icon-square-down"></i></button>--}}
+{{--                            </div>--}}
+                            @if(!$ticket['closed'])
+
+                            <div class="col-sm-4 p-1">
+                                <button type="button" class="btn mt-1 p-1 bg-orange btn-block btn-float btn-float-lg modal-ajax-load"
+                                        data-ajax-link="{{route('load_building_ticket_close_form',['ticket_id'=>$ticket['id']])}}"
+                                        data-toggle="modal"
+                                        data-modal-title="{{trans('messages.close_ticket')}}"
+                                        data-popup="tooltip"
+                                        data-target="#general_modal"
+                                        title=""
+                                        data-placement="bottom"
                                         data-container="body" data-original-title="{{trans('messages.approve')}}"
                                 ><i class="icon-xl icon-shield-check"></i></button>
                             </div>
-                            <div class="col-sm-3 p-1">
-                                <button class="btn mt-1 p-1 bg-danger btn-block btn-float btn-float-lg"
-                                        data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.close_ticket')}}"
-                                ><i class="icon-xl icon-switch2"></i></button>
-                            </div>
+                            @endif
 
+                            @if($ticket['closed'])
 
-                            <div class="col-sm-3 p-1">
-                                <button class="btn mt-1 p-1 bg-violet btn-block btn-float btn-float-lg"
-                                        data-popup="tooltip" title="" data-placement="bottom"
-                                        data-container="body" data-original-title="{{trans('messages.Refer_to')}}"
-                                ><i class="icon-xl icon-reset"></i></button>
-                            </div>
+                                <div class="col-sm-4 p-1">
+                                    <button type="button" class="btn mt-1 p-1 bg-pink btn-block btn-float btn-float-lg modal-ajax-load"
+                                            data-ajax-link="{{route('load_building_ticket_close_form',['ticket_id'=>$ticket['id']])}}"
+                                            data-toggle="modal"
+                                            data-modal-title="{{trans('messages.re_open_ticket')}}"
+                                            data-popup="tooltip"
+                                            data-target="#general_modal"
+                                            title=""
+                                            data-placement="bottom"
+                                            data-container="body" data-original-title="{{trans('messages.re_open_ticket')}}"
+                                    ><i class="icon-xl icon-reset"></i></button>
+                                </div>
+                            @endif
+{{--                            <div class="col-sm-4 p-1">--}}
+{{--                                <button class="btn mt-1 p-1 bg-danger btn-block btn-float btn-float-lg"--}}
+{{--                                        data-popup="tooltip" title="" data-placement="bottom"--}}
+{{--                                        data-container="body" data-original-title="{{trans('messages.close_ticket')}}"--}}
+{{--                                ><i class="icon-xl icon-switch2"></i></button>--}}
+{{--                            </div>--}}
+
+{{--                            @if(!$ticket['closed'])--}}
+
+{{--                            <div class="col-sm-4 p-1">--}}
+{{--                                <button class="btn mt-1 p-1 bg-violet btn-block btn-float btn-float-lg"--}}
+{{--                                        data-popup="tooltip" title="" data-placement="bottom"--}}
+{{--                                        data-container="body" data-original-title="{{trans('messages.Refer_to')}}"--}}
+{{--                                ><i class="icon-xl icon-reply"></i></button>--}}
+{{--                            </div>--}}
+{{--                            @endif--}}
+
                         </div>
                     </div>
                 </div>
                 <div class="card border-info ">
-                    <div class="card-header p-1 bg-info">
+                    <div class="card-header p-1  bg-teal-800">
                         {{__('messages.ticket_info')}}
                     </div>
                     <div class="card-body font-size-lg ">
-                        <div class="list mb-1"><strong>{{__('messages.project_title')}}:</strong> {{$project['title']}}
+                        @if($ticket['closed'])
+                        <div class="card-body-icon ">
+                            <div class="text-danger-300" style="font-size: 4rem;">{{trans('messages.closed')}}</div>
+                        </div>
+                        @endif
+                        <div class="list mb-1 "><strong>{{__('messages.project_title')}}:</strong> {{$project['title']}}
                         </div>
                         <div class="list mb-1"><strong>{{__('messages.creator')}}
                                 :</strong> {{get_user($ticket['creator'])['name']}}</div>
@@ -277,7 +310,7 @@
                                     :</strong> {{$ticket['predict_percent']}} %</div>
                         @endif
                         @if(!empty($ticket['actual_percent']))
-                            <div class="list mb-1"><strong>{{__('messages.actual_percent') . __('messages.certain')}}
+                            <div class="list mb-1"><strong>{{__('messages.actual_percent') ." ". __('messages.certain')}}
                                     :</strong> {{$ticket['actual_percent']}} %</div>
                         @endif
 
@@ -293,35 +326,35 @@
                                 // 0 => created 1=> add note 2 =>refer 3=>assign to self 4=>close 5=> approve 6=> reject 7 => reOpen
                                 @case(0)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.ticket_creation')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(1)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.add_note')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(2)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.refer')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(3)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.assign_to_self')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(4)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.close')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(5)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.approved')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(6)
                                 <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.reject')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @case(7)
-                                <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.re_open')}}
-                                    </strong> {{miladi_to_shamsi_date($history['created_at'])}}</div>
+                                <div class="list mb-1 text-muted"><strong> {{get_user($history['user_id'])['name']}}  {{__('messages.re_open_ticket')}}
+                                    </strong> {{miladi_to_shamsi_date($history['created_at'],null,true)}}</div>
                                 @break
                                 @default
                             @endswitch

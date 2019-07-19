@@ -526,35 +526,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="card ">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                        </div>
-                    </div>
-                </div>
 
                 <div class="card">
                     <div class="card-header">
+                        <form class="" method="get" action="">
                         <div class="row">
                             <div class="col-md-4">
                                 <!-- Within a group with checkbox -->
-                                <label class="label"> Item </label>
+                                <label class="label"> {{__('messages.items')}} </label>
                                 <div class="form-group">
                                     <div class="input-group">
 
                                 <span class="input-group-prepend">
 											<div class="input-group-text">
 												<input type="checkbox" class="form-control-styled"
-                                                       name="input-addon-checkbox" checked data-fouc>
+                                                       name="ticket_item_checkbox" checked data-fouc>
 											</div>
 										</span>
 
-                                        <select class="form-control multiselect" multiple="multiple" data-fouc>
-                                            <option value="cheese">Cheese</option>
-                                            <option value="tomatoes">Tomatoes</option>
-                                            <option value="mozarella">Mozzarella</option>
-                                            <option value="mushrooms">Mushrooms</option>
+                                        <select name="ticket_item_filter[]" class="form-control multiselect" multiple="multiple" data-fouc>
+                                            @foreach($projects['building_items'] as $item)
+                                                <option value="{{$item['id']}}">{{$item['title']}}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -562,7 +556,7 @@
                             </div>
                             <div class="col-md-4">
                                 <!-- Within a group with checkbox -->
-                                <label class="label"> Status </label>
+                                <label class="label"> {{__('messages.status')}} </label>
 
                                 <div class="form-group">
                                     <div class="input-group">
@@ -570,15 +564,14 @@
                                 <span class="input-group-prepend">
 											<div class="input-group-text">
 												<input type="checkbox" class="form-control-styled"
-                                                       name="input-addon-checkbox" checked data-fouc>
+                                                       name="ticket_status_checkbox" checked data-fouc>
 											</div>
 										</span>
 
-                                        <select class="form-control multiselect" multiple="multiple" data-fouc>
-                                            <option value="cheese">Cheese</option>
-                                            <option value="tomatoes">Tomatoes</option>
-                                            <option value="mozarella">Mozzarella</option>
-                                            <option value="mushrooms">Mushrooms</option>
+                                        <select name="ticket_status_filter[]" class="form-control multiselect" multiple="multiple" data-fouc>
+                                            <option value="in_progress">{{__('messages.in_progress')}}</option>
+                                            <option value="closed">{{__('messages.closed')}}</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -587,14 +580,17 @@
                             <div class="col-md-4">
                                 <label class="label">&nbsp;</label>
                                 <div class="form-group">
-                                    <button class="btn-block btn btn-outline-danger"> filter</button>
+                                    <button class="btn-block btn btn-outline-danger"> {{__('messages.filter')}}</button>
                                 </div>
                             </div>
                         </div>
+                        </form>
+
                     </div>
                     <div class="card-body">
                         <table class="table">
-                        @foreach(get_building_tickets($projects['id']) as $tickets)
+
+                        @foreach(get_building_tickets($projects['id'],$ticket_item_checkbox,$ticket_item_filter,$ticket_status_checkbox,$ticket_status_filter) as $tickets)
                             <tr class="@switch ($tickets['ticket_type'])
                                     @case(0)
                                     border-left-3 border-danger
@@ -602,18 +598,43 @@
                                     border-left-3 border-info
                                     @default
                                     @endswitch">
-                            <td>
+
+                                <td>
+                                    <a href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
                                 @if($tickets['predict_percent'])
-                                <span class="badge-warning badge-pill">{{$tickets['predict_percent']}} %</span>
+                                    <span class="badge-warning badge-pill">{{$tickets['predict_percent']}} %</span>
                                 @endif
                                 @if($tickets['actual_percent'])
                                     <span class="badge-success badge-pill">{{$tickets['actual_percent']}} %</span>
                                 @endif
-                            </td>
-                            <td><a href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">{{$tickets['title']}}  </a> </td>
-                            <td>{{get_user($tickets['creator'])['name']}}</td>
+                                @if($tickets['ticket_type'] ==1)
+                                        <span class="badge-info badge-pill">{{trans('messages.normal_ticket')}}</span>
+
+                                    @endif
+                                    </a>
+                                </td>
+                                <td>
+                                    @if(!empty($tickets['building_item']))
+                                        <span class="badge bg-blue-600 ">{{$tickets['building_item']['title']}}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a style="color: black;" href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
+                                        <strong class="text-black">{{miladi_to_shamsi_date($tickets['created_at'])}} </strong><span class="text-muted font-size-xs ">{{__('messages.by')}}  </span><strong> {{get_user($tickets['creator'])['name']}}</strong>
+                                    </a>
+                                </td>
+                                <td>@if($tickets['closed'])
+                                <div class="badge badge-danger">{{__('messages.closed')}} <span class="font-weight-bold" >{{miladi_to_shamsi_date($tickets['closed'])}}</span></div>
+                                    @else
+                                        <div class="badge badge-info">{{__("messages.in_progress")}} <i class="icon-spinner"></i> </div>
+                                    @endif
+                                </td>
+
+                                <td>{{$tickets['title']}} </td>
+
                             </tr>
-                        @endforeach
+
+                            @endforeach
                         </table>
                     </div>
                 </div>
@@ -627,12 +648,30 @@
 
                             <div class="col-md-6 ">
                                 <a type="button"
-                                        class="btn bg-success btn-block btn-float btn-float-lg "
-                                        href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
-                                        data-original-title="{{trans('messages.add_new',['item'=>__('messages.ticket')])}}">
+                                   class="btn bg-success btn-block btn-float btn-float-lg "
+                                   href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
+                                   data-original-title="{{trans('messages.add_new',['item'=>__('messages.ticket')])}}">
                                     <div class="row">
-                                    <div class="col-md-4"><i class="icon-ticket icon-2x"></i></div>
-                                    <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.ticket')])}}</span></div>
+                                        <div class="col-md-4"><i class="icon-ticket icon-2x"></i></div>
+                                        <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.ticket')])}}</span></div>
+                                    </div>
+                                </a>
+                                <a type="button"
+                                   class="disabled btn bg-violet-600 btn-block btn-float btn-float-lg "
+
+                                   data-original-title="{{trans('messages.add_new',['item'=>__('messages.image')])}}">
+                                    <div class="row">
+                                        <div class="col-md-4"><i class="icon-image5 icon-2x"></i></div>
+                                        <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.image')])}}</span></div>
+                                    </div>
+                                </a>
+                                <a type="button"
+                                   class="disabled btn bg-pink-600 btn-block btn-float btn-float-lg "
+
+                                   data-original-title="{{trans('messages.set_project_finish')}}">
+                                    <div class="row">
+                                        <div class="col-md-4"><i class="icon-finish icon-2x"></i></div>
+                                        <div class="col-md-8"> <span> {{trans('messages.set_project_finish')}}</span></div>
                                     </div>
                                 </a>
                             </div>
@@ -653,6 +692,43 @@
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="title">{{__('messages.project_info')}}</span>
+                    </div>
+                    <div class="card-img-actions px-1 pt-1">
+                        <img class="card-img img-fluid img-absolute "
+                             src="{{'/'.$projects['media']['url']}}" alt="">
+                        <div class="card-img-actions-overlay  card-img bg-dark-alpha">
+
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="list-feed-item">
+                            <strong>{{__('messages.title')}}</strong>:<b>{{$projects['title']}}</b></div>
+                        <div class="list-feed-item">
+
+                        <p class="font-size-xs">{!! $projects['description'] !!}</p>
+                        </div>
+                        <div class="list-feed-item">
+
+                            <strong>{{__('messages.address')}}</strong>:{{get_cites($projects['city_id'])['name']}} <p class="font-size-xs">{!! $projects['address'] !!}</p>
+                        </div>
+                        <div class="list-feed-item">
+
+                            <strong>{{__('messages.start_date')}}</strong>:<p class="font-size-xs">{!! miladi_to_shamsi_date($projects['start_date'] )!!}</p>
+                        </div>
+
+                        <div class="list-feed-item">
+
+                            <strong>{{__('messages.predict_end_date')}}</strong>:<p class="font-size-xs">{!! miladi_to_shamsi_date($projects['end_date_prediction'] )!!}</p>
+                        </div>
+                        <div class="list-feed-item" ><a href="">{{__('messages.show_in_map')}} <i class="icon-location3"></i> </a> </div>
+                    </div>
+                </div>
+
+
                 <div class="card">
 
                     <div class="card-body">
@@ -676,13 +752,72 @@
 
                     </div>
                 </div>
+                <div class="card">
+
+                    <div class="card-header">
+                        {{__('messages.related_persons')}}
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @for($i=1 ;$i<=4 ;$i++)
+                                    <div class="card  p-0 mr-0 ml-0 ">
+                                    <div class="card-header p-1 bg-teal">
+                                    @switch($i)
+                                        @case("1")
+                                        {{__('messages.project_manager')}}
+                                        @break
+                                        @case("2")
+                                        {{__('messages.project_officer')}}
+                                        @break
+                                        @case("3")
+                                        {{__('messages.project_worker')}}
+                                        @break
+                                        @case("4")
+                                        {{__('messages.project_watcher')}}
+                                        @break
+
+                                        @default
+                                    @endswitch
+                                    </div>
+                                        <div class="card-body p-1">
+
+                                        @foreach($projects['building_users'] as $building_user)
+                                        @if($building_user['level'] ==$i)
+                                            <div class="list-feed-item">
+                                            {{get_user($building_user['user_id'])['name']}}
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                        </div>
+
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="float-right btn alpha-orange border-danger-400 text-danger-800 btn-icon rounded-round ml-2
+                                                     modal-ajax-load"
+                                data-ajax-link="{{route('load_building_users_form',['project_id'=>$projects['id']])}}"
+                                data-toggle="modal"
+                                data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.related_persons')])}}"
+                                data-target="#general_modal">
+                            <i class="icon-pencil"></i>
+                        </button>
+
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
 
 @section('footer_js')
+
     <script type="text/javascript">
+
         jssor_1_slider_init();
     </script>
 
@@ -1012,11 +1147,11 @@
 
                 initCharts: function () {
                     // Progress charts
-                    _RoundedProgressChart('#hours-available-progress', 60, 2, '#F06292', 0.68, 'icon-watch text-pink-400', '{{trans('messages.progress_percent')}}', '...');
+                    _RoundedProgressChart('#hours-available-progress', 60, 2, '#F06292',{{$total_progress/100}}, 'icon-meter2 text-pink-400', '{{trans('messages.progress_percent')}}', '...');
                     // Bar charts
                     _BarChart('#hours-available-bars', [
                         @foreach($projects['building_items'] as $item)
-                            '{{rand(1,10)}}',
+                            '{{isset($items_progress[$item['id']]['actual'])? $items_progress[$item['id']]['actual']: 0}}',
                         @endforeach
                     ],40, true, 'elastic', 2200, 250, '#EC407A', 'hours');
 
@@ -1183,7 +1318,7 @@
                                 },
                                 data: [
                                     @foreach($projects['building_items'] as $item)
-                                    '{{rand(0,50)}}',
+                                    '{{isset($items_progress[$item['id']]['actual'])? $items_progress[$item['id']]['actual']: ""}}',
                                     @endforeach
 
                                 ]
@@ -1205,7 +1340,7 @@
                                 },
                                 data: [
                                     @foreach($projects['building_items'] as $item)
-                                    '{{rand(0,50)}}',
+                                    '{{isset($items_progress[$item['id']]['predict'])?$items_progress[$item['id']]['predict'] : ""}}',
                                     @endforeach
 
                                 ]

@@ -295,9 +295,30 @@ function get_building_items($project_id)
     $items = \App\building_item::where('building_id',$project_id)->get();
     return $items;
 }
-function get_building_tickets($project_id)
+function get_building_tickets($project_id,$ticket_item_checkbox=null,$ticket_item_filter=null,$ticket_status_checkbox=null,$ticket_status_filter=null)
 {
-    $tickets = \App\building_ticket::where('building_id',$project_id)->get();
+    $tickets_query = \App\building_ticket::query();
+    $tickets_query->with('building_item');
+    $tickets_query->where('building_id',$project_id);
+    $tickets_query->orderBy('created_at','desc');
+    if ($ticket_item_checkbox == "on" and $ticket_item_filter){
+        $items=[];
+        foreach ($ticket_item_filter as $item){
+            $items[]=$item;
+        }
+        $tickets_query->whereIn('item_id',$items);
+    }
+    if ($ticket_status_checkbox == "on" and $ticket_status_filter){
+            foreach ($ticket_status_filter as $status){
+                if ($status == 'in_progress'){
+                    $tickets_query->whereNull('closed');
+                }
+                elseif($status == 'closed'){
+                    $tickets_query->whereNotNull('closed');
+                }
+        }
+    }
+    $tickets = $tickets_query->get();
     return $tickets;
 }
 

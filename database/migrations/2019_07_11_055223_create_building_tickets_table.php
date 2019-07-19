@@ -24,8 +24,8 @@ class CreateBuildingTicketsTable extends Migration
             $table->unsignedInteger('item_id')->nullable();
             $table->integer('priority')->default(0);
             $table->integer('parent_id')->default(0);
-            $table->integer('ticket_type')->default(0);
-            $table->boolean('closed')->default(0);
+            $table->integer('ticket_type')->default(0); //0=>progress 1=>normal
+            $table->dateTime('closed')->nullable();
             $table->timestamps();
         });
     }

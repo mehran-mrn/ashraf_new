@@ -169,6 +169,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/new_ticket/{project_id}', 'panel\building@new_ticket')->name('building_new_ticket_submit');
         Route::get('/ticket/{ticket_id}', 'panel\panel_view@ticket_page')->name('ticket_page');
         Route::post('/ticket_note/{ticket_id}', 'panel\building@add_ticket_note')->name('add_ticket_note');
+        Route::get('load_building_users_form/{project_id}', 'panel\panel_view@load_building_users_form')->name('load_building_users_form');
+        Route::post('edit_project_users/{project_id}', 'panel\building@edit_project_users')->name('edit_project_users');
+        Route::get('load_building_ticket_close_form/{ticket_id}', 'panel\panel_view@load_building_ticket_close_form')->name('load_building_ticket_close_form');
+        Route::post('close_building_ticket/{ticket_id}', 'panel\building@close_building_ticket')->name('close_building_ticket');
 
     });
     Route::prefix('ajax')->group(function () {

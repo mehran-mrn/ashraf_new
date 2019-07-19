@@ -104,4 +104,3 @@
         $(".counter-row-" + rowID).remove();
     };
 </script>
-<script src="{{ URL::asset('/public/assets/panel/js/custom.js') }}"></script>
