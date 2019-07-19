@@ -66,7 +66,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.blog')}}"
                         style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('post_add')}}"
                                                 class="nav-link {{in_array("post_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_add')}}</a>
@@ -84,7 +84,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-cart"></i>
                         <span>{{trans('messages.store')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.store')}}"
                         style="display:{{in_array("store", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('product_add')}}"
                                                 class="nav-link {{in_array("product_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.product_add')}}</a>
@@ -122,7 +122,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.caravans')}}"
                         style="display:{{in_array("caravans", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('caravan_dashboard')}}"
                                                 class="nav-link {{in_array("caravans_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.dashboard')}} {{trans('messages.caravans')}}</a>
@@ -142,7 +142,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-quill4"></i>
                         <span>{{trans('messages.building_projects')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.building_projects')}}"
                         style="display:{{in_array("building", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('building_dashboard')}}"
                                                 class="nav-link {{in_array("building_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.building_dashboard')}}</a>
@@ -159,7 +159,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class="nav-link"><i class="icon-users4"></i>
                         <span>{{trans('messages.users_management')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.users_management')}}"
                         style="display:{{in_array("user_manager", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('users_list')}}"
                                                 class="nav-link {{in_array("users_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.users_list')}}</a>
@@ -179,7 +179,7 @@ if (!isset($active_sidbare)) {
                     <a href="#" class=" nav-link"><i class="icon-gear"></i>
                         <span>{{trans('messages.setting')}}</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Layouts"
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.setting')}}"
                         style="display:{{in_array("setting", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('cities_list')}}"
                                                 class="nav-link {{in_array("cities_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.cities')}}</a>
