@@ -206,20 +206,22 @@ class building extends Controller
 
     public function edit_project_items($project_id, Request $request)
     {
-        $this->validate($request, [
-            'project_id' => 'required|exists:building_projects,id',
-        ]);
+            $this->validate($request, [
+                'project_id' => 'required|exists:building_projects,id',
+            ]);
         if ($project_id != $request['project_id']) {
             $errors[] = "undefined";
             return back_error($request, $errors);
         }
         $percent = 0;
-        foreach ($request['percent'] as $item_percent) {
-            if ($item_percent > 100 or $item_percent < 0) {
-                $errors[] = trans('errors.percent_more_than_100') . " - " . $item_percent;
-                return back_error($request, $errors);
+        if ($request['percent']){
+            foreach ($request['percent'] as $item_percent) {
+                if ($item_percent > 100 or $item_percent < 0) {
+                    $errors[] = trans('errors.percent_more_than_100') . " - " . $item_percent;
+                    return back_error($request, $errors);
+                }
+                $percent += $item_percent;
             }
-            $percent += $item_percent;
         }
         if (isset($request['new_item_percent']) and count($request['new_item_percent']) > 0) {
             foreach ($request['new_item_percent'] as $new_item_percent) {
@@ -234,13 +236,13 @@ class building extends Controller
             $errors[] = trans('errors.percent_more_than_100') . " - " . $percent;
             return back_error($request, $errors);
         }
-
+        if ($request['item_id']){
         foreach ($request['item_id'] as $old_item_id) {
             $old_building_item = building_item::where('building_id', $project_id)->find($old_item_id);
             $old_building_item['title'] = $request['title'][$old_item_id];
             $old_building_item['percent'] = $request['percent'][$old_item_id];
             $old_building_item->save();
-        }
+        }}
         if (isset($request['new_item_percent']) and count($request['new_item_percent']) > 0) {
             foreach ($request['new_item_percent'] as $key => $new_item_percent) {
                 $new_building_item = new building_item();

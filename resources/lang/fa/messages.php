@@ -281,6 +281,14 @@ return [
     'public_key' => 'کلید عمومی',
     'terminal_id' => 'کلید ترمینال',
 
+    'Charity' => 'خیریه',
+    'payment_list' => 'لیست پرداخت ها',
+    'payment_titles' => 'عناوین پرداخت',
+    'hooks_types' => 'انواع صندوق ها',
+    'charity_dashboard' => 'صفحه مدیریت خیریه',
+    'charity_setting' => 'تنظیمات خیریه',
+    'request_hook' => 'درخواست صندوق',
+
     'store' => 'فروشگاه',
     'product_add' => 'افزودن محصول',
     'product_list' => 'لیست محصولات',
@@ -371,4 +379,6 @@ return [
     'send_information'=>'اطلاعات ارسال',
     'payment_information'=>'اطلاعات پرداخت',
     'order_title'=>'عنوان سفارش'
+
+
 ];
