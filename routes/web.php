@@ -179,6 +179,12 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('close_building_ticket/{ticket_id}', 'panel\building@close_building_ticket')->name('close_building_ticket');
 
     });
+    Route::prefix('charity')->group(function () {
+        Route::get('charity_payment_title', 'panel\panel_view@charity_payment_title')->name('charity_payment_title');
+        Route::get('charity_payment_title_add/{payment_title_id?}', 'panel\panel_view@charity_payment_title_add')->name('charity_payment_title_add');
+        Route::post('charity_payment_title_add/{payment_title_id?}', 'panel\charity@charity_payment_title_add')->name('charity_payment_title_add');
+
+    });
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
         Route::get('/register_permission', 'panel\panel_view@register_permission_form')->name('panel_register_permission_form');

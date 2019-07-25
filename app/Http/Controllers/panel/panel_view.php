@@ -13,8 +13,10 @@ use App\building_type_itme;
 use App\building_user;
 use App\caravan_host;
 use App\category;
+use App\charity_payment_title;
 use App\city;
 use App\gateway;
+use App\period;
 use App\Permission;
 use App\person;
 use App\product_category;
@@ -486,6 +488,25 @@ class panel_view extends Controller
 
 
 //end building module
+
+//charity module
+
+    public function charity_payment_title()
+    {
+        return view('panel.charity.setting.payment_titles');
+    }
+    public function charity_payment_title_add($payment_title_id=null)
+    {
+        $payment_title=null;
+        if ($payment_title_id){
+        $payment_title = charity_payment_title::find($payment_title_id);
+        }
+        return view('panel.charity.setting.module.add_new_payment_title_form', compact('payment_title'));
+    }
+
+//end charity module
+
+
 
 //setting module
     public function cities_list()

@@ -288,6 +288,11 @@ return [
     'charity_dashboard' => 'صفحه مدیریت خیریه',
     'charity_setting' => 'تنظیمات خیریه',
     'request_hook' => 'درخواست صندوق',
+    'payment_periods' => 'دوره های پرداخت',
+    'payment_period' => 'دوره پرداخت',
+    'period_interval' => 'دوره تکرار',
+    'in_days' => '(روز)',
+    'payment_title' => 'عنوان پرداخت',
 
     'store' => 'فروشگاه',
     'product_add' => 'افزودن محصول',

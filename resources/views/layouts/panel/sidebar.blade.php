@@ -61,7 +61,6 @@ if (!isset($active_sidbare)) {
                     </a>
                 </li>
 
-
                 <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
                         <span>{{trans('messages.blog')}}</span></a>
@@ -155,22 +154,23 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item nav-item-submenu {{in_array("Charity_payment", $active_sidbare) ? ' nav-item-open' : '' }}">
+                <li class="nav-item nav-item-submenu {{in_array("charity", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-umbrella"></i>
                         <span>{{trans('messages.Charity')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.Charity')}}"
-                        style="display:{{in_array("building", $active_sidbare) ? 'block' : 'none' }}">
+                        style="display:{{in_array("charity", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('building_dashboard')}}"
                                                 class="nav-link {{in_array("building_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_list')}}</a>
                         </li>
                         <li class="nav-item"><a href="{{route('building_types')}}"
                                                 class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.request_hook')}}</a>
                         </li>
-                        <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_setting')}}</a>
-                            <ul class="nav nav-group-sub">
-                                <li><a href="starters/3_col_dual.html" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_titles')}}</a></li>
+                        <li class="nav-item nav-item-submenu {{in_array("charity_setting", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("charity_setting", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_setting')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("charity_setting", $active_sidbare) ? 'block' : 'none' }}">
+                                <li><a href="{{route('charity_payment_title')}}" class="nav-link {{in_array("charity_payment_titles", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_titles')}}</a></li>
                                 <li><a href="starters/3_col_double.html" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.hooks_types')}}</a></li>
                             </ul>
                         </li>
@@ -215,7 +215,6 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-
                 <!-- /main -->
             </ul>
         </div>
