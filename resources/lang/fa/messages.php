@@ -14,6 +14,7 @@ return [
     */
     'add_new' => 'ثبت :item جدید',
     'edit_item' => 'ویرایش :item ',
+    'recover_item' => 'بازیابی :item ',
     'item_created' => ':item با موفقیت ایجاد شد.',
     'item_updated' => ':item با موفقیت ویرایش شد.',
     'delete_item' => 'حذف :item',
@@ -21,6 +22,8 @@ return [
     'delete_item_text' => 'آیا از حذف :item اطمینان دارید؟',
     'add_category' => 'افزودن :item',
     'updated' => ':item ویرایش شد.',
+    'recover_title_warn' => 'برای بازیابی آیتم حذف شده تایید کنید.',
+    'recover' => 'بازیابی',
 
     'transportation'=>'حمل و نقل',
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
@@ -282,6 +285,8 @@ return [
     'terminal_id' => 'کلید ترمینال',
 
     'Charity' => 'خیریه',
+    'display_items' => 'آیتم هایی که نمایش داده میشوند',
+    'deleted_items' => 'آیتم های حذف شده',
     'payment_list' => 'لیست پرداخت ها',
     'payment_titles' => 'عناوین پرداخت',
     'hooks_types' => 'انواع صندوق ها',
@@ -293,6 +298,7 @@ return [
     'period_interval' => 'دوره تکرار',
     'in_days' => '(روز)',
     'payment_title' => 'عنوان پرداخت',
+    'payment_pattern' => 'الگو پرداخت',
 
     'store' => 'فروشگاه',
     'product_add' => 'افزودن محصول',
@@ -318,6 +324,9 @@ return [
     'please_select' => 'لطفاْ انتخاب نمایید.',
     'private_key' => 'کلید خصوصی',
     'pay_gateway' => 'درگاه های پرداخت',
+    'periodic_payment' => 'پرداخت دوره ای',
+    'custom_payment_types' => 'انواع دیگر کمک نقدی',
+    'payment_selection' => 'سرفصل پرداخت',
     'online' => 'آنلاین',
     'cart_to_cart' => 'کارت به کارت',
     'send_to_account' => 'واریز به حساب',

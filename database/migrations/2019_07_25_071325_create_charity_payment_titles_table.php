@@ -16,10 +16,8 @@ class CreateCharityPaymentTitlesTable extends Migration
         Schema::create('charity_payment_titles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('description');
-            $table->unsignedInteger('image_id')->nullable();
-            $table->string('image_url')->nullable();
-            $table->string('periodic')->nullable(); //1=monthly 2=every three month 3=every six month 4=every year
+            $table->unsignedInteger('ch_pay_pattern_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

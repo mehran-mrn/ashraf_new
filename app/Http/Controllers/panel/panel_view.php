@@ -13,6 +13,7 @@ use App\building_type_itme;
 use App\building_user;
 use App\caravan_host;
 use App\category;
+use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\city;
 use App\gateway;
@@ -493,15 +494,27 @@ class panel_view extends Controller
 
     public function charity_payment_title()
     {
-        return view('panel.charity.setting.payment_titles');
+        $periodic_title = charity_payment_patern::where('system',1)->where('periodic',1)->first();
+        $system_title = charity_payment_patern::with('titles')->where('system',1)->where('periodic',0)->first();
+        $deleted_titles = charity_payment_title::where('ch_pay_pattern_id',$system_title['id'])->onlyTrashed()->get();
+        $other_titles = charity_payment_patern::with('fields')->where('system',0)->where('periodic',0)->get();
+        return view('panel.charity.setting.payment_titles',compact('periodic_title','system_title','other_titles','deleted_titles'));
     }
-    public function charity_payment_title_add($payment_title_id=null)
+    public function charity_payment_title_add($payment_pattern_id,$payment_title_id=null)
     {
         $payment_title=null;
+        $payment_pattern=charity_payment_patern::find($payment_pattern_id);
         if ($payment_title_id){
         $payment_title = charity_payment_title::find($payment_title_id);
         }
-        return view('panel.charity.setting.module.add_new_payment_title_form', compact('payment_title'));
+        return view('panel.charity.setting.module.add_new_payment_title_form', compact('payment_title','payment_pattern'));
+    }
+    public function charity_payment_title_recover($payment_pattern_id,$payment_title_id)
+    {
+        $payment_pattern=charity_payment_patern::find($payment_pattern_id);
+        $payment_title = charity_payment_title::withTrashed()->find($payment_title_id);
+
+        return view('panel.charity.setting.module.recover_new_payment_title_form', compact('payment_title','payment_pattern'));
     }
 
 //end charity module

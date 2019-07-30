@@ -181,8 +181,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
     Route::prefix('charity')->group(function () {
         Route::get('charity_payment_title', 'panel\panel_view@charity_payment_title')->name('charity_payment_title');
-        Route::get('charity_payment_title_add/{payment_title_id?}', 'panel\panel_view@charity_payment_title_add')->name('charity_payment_title_add');
-        Route::post('charity_payment_title_add/{payment_title_id?}', 'panel\charity@charity_payment_title_add')->name('charity_payment_title_add');
+        Route::get('charity_payment_title_add/{payment_pattern_id?}/{payment_title_id?}', 'panel\panel_view@charity_payment_title_add')->name('charity_payment_title_add');
+        Route::post('charity_payment_title_add/{payment_pattern_id?}/{payment_title_id?}', 'panel\charity@charity_payment_title_add')->name('charity_payment_title_add');
+        Route::post('charity_payment_title_delete/{payment_pattern_id}/{payment_title_id}', 'panel\charity@charity_payment_title_delete')->name('charity_payment_title_delete');
+        Route::get('charity_payment_title_recover/{payment_pattern_id?}/{payment_title_id?}', 'panel\panel_view@charity_payment_title_recover')->name('charity_payment_title_recover');
+        Route::post('charity_payment_title_recover/{payment_pattern_id?}/{payment_title_id?}', 'panel\charity@charity_payment_title_recover')->name('charity_payment_title_recover');
+        Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
+        Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
 
     });
     Route::prefix('ajax')->group(function () {

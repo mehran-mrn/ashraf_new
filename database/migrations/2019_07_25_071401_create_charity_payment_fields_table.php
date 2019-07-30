@@ -15,6 +15,10 @@ class CreateCharityPaymentFieldsTable extends Migration
     {
         Schema::create('charity_payment_fields', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('label');
+            $table->boolean('require')->default(0);
+            $table->unsignedInteger('ch_pay_pattern_id');
+            $table->unsignedInteger('type')->default(0);//0=input ,1=textarea 2=number 3=date 4=time
             $table->timestamps();
         });
     }
