@@ -494,10 +494,10 @@ class panel_view extends Controller
 
     public function charity_payment_title()
     {
-        $periodic_title = charity_payment_patern::where('system',1)->where('periodic',1)->first();
+        $periodic_title = charity_payment_patern::with('titles')->where('system',1)->where('periodic',1)->first();
         $system_title = charity_payment_patern::with('titles')->where('system',1)->where('periodic',0)->first();
         $deleted_titles = charity_payment_title::where('ch_pay_pattern_id',$system_title['id'])->onlyTrashed()->get();
-        $other_titles = charity_payment_patern::with('fields')->where('system',0)->where('periodic',0)->get();
+        $other_titles = charity_payment_patern::with('titles')->with('fields')->where('system',0)->where('periodic',0)->get();
         return view('panel.charity.setting.payment_titles',compact('periodic_title','system_title','other_titles','deleted_titles'));
     }
     public function charity_payment_title_add($payment_pattern_id,$payment_title_id=null)
@@ -515,6 +515,14 @@ class panel_view extends Controller
         $payment_title = charity_payment_title::withTrashed()->find($payment_title_id);
 
         return view('panel.charity.setting.module.recover_new_payment_title_form', compact('payment_title','payment_pattern'));
+    }
+    public function charity_payment_pattern_add($payment_pattern_id=null)
+    {
+        $payment_pattern=null;
+        if ($payment_pattern_id){
+            $payment_pattern = charity_payment_patern::with('fields')->find($payment_pattern_id);
+        }
+        return view('panel.charity.setting.module.add_new_payment_pattern_form', compact('payment_pattern'));
     }
 
 //end charity module

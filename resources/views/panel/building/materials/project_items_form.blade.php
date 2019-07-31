@@ -64,7 +64,7 @@
     </div>
     <hr>
     <div class="form-group row ">
-        <div class="col-md-6 ">
+        <div class="col-md-4">
             <button type="submit" class="btn btn-block btn-info">
                 {{ __('messages.save') }} <i class="icon-floppy-disk"></i>
             </button>

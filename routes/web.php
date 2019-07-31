@@ -187,7 +187,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('charity_payment_title_recover/{payment_pattern_id?}/{payment_title_id?}', 'panel\panel_view@charity_payment_title_recover')->name('charity_payment_title_recover');
         Route::post('charity_payment_title_recover/{payment_pattern_id?}/{payment_title_id?}', 'panel\charity@charity_payment_title_recover')->name('charity_payment_title_recover');
         Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
-        Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
+        Route::post('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\charity@charity_payment_pattern_add')->name('charity_payment_pattern_add');
+        Route::post('charity_payment_pattern_delete/{payment_pattern_id}', 'panel\charity@charity_payment_pattern_delete')->name('charity_payment_pattern_delete');
 
     });
     Route::prefix('ajax')->group(function () {

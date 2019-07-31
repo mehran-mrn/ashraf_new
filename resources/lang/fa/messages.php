@@ -283,6 +283,14 @@ return [
     'merchant_id' => 'مرچنت آی دی',
     'public_key' => 'کلید عمومی',
     'terminal_id' => 'کلید ترمینال',
+    'min' => 'حداقل',
+    'max' => 'حداکثر',
+    'custom_fields' => 'فیلد های اضافه',
+    'input' => 'ورودی متن',
+    'textarea' => 'ورودی متن زیاد',
+    'number' => 'ورودی عددی',
+    'time_input' => 'ورودی ساعت',
+    'date_input' => 'ورودی تاریخ',
 
     'Charity' => 'خیریه',
     'display_items' => 'آیتم هایی که نمایش داده میشوند',
@@ -299,6 +307,8 @@ return [
     'in_days' => '(روز)',
     'payment_title' => 'عنوان پرداخت',
     'payment_pattern' => 'الگو پرداخت',
+    'optional' => 'اختیاری',
+    'required' => 'اجباری',
 
     'store' => 'فروشگاه',
     'product_add' => 'افزودن محصول',

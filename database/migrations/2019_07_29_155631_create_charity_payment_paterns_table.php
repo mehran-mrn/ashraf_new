@@ -19,7 +19,6 @@ class CreateCharityPaymentPaternsTable extends Migration
             $table->string('description')->nullable();
             $table->boolean('periodic')->default(0);
             $table->boolean('system')->default(0);
-            $table->unsignedInteger('ch_pay_pattern_id');
             $table->integer('min')->nullable();
             $table->integer('max')->nullable();
             $table->timestamps();
