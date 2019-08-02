@@ -1,3 +1,4 @@
+
 @extends('layouts.global.global_layout')
 @section('content')
     <table id="cart" class="table table-hover table-condensed">

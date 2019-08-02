@@ -7,12 +7,10 @@
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="form-group row">
                 {{trans('messages.recover_title_warn')}}
             </div>
         </div>
-
     </div>
     <hr>
     <div class="form-group row ">

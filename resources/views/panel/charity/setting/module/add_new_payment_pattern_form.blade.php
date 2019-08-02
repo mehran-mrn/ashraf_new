@@ -20,50 +20,26 @@
         <input type="hidden" name="payment_pattern_id" value="{{$payment_pattern['id']}}">
     @endif
     <div class="row">
-        <div class="col-md-12">
-
+        <div class="col-md-5">
             <div class="form-group row">
-
-                <label for="title"
-                       class=" col-form-label text-md-right">{{ __('messages.title') }}</label>
-
-                <div class="col-md-6">
-                    <input id="title" type="text" class="form-control"
-                           name="title"
-                           value="{{$payment_pattern['title'] }}" autocomplete="title" autofocus>
-
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <label for="description" class=" col-form-label text-md-right">{{ __('messages.description') }}</label>
-
                 <div class="col-md-12">
-                    <textarea id="description" type="number" class="form-control"
-                              name="description">{!!$payment_pattern['description']!!}</textarea>
-
+                    <label for="title" class="col-form-label text-md-right">{{ __('messages.title') }}</label>
+                    <input id="title" type="text" class="form-control" name="title" min="100" max="900000000"
+                           value="{{$payment_pattern['title'] }}" autocomplete="title" autofocus>
                 </div>
-
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <div class="col-md-12">
-                        <label class="label" for="payment_pattern_min">{{trans('messages.min')}}</label>
-                        <input class="form-control" type="number" name="min" value="{{$payment_pattern['min'] }}">
-                    </div>
-                    <div class="col-md-12">
-                        <label class="label" for="payment_pattern_max">{{trans('messages.max')}}</label>
-                        <input class="form-control" type="number" name="max" value="{{$payment_pattern['max'] }}">
-                    </div>
+                <div class="col-md-6">
+                    <label class="col-form-label text-md-right" for="min">{{trans('messages.min')}}</label>
+                    <input class="form-control price" type="number" min="100" max="900000000" name="min"
+                           value="{{$payment_pattern['min'] }}">
                 </div>
-                <div class="col-md-9">
-
-                    <div class="card bordered border-slate-800">
+                <div class="col-md-6">
+                    <label class="col-form-label text-md-right" for="max">{{trans('messages.max')}}</label>
+                    <input class="form-control" type="number" name="max" value="{{$payment_pattern['max'] }}">
+                </div>
+                <div class="col-md-12">
+                    <div class="card bordered border-slate-800 mt-4">
                         <div class="card-header bg-slate-300">
                             {{trans('messages.custom_fields')}}
-
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -73,69 +49,70 @@
                                 </button>
                             </div>
                             <div class="old-field-box">
-                                <?php $randomNumber =1; ?>
+                                <?php $randomNumber = 1; ?>
                                 @if($payment_pattern['fields'])
-                                @foreach($payment_pattern['fields'] as $field)
-                                    <div class="row pb-1 pt-1 counter-row-{{$randomNumber}}">
-                                        <div class="d-inline-block">
+                                    @foreach($payment_pattern['fields'] as $field)
+                                        <div class="row pb-1 pt-1 counter-row-{{$randomNumber}}">
+                                            <div class="d-inline-block">
+                                                <div class="col-md-2">
+                                                    <button type="button" data-row-id=""
+                                                            onclick="removeRow({{$randomNumber}})"
+                                                            class="btn btn-outline-danger btn-xs"><i class="icon-x"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="text" placeholder="{{__('messages.title')}}"
+                                                       value="{{$field['label']}}"
+                                                       class="form-control" required="required"
+                                                       name="new_field_title[{{$randomNumber}}]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <select name="field_type[{{$randomNumber}}]" class="form-control ">
+                                                    <option value="0" {{$field['type'] == 0 ?"selected":""}} >{{trans('messages.input')}}</option>
+                                                    <option value="1" {{$field['type'] == 1 ?"selected":""}}>{{trans('messages.textarea')}}</option>
+                                                    <option value="2" {{$field['type'] == 2 ?"selected":""}}>{{trans('messages.number')}}</option>
+                                                    <option value="3" {{$field['type'] == 3 ?"selected":""}}>{{trans('messages.date_input')}}</option>
+                                                    <option value="4" {{$field['type'] == 4 ?"selected":""}}>{{trans('messages.time_input')}}</option>
+                                                </select>
+                                            </div>
                                             <div class="col-md-2">
-                                                <button type="button" data-row-id="" onclick="removeRow({{$randomNumber}})"
-                                                        class="btn btn-outline-danger btn-xs"><i class="icon-x"></i>
-                                                </button>
+                                                <input type="hidden" name="new_field_id[{{$randomNumber}}]"
+                                                       value="{{$field['id']}}">
+                                                <select name="field_requirement[{{$randomNumber}}]"
+                                                        class="form-control ">
+                                                    <option value="0" {{$field['require'] == 0 ?"selected":""}} >{{trans('messages.optional')}}</option>
+                                                    <option value="1" {{$field['require'] == 1 ?"selected":""}} >{{trans('messages.required')}}</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder="{{__('messages.title')}}"  value="{{$field['label']}}"
-                                                   class="form-control" required="required" name="new_field_title[{{$randomNumber}}]">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select name="field_type[{{$randomNumber}}]" class="form-control ">
-                                                <option value="0" {{$field['type'] == 0 ?"selected":""}} >{{trans('messages.input')}}</option>
-                                                <option value="1" {{$field['type'] == 1 ?"selected":""}}>{{trans('messages.textarea')}}</option>
-                                                <option value="2" {{$field['type'] == 2 ?"selected":""}}>{{trans('messages.number')}}</option>
-                                                <option value="3" {{$field['type'] == 3 ?"selected":""}}>{{trans('messages.date_input')}}</option>
-                                                <option value="4" {{$field['type'] == 4 ?"selected":""}}>{{trans('messages.time_input')}}</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="hidden" name="new_field_id[{{$randomNumber}}]" value="{{$field['id']}}" >
-                                            <select name="field_requirement[{{$randomNumber}}]" class="form-control ">
-                                                <option value="0" {{$field['require'] == 0 ?"selected":""}} >{{trans('messages.optional')}}</option>
-                                                <option value="1" {{$field['require'] == 1 ?"selected":""}} >{{trans('messages.required')}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                         <?php $randomNumber++; ?>
                                     @endforeach
-                                    @endif
+                                @endif
                                 <input type="hidden" value="{{$randomNumber}}" id="randomNumber">
                             </div>
-                            <div class="field-box">
-
-                            </div>
-
+                            <div class="field-box"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
-    <hr>
-    <div class="form-group row ">
-        <div class="col-md-6 ">
-            <button type="submit" class="btn btn-block btn-info">
-                {{ __('messages.save') }} <i class="icon-arrow-left5"></i>
-            </button>
+        <div class="col-md-7">
+            <label for="description"
+                   class=" col-form-label text-md-right">{{ __('messages.description') }}</label>
+            <textarea id="description" type="number" class="form-control"
+                      name="description">{!!$payment_pattern['description']!!}</textarea>
         </div>
     </div>
+    <hr>
+    <div class="form-group">
+        <button type="submit" class="btn float-right btn-info">
+            {{ __('messages.save') }} <i class="icon-arrow-left5"></i>
+        </button>
+    </div>
 </form>
-
-
-</select>
 <script>
     $(document).ready(function () {
-
         $(".add-field").on('click', function () {
             var x = +$("#randomNumber").val() + 1;
 
@@ -169,7 +146,6 @@
             );
             $("#randomNumber").val(x);
         })
-
     });
 
     function removeRow(x) {

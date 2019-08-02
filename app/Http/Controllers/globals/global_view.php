@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\charity_payment_patern;
+use App\gateway;
 use App\setting_transportation;
 use App\store;
 use App\store_product;
@@ -80,18 +82,26 @@ class global_view extends Controller
     {
         return view('global.store.cart');
     }
+
     public function store_order()
     {
-        $tran = setting_transportation::where('status',"active")->get();
-        return view('global.store.order',compact('tran'));
+        $tran = setting_transportation::where('status', "active")->get();
+        return view('global.store.order', compact('tran'));
     }
 
     public function store_payment()
     {
-        $tran = setting_transportation::where('status',"active")->get();
+        $tran = setting_transportation::where('status', "active")->get();
 
-        return view('global.store.payment',compact('tran'));
+        return view('global.store.payment', compact('tran'));
 
+    }
+
+    public function vow(Request $request)
+    {
+        $charity = charity_payment_patern::with('fields')->find($request['id']);
+        $gateways = gateway::with('bank')->where('online', 1)->get();
+        return view('global.vows.vow', compact('charity','gateways'));
     }
 
 }

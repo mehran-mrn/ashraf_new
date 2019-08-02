@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\charity_payment_patern;
+use App\charity_payment_title;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -29,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        \View::composer("*", function ($view) {
+            $view->with('menu', charity_payment_patern::all());
+        });
         Schema::defaultStringLength(191);
     }
 }
