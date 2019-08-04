@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\bank;
 use App\charity_payment_patern;
+use App\charity_payment_title;
+use App\charity_transaction;
+use App\charity_transactions_value;
 use App\gateway;
 use App\setting_transportation;
 use App\store;
@@ -92,16 +96,79 @@ class global_view extends Controller
     public function store_payment()
     {
         $tran = setting_transportation::where('status', "active")->get();
-
         return view('global.store.payment', compact('tran'));
-
     }
 
-    public function vow(Request $request)
+    public function vow_view(Request $request)
     {
         $charity = charity_payment_patern::with('fields')->find($request['id']);
         $gateways = gateway::with('bank')->where('online', 1)->get();
-        return view('global.vows.vow', compact('charity','gateways'));
+        return view('global.vows.vow', compact('charity', 'gateways'));
+    }
+
+    public function vow_payment(Request $request)
+    {
+        $this->validate($request,
+            [
+                'amount' => 'required',
+                'gateway' => 'required',
+                'email' => 'email'
+            ]);
+        $user_id = 0;
+        if (Auth::id()) {
+            $user_id = Auth::id();
+        }
+        if (charity_payment_patern::find($request['charity_id'])) {
+            $trans = new charity_transaction();
+            $trans->user_id = $user_id OR null;
+            $trans->charity_id = $request['charity_id'] OR null;
+            $trans->charity_field_id = $request['charity_id'] OR null;
+            $trans->name = $request['name'] OR null;
+            $trans->phone = $request['phone'] OR null;
+            $trans->email = $request['email'] OR null;
+            $trans->title_id = $request['title'] OR null;
+            $trans->description = $request['description'] OR null;
+            $trans->amount = $request['amount'] OR null;
+            $trans->gateway_id = $request['gateway'] OR null;
+            $trans->status = 'pending';
+            $trans->save();
+            $transInfo = $trans->id;
+            if(isset($request['field'])) {
+                foreach ($request['field'] as $item => $value) {
+                    if ($value != "") {
+                        charity_transactions_value::create(
+                            [
+                                'trans_id' => $transInfo,
+                                'field_id' => $item,
+                                'value' => $value
+                            ]
+                        );
+                    }
+                }
+            }
+            $message = trans("messages.transaction_created");
+            return back_normal($request, ['message' => $message, "code" => 200, 'id' => $transInfo]);
+
+        } else {
+            $message = trans("messages.error");
+            return back_normal($request, ['message' => $message, 'code' => 201]);
+        }
+        $message = trans("messages.error2");
+        return back_normal($request, ['message' => $message, 'code' => 202]);
+    }
+
+    public function vow_cart(Request $request)
+    {
+        $charityIn = charity_transaction::with('values')->find($request['id'])->with('charity_field');
+        return view('global.vows.vow_cart', compact('charityIn'));
+    }
+
+    public function vow_donate()
+    {
+        $title = charity_payment_title::get();
+        $patern = charity_payment_patern::find(2);
+        $gateways = gateway::with('bank')->where('online', 1)->get();
+        return view('global.vows.donate', compact('title', 'patern', 'gateways'));
     }
 
 }

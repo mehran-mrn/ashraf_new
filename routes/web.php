@@ -11,6 +11,12 @@
 |
 */
 
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
 Route::get('/', 'globals\global_view@index');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
@@ -260,7 +266,14 @@ Route::get('/order/order', 'globals\global_view@store_order')->name('store_order
 Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
 Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
 Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
-Route::get('vow/{id}', 'globals\global_view@vow')->name('vows');
+
+
+//charity view
+Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
+Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
+Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
+Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
+
 //=========================================
 
 

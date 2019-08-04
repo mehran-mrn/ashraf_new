@@ -406,6 +406,7 @@ return [
     'Periodic_assistance' => 'کمک های دوره ای',
     'payment_gateway'=>'درگاه پرداخت',
     'amount'=>'مبلغ',
-    'pay'=>'پرداخت'
-
+    'pay'=>'پرداخت',
+    'transaction_created'=>'تراکنش ایجاد شد.',
+    'for'=>'بابت'
 ];
