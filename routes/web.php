@@ -12,13 +12,15 @@
 */
 
 
-Route::get('/', 'globals\global_view@index');
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
+Route::get('/', 'globals\global_view@index');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 
 //=========================================
 // ------------admin panel-----------------
@@ -248,15 +250,12 @@ Route::prefix('ajax')->group(function () {
     Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
     Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
 
-
     Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
 });
 
 Route::prefix('page')->group(function () {
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-
-
 });
 Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
 Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
@@ -266,6 +265,14 @@ Route::get('/order/order', 'globals\global_view@store_order')->name('store_order
 Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
 Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
 Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
+
+
+//charity view
+Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
+Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
+Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
+Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
+
 //=========================================
 
 

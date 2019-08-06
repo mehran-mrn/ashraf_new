@@ -601,17 +601,140 @@ class DatabaseSeeder extends Seeder
         DB::table('setting_transportations')->insert(
             [
                 [
-                    'title'=>'پست',
-                    'time'=>3
-                ],[
-                    'title'=>'پیک',
-                    'time'=>1
-                ],[
-                    'title'=>'پست پیشتاز',
-                    'time'=>2
-                ],
+                    'title' => 'پست',
+                    'time' => 3
+                ], [
+                'title' => 'پیک',
+                'time' => 1
+            ], [
+                'title' => 'پست پیشتاز',
+                'time' => 2
+            ],
+            ]
+        );
+
+        DB::table('charity_payment_paterns')->insert(
+            [
+                'title' => 'قربانی',
+                'description' => 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.',
+                'periodic' => '0',
+                'system' => '0',
+                'min' => '10000',
+                'max' => '9000000000',
+                'type' => 'vow',
+            ]
+        );
+        DB::table('charity_payment_paterns')->insert(
+            [
+                'title' => 'عقیقه',
+                'description' => 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.',
+                'periodic' => '0',
+                'system' => '0',
+                'min' => '20000',
+                'max' => '9000000000',
+                'type' => 'vow',
+            ]
+        );
+
+
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'نام نیکوکار',
+                'require' => '1',
+                'ch_pay_pattern_id' => '3',
+                'type' => '0',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'شماره همراه',
+                'require' => '1',
+                'ch_pay_pattern_id' => '3',
+                'type' => '2',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'آدرس',
+                'require' => '0',
+                'ch_pay_pattern_id' => '3',
+                'type' => '1',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'توضیحات',
+                'require' => '0',
+                'ch_pay_pattern_id' => '3',
+                'type' => '1',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'نام نیکوکار',
+                'require' => '1',
+                'ch_pay_pattern_id' => '4',
+                'type' => '0',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'شماره همراه',
+                'require' => '1',
+                'ch_pay_pattern_id' => '4',
+                'type' => '2',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'آدرس',
+                'require' => '0',
+                'ch_pay_pattern_id' => '4',
+                'type' => '1',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'توضیحات',
+                'require' => '0',
+                'ch_pay_pattern_id' => '4',
+                'type' => '1',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'نام پدر',
+                'require' => '1',
+                'ch_pay_pattern_id' => '4',
+                'type' => '0',
+            ]
+        );
+        DB::table('charity_payment_fields')->insert(
+            [
+                'label' => 'نام فرزند',
+                'require' => '1',
+                'ch_pay_pattern_id' => '4',
+                'type' => '0',
+            ]
+        );
+
+        DB::table('charity_payment_titles')->insert(
+            [
+                'title' => 'کمک',
+                'ch_pay_pattern_id' => '2',
+            ]
+        );
+        DB::table('charity_payment_titles')->insert(
+            [
+                'title' => 'طرح سپاس',
+                'ch_pay_pattern_id' => '2',
+            ]
+        );
+        DB::table('charity_payment_titles')->insert(
+            [
+                'title' => 'طرح همه',
+                'ch_pay_pattern_id' => '2',
             ]
         );
     }
 }
-

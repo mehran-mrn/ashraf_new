@@ -24,6 +24,7 @@ class charity extends Controller
             $payment_title->ch_pay_pattern_id=$request['payment_pattern_id'];
         }
         $payment_title->title=$request['title'];
+//        $payment_title->type="online";
         $payment_title->save();
         return back_normal($request);
     }
@@ -49,8 +50,9 @@ class charity extends Controller
         }
         $payment_pattern->title=$request['title'];
         $payment_pattern->description=$request['description'];
-        $payment_pattern->min=$request['payment_pattern_min'] or null;
-        $payment_pattern->max=$request['payment_pattern_max'] or null;
+        $payment_pattern->min=$request['min'] or null;
+        $payment_pattern->max=$request['max'] or null;
+        $payment_pattern->type="vow";
         $payment_pattern->save();
 
         $old_ids=[];
