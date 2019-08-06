@@ -84,7 +84,7 @@ class charity extends Controller
     }
 
     public function charity_payment_pattern_delete($payment_pattern_id,Request $request){
-        charity_payment_patern::where('id',$payment_pattern_id)->delete();
+        charity_payment_patern::where('id',$payment_pattern_id)->where('system',0)->delete();
         return back_normal($request);
     }
 }
