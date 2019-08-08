@@ -43,7 +43,7 @@ class panel_view extends Controller
     //
     public function dashboard()
     {
-        return request()->segment(1);
+//        return request()->segment(1);
         return view('panel.dashboard');
     }
 
