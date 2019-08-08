@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="en">
+<html lang="{{ trim(str_replace('_', '-', app()->getLocale())) }}" dir="{{trim(str_replace('_', '-', app()->getLocale())) == 'fa'? 'rtl':'ltr'}}">
 <head>
 
     <!-- Meta Tags -->

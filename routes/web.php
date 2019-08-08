@@ -17,7 +17,6 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
-Route::get('/', 'globals\global_view@index');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -243,7 +242,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
 Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 
-
     /** The main public facing blog routes - show all posts, view a category, rss feed, view a single post, also the add comment route */
     Route::group(['prefix' => config('blogetc.blog_prefix', 'blog')], function () {
 
@@ -369,6 +367,13 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //=========================================
 // ------------Global View-----------------
 //=========================================
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+
+    ], function()
+{
 Route::prefix('ajax')->group(function () {
     Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
     Route::post('/register', 'globals\global_controller@register_form_store')->name('global_register_form_store');
@@ -386,6 +391,7 @@ Route::prefix('page')->group(function () {
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
 });
+Route::get('/', 'globals\global_view@index');
 Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
 Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
 Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
@@ -401,7 +407,7 @@ Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
 Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
 Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
 Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
-
+});
 //=========================================
 
 

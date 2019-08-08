@@ -107,7 +107,15 @@ return [
     */
 
     'faker_locale' => 'en_US',
+    /**
+     * List of alternative languages (not including the one specified as 'locale')
+     */
+    'alt_langs' => array ('en', 'fa'),
 
+    /**
+     *  Prefix of selected locale  - leave empty (set in runtime)
+     */
+    'locale_prefix' => '',
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
