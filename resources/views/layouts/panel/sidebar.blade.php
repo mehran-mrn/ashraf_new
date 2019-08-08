@@ -61,20 +61,79 @@ if (!isset($active_sidbare)) {
                     </a>
                 </li>
 
+{{--                <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">--}}
+{{--                    <a href="#" class=" nav-link"><i class="icon-blogger2"></i>--}}
+{{--                        <span>{{trans('messages.blog')}}</span></a>--}}
+
+{{--                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.blog')}}"--}}
+{{--                        style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">--}}
+{{--                        <li class="nav-item"><a href="{{route('post_add')}}"--}}
+{{--                                                class="nav-link {{in_array("post_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_add')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item"><a href="{{route('post_list')}}"--}}
+{{--                                                class="nav-link {{in_array("post_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_list')}}</a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item"><a href="{{route('category_list')}}"--}}
+{{--                                                class="nav-link {{in_array("category_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a>--}}
+{{--                        </li>--}}
+
+{{--                    </ul>--}}
+{{--                </li>--}}
                 <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">
-                    <a href="#" class=" nav-link"><i class="icon-blogger2"></i>
+                    <a href="#" class=" nav-link"><i class="icon-blogger"></i>
                         <span>{{trans('messages.blog')}}</span></a>
 
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.blog')}}"
                         style="display:{{in_array("blog", $active_sidbare) ? 'block' : 'none' }}">
-                        <li class="nav-item"><a href="{{route('post_add')}}"
-                                                class="nav-link {{in_array("post_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_add')}}</a>
+                        <li class="nav-item nav-item-submenu {{in_array("blog_posts", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("blog_posts", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_posts')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("blog_posts", $active_sidbare) ? 'block' : 'none' }}">
+                                <li class="nav-item {{in_array("blog_posts_list", $active_sidbare) ? ' nav-item-open' : '' }}">
+                                    <a href="{{ route('blogetc.admin.index') }}"
+                                                        class="nav-link ">{{trans('messages.post_list')}}</a>
+                                </li>
+                                <li class="nav-item {{in_array("blog_posts_add", $active_sidbare) ? ' nav-item-open' : '' }}">
+                                    <a href="{{ route('blogetc.admin.create_post') }}"
+                                                        class="nav-link ">{{trans('messages.post_add')}}</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item"><a href="{{route('post_list')}}"
-                                                class="nav-link {{in_array("post_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.post_list')}}</a>
+                        <li class="nav-item nav-item-submenu {{in_array("blog_comments", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("blog_comments", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_comments')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("blog_comments", $active_sidbare) ? 'block' : 'none' }}">
+                                <li class="nav-item {{in_array("all_blog_comments", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.comments.index') }}"
+                                                        class="nav-link ">{{trans('messages.all_blog_comments')}}</a>
+                                </li>
+                                <li class="nav-item {{in_array("pending_blog_comments", $active_sidbare) ? ' nav-item-open' : '' }}"><a href='{{ route('blogetc.admin.comments.index') }}?waiting_for_approval=true'
+                                                        class="nav-link ">{{trans('messages.pending_blog_comments')}}</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item"><a href="{{route('category_list')}}"
-                                                class="nav-link {{in_array("category_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.category')}}</a>
+                        <li class="nav-item nav-item-submenu {{in_array("blog_categories", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("blog_categories", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_categories')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("blog_categories", $active_sidbare) ? 'block' : 'none' }}">
+                                <li class="nav-item {{in_array("all_blog_categories", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.categories.index') }}"
+                                                        class="nav-link ">{{trans('messages.all_blog_categories')}}</a>
+                                </li>
+                                <li class="nav-item {{in_array("add_blog_category", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.categories.create_category') }}"
+                                                        class="nav-link ">{{trans('messages.add_blog_category')}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-submenu {{in_array("blog_images", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("blog_images", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_images')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("blog_images", $active_sidbare) ? 'block' : 'none' }}">
+                                <li class="nav-item {{in_array("blog_posts_list", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.all') }}"
+                                                        class="nav-link ">{{trans('messages.all_blog_images')}}</a>
+                                </li>
+                                <li class="nav-item {{in_array("add_blog_images", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.upload') }}"
+                                                        class="nav-link ">{{trans('messages.add_blog_images')}}</a>
+                                </li>
+                            </ul>
                         </li>
 
                     </ul>
