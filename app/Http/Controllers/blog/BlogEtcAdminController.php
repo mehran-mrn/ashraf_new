@@ -92,6 +92,14 @@ class BlogEtcAdminController extends Controller
         $slider->save();
         return redirect()->route('blog_slider');
     }
+    public function delete_slider($slider_id = null,Request $request)
+    {
+        $slider = blog_slider::find($slider_id);
+        $slider->delete();
+        $messages = trans('messages.item_deleted', ['item' => trans('messages.blog_slider')]);
+        return back_normal($request,$messages);
+
+    }
 
     /**
      * Show form for creating new post

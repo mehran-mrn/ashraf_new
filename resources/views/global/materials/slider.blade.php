@@ -14,7 +14,7 @@
                                 <!-- LAYERS -->
                                 @if($slider['text_1'])
                                 <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-resizeme text-uppercase  bg-dark-transparent text-white font-raleway pl-30 pr-30"
+                                <div class="tp-caption tp-resizeme   bg-dark-transparent text-white  pl-30 pr-30"
                                      id="rs-{{$key}}-layer-1"
 
                                      data-x="['center']"
@@ -46,7 +46,7 @@
                             @if($slider['text_2'])
 
                                 <!-- LAYER NR. 2 -->
-                                <div class="tp-caption tp-resizeme text-uppercase bg-theme-colored-transparent text-white font-raleway pl-30 pr-30"
+                                <div class="tp-caption tp-resizeme  bg-theme-colored-transparent text-white  pl-30 pr-30"
                                      id="rs-{{$key}}-layer-2"
 
                                      data-x="['left']"

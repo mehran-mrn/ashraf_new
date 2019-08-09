@@ -37,6 +37,24 @@
                                             {!! $slider['text_2'] !!}<br>
                                             {!! $slider['text_3'] !!}<br>
                                             </div>
+                                            <div class="card-footer">
+                                                <a href="{{route('slider_page',['slider_id'=>$slider['id']])}}" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2"
+                                                        >
+                                                    <i class="icon-pencil"></i>
+                                                </a>
+                                                <button type="button"
+                                                        class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                                        data-ajax-link="{{route('delete_blog_slider',['slider_id'=>$slider['id']])}}"
+                                                        data-method="POST"
+                                                        data-csrf="{{csrf_token()}}"
+                                                        data-title="{{trans('messages.delete_item',['item'=>trans('messages.blog_slider')])}}"
+                                                        data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.blog_slider')])}}"
+                                                        data-type="warning"
+                                                        data-cancel="true"
+                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                    <i class="icon-trash"></i>
+                                            </div>
                                         </div>
 
 

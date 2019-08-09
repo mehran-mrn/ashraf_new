@@ -288,6 +288,8 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
             ->name('slider_page');
         Route::post('/slider_page/{slider_id?}', 'BlogEtcAdminController@save_slider')
             ->name('slider_page');
+        Route::post('/delete_slider/{slider_id?}', 'BlogEtcAdminController@delete_slider')
+            ->name('delete_blog_slider');
 
         Route::get('/add_post',
             'BlogEtcAdminController@create_post')
