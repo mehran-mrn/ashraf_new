@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\globals;
 
 use App\bank;
+use App\blog_slider;
 use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_transaction;
@@ -23,7 +24,8 @@ class global_view extends Controller
 {
     public function index()
     {
-        return view('global.index');
+        $sliders = blog_slider::get();
+        return view('global.index',compact('sliders'));
     }
 
     public function register_form()

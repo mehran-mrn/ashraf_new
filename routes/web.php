@@ -282,6 +282,13 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
         Route::get('/', 'BlogEtcAdminController@index')
             ->name('blogetc.admin.index');
 
+        Route::get('/blog_slider', 'BlogEtcAdminController@slider')
+            ->name('blog_slider');
+        Route::get('/slider_page/{slider_id?}', 'BlogEtcAdminController@slider_page')
+            ->name('slider_page');
+        Route::post('/slider_page/{slider_id?}', 'BlogEtcAdminController@save_slider')
+            ->name('slider_page');
+
         Route::get('/add_post',
             'BlogEtcAdminController@create_post')
             ->name('blogetc.admin.create_post');

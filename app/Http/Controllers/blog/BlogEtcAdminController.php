@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\blog;
 
+use App\blog_slider;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,6 +51,46 @@ class BlogEtcAdminController extends Controller
             ->paginate(10);
 
         return view("blog.blogetc_admin.index", ['posts'=>$posts]);
+    }
+
+    public function slider()
+    {
+        $sliders = blog_slider::get();
+
+        return view("blog.blogetc_admin.slider.index", compact('sliders'));
+    }
+    public function slider_page($slider_id = null)
+    {
+        $slider = null;
+        if ($slider_id){
+            $slider = blog_slider::find($slider_id);
+        }
+
+        return view("blog.blogetc_admin.slider.slider_page", compact('slider'));
+    }
+    public function save_slider($slider_id = null,Request $request)
+    {
+        $this->validate($request, [
+            'filepath' => 'required',
+        ]);
+        if ($request['slider_id']){
+            $slider = blog_slider::find($request['slider_id']);
+        }
+        else{
+            $slider = new blog_slider();
+        }
+        $slider->image_large= $request['filepath'];
+        $slider->text_1= $request['text_1'] or null;
+        $slider->text_1_dir= $request['text_1_dir'] or null;
+        $slider->text_2= $request['text_2'] or null;
+        $slider->text_2_dir= $request['text_2_dir'] or null;
+        $slider->text_3= $request['text_3'] or null;
+        $slider->text_3_dir= $request['text_3_dir'] or null;
+        $slider->btn_text= $request['btn_text'] or null;
+        $slider->btn_link= $request['btn_link'] or null;
+        $slider->btn_dir= $request['btn_dir'] or null;
+        $slider->save();
+        return redirect()->route('blog_slider');
     }
 
     /**
