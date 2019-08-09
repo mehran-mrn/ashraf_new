@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
-                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="{{route('home')}}"><img
+                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="{{route('home')}}"><img class="img-responsive"
                                     src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}"
                                     alt=""></a>
                     </div>
