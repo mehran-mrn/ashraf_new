@@ -8,7 +8,7 @@
                 <ul>
 
                     <!-- SLIDE 1 -->
-                    <li data-index="rs-1" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg14.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
+                    <li data-index="rs-1" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
                         <!-- MAIN IMAGE -->
                         <img src="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                         <!-- LAYERS -->
@@ -113,7 +113,7 @@
                     </li>
 
                     <!-- SLIDE 2 -->
-                    <li data-index="rs-2" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg5.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 2" data-description="">
+                    <li data-index="rs-2" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ URL::asset('/public/assets/global/images/bg/bg5.jpg') }}" data-rotate="0" data-saveperformance="off" data-title="Slide 2" data-description="">
                         <!-- MAIN IMAGE -->
                         <img src="{{ URL::asset('/public/assets/global/images/bg/bg5.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                         <!-- LAYERS -->
@@ -218,7 +218,7 @@
                     </li>
 
                     <!-- SLIDE 3 -->
-                    <li data-index="rs-3" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/bg/bg7.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide 3" data-description="">
+                    <li data-index="rs-3" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ URL::asset('/public/assets/global/images/bg/bg7.jpg') }}" data-rotate="0" data-saveperformance="off" data-title="Slide 3" data-description="">
                         <!-- MAIN IMAGE -->
                         <img src="{{ URL::asset('/public/assets/global/images/bg/bg7.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
                         <!-- LAYERS -->

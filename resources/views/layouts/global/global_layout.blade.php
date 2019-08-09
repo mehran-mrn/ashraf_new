@@ -57,7 +57,7 @@
           type="text/css"/>
 
     <!-- CSS | Theme Color -->
-    <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-blue.css') }}" rel="stylesheet"
+    <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-green.css') }}" rel="stylesheet"
           type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{URL::asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
