@@ -25,7 +25,7 @@
     }
 </script>
 <div class="form-group">
-    <label for="category_category_name">Category Name</label>
+    <label for="category_category_name">{{trans('messages.category_name')}}</label>
 
     <input type="text"
            class="form-control"
@@ -37,12 +37,11 @@
            value="{{old("category_name",$category->category_name)}}"
     >
 
-    <small id="category_category_name_help" class="form-text text-muted">The name of the category</small>
 </div>
 
 
 <div class="form-group">
-    <label for="category_slug">Category slug</label>
+    <label for="category_slug">{{trans('messages.slug')}}</label>
     <input
             maxlength='100'
             pattern="[a-zA-Z0-9-]+"
@@ -66,7 +65,7 @@
 
 
 <div class="form-group">
-    <label for="category_description">Category Description (optional)</label>
+    <label for="category_description">{{trans('messages.description')}} - ({{trans('messages.optional')}})</label>
     <textarea name='category_description'
               class='form-control'
     id='category_description'>{{old("category_description",$category->category_description)}}</textarea>

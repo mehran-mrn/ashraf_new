@@ -6,16 +6,22 @@
     $active_sidbare = ['blog','blog_categories','add_blog_category']
     ?>
 
-    <h5>Admin - Add Category</h5>
+<div class="card m-1">
+<div class="card-body">
 
     <form method='post' action='{{route("blogetc.admin.categories.create_category")}}'  enctype="multipart/form-data" >
 
         @csrf
         @include("blog.blogetc_admin.categories.form", ['category' => new \WebDevEtc\BlogEtc\Models\BlogEtcCategory()])
 
-        <input type='submit' class='btn btn-primary' value='Add new category' >
+        <button type='submit' class='btn btn-primary' value='Add new category' >
+        {{trans('messages.add_new',['item'=>__('messages.category')])}}
+        </button>
 
     </form>
+        </div>
+    </div>
+
         </div>
     </div>
 @endsection

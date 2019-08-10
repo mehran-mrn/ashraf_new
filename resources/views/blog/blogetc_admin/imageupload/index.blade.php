@@ -6,12 +6,6 @@
     $active_sidbare = ['blog','blog_images','blog_posts_list']
     ?>
 
-    <h5>Admin - Uploaded Images</h5>
-
-    <p>You can view all previously uploaded images here.</p>
-
-    <p>It includes one thumbnail per photo - the smallest image is selected.</p>
-
     <script>
 
         function show_uploaded_file_row(id, img) {
@@ -25,9 +19,11 @@
 
         }
     </script>
-    @foreach($uploaded_photos as $uploadedPhoto)
+        <div class='row mt-2'>
 
-        <div style='border-radius:15px; border:2px solid #efefef; background : #fefefe; margin: 15px;padding:15px'>
+        @foreach($uploaded_photos as $uploadedPhoto)
+
+        <div class="col-md-4 " style='border-radius:15px; border:2px solid #efefef; background : #fefefe'>
                     <h3>Image ID: {{$uploadedPhoto->id}}: {{$uploadedPhoto->image_title ?? "Untitled Photo"}}</h3>
                     <h4>
                         <small title='{{$uploadedPhoto->created_at}}'>
@@ -36,7 +32,7 @@
 
             <div class='row'>
                 <div class='col-md-8'>
-                    <div class='row' style=' margin: 10px; background: #eee; overflow:auto; padding:5px;'>
+                    <div class='row'>
 
                         <?php
                         $smallest = null;
@@ -112,7 +108,7 @@
 
     @endforeach
 
-
+        </div>
 
     <div class='text-center'>
         {{$uploaded_photos->appends( [] )->links()}}
