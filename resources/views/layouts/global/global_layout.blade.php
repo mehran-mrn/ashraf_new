@@ -105,7 +105,7 @@
         }</style>
 </noscript>
 
-<body class="rtl">
+<body class="rtl dark">
 <div id="wrapper" class="clearfix">
     <!-- preloader -->
     <div id="preloader">

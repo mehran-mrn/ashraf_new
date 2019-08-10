@@ -5,6 +5,8 @@
 <div class="main-content">
 
     @include('global.materials.slider')
+    @include('global.materials.clients')
+
     @include('global.materials.upcoming_events')
 
     @include('global.materials.our_mission')
@@ -14,7 +16,6 @@
     @include('global.materials.counter')
     @include('global.materials.gallery')
     @include('global.materials.blog_cards')
-    @include('global.materials.clients')
 
 </div>
 <!-- end main-content -->
