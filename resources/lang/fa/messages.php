@@ -249,6 +249,7 @@ return [
     'my_profile' => 'پروفایل من',
     'dashboard' => 'میزکار',
     'blog' => 'وبلاگ',
+    'read_more' => 'ادامه مطلب',
     'category_name' => 'نام دسته بندی',
     'blog' => 'وبلاگ',
     'no_categories' => 'بدون دسته بندی',
@@ -318,6 +319,7 @@ return [
     'number' => 'ورودی عددی',
     'time_input' => 'ورودی ساعت',
     'date_input' => 'ورودی تاریخ',
+    'latest_posts' => " <span class='text-theme-colored'> آخرین </span> مطالب ",
 
     'Charity' => 'خیریه',
     'display_items' => 'آیتم هایی که نمایش داده میشوند',

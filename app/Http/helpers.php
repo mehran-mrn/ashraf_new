@@ -604,3 +604,15 @@ function childView($Category,$checked=[])
 function get_inventory_size_max_time($pro_id){
 
 }
+function get_posts($limit=null,$main_page=null,$categories=[],$paginate=10){
+
+    $posts_query =  WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
+    $posts_query->orderBy("posted_at", "desc");
+    if (!empty($main_page)){    }
+    if (!empty($categories)){    }
+    if (!empty($limit)){
+        $posts_query->take($limit);
+    }
+       $posts=  $posts_query->take($limit)->get();
+    return $posts;
+}

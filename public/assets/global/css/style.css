@@ -34,3 +34,9 @@ body {
 input:-moz-placeholder {
     text-align: right;
 }
+
+.post-thumb-img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+}

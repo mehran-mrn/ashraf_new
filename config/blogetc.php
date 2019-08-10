@@ -15,7 +15,7 @@ return [
 
 
     'image_upload_enabled' => true, // true or false, if image uploading is allowed.
-    'blog_upload_dir' => "public/blog_images", // this should be in public_path() (i.e. /public/blog_images), and should be writable
+    'blog_upload_dir' => "blog_images", // this should be in public_path() (i.e. /public/blog_images), and should be writable
 
 
     'memory_limit' => '2048M', // This is used when uploading images :
@@ -118,7 +118,7 @@ return [
     'rssfeed' => [
 
         'should_shorten_text' => true, // boolean. Default: true. Should we shorten the text in rss feed?
-        'text_limit' => 100, // max length of description text in the rss feed
+        'text_limit' => 400, // max length of description text in the rss feed
         'posts_to_show_in_rss_feed' => 10,  // how many posts should we show in the rss feed
         'cache_in_minutes' => 60, // how long (in minutes) to cache the RSS blog feed for.
         'description' => "Our blog post RSS feed", //description for the RSS feed
