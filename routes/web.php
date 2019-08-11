@@ -401,6 +401,7 @@ Route::prefix('page')->group(function () {
     Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
 });
 Route::get('/', 'globals\global_view@index');
+Route::get('/post/{blogPostSlug}', 'globals\global_view@post_page')->name('post_page');
 Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
 Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
 Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
@@ -421,6 +422,7 @@ Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('ca
 
         Route::post('panel/profile/period/delete','globals\global_controller@profile_period_delete')->name('global_profile_delete_period');
         Route::get('panel/profile/period/check','globals\global_controller@profile_period_check')->name('global_profile_check');
+});
 //=========================================
 
 
