@@ -1,13 +1,30 @@
 @extends('layouts.global.global_layout')
-
 @section('content')
     <div class="main-content">
+
+        <!-- Section: inner-header -->
+        <section class="inner-header divider parallax layer-overlay overlay-dark-5" data-stellar-background-ratio="0.5"
+                 data-bg-img="{{URL::asset('/public/assets/global/images/bg/bg1.jpg')}}">
+            <div class="container pt-100 pb-50">
+                <!-- Section Content -->
+                <div class="section-content pt-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="title text-white">{{__('messages.account')}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <section>
-            <div class="container pb-0">
+            <div class="container pt-sm-30">
                 <div class="section-content">
                     <div class="panel">
                         <div class="panel-heading bg-dark-transparent-1">
                             <h3 class="panel-title">{{user_information('full')." ".__('messages.welcome')}}</h3>
+
                         </div>
                         <div class="panel-body bg-white-fe">
                             <div class="row">
@@ -63,110 +80,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container pt-0">
-                <div class="section-content">
-                    <div class="panel">
-                        <div class="panel-body bg-white-fe">
-                            <ul id="myTab" class="nav nav-tabs boot-tabs">
-                                <li class="active">
-                                    <a href="#payment_list" data-toggle="tab">{{__('messages.payment_list')}}</a></li>
-                                <li><a href="#periodic_payemnt"
-                                       data-toggle="tab">{{__('messages.periodic_payment')}}</a></li>
-
-                                <li><a href="#paid"
-                                       data-toggle="tab">{{__('messages.paid')}}</a></li>
-                            </ul>
-                            <div id="myTabContent" class="tab-content">
-                                <div class="tab-pane fade in active" id="payment_list">
-                                </div>
-                                <div class="tab-pane fade" id="periodic_payemnt">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped text-center table-bordered">
-                                            <thead class="text-center">
-                                            <tr>
-                                                <th>{{__('messages.amount')}}</th>
-                                                <th>{{__('messages.start_date')}}</th>
-                                                <th>{{__('messages.period')}}</th>
-                                                <th>{{__('messages.description')}}</th>
-                                                <th>{{__('messages.status')}}</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                            @foreach($periods as $period)
-                                                <?php $color = "label-warning" ?>
-                                                <?php $text = "activate" ?>
-                                                <?php $btn_color = "success" ?>
-                                                @if($period['status']=='active')
-                                                    <?php $color = "label-success" ?>
-                                                    <?php $text = "inactivate" ?>
-                                                    <?php $btn_color = "danger" ?>
-                                                @endif
-                                                <tr>
-                                                    <td>{{$period['amount']}}</td>
-                                                    <td>{{miladi_to_shamsi_date($period['start_date'])}}</td>
-                                                    <td>{{$period['period']}}</td>
-                                                    <td>{{$period['description']}}</td>
-                                                    <td>
-                                                        <span class="label {{$color}}">{{__("messages.".$period['status'])}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-{{$btn_color}} btn-xs btn-delete"
-                                                                data-id="{{$period['id']}}">{{__('messages.'.$text)}}</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="paid">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped text-center table-bordered">
-                                            <thead class="text-center">
-                                            <tr>
-                                                <th>{{__('messages.amount')}}</th>
-                                                <th>{{__('messages.start_date')}}</th>
-                                                <th>{{__('messages.period')}}</th>
-                                                <th>{{__('messages.description')}}</th>
-                                                <th>{{__('messages.status')}}</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                            @foreach($periods as $period)
-                                                <?php $color = "label-warning" ?>
-                                                <?php $text = "activate" ?>
-                                                <?php $btn_color = "success" ?>
-                                                @if($period['status']=='active')
-                                                    <?php $color = "label-success" ?>
-                                                    <?php $text = "inactivate" ?>
-                                                    <?php $btn_color = "danger" ?>
-                                                @endif
-                                                <tr>
-                                                    <td>{{$period['amount']}}</td>
-                                                    <td>{{miladi_to_shamsi_date($period['start_date'])}}</td>
-                                                    <td>{{$period['period']}}</td>
-                                                    <td>{{$period['description']}}</td>
-                                                    <td>
-                                                        <span class="label {{$color}}">{{__("messages.".$period['status'])}}</span>
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-{{$btn_color}} btn-xs btn-delete"
-                                                                data-id="{{$period['id']}}">{{__('messages.'.$text)}}</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Section: Divider call -->
@@ -186,7 +99,8 @@
                 </div>
             </div>
         </section>
-        @csrf
+
+
         <section>
             <div class="container">
                 <div class="section-content">
@@ -310,55 +224,3 @@
 
     </div>
 @endsection
-@section('js')
-    <script src="{{ URL::asset('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.btn-delete', function () {
-                var id = $(this).data('id');
-                Swal.fire({
-                    title: '{{__('messages.change_status')}}',
-                    text: "{{__('messages.are_you_sure')}}",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '{{__('messages.yes_i_sure')}}',
-                    cancelButtonText: '{{__('messages.cancel')}}'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{route('global_profile_delete_period')}}",
-                            type: "post",
-                            data: {id: id},
-                            headers: {
-                                'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                            },
-                            success: function (response) {
-                                console.log(response);
-                                $.each(response, function (index, value) {
-                                    PNotify.success({
-                                        text: value.message,
-                                        delay: 3000,
-                                    });
-                                })
-                                setTimeout(function () {
-                                    location.reload();
-                                }, 3000);
-                            }, error: function (response) {
-                                var errors = response.responseJSON.errors;
-                                $.each(errors, function (index, value) {
-                                    PNotify.error({
-                                        delay: 3000,
-                                        title: index,
-                                        text: value,
-                                    });
-                                });
-                            }
-                        });
-                    }
-                })
-            })
-        })
-    </script>
-@stop

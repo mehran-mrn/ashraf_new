@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'period_res' => 'دوره پرداخت :item شد.',
     'add_new' => 'ثبت :item جدید',
     'edit_item' => 'ویرایش :item ',
     'recover_item' => 'بازیابی :item ',
@@ -458,5 +459,22 @@ return [
     'amount'=>'مبلغ',
     'pay'=>'پرداخت',
     'transaction_created'=>'تراکنش ایجاد شد.',
-    'for'=>'بابت'
+    'for'=>'بابت',
+    'period'=>'دوره',
+    'daily'=>'روزانه',
+    'monthly'=>'ماهانه',
+    'yearly'=>'سالانه',
+    'every_3_months'=>'هر سه ماه یک بار',
+    'every_6_months'=>'هر شش ماه یک بار',
+    'period_created'=>'دوره پرداخت ثبت گردید.',
+    'are_you_sure'=>'آیا مطمئن هستید؟',
+    'yes_delete_id'=>'بله! حذف شود.',
+    'period_inactived'=>'پرداخت دوره ای غیر فعال شد.',
+    'period_not_found'=>'پرداخت دوره ای یافت نشد!',
+    'change_status'=>'تغییر وضعیت',
+    'yes_i_sure'=>'بله مطمئنم!',
+    'activate'=>'فعال سازی',
+    'inactivate'=>'غیر فعال سازی',
+    'paid'=>'پرداخت شده'
+
 ];

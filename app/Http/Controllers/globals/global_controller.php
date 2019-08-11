@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\charity_period;
+use App\charity_periods_transaction;
 use App\store_product;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
 use App\User;
+use const http\Client\Curl\AUTH_ANY;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -118,14 +121,14 @@ class global_controller extends Controller
         $off = $product['off'];
         $extra_title = "";
         $time = $product['ready'];
-        if (isset($request['inventory_id'])&& $request['inventory_id']!=0) {
+        if (isset($request['inventory_id']) && $request['inventory_id'] != 0) {
             $inventory = store_product_inventory::find($request['inventory_id']);
             $price = $inventory['price'];
             $off = $inventory['off'];
             $inventory_id = $request['inventory_id'];
             $extra_title = $inventory['color_code'];
         }
-        if (isset($request['inventory_size_id']) && $request['inventory_size_id']!=0) {
+        if (isset($request['inventory_size_id']) && $request['inventory_size_id'] != 0) {
             $inventory_size = store_product_inventory_size::find($request['inventory_size_id']);
             $price = $inventory_size['price'];
             $off = $inventory_size['off'];
@@ -146,7 +149,7 @@ class global_controller extends Controller
         if (!$cart) {
             $cart = [
                 $request['pro_id'] . $inventory_id . $inventory_size_id => [
-                    "title" => $product['title']." ".$extra_title,
+                    "title" => $product['title'] . " " . $extra_title,
                     "product_id" => $product['id'],
                     "inventory_id" => $inventory_id,
                     "inventory_size_id" => $inventory_size_id,
@@ -154,7 +157,7 @@ class global_controller extends Controller
                     "off" => $off,
                     "count" => $count,
                     "photo" => $product['main_image'],
-                    'time'=>$time
+                    'time' => $time
                 ]
             ];
             session()->put('cart', $cart);
@@ -176,7 +179,7 @@ class global_controller extends Controller
 
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$request['pro_id'] . $inventory_id . $inventory_size_id] = [
-            "title" => $product['title']." ".$extra_title,
+            "title" => $product['title'] . " " . $extra_title,
             "product_id" => $product['id'],
             "inventory_id" => $inventory_id,
             "inventory_size_id" => $inventory_size_id,
@@ -184,7 +187,7 @@ class global_controller extends Controller
             "off" => $off,
             "count" => $count,
             "photo" => $product['main_image'],
-            'time'=>$time
+            'time' => $time
         ];
 
         session()->put('cart', $cart);
@@ -220,6 +223,100 @@ class global_controller extends Controller
             }
 
             session()->flash('success', 'Product removed successfully');
+        }
+    }
+
+    public function add_charity_period(Request $request)
+    {
+        $this->validate($request,
+            [
+                'amount' => 'required',
+                'start_date' => 'required',
+                'period' => 'required',
+            ]);
+        $info = charity_period::create(
+            [
+                'user_id' => Auth::id(),
+                'amount' => $request['amount'],
+                'start_date' => shamsi_to_miladi($request['start_date']),
+                'next_date' => shamsi_to_miladi($request['start_date']),
+                'period' => $request['period'],
+                'description' => $request['description'],
+            ]
+        );
+
+        if (strtotime(shamsi_to_miladi($request['start_date'])) <= time()) {
+            charity_periods_transaction::create(
+                [
+                    'user_id' => Auth::id(),
+                    'period_id' => $info['id'],
+                    'payment_date' => $info['next_date'],
+                    'amount' => $info['amount'],
+                    'description' => "پرداخت دوره ای شماره " . $info['id'],
+                    'status' => "unpaid",
+                ]
+            );
+            charity_period::where('id', $info['id'])->update(
+                [
+                    'next_date' => date('Y-m-d', strtotime("+" . $info['period'] . " month", time()))
+                ]
+            );
+        }
+
+
+        $message = trans("messages.period_created");
+        return back_normal($request, ['message' => $message, "code" => 200]);
+    }
+
+    public function profile_period_delete(Request $request)
+    {
+        if ($charity = charity_period::find($request['id'])) {
+            if ($charity['user_id'] == Auth::id()) {
+                $status = 'active';
+                if ($charity['status'] == "active") {
+                    $status = 'inactive';
+                }
+                $charity->status = $status;
+                $charity->save();
+                $message = trans("messages.period_res", ['item' => __('messages.' . $status)]);
+                return back_normal($request, ['message' => $message, "code" => 200]);
+            } else {
+                $message[] = trans("messages.period_not_found");
+                return back_error($request, $message);
+            }
+        } else {
+            $message[] = trans("messages.period_not_found");
+            return back_error($request, $message);
+        }
+    }
+
+    public function profile_period_check()
+    {
+        $charity = charity_period::where(
+            [
+                ['status', '=', 'active'],
+                ['next_date', '<', date("Y-m-d")]
+            ])->get();
+        foreach ($charity as $item) {
+            $nextDate = strtotime($item['next_date']);
+            $now = time();
+            if ($now > $nextDate) {
+                charity_periods_transaction::create(
+                    [
+                        'user_id' => $item['user_id'],
+                        'period_id' => $item['id'],
+                        'payment_date' => $item['next_date'],
+                        'amount' => $item['amount'],
+                        'description' => "پرداخت دوره ای شماره " . $item['id'],
+                        'status' => "unpaid",
+                    ]
+                );
+                charity_period::where('id', $item['id'])->update(
+                    [
+                        'next_date' => date('Y-m-d', strtotime("+" . $item['period'] . " month", time()))
+                    ]
+                );
+            }
         }
     }
     //end cart actions

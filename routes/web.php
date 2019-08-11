@@ -11,8 +11,10 @@
 |
 */
 
+use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::get('/clear-cache', function() {
+
+Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
@@ -219,7 +221,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::prefix('media')->group(function () {
         Route::post('/upload_files', 'panel\Media@upload_files')->name('upload_files');
     });
-        //======================================
+    //======================================
     //-----------End Panel View------------
     //======================================
 
@@ -376,47 +378,53 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //=========================================
 // ------------Global View-----------------
 //=========================================
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
+    function () {
+        Route::prefix('ajax')->group(function () {
 
-    ], function()
-{
-Route::prefix('ajax')->group(function () {
-    Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
-    Route::post('/register', 'globals\global_controller@register_form_store')->name('global_register_form_store');
+            Route::get('/blog', 'global_view@blog')->name('blog');
 
-    Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
+            Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
+            Route::post('/register', 'globals\global_controller@register_form_store')->name('global_register_form_store');
 
-    Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
-    Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
-    Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
+            Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
 
-    Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
-});
+            Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
+            Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
+            Route::post('/update_password', 'globals\global_controller@update_password')->name('global_update_password');
 
-Route::prefix('page')->group(function () {
-    Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
-    Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-});
-Route::get('/', 'globals\global_view@index');
-Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
-Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
-Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
-Route::get('/order/cart', 'globals\global_view@store_cart')->name('store_cart');
-Route::get('/order/order', 'globals\global_view@store_order')->name('store_order');
-Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
-Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
-Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
+            Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
+        });
+
+        Route::prefix('page')->group(function () {
+            Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
+            Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
+        });
+        Route::get('/', 'globals\global_view@index');
+        Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
+        Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
+        Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
+        Route::get('/order/cart', 'globals\global_view@store_cart')->name('store_cart');
+        Route::get('/order/order', 'globals\global_view@store_order')->name('store_order');
+        Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
+        Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
+        Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
 
 
 //charity view
-Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
-Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
-Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
-Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
-});
+        Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
+        Route::get('vow/periodic', 'globals\global_view@vow_period')->name('vow_periodic');
+        Route::post('vow/periodic/add', 'globals\global_controller@add_charity_period')->name('add_charity_period');
+        Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
+        Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
+        Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
+
+        Route::post('panel/profile/period/delete','globals\global_controller@profile_period_delete')->name('global_profile_delete_period');
+        Route::get('panel/profile/period/check','globals\global_controller@profile_period_check')->name('global_profile_check');
 //=========================================
-
-
+    });

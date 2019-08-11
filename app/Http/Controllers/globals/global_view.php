@@ -6,6 +6,7 @@ use App\bank;
 use App\blog_slider;
 use App\charity_payment_patern;
 use App\charity_payment_title;
+use App\charity_period;
 use App\charity_transaction;
 use App\charity_transactions_value;
 use App\gateway;
@@ -25,8 +26,9 @@ class global_view extends Controller
     public function index()
     {
         $sliders = blog_slider::get();
-        return view('global.index',compact('sliders'));
+        return view('global.index', compact('sliders'));
     }
+
 
     public function register_form()
     {
@@ -56,7 +58,8 @@ class global_view extends Controller
     public function profile_page()
     {
         Artisan::call("cache:clear");
-        return view('global.profile');
+        $periods = charity_period::where('user_id', Auth::id())->get();
+        return view('global.profile', compact('periods'));
     }
 
     public function change_password()
@@ -135,7 +138,7 @@ class global_view extends Controller
             $trans->status = 'pending';
             $trans->save();
             $transInfo = $trans->id;
-            if(isset($request['field'])) {
+            if (isset($request['field'])) {
                 foreach ($request['field'] as $item => $value) {
                     if ($value != "") {
                         charity_transactions_value::create(
@@ -171,6 +174,13 @@ class global_view extends Controller
         $patern = charity_payment_patern::find(2);
         $gateways = gateway::with('bank')->where('online', 1)->get();
         return view('global.vows.donate', compact('title', 'patern', 'gateways'));
+    }
+
+
+    public function vow_period()
+    {
+        $patern = charity_payment_patern::find(1);
+        return view('global.vows.period', compact('patern'));
     }
 
 }

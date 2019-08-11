@@ -173,9 +173,7 @@ return [
         Kim\Activity\ActivityServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
         Nestable\NestableServiceProvider::class,
-
         Intervention\Image\ImageServiceProvider::class,
-
         /*
          * Package Service Providers...
          *
@@ -189,7 +187,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
     ],
 
     /*
@@ -245,7 +244,6 @@ return [
         'Laratrust'   => Laratrust\LaratrustFacade::class,
         'Nestable' => Nestable\Facades\NestableService::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
     ],
 
 ];

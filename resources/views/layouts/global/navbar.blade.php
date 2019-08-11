@@ -6,9 +6,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
-                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="{{route('home')}}"><img class="img-responsive"
-                                    src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}"
-                                    alt=""></a>
+                        <a class="menuzord-brand pull-left flip xs-pull-center mb-15" href="{{route('home')}}"><img class="img-responsive" src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -50,7 +48,6 @@
                 <nav id="menuzord" class="menuzord default bg-silver-light">
                     <ul class="menuzord-menu">
                         <li><a href="{{route('home')}}">{{trans('messages.home')}}</a></li>
-
                         <li><a href="#home">{{trans('messages.cooperation')}}</a>
                             <ul class="dropdown">
                                 <li><a href="{{route('global_shop')}}">{{__("messages.tableau_and_wreath")}}</a></li>
@@ -64,7 +61,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
-                                <li><a href="{{route('vow_donate')}}">{{__("messages.Periodic_assistance")}}</a></li>
+                                <li><a href="{{route('vow_periodic')}}">{{__("messages.Periodic_assistance")}}</a></li>
                             </ul>
                         </li>
                     </ul>
