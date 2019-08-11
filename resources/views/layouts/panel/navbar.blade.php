@@ -1,8 +1,8 @@
 <!-- main navbar -->
 <div class="navbar navbar-expand-md navbar-dark">
-    <div class="navbar-brand">
+    <div class="navbar-brand p-1">
         <a href="{{route('dashboard')}}" class="d-inline-block">
-            <img src="{{ URL::asset('/public/assets/panel/global_assets/images/logo_light.png') }}" alt="">
+            <img style="height: 2rem;" src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}" alt="">
         </a>
     </div>
 
