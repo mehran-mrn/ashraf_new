@@ -20,16 +20,38 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-
+use Swis\LaravelFulltext\Search;
+use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
+use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
+use WebDevEtc\BlogEtc\Models\BlogEtcPost;
 class global_view extends Controller
 {
+    use UsesCaptcha;
+
     public function index()
     {
         $sliders = blog_slider::get();
         return view('global.index', compact('sliders'));
     }
 
+    public function post_page($blogPostSlug,Request $request)
+    {
+        $blog_post = BlogEtcPost::where("slug", $blogPostSlug)
+            ->firstOrFail();;
 
+        if ($captcha = $this->getCaptchaObject()) {
+            $captcha->runCaptchaBeforeShowingPosts($request, $blog_post);
+        }
+
+        return view('global.post', [
+            'post' => $blog_post,
+            // the default scope only selects approved comments, ordered by id
+            'comments' => $blog_post->comments()
+                ->with("user")
+                ->get(),
+            'captcha' => $captcha,
+        ]);
+    }
     public function register_form()
     {
         return view('global.materials.register');
@@ -138,7 +160,7 @@ class global_view extends Controller
             $trans->status = 'pending';
             $trans->save();
             $transInfo = $trans->id;
-            if (isset($request['field'])) {
+            if(isset($request['field'])) {
                 foreach ($request['field'] as $item => $value) {
                     if ($value != "") {
                         charity_transactions_value::create(

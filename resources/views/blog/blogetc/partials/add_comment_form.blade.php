@@ -85,7 +85,8 @@
 
 
         <div class="form-group ">
-            <input type='submit' class="form-control input-sm btn btn-success "
+            <input type='submit'
+                   class="form-control input-sm btn btn-success "
                    value='Add Comment'>
         </div>
 

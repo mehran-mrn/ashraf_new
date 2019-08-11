@@ -389,6 +389,7 @@ function shamsi_to_miladi($input)
 }
 
 
+
 function count_caravan_useage_history($person_id, $current_caravan_id = null)
 {
     $count_query = \App\person_caravan::query();
@@ -474,13 +475,14 @@ function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false
     $new_date_day = $new_date[2];
     $new_date_month = $new_date[1];
     $new_date_year = $new_date[0];
-    if (!empty($be_array)) {
+    if ($be_array) {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day);
-
+        return $date_jalali;
     } else {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day, "-");
+        return $time."  ".$date_jalali ;
+
     }
-    return $time."  ".$date_jalali ;
 
 }
 
@@ -604,6 +606,11 @@ function childView($Category,$checked=[])
 function get_inventory_size_max_time($pro_id){
 
 }
+function get_blog_categories(){
+    $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
+    return $categories;
+}
+
 function get_posts($limit=null,$main_page=null,$categories=[],$paginate=10){
 
     $posts_query =  WebDevEtc\BlogEtc\Models\BlogEtcPost::query();

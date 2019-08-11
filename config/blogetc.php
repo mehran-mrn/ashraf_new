@@ -107,7 +107,7 @@ return [
 
 
     'captcha' => [
-        'captcha_enabled' => true, // true = we should use a captcha, false = turn it off. If comments are disabled this makes no difference.
+        'captcha_enabled' => false, // true = we should use a captcha, false = turn it off. If comments are disabled this makes no difference.
         'captcha_type' => \WebDevEtc\BlogEtc\Captcha\Basic::class, // this should be a class that implements the \WebDevEtc\BlogEtc\Interfaces\CaptchaInterface interface
         'basic_question' => "What is the opposite of white?", // a simple captcha question to always ask (if captcha_type is set to 'basic'
         'basic_answers' => "black,dark", // comma separated list of possible answers. Don't worry about case.
@@ -154,7 +154,7 @@ return [
 
         'ask_for_author_email' => true, // show 'author email' on the form ?
         'require_author_email' => false, // require an email (make sure ask_for_author_email is true if you want to use this)
-        'ask_for_author_website' => true, // show 'author website' on the form, show the link when viewing the comment
+        'ask_for_author_website' => false, // show 'author website' on the form, show the link when viewing the comment
 
         'disqus' => [
 
@@ -170,7 +170,7 @@ return [
 
 
     'search' => [
-        'search_enabled' => false, // is search enabled? By default this is disabled, but you can easily turn it on.
+        'search_enabled' => true, // is search enabled? By default this is disabled, but you can easily turn it on.
     ],
 
 

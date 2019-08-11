@@ -1,6 +1,6 @@
 <!-- Divider: Funfact -->
 <section class="divider parallax layer-overlay overlay-theme-colored-9" data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}" data-parallax-ratio="0.7">
-    <div class="container pt-90 pb-90">
+    <div class="container pt-30 pb-30">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
                 <div class="funfact text-center">

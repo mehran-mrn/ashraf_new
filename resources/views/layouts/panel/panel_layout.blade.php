@@ -18,6 +18,7 @@
     <link href="{{ URL::asset('/public/assets/panel/css/components.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/colors.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/panel/css/fonts.css') }}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     @yield('css')
 
