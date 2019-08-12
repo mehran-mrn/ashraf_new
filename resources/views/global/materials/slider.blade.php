@@ -361,7 +361,7 @@
             $(document).ready(function(e) {
                 $(".rev_slider_fullscreen").revolution({
                     sliderType:"standard",
-                    sliderLayout: "fullscreen",
+                    sliderLayout: "auto",
                     dottedOverlay: "none",
                     delay: 5000,
                     navigation: {
