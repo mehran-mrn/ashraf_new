@@ -4,7 +4,7 @@
 
         <!-- Slider Revolution Start -->
         <div class="rev_slider_wrapper">
-            <div class="rev_slider rev_slider_default" data-version="5.0">
+            <div class="rev_slider  rev_slider_fullscreen" data-version="5.0">
                 <ul>
                     @forelse($sliders as $key=>$slider)
                         <!-- SLIDE 1 -->
@@ -14,18 +14,18 @@
                                 <!-- LAYERS -->
                                 @if($slider['text_1'])
                                 <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-resizeme   bg-dark-transparent text-white  pl-30 pr-30"
+                                <div class="tp-caption tp-resizeme   bg-dark-transparent text-white  pl-20 pr-20"
                                      id="rs-{{$key}}-layer-1"
 
-                                     data-x="['center']"
-                                     data-hoffset="['0']"
-                                     data-y="['@switch($slider['text_1_dir'])
+                                     data-x="['@switch($slider['text_1_dir'])
                                      @case('left'){{'left'}}@break
                                      @case('right'){{'right'}}@break
                                      @case('center'){{'middle'}}@break
                                      @default{{'middle'}}@break
                                      @endswitch']"
-                                     data-voffset="['-90']"
+                                     data-hoffset="['0']"
+                                     data-y="['middle']"
+                                     data-voffset="['-200']"
                                      data-fontsize="['28']"
                                      data-lineheight="['54']"
                                      data-width="none"
@@ -40,30 +40,31 @@
                                      data-splitin="none"
                                      data-splitout="none"
                                      data-responsive_offset="on"
+                                     style="border-radius: 30px;"
                                      >{!! $slider['text_1'] !!}
                                 </div>
                                 @endif
                             @if($slider['text_2'])
 
                                 <!-- LAYER NR. 2 -->
-                                <div class="tp-caption tp-resizeme  bg-theme-colored-transparent text-white  pl-30 pr-30"
+                                <div class="tp-caption tp-resizeme text-white text-center"
                                      id="rs-{{$key}}-layer-2"
 
-                                     data-x="['left']"
-                                     data-hoffset="['0']"
-                                     data-y="['@switch($slider['text_2_dir'])
+                                     data-x="['@switch($slider['text_2_dir'])
                                      @case('left'){{'left'}}@break
                                      @case('right'){{'right'}}@break
                                      @case('center'){{'middle'}}@break
                                      @default{{'middle'}}@break
                                      @endswitch']"
-                                     data-voffset="['-20']"
+                                     data-hoffset="['0']"
+                                     data-y="['middle']"
+                                     data-voffset="['-40']"
                                      data-fontsize="['48']"
                                      data-lineheight="['70']"
                                      data-width="none"
                                      data-height="none"
                                      data-whitespace="nowrap"
-                                     data-transform_idle="o:1;s:500"
+                                     data-transform_idle="o:1;s:900"
                                      data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
                                      data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
                                      data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
@@ -72,7 +73,7 @@
                                      data-splitin="none"
                                      data-splitout="none"
                                      data-responsive_offset="on"
-                                     style="z-index: 7; white-space: nowrap; font-weight:700; border-radius: 30px;">{!! $slider['text_2'] !!}
+                                     style="border-radius: 30px;">{!! $slider['text_2'] !!}
                                 </div>
                             @endif
                             @if($slider['text_3'])
@@ -80,15 +81,15 @@
                                 <div class="tp-caption tp-resizeme text-white text-center"
                                      id="rs-{{$key}}-layer-3"
 
-                                     data-x="['right']"
-                                     data-hoffset="['0']"
-                                     data-y="['@switch($slider['text_3_dir'])
+                                     data-x="['@switch($slider['text_3_dir'])
                                      @case('left'){{'left'}}@break
                                      @case('right'){{'right'}}@break
                                      @case('center'){{'middle'}}@break
                                      @default{{'middle'}}@break
                                      @endswitch']"
-                                     data-voffset="['50']"
+                                     data-hoffset="['0']"
+                                     data-y="['middle']"
+                                     data-voffset="['60']"
                                      data-fontsize="['16','18',24']"
                                      data-lineheight="['28']"
                                      data-width="none"
@@ -103,7 +104,8 @@
                                      data-splitin="none"
                                      data-splitout="none"
                                      data-responsive_offset="on"
-                                     >{!! $slider['text_3'] !!}
+                                     style="border-radius: 30px;"
+                                     >{!!$slider['text_3']!!}
                                 </div>
                             @endif
                             @if($slider['btn_text'])
@@ -111,15 +113,15 @@
                                 <div class="tp-caption tp-resizeme"
                                      id="rs-{{$key}}-layer-4"
 
-                                     data-x="['center']"
-                                     data-hoffset="['0']"
-                                     data-y="['@switch($slider['btn_dir'])
+                                     data-x="['@switch($slider['btn_dir'])
                                      @case('left'){{'left'}}@break
                                      @case('right'){{'right'}}@break
                                      @case('center'){{'middle'}}@break
                                      @default{{'middle'}}@break
                                      @endswitch']"
-                                     data-voffset="['115']"
+                                     data-hoffset="['0']"
+                                     data-y="['middle']"
+                                     data-voffset="['125']"
                                      data-width="none"
                                      data-height="none"
                                      data-whitespace="nowrap"
@@ -357,9 +359,9 @@
         <!--  Revolution slider scriopt -->
         <script>
             $(document).ready(function(e) {
-                $(".rev_slider_default").revolution({
+                $(".rev_slider_fullscreen").revolution({
                     sliderType:"standard",
-                    sliderLayout: "auto",
+                    sliderLayout: "fullscreen",
                     dottedOverlay: "none",
                     delay: 5000,
                     navigation: {
@@ -416,7 +418,7 @@
                     responsiveLevels: [1240, 1024, 778],
                     visibilityLevels: [1240, 1024, 778],
                     gridwidth: [1170, 1024, 778, 480],
-                    gridheight: [550, 600, 700, 720],
+                    gridheight: [600, 768, 960, 720],
                     lazyType: "none",
                     parallax: {
                         origo: "slidercenter",
@@ -451,3 +453,5 @@
         <!-- Slider Revolution Ends -->
     </div>
 </section>
+
+

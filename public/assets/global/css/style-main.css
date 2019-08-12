@@ -1067,7 +1067,8 @@ section > .container-fluid {
   padding: 0;
 }
 .header-nav.navbar-transparent.animated-active {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
 }
 /*
  * nav.less
@@ -1201,6 +1202,7 @@ section > .container-fluid {
 /* -------- Header White ---------- */
 .header-nav.navbar-white {
   background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
   border: medium none;
 }
 .header-nav.navbar-white .menuzord {
@@ -1214,7 +1216,8 @@ section > .container-fluid {
   border-bottom: 1px solid #eee;
 }
 .header-nav.navbar-transparent.animated-active {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
 }
 .header-nav.navbar-transparent.animated-active .header-nav-wrapper {
   border-bottom: none;
