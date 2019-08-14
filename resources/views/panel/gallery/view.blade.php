@@ -81,6 +81,54 @@
             }
         }();
         DropzoneUploader.init();
+
+        function editMedia(id) {
+            $.ajax({
+                url: "{{route('gallery_media_info')}}",
+                type: "POST",
+                data: {id: id},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
+                },
+                success: function (response) {
+                    $("#edit_modal").modal('show');
+                    if (response.id) {
+                        $("#frm_edit_image input[name='title']").val(response.title);
+                        $("#frm_edit_image input[name='media_id']").val(response.id);
+                    }
+                }, error: function () {
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $(document).on('submit', "#frm_edit_image", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{{route('gallery_media_edit')}}",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response.message.status === 200) {
+                            new PNotify({
+                                title: '',
+                                text: response.message.messages,
+                                type: 'success'
+                            });
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+                        }
+                    }, error: function () {
+                    }
+                });
+            })
+        })
+
     </script>
 @endsection
 @section('content')
@@ -119,8 +167,15 @@
                                                     <a href="/{{$media['url']}}"
                                                        class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round"
                                                        data-popup="lightbox" rel="group">
-                                                        <i class="icon-plus3"></i>
+                                                        <i class="icon-eye"></i>
                                                     </a>
+
+                                                    <a href="javascript:;" onclick="editMedia({{$media['id']}})"
+                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round"
+                                                       data-popup="lightbox" rel="group">
+                                                        <i class="icon-database-edit2"></i>
+                                                    </a>
+
                                                     <a href="javascript:;"
                                                        class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round swal-alert "
                                                        data-ajax-link="{{route('gallery_category_image_remove',['id'=>$media['id']])}}"
@@ -131,13 +186,13 @@
                                                        data-type="warning"
                                                        data-cancel="true"
                                                        data-confirm-text="{{trans('messages.delete')}}"
-                                                       data-cancel-text="{{trans('messages.cancel')}}"><i class="icon-trash"></i>
+                                                       data-cancel-text="{{trans('messages.cancel')}}"><i
+                                                                class="icon-trash"></i>
                                                     </a>
                                                 </div>
                                                 <div class="caption">
                                                     <h6 class="caption text-center pt-1">{{$media['title']}}</h6>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +209,7 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header bg-info">
-                    <h6 class="modal-title">{{__('messages.add_category')}}</h6>
+                    <h6 class="modal-title">{{__('messages.add_image')}}</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -170,7 +225,35 @@
                             </div>
                         </div>
                         <div class="form-group pull-left pt-2">
+                            <button type="button" id="button" class="btn btn-default" class="close"
+                                    data-dismiss="modal">{{__('messages.cancel')}}</button>
                             <button type="submit" id="button" class="btn btn-primary">{{__('messages.add')}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="edit_modal" class="modal fade ">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h6 class="modal-title">{{__('messages.edit')}}</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="frm_edit_image">
+                        <div class="form-group">
+                            <label for="">{{__('messages.title')}}</label>
+                            <input type="text" name="title" class="form-control">
+                        </div>
+                        <input type="hidden" name="media_id" id="media_id" value="">
+                        <div class="form-group pull-left pt-2">
+                            <button type="button" id="button" class="btn btn-default" class="close"
+                                    data-dismiss="modal">{{__('messages.cancel')}}</button>
+                            <button type="submit" class="btn btn-primary">{{__('messages.add')}}</button>
                         </div>
                     </form>
                 </div>

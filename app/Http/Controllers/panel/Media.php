@@ -110,5 +110,24 @@ class Media extends Controller
 
     }
 
+    public function gallery_media_info(Request $request)
+    {
+        return \App\media::findOrFail($request['id']);
+    }
+
+    public function gallery_media_edit(Request $request)
+    {
+        if (\App\media::findOrFail($request['media_id'])) {
+            \App\media::where('id', $request['media_id'])
+                ->update(
+                    [
+                        'title' => $request['title']
+                    ]);
+            $data['messages'] = trans('messages.item_updated', ['item' => trans('messages.file')]);
+            $data['status'] = 200;
+            return back_normal($request, $data);
+        }
+    }
+
 
 }

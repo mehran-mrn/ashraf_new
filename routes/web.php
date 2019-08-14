@@ -228,6 +228,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('category/{id}', 'panel\panel_view@gallery_category_view')->name('gallery_category_view');
         Route::delete('category/{id}','panel\Media@gallery_category_remove')->name('gallery_category_remove');
         Route::delete('category/image/{id}','panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
+        Route::POST('media/info','panel\Media@gallery_media_info')->name('gallery_media_info');
+        Route::post('media/edit','panel\Media@gallery_media_edit')->name('gallery_media_edit');
     });
     //======================================
     //-----------End Panel View------------
