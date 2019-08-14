@@ -48,20 +48,11 @@ return [
 
 
     'image_sizes' => [
-
-        // if you set 'enabled' to false, it will clear any data for that field the next time any row is updated. However it will NOT delete the .jpg file on your file server.
-        // I recommend that you only change the enabled field before any images have been uploaded!
-
-        // Also, if you change the w/h (which are obviously in pixels :) ), it won't change any previously uploaded images.
-
-        // There must be only three sizes - image_large, image_medium, image_thumbnail.
-
-
         'image_large' => [ // this key must start with 'image_'. This is what the DB column must be named
             'w' => 1000, // width in pixels
             'h' => 700, //height
             'basic_key' => "large", // same as the main key, but WITHOUT 'image_'.
-            'name' => "Large", // description, used in the admin panel
+            'name' => __('messages.large'), // description, used in the admin panel
             'enabled' => true, // see note above
             'crop' => true, // if true then we will crop and resize to exactly w/h. If false then it will maintain proportions, with a max width of 'w' and max height of 'h'
         ],
@@ -69,7 +60,7 @@ return [
             'w' => 600, // width in pixels
             'h' => 400, //height
             'basic_key' => "medium",// same as the main key, but WITHOUT 'image_'.
-            'name' => "Medium",// description, used in the admin panel
+            'name' => __('messages.medium'),// description, used in the admin panel
             'enabled' => true, // see note above
             'crop' => true, // if true then we will crop and resize to exactly w/h. If false then it will maintain proportions, with a max width of 'w' and max height of 'h'. If you use these images as part of your website template then you should probably have this to true.
         ],
@@ -77,7 +68,7 @@ return [
             'w' => 150, // width in pixels
             'h' => 150, //height
             'basic_key' => "thumbnail",// same as the main key, but WITHOUT 'image_'.
-            'name' => "Thumbnail",// description, used in the admin panel
+            'name' => __('messages.thumbnail'),// description, used in the admin panel
             'enabled' => true, // see note above
         ],
 

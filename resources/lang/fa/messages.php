@@ -504,5 +504,17 @@ return [
     'edit_category'=>'ویرایش دسته بندی',
     'image_upload'=>'بارگزاری تصویر',
     'blog_album'=>'البوم وبلاگ',
-    'image_title'=>'عنوان تصویر'
+    'image_title'=>'عنوان تصویر',
+    'images_id'=>'شناسه تصویر',
+    'untitled_photo'=>'بدون عنوان',
+    'uploaded_on'=>'بارگزاری شده در',
+    'image_url'=>'آدرس تصویر',
+    'image_tag'=>'تگ تصویر',
+    'change_size_to'=>'تغییر اندازه به',
+    'full_size'=>'اندازه اصلی',
+    'large'=>'بزرگ',
+    'medium'=>'متوسط',
+    'thumbnail'=>'کوچک',
+    'show'=>'نمایش',
+    'zoom_in'=>'بزرگ نمایی'
 ];
