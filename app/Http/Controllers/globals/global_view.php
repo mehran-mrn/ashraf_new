@@ -7,6 +7,7 @@ use App\blog_slider;
 use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
+use App\charity_periods_transaction;
 use App\charity_transaction;
 use App\charity_transactions_value;
 use App\gateway;
@@ -81,7 +82,12 @@ class global_view extends Controller
     {
         Artisan::call("cache:clear");
         $periods = charity_period::where('user_id', Auth::id())->get();
-        return view('global.profile', compact('periods'));
+        $unpaidPeriod = charity_periods_transaction::where(
+            [
+                ['status','=','unpaid'],
+                ['user_id','=',Auth::id()],
+        ])->get();
+        return view('global.profile', compact('periods','unpaidPeriod'));
     }
 
     public function change_password()

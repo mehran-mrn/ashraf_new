@@ -79,6 +79,45 @@
                             </ul>
                             <div id="myTabContent" class="tab-content">
                                 <div class="tab-pane fade in active" id="payment_list">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped text-center table-bordered">
+                                            <thead class="text-center">
+                                            <tr>
+                                                <th>{{__('messages.amount')}}</th>
+                                                <th>{{__('messages.start_date')}}</th>
+                                                <th>{{__('messages.description')}}</th>
+                                                <th>{{__('messages.status')}}</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                            @foreach($unpaidPeriod as $unpaid)
+                                                <?php $color = "label-warning" ?>
+                                                <?php $text = "unpaid" ?>
+                                                <?php $btn_color = "success" ?>
+                                                @if($unpaid['status']=='paid')
+                                                    <?php $color = "label-success" ?>
+                                                    <?php $text = "paid" ?>
+                                                    <?php $btn_color = "warning" ?>
+                                                @endif
+                                                <tr>
+                                                    <td>{{$unpaid['amount']}}</td>
+                                                    <td>{{miladi_to_shamsi_date($unpaid['payment_date'])}}</td>
+                                                    <td>{{$unpaid['description']}}</td>
+                                                    <td>
+                                                        <span class="label {{$color}}">{{__("messages.".$unpaid['status'])}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-{{$btn_color}}  btn-delete"
+                                                                data-id="{{$unpaid['id']}}">
+                                                            {{__('messages.pay')}} <i class="fa fa-chevron-left"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="periodic_payemnt">
                                     <div class="table-responsive">

@@ -178,6 +178,23 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+
+
+                <li class="nav-item nav-item-submenu {{in_array("gallery", $active_sidbare) ? ' nav-item-open' : '' }}">
+                    <a href="#" class=" nav-link"><i class="icon-gallery"></i>
+                        <span>{{trans('messages.gallery')}}</span></a>
+
+                    <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.gallery')}}"
+                        style="display:{{in_array("gallery", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('gallery_add')}}"
+                                                class="nav-link {{in_array("gallery_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.gallery')}}</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
                 <li class="nav-item nav-item-submenu {{in_array("caravans", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>

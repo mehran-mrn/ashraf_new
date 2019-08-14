@@ -26,6 +26,8 @@ return [
     'recover_title_warn' => 'برای بازیابی آیتم حذف شده تایید کنید.',
     'recover' => 'بازیابی',
 
+
+    'add_gallery_category'=>'افزودن دسته بندی نگارخانه',
     'transportation' => 'حمل و نقل',
     'roles_user_has' => 'نقش هایی که این کاربر دارد',
     'permission_user_has' => 'دسترسی هایی که این کاربر دارد',
@@ -483,6 +485,10 @@ return [
     'yes_i_sure'=>'بله مطمئنم!',
     'activate'=>'فعال سازی',
     'inactivate'=>'غیر فعال سازی',
-    'paid'=>'پرداخت شده'
+    'paid'=>'پرداخت شده',
+    'unpaid'=>'پرداخت نشده',
 
+    'gallery'=>'نگارخانه',
+    'add_image'=>'افزودن تصویر',
+    'back'=>'برگشت',
 ];

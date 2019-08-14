@@ -5,9 +5,7 @@
 @section('js')
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
-
     <script>
 
         // Setup module

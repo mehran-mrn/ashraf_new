@@ -354,41 +354,6 @@ function get_user($user_id)
     return $user;
 }
 
-function shamsi_to_miladi($input)
-{
-    // yyyy/mm/dd
-    // yyyy/mm/dd hh:MM:ss
-    // yyyy-mm-dd
-    // yyyy-mm-dd hh:MM:ss
-
-    $input = str_replace("    ", " ", $input);
-    $input = str_replace("   ", " ", $input);
-    $input = str_replace("  ", " ", $input);
-    $date_array = explode(" ", $input);
-    $date = $date_array[0];
-    $time = (empty($date_array[1]) ? "00:00:00" : $date_array[1]);
-    if (strpos($date, '-') > 0 and strpos($date, '/') == false) {
-        $new_date = explode("-", $date);
-    } elseif (strpos($date, "-") == false and strpos($date, "/") > 0) {
-        $new_date = explode("/", $date);
-    } else {
-        return false;
-    }
-    $new_date_day = $new_date[2];
-    $new_date_month = $new_date[1];
-    $new_date_year = $new_date[0];
-    if ($new_date_year > 1800) {//if input is not shamsi date
-        return false;
-    }
-
-    $date_gregorian = jalali_to_gregorian($new_date_year, $new_date_month, $new_date_day, "-");
-
-    $date_gregorian = $date_gregorian . " " . $time;
-    return $date_gregorian;
-
-}
-
-
 
 function count_caravan_useage_history($person_id, $current_caravan_id = null)
 {
@@ -459,7 +424,39 @@ function get_age($date)
     return $age;
 }
 
+function shamsi_to_miladi($input)
+{
+    // yyyy/mm/dd
+    // yyyy/mm/dd hh:MM:ss
+    // yyyy-mm-dd
+    // yyyy-mm-dd hh:MM:ss
 
+    $input = str_replace("    ", " ", $input);
+    $input = str_replace("   ", " ", $input);
+    $input = str_replace("  ", " ", $input);
+    $date_array = explode(" ", $input);
+    $date = $date_array[0];
+    $time = (empty($date_array[1]) ? "00:00:00" : $date_array[1]);
+    if (strpos($date, '-') > 0 and strpos($date, '/') == false) {
+        $new_date = explode("-", $date);
+    } elseif (strpos($date, "-") == false and strpos($date, "/") > 0) {
+        $new_date = explode("/", $date);
+    } else {
+        return false;
+    }
+    $new_date_day = $new_date[2];
+    $new_date_month = $new_date[1];
+    $new_date_year = $new_date[0];
+    if ($new_date_year > 1800) {//if input is not shamsi date
+        return false;
+    }
+
+    $date_gregorian = jalali_to_gregorian($new_date_year, $new_date_month, $new_date_day, "-");
+
+    $date_gregorian = $date_gregorian . " " . $time;
+    return $date_gregorian;
+
+}
 function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false)
 {  //2017-01-01 20:30:00
     $time="";
@@ -485,7 +482,6 @@ function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false
     }
 
 }
-
 function persian_num($string)
 {
     //arrays of persian and latin numbers
@@ -496,7 +492,6 @@ function persian_num($string)
 
     return $string;
 }
-
 function latin_num($string)
 {
     //arrays of persian and latin numbers

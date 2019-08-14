@@ -22,7 +22,10 @@ class CreateMediaTable extends Migration
             $table->string('mime');
             $table->string('module');
             $table->integer('size');
+            $table->integer('category_id')->nullable();
+            $table->string('title')->nullable();
             $table->string('type'); //image,video,audio,file,xml,
+            $table->softDeletes();
             $table->timestamps();
         });
     }
