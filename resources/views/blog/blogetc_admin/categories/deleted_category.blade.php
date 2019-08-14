@@ -2,7 +2,6 @@
 @section("content")
     <div class="container">
         <div class="row">
-
-<div class='alert alert-success'><b>Deleted that category</b></div>
+            <div class='alert alert-success'><b>Deleted that category</b></div>
         </div>
 @endsection

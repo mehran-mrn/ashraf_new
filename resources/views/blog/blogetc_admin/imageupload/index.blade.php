@@ -5,11 +5,8 @@
     <?php
     $active_sidbare = ['blog','blog_images','blog_posts_list']
     ?>
-
     <script>
-
         function show_uploaded_file_row(id, img) {
-
             // show the div, and populate it with the image.
             [].forEach.call(document.querySelectorAll('.' + id), function (el) {
                 el.style.display = 'block';
@@ -46,11 +43,11 @@
                             <h6 class='text-center mt-3'><strong>{{$file_key}}</strong> - {{$file['w']}}
                                 x {{$file['h']}}:</h6>
                             <p class='text-center'><a
-                                        href='{{asset('public/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}'
+                                        href='{{asset('public/images/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}'
                                         target='_blank'>[link]</a> / <span
                                         class='btn btn-sm btn-primary'
                                         style='cursor: zoom-in;'
-                                        onclick='show_uploaded_file_row("{{$id}}","{{asset(     'public/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}")'>show</span>
+                                        onclick='show_uploaded_file_row("{{$id}}","{{asset(     'public/images/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}")'>show</span>
                             </p>
 
                             <div id="{{$id}}"></div>
@@ -59,7 +56,7 @@
                             <div style=''>
                                 <small class='text-muted'>Image URL</small>
                                 <input type='text' readonly='readonly' class='form-control'
-                                       value='{{asset(     'public/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}'>
+                                       value='{{asset(     'public/images/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])}}'>
                             </div>
                         </div>
                         <div class='col-md-6 {{$id}}' style='display:none;'>
@@ -67,7 +64,7 @@
                             <div style=''>
                                 <small class='text-muted'>img tag</small>
                                 <input type='text' readonly='readonly' class='form-control'
-                                       value='{{"<img src='".asset(     'public/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])."' alt='" . e($uploadedPhoto->image_title) . "' >"}}'>
+                                       value='{{"<img src='".asset(     'public/images/'.config("blogetc.blog_upload_dir") . "/". $file['filename'])."' alt='" . e($uploadedPhoto->image_title) . "' >"}}'>
                             </div>
                         </div>
 
@@ -89,9 +86,9 @@
 
 
                         <div style='text-align:center;'>
-                            <a style='cursor: zoom-in;' href='{{asset(     'public/'.config("blogetc.blog_upload_dir") . "/". $smallest['filename'])}}'
+                            <a style='cursor: zoom-in;' href='{{asset('public/images/'.config("blogetc.blog_upload_dir") . "/". $smallest['filename'])}}'
                                target='_blank'>
-                                <img src='{{asset(     'public/'.config("blogetc.blog_upload_dir") . "/". $smallest['filename'])}}'
+                                <img src='{{asset('public/images/'.config("blogetc.blog_upload_dir") . "/". $smallest['filename'])}}'
                                      style='max-width:100%; height: auto;'>
                             </a>
                         </div>

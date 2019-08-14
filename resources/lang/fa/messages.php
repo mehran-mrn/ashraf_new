@@ -25,6 +25,7 @@ return [
     'updated' => ':item ویرایش شد.',
     'recover_title_warn' => 'برای بازیابی آیتم حذف شده تایید کنید.',
     'recover' => 'بازیابی',
+    'no_found_any'=>'هیچ :item یافت نشد.',
 
 
     'add_gallery_category'=>'افزودن دسته بندی نگارخانه',
@@ -279,7 +280,8 @@ return [
     'posted_at' => 'تاریخ انتشار',
     'Categories' => 'دسته بندی ها',
     'blog_slider' => 'اسلایدر',
-    'comment' => 'نظر',
+    'comment' => 'دیدگاه',
+    'commentss'=>'دیدگاهی',
     'no_comment_yet' => 'هنوز نظری ثبت نشده است. ',
     'blog_comments' => 'نظرات',
     'all_blog_comments' => 'لیست نظرات',
@@ -491,4 +493,16 @@ return [
     'gallery'=>'نگارخانه',
     'add_image'=>'افزودن تصویر',
     'back'=>'برگشت',
+
+    'add_item'=>'افزودن :item',
+    'no_any_post'=>'هیچ پستی یافت نشد.',
+    'not_found_any_data'=>'اطلاعاتی یافت نشد',
+    'please_insert_post'=>'لطفاً پست جدید اضافه نمایید.',
+    'messages.image_update_disabled'=>'بارگزاری تصویر غیر فعال می باشد.',
+    'please_no_any_comment'=>'هیچ نظری در سیستم یافت نشد.',
+    'comment_list'=>'لیست نظرات',
+    'edit_category'=>'ویرایش دسته بندی',
+    'image_upload'=>'بارگزاری تصویر',
+    'blog_album'=>'البوم وبلاگ',
+    'image_title'=>'عنوان تصویر'
 ];

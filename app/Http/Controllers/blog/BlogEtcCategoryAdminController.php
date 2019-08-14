@@ -100,16 +100,15 @@ class BlogEtcCategoryAdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function destroy_category(DeleteBlogEtcCategoryRequest $request, $categoryId){
-
-        /* Please keep this in, so code inspections don't say $request was unused. Of course it might now get marked as left/right parts are equal */
         $request=$request;
 
         $category = BlogEtcCategory::findOrFail($categoryId);
         event(new CategoryWillBeDeleted($category));
         $category->delete();
 
-        return view ("blog.blogetc_admin.categories.deleted_category");
 
+        $messages = trans('messages.item_deleted', ['item' => trans('messages.category')]);
+        return back_normal($request, $messages);
     }
 
 }

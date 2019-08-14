@@ -7,18 +7,18 @@
         <div class='col-sm-12 blogetc_container'>
             @if(\Auth::check() && \Auth::user()->canManageBlogEtcPosts())
                 <div class="text-center">
-                        <p class='mb-1'>You are logged in as a blog admin user.
-                            <br>
+                    <p class='mb-1'>You are logged in as a blog admin user.
+                        <br>
 
-                            <a href='{{route("blogetc.admin.index")}}'
-                               class='btn border  btn-outline-primary btn-sm '>
+                        <a href='{{route("blogetc.admin.index")}}'
+                           class='btn border  btn-outline-primary btn-sm '>
 
-                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
 
-                                Go To Blog Admin Panel</a>
+                            Go To Blog Admin Panel</a>
 
 
-                        </p>
+                    </p>
                 </div>
             @endif
 
@@ -31,22 +31,15 @@
                 @endif
 
             @endif
-
-
             @forelse($posts as $post)
                 @include("blogetc::partials.index_loop")
             @empty
                 <div class='alert alert-danger'>No posts</div>
             @endforelse
-
             <div class='text-center  col-sm-4 mx-auto'>
                 {{$posts->appends( [] )->links()}}
             </div>
-
-
-
-
-                @include("blogetc::sitewide.search_form")
+            @include("blogetc::sitewide.search_form")
 
         </div>
     </div>

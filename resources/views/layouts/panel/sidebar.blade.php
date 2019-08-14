@@ -118,9 +118,7 @@ if (!isset($active_sidbare)) {
                                 <li class="nav-item {{in_array("all_blog_categories", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.categories.index') }}"
                                                         class="nav-link ">{{trans('messages.all_blog_categories')}}</a>
                                 </li>
-                                <li class="nav-item {{in_array("add_blog_category", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.categories.create_category') }}"
-                                                        class="nav-link ">{{trans('messages.add_blog_category')}}</a>
-                                </li>
+                                
                             </ul>
                         </li>
                         <li class="nav-item nav-item-submenu {{in_array("blog_images", $active_sidbare) ? ' nav-item-open' : '' }}">
@@ -136,7 +134,6 @@ if (!isset($active_sidbare)) {
                             </ul>
                         </li>
                         <li class="nav-item {{in_array("blog_slider", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blog_slider') }}"
-                                                                                                                          class="nav-link ">{{trans('messages.blog_slider')}}</a>
                         </li>
                     </ul>
                 </li>
