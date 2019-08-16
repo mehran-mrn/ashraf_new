@@ -333,6 +333,8 @@ return [
     'leave_a_comment' => 'نظر دهید',
     'comment_body' => 'متن نظر',
     'latest_posts' => " <span class='text-theme-colored'> آخرین </span> مطالب ",
+    'photos_gallery' => " <span class='text-theme-colored'> گالری </span> تصاویر ",
+    'random_photos' => " <span class='text-theme-colored'> تصاویر </span> تصادفی ",
 
     'Charity' => 'خیریه',
     'display_items' => 'آیتم هایی که نمایش داده میشوند',

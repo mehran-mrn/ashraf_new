@@ -618,3 +618,19 @@ function get_posts($limit=null,$main_page=null,$categories=[],$paginate=10){
        $posts=  $posts_query->take($limit)->get();
     return $posts;
 }
+
+function get_random_photo($limit=12,$gallery=false,$random=true){
+    if ($gallery){
+        $response_query = \App\gallery_category::query();
+    }
+    else{
+        $response_query = \App\media::query();
+        $response_query->where('module','gallery');
+    }
+    $response_query->limit($limit);
+    if ($random){
+        $response_query->inRandomOrder();
+    }
+    $response = $response_query->get();
+    return $response;
+}

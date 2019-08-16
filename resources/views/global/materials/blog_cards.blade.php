@@ -5,8 +5,8 @@
         <div class="section-title text-center">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h2 class="text-uppercase line-bottom-center mt-0">Our Blog</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem<br> voluptatem obcaecati!</p>
+                    <h2 class="text-uppercase line-bottom-center mt-0"></h2>
+                    <p>{{trans('messages.articles_preview')}}</p>
                 </div>
             </div>
         </div>

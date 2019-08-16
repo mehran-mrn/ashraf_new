@@ -140,7 +140,7 @@
         <div class="container pt-15 pb-10">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="font-11 text-black-777 m-0">Copyright &copy;2016 ThemeMascot. All Rights Reserved</p>
+                    <p class="font-11 text-black-777 m-0">&copy; {{trans('messages.copyright')}} </p>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="widget no-border m-0">

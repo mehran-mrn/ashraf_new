@@ -1,6 +1,6 @@
 
 <!-- Header -->
-<header id="header" class="header">
+<header id="header" class="header mb-30">
     <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated animated-active">
         <div class="header-nav-wrapper">
             <div class="container">

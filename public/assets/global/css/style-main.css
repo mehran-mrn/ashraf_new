@@ -1202,7 +1202,7 @@ section > .container-fluid {
 /* -------- Header White ---------- */
 .header-nav.navbar-white {
   background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
   border: medium none;
 }
 .header-nav.navbar-white .menuzord {
@@ -1213,10 +1213,10 @@ section > .container-fluid {
   background: transparent;
 }
 .header-nav.navbar-transparent .header-nav-wrapper {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
 }
 .header-nav.navbar-transparent.animated-active {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(100, 255, 155, 0.3);
   backdrop-filter: blur(10px);
 }
 .header-nav.navbar-transparent.animated-active .header-nav-wrapper {

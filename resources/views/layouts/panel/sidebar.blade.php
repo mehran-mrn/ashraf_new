@@ -133,7 +133,7 @@ if (!isset($active_sidbare)) {
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{in_array("blog_slider", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blog_slider') }}"
+                        <li class="nav-item {{in_array("blog_slider", $active_sidbare) ? ' nav-item-open' : '' }}"><a class="nav-link " href="{{ route('blog_slider') }}"> {{trans('messages.blog_slider')}}</a>
                         </li>
                     </ul>
                 </li>

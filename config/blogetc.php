@@ -52,7 +52,7 @@ return [
             'w' => 1000, // width in pixels
             'h' => 700, //height
             'basic_key' => "large", // same as the main key, but WITHOUT 'image_'.
-            'name' => __('messages.large'), // description, used in the admin panel
+            'name' => 'بزرگ',// __('messages.large'), // description, used in the admin panel
             'enabled' => true, // see note above
             'crop' => true, // if true then we will crop and resize to exactly w/h. If false then it will maintain proportions, with a max width of 'w' and max height of 'h'
         ],
@@ -60,7 +60,7 @@ return [
             'w' => 600, // width in pixels
             'h' => 400, //height
             'basic_key' => "medium",// same as the main key, but WITHOUT 'image_'.
-            'name' => __('messages.medium'),// description, used in the admin panel
+            'name' => 'متوسط',//__('messages.medium'),// description, used in the admin panel
             'enabled' => true, // see note above
             'crop' => true, // if true then we will crop and resize to exactly w/h. If false then it will maintain proportions, with a max width of 'w' and max height of 'h'. If you use these images as part of your website template then you should probably have this to true.
         ],
@@ -68,7 +68,7 @@ return [
             'w' => 150, // width in pixels
             'h' => 150, //height
             'basic_key' => "thumbnail",// same as the main key, but WITHOUT 'image_'.
-            'name' => __('messages.thumbnail'),// description, used in the admin panel
+            'name' => 'کوچک',//__('messages.thumbnail'),// description, used in the admin panel
             'enabled' => true, // see note above
         ],
 

@@ -4,7 +4,7 @@
         <div class="section-content">
             <div class="row">
 
-                <div class="col-md-7">
+                <div class="col-md-6">
                     @foreach(get_posts(1) as $news)
 
                     <img class="img-fullwidth" src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']}}" alt="">
@@ -14,7 +14,7 @@
                     @endforeach
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <h3 class="text-uppercase title line-bottom mt-0 mb-30"><i class="fa fa-calendar text-gray-darkgray mr-10"></i>{!!  trans('messages.latest_posts')!!} </h3>
                     @foreach(get_posts(4) as $key=> $news)
                         @if($key !=0)

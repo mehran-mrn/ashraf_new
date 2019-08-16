@@ -303,6 +303,15 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
         Route::post('/delete_slider/{slider_id?}', 'BlogEtcAdminController@delete_slider')
             ->name('delete_blog_slider');
 
+        Route::get('/blog_gallery', 'BlogEtcAdminController@gallery')
+            ->name('blog_gallery');
+        Route::get('/blog_gallery/{gallery_id?}', 'BlogEtcAdminController@gallery_page')
+            ->name('blog_gallery');
+        Route::post('/gallery_page/{gallery_id?}', 'BlogEtcAdminController@save_gallery')
+            ->name('gallery_page');
+        Route::post('/delete_gallery/{gallery_id?}', 'BlogEtcAdminController@delete_gallery')
+            ->name('delete_blog_gallery');
+
         Route::get('/add_post',
             'BlogEtcAdminController@create_post')
             ->name('blogetc.admin.create_post');
