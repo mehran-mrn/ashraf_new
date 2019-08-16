@@ -619,18 +619,27 @@ function get_posts($limit=null,$main_page=null,$categories=[],$paginate=10){
     return $posts;
 }
 
-function get_random_photo($limit=12,$gallery=false,$random=true){
+function get_photo_gallery($limit=12,$gallery=false,$random=true,$gallery_id=[]){
     if ($gallery){
         $response_query = \App\gallery_category::query();
     }
     else{
         $response_query = \App\media::query();
         $response_query->where('module','gallery');
+        if (!empty($gallery_id)){
+            $response_query->whereIn('category_id',$gallery_id);
+        }
     }
     $response_query->limit($limit);
     if ($random){
         $response_query->inRandomOrder();
     }
-    $response = $response_query->get();
+    if ($limit==1){
+        $response = $response_query->first();
+    }
+    else{
+        $response = $response_query->get();
+    }
+
     return $response;
 }

@@ -8,7 +8,7 @@
                     <!-- Portfolio Gallery Grid -->
 
                     <div class="gallery-isotope grid-4 gutter-small clearfix" data-lightbox="gallery">
-                        @forelse(get_random_photo(12) as $photo)
+                        @forelse(get_photo_gallery(12) as $photo)
 
                             <!-- Portfolio Item Start -->
                                 <div class="gallery-item">
@@ -226,72 +226,79 @@
                     <h3 class="text-uppercase title line-bottom mt-0 mb-30 mt-sm-40"><i class="fa fa-photo text-gray-darkgray mr-10"></i>{!! trans('messages.photos_gallery') !!}</h3>
 
                     <div class="bxslider bx-nav-top">
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                        @forelse(get_photo_gallery(6,true,false) as $gallery)
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-rounded" alt="" src="{{ URL::asset(get_photo_gallery(1,false,true,[$gallery['id']])['url']) }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <h5 class="font-weight-600 font-16 text-green-400"><a href="page-single-cause.html">{{$gallery['title']}}</a></h5>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10"> <span class="text-theme-colored">{{trans('messages.view')}}</span> </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+
+                        @empty
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
-                            <div class="pt-10">
-                                <div class="thumb pull-left mb-0 mr-0 pr-20">
-                                    <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
-                                </div>
-                                <div class="ml-100 ">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
-                                    <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
+                                <div class="pt-10">
+                                    <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <img width="75" class="img-circle" alt="" src="{{ URL::asset('/public/assets/global/images/testimonials/1.jpg') }}">
+                                    </div>
+                                    <div class="ml-100 ">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p class="author mt-10">- <span class="text-theme-colored">Catherine Grace,</span> <small><em>CEO apple.inc</em></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforelse
+
+
                     </div>
                 </div>
             </div>
