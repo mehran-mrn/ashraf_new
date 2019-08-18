@@ -47,6 +47,7 @@
                             });
                         });
                         this.on("success", function (file, response) {
+                            console.log(response);
                             var org_name = file.name;
                             var new_name = org_name.replace(".", "_");
                             $("#file_names").append(
@@ -58,7 +59,7 @@
                                 type: 'success'
                             });
                             setTimeout(function () {
-                                location.reload();
+                                // location.reload();
                             }, 1000)
 
                         });
@@ -106,8 +107,11 @@
                 e.preventDefault();
                 $.ajax({
                     url: "{{route('gallery_media_edit')}}",
-                    type: "POST",
+                    method: 'POST',
                     data: $(this).serialize(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
                     },
@@ -162,17 +166,19 @@
                                         <div class="card">
                                             <div class="card-img-actions m-1">
                                                 <img class="card-img img-responsive " width="200" height="250"
-                                                     src="/{{$media['url']}}" alt="">
+                                                     src="/{{$media['url']}}"
+                                                     alt="">
                                                 <div class="card-img-actions-overlay card-img">
                                                     <a href="/{{$media['url']}}"
-                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round"
-                                                       data-popup="lightbox" rel="group">
+                                                       class="btn btn-outline fancybox-thumb bg-white text-white border-white border-2 btn-icon rounded-round"
+                                                       data-popup="lightbox"
+                                                       title="{{$media['title']}}"
+                                                       rel="fancybox-thumb">
                                                         <i class="icon-eye"></i>
                                                     </a>
 
                                                     <a href="javascript:;" onclick="editMedia({{$media['id']}})"
-                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round"
-                                                       data-popup="lightbox" rel="group">
+                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
                                                         <i class="icon-database-edit2"></i>
                                                     </a>
 
@@ -213,7 +219,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" id="frm_add_image">
+                    <form action="" method="post" id="frm_add_image" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="">{{__('messages.title')}}</label>
                             <input type="text" name="title" class="form-control">

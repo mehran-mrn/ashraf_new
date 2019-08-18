@@ -648,6 +648,9 @@ var THEMEMASCOT = {};
                         closeOnContentClick: true,
                         closeBtnInside: false,
                         fixedContentPos: true,
+                        slick: {
+                            rtl: true
+                        },
                         mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
                         image: {
                             verticalFit: true
@@ -675,7 +678,11 @@ var THEMEMASCOT = {};
                 $mfpLightboxIframe.magnificPopup({
                     disableOn: 600,
                     type: 'iframe',
+                    slick: {
+                        rtl: true
+                    },
                     removalDelay: 160,
+                    rtl:true,
                     preloader: false,
                     fixedContentPos: false
                 });
@@ -686,6 +693,10 @@ var THEMEMASCOT = {};
             if( $mfpLightboxInline.length > 0 ) {
                 $mfpLightboxInline.magnificPopup({
                     type: 'inline',
+                    rtl:true,
+                    slick: {
+                        rtl: true
+                    },
                     mainClass: 'mfp-no-margins mfp-zoom-in',
                     closeBtnInside: false,
                     fixedContentPos: true

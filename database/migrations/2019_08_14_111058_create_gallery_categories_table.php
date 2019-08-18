@@ -17,6 +17,7 @@ class CreateGalleryCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description')->nullable();
+            $table->longText('more_description')->nullable();
             $table->string('status')->default('active');
             $table->softDeletes();
             $table->timestamps();

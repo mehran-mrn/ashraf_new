@@ -1,5 +1,6 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
+    <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ URL::asset('node_modules/pnotify/dist/iife/PNotify.js') }}"></script>
 @endsection
 @section('content')

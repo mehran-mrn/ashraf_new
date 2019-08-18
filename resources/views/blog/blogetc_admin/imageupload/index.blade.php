@@ -121,6 +121,4 @@ $active_sidbare = ['blog', 'blog_images', 'blog_posts_list']
         @endif
 
     </div>
-
-
 @endsection

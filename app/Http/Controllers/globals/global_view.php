@@ -10,7 +10,9 @@ use App\charity_period;
 use App\charity_periods_transaction;
 use App\charity_transaction;
 use App\charity_transactions_value;
+use App\gallery_category;
 use App\gateway;
+use App\media;
 use App\setting_transportation;
 use App\store;
 use App\store_product;
@@ -211,4 +213,16 @@ class global_view extends Controller
         return view('global.vows.period', compact('patern'));
     }
 
+    public function gallery()
+    {
+        $medias = gallery_category::where('status','active')->with('media')->get();
+        return view('global.gallery',compact('medias'));
+    }
+
+    public function gallery_view(Request $request)
+    {
+        $pics = media::where('category_id',$request['id'])->get();
+        $categoryInfo = gallery_category::find($request['id']);
+        return view('global.gallery.gallery_view',compact('pics','categoryInfo'));
+    }
 }

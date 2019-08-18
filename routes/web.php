@@ -447,6 +447,10 @@ Route::group(
 
     Route::post('panel/profile/period/delete', 'globals\global_controller@profile_period_delete')->name('global_profile_delete_period');
     Route::get('panel/profile/period/check', 'globals\global_controller@profile_period_check')->name('global_profile_check');
+
+    //gallery view
+    Route::get('gallery', 'globals\global_view@gallery')->name('gallery');
+    Route::get('gallery/{id}', 'globals\global_view@gallery_view')->name('gallery_view');
 });
 //=========================================
 
