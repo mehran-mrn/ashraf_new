@@ -960,21 +960,21 @@ var THEMEMASCOT = {};
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-down'></i>"
             });
             $("#menuzord-right").menuzord({
                 align: "right",
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-down'></i>"
             });
             $("#menuzord-side-panel").menuzord({
                 align: "right",
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "",
-                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
+                indicatorSecondLevel: "<i class='fa fa-angle-down'></i>"
             });
             
             $("#menuzord-verticalnav").menuzord({
@@ -982,9 +982,9 @@ var THEMEMASCOT = {};
                 effect: "slide",
                 animation: "none",
                 indicatorFirstLevel: "<i class='fa fa-angle-down'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-left'></i>"
-                /*indicatorFirstLevel: "<i class='fa fa-angle-right'></i>",
-                indicatorSecondLevel: "<i class='fa fa-angle-right'></i>"*/
+                indicatorSecondLevel: "<i class='fa fa-angle-down'></i>"
+                /*indicatorFirstLevel: "<i class='fa fa-angle-up'></i>",
+                indicatorSecondLevel: "<i class='fa fa-angle-up'></i>"*/
             });
         },
 
@@ -1925,8 +1925,8 @@ var THEMEMASCOT = {};
                     minSlides: ( $bxslider.data("count") === undefined ) ? 2: $bxslider.data("count"),
                     slideMargin: 20,
                     pager: false,
-                    prevText: '<i class="fa fa-angle-left"></i>',
-                    nextText: '<i class="fa fa-angle-right"></i>'
+                    prevText: '<i class="fa fa-angle-down"></i>',
+                    nextText: '<i class="fa fa-angle-up"></i>'
                 });
             }
         },

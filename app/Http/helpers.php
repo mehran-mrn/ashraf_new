@@ -643,3 +643,23 @@ function get_photo_gallery($limit=12,$gallery=false,$random=true,$gallery_id=[])
 
     return $response;
 }
+function get_video_gallery($limit=1,$random=false,$video_id=[]){
+
+        $response_query = \App\video_gallery::query();
+        if (!empty($video_id)){
+            $response_query->whereIn('id',$video_id);
+        }
+
+    $response_query->limit($limit);
+    if ($random){
+        $response_query->inRandomOrder();
+    }
+    if ($limit==1){
+        $response = $response_query->first();
+    }
+    else{
+        $response = $response_query->get();
+    }
+
+    return $response;
+}

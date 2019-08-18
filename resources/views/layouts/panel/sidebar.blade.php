@@ -184,7 +184,10 @@ if (!isset($active_sidbare)) {
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.gallery')}}"
                         style="display:{{in_array("gallery", $active_sidbare) ? 'block' : 'none' }}">
                         <li class="nav-item"><a href="{{route('gallery_add')}}"
-                                                class="nav-link {{in_array("gallery_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.gallery')}}</a>
+                                                class="nav-link {{in_array("gallery_add", $active_sidbare) ? 'active' : '' }}">{{trans('messages.photos')}}</a>
+                        </li>
+                        <li class="nav-item"><a href="{{route('list_video_galleries')}}"
+                                                class="nav-link {{in_array("list_video_galleries", $active_sidbare) ? 'active' : '' }}">{{trans('messages.videos')}}</a>
                         </li>
 
                     </ul>

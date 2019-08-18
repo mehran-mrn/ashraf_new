@@ -4,6 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\gallery_category;
 use App\Http\Controllers\Controller;
+use App\video_gallery;
 use Illuminate\Http\Request;
 use Intervention\Image\Image;
 
@@ -80,13 +81,45 @@ class Media extends Controller
             ]);
         gallery_category::create(
             [
-                'title' => $request['title']
+                'title' => $request['title'],
+                'description' => $request['description']
             ]
         );
 
         $messages = trans('messages.item_created', ['item' => trans('messages.category')]);
         return back_normal($request, $messages);
     }
+
+    public function add_video(Request $request)
+    {
+        $this->validate($request,
+            [
+                'title' => 'required|min:3|string',
+                'iframe' => 'required|min:13|string'
+            ]);
+        video_gallery::create(
+            [
+                'title' => $request['title'],
+                'description' => $request['description'],
+                'iframe' => $request['iframe']
+            ]
+        );
+
+        $messages = trans('messages.item_created', ['item' => trans('messages.video')]);
+        return back_normal($request, $messages);
+    }
+
+    public function video_remove(Request $request)
+    {
+        if ($video = video_gallery::findOrFail($request['id'])) {
+            $video->delete();
+            $video->save();
+            $messages = trans('messages.item_deleted', ['item' => trans('messages.video')]);
+            return back_normal($request, $messages);
+        }
+    }
+
+
 
     public function gallery_category_remove(Request $request)
     {

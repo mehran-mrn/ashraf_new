@@ -11,8 +11,8 @@
                         @forelse(get_photo_gallery(12) as $photo)
 
                             <!-- Portfolio Item Start -->
-                                <div class="gallery-item">
-                                    <div class="thumb">
+                                <div class="gallery-item ">
+                                    <div class="thumb random-gallery">
                                         <img alt="project" src="{{ URL::asset($photo['url']) }}" class="img-fullwidth">
                                         <div class="overlay-shade"></div>
                                         <div class="icons-holder">
@@ -234,7 +234,7 @@
                                     </div>
                                     <div class="ml-100 ">
                                         <h5 class="font-weight-600 font-16 text-green-400"><a href="page-single-cause.html">{{$gallery['title']}}</a></h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas vel sint, ut. Quisquam doloremque minus possimus eligendi dolore ad.</p>
+                                        <p>{{nl2br($gallery['description'])}}</p>
                                         <p class="author mt-10"> <span class="text-theme-colored">{{trans('messages.view')}}</span> </p>
                                     </div>
                                 </div>

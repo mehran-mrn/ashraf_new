@@ -33,6 +33,7 @@ use App\store_product;
 use App\Team;
 use App\User;
 use App\caravan;
+use App\video_gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -677,6 +678,16 @@ class panel_view extends Controller
         return view('panel.store.items.store_items_category_edit', compact('info'));
     }
 
+
+    public function list_video_galleries()
+    {
+        $videos = video_gallery::get();
+        return view('panel.gallery.video_gallery_list', compact('videos'));
+    }
+    public function add_video_galleries_modal()
+    {
+        return view('panel.gallery.ajax.add_video');
+    }
 
     public function gallery_add()
     {

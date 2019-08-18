@@ -63,6 +63,8 @@
     <link href="{{ URL::asset('/public/assets/panel/css/fonts.css') }}" rel="stylesheet" type="text/css">
     <link href="{{URL::asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
 
+
+
     @yield('css')
     <style>
 
@@ -74,6 +76,10 @@
     <!-- JS | jquery plugin collection for this theme -->
     <script src="{{ URL::asset('/public/assets/global/js/jquery-plugin-collection.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
+
+
+
+
 
     <!-- Revolution Slider 5.x SCRIPTS -->
     <script
@@ -150,6 +156,9 @@
 <!-- JS | Custom script for all pages -->
 <script src="{{ URL::asset('/public/assets/global/js/custom.js') }}"></script>
 @yield('footer_js')
+
+
+
 <script>
     $(document).ready(function () {
         @if(!$errors->isEmpty())

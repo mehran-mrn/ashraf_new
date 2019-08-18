@@ -4,6 +4,10 @@
         <label class="label">{{__("messages.title")}}</label>
         <input type="text" class="form-control" name="title">
     </div>
+    <div class="form-group row">
+        <label class="label">{{__("messages.description")}}</label>
+        <textarea class="form-control" name="description"></textarea>
+    </div>
     <div class="form-group row pull-left">
         <button class="btn btn-default" type="button" data-dismiss="modal">{{__('messages.cancel')}}</button>
         <button class="btn btn-primary" type="submit">{{__('messages.add')}}</button>
