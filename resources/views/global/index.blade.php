@@ -7,7 +7,7 @@
     @include('global.materials.slider')
     @include('global.materials.clients')
 
-    @include('global.materials.upcoming_events')
+{{--    @include('global.materials.upcoming_events')--}}
     @include('global.materials.counter')
 
     @include('global.materials.our_mission')
