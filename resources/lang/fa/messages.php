@@ -337,6 +337,7 @@ return [
     'comments' => 'نظرات',
     'leave_a_comment' => 'نظر دهید',
     'comment_body' => 'متن نظر',
+    'copyright' => 'کلیه حقوق این وب سایت متعلق به موسسه خیریه اشرف الانبیاء (ص) می باشد',
     'latest_posts' => " <span class='text-theme-colored'> آخرین </span> مطالب ",
     'photos_gallery' => " <span class='text-theme-colored'> گالری </span> تصاویر ",
     'random_photos' => " <span class='text-theme-colored'> تصاویر </span> تصادفی ",

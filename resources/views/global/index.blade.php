@@ -13,7 +13,7 @@
 {{--    @include('global.materials.our_mission')--}}
     @include('global.materials.home_boxes')
 {{--    @include('global.materials.wide_banner')--}}
-    @include('global.materials.cards')
+{{--    @include('global.materials.cards')--}}
     @include('global.materials.gallery')
     @include('global.materials.video_gallery')
     @include('global.materials.blog_cards')

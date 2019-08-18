@@ -1,5 +1,5 @@
 <!-- Section: home-boxes -->
-<section>
+<section class="mt-30">
     <div class="container pt-0">
         <div class="section-content">
             <div class="row equal-height-inner home-boxes">

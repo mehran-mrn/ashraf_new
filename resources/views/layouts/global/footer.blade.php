@@ -5,18 +5,37 @@
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
                     <img class="mt-10 mb-20" alt="" src="{{ URL::asset('/public/assets/global/images/logo-wide-white-footer.png') }}">
-                    <p>203, Envato Labs, Behind Alis Steet, Melbourne, Australia.</p>
+                    <p>تهران - شمیران - بزرگراه ارتش - پلاک 99
+                        صندوق پستی: 4459-19395
+                    </p>
                     <ul class="list-inline mt-5">
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored mr-5"></i> <a class="text-gray" href="#">123-456-789</a> </li>
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored mr-5"></i> <a class="text-gray" href="#">contact@yourdomain.com</a> </li>
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored mr-5"></i> <a class="text-gray" href="#">www.yourdomain.com</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored mr-5"></i> <a class="text-gray" href="#">021-22454646</a> </li><br>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-fax text-theme-colored mr-5"></i> <a class="text-gray" href="#">021-22491185</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored mr-5"></i> <a class="text-gray" href="#">info@ashrafolanbia.ir</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored mr-5"></i> <a class="text-gray" href="#">www.ashrafolanbia.ir</a> </li>
+
                     </ul>
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
-                    <h5 class="widget-title line-bottom">Latest News</h5>
+                    <h5 class="widget-title line-bottom">{!! trans('messages.latest_posts') !!}</h5>
                     <div class="latest-posts">
+                        @forelse(get_posts(8) as $key=> $news)
+                            <article class="post media-post clearfix pb-0 mb-10">
+                                <a class="post-thumb" href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"><img
+                                            class="post-side-thumb-img"
+                                            src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}"
+                                            alt=""></a>
+                                <div class="post-right">
+                                    <h5 class="post-title mt-0"><a
+                                                href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">{{$news['title']}}</a>
+                                    </h5>
+                                </div>
+                            </article>
+
+                        @empty
+
                         <article class="post media-post clearfix pb-0 mb-10">
                             <a href="#" class="post-thumb"><img alt="" src="http://placehold.it/80x55"></a>
                             <div class="post-right">
@@ -38,6 +57,7 @@
                                 <p class="post-date mb-0 font-12">Mar 08, 2015</p>
                             </div>
                         </article>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -114,10 +134,9 @@
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <div class="widget dark">
-                    <h5 class="widget-title mb-10">Call Us Now</h5>
+                    <h5 class="widget-title mb-10">صندوق دریافت پیامک</h5>
                     <div class="text-gray">
-                        +61 3 1234 5678 <br>
-                        +12 3 1234 5678
+                        1000454646 <br>
                     </div>
                 </div>
             </div>
