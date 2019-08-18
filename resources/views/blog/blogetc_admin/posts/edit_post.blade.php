@@ -1,4 +1,7 @@
 @extends("blog.blogetc_admin.layouts.admin_layout")
+@section("js")
+    <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
+@endsection
 @section("content")
     <div class="container">
         <div class="row">
@@ -20,4 +23,15 @@
 
     </form>
         </div></div>
+@endsection
+@section('footer_js')
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('post_text', {
+                language: 'fa',
+                uiColor: '#9AB8F3',
+
+            });
+        });
+    </script>
 @endsection

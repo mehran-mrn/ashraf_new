@@ -262,6 +262,7 @@ return [
     'categories' => 'دسته بندی ها',
     'latest_post' => 'آخرین مطالب',
     'blog_posts' => 'مطالب',
+    'articles_preview' => 'نیم نگاهی به مقالات',
     'post_add' => 'افزودن مطلب',
     'post_list' => 'لیست مطالب',
     'featured_images' => 'تصویر عنوان',
