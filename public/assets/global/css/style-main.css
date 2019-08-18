@@ -1237,7 +1237,7 @@ section > .container-fluid {
   border-bottom: 1px solid rgba(255, 255, 255, 1);
 }
 .header-nav.navbar-transparent.animated-active {
-  background-color: rgba(100, 255, 155, 0.3);
+  background-color: rgba(37, 39, 46, 0.3);
   backdrop-filter: blur(10px);
 }
 .header-nav.navbar-transparent.animated-active .header-nav-wrapper {
