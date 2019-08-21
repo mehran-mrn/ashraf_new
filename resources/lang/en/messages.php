@@ -36,6 +36,7 @@ return [
     'email_or_mobile'=>'email or mobile',
     'repeat_password'=>'Repeat Password',
     'password'=>'Password',
+    'translation_maganger'=>'مترجم سایت',
     'register_form_title'=>'Register Form'
 
 
