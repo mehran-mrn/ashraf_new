@@ -209,7 +209,7 @@ ul.list li:before {
 }
 
 .form-control:focus, form input[type=\"text\"]:focus, form input[type=\"email\"]:focus, form input[type=\"number\"]:focus, form input[type=\"url\"]:focus, form input[type=\"search\"]:focus, form input[type=\"tel\"]:focus, form input[type=\"password\"]:focus, form input[type=\"date\"]:focus, form input[type=\"color\"]:focus, form select:focus, form textarea:focus {
-    border-color: rgba(0, 0, 0,0.3);
+    border-color: rgba(0, 0, 0, 0.3);
 }
 
 .form-transparent.form-line .form-control {
@@ -635,6 +635,10 @@ ul.list li:before {
 
 .btn-read-more::after {
     margin-right: 5px;
+    float: right !important;
+    content: "\f0a8";
+
+
 }
 
 blockquote {

@@ -684,6 +684,7 @@ class panel_view extends Controller
         $videos = video_gallery::get();
         return view('panel.gallery.video_gallery_list', compact('videos'));
     }
+
     public function add_video_galleries_modal()
     {
         return view('panel.gallery.ajax.add_video');
@@ -703,8 +704,12 @@ class panel_view extends Controller
     public function gallery_category_view(Request $request)
     {
         $catInfo = gallery_category::find($request['id']);
-        $medias = \App\media::where('category_id', $request['id'])->get();
-        return view('panel.gallery.view', compact('medias','catInfo'));
+        $medias = \App\media::where(
+            [
+                ['thumbnail_size', '=', '267x250'],
+                ['category_id', '=', $request['id']],
+            ])->get();
+        return view('panel.gallery.view', compact('medias', 'catInfo'));
     }
 //end store module
 

@@ -25,6 +25,8 @@ class CreateMediaTable extends Migration
             $table->integer('category_id')->nullable();
             $table->string('title')->nullable();
             $table->string('type'); //image,video,audio,file,xml,
+            $table->string('thumbnail_size')->nullable();
+            $table->integer('parent_id')->nullable(); //image,video,audio,file,xml,
             $table->softDeletes();
             $table->timestamps();
         });

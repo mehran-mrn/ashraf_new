@@ -282,12 +282,9 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 
         // throttle to a max of 10 attempts in 3 minutes:
         Route::group(['middleware' => 'throttle:10,3'], function () {
-
             Route::post('save_comment/{blogPostSlug}',
                 'BlogEtcCommentWriterController@addNewComment')
                 ->name('blogetc.comments.add_new_comment');
-
-
         });
 
     });
@@ -451,6 +448,9 @@ Route::group(
     //gallery view
     Route::get('gallery', 'globals\global_view@gallery')->name('gallery');
     Route::get('gallery/{id}', 'globals\global_view@gallery_view')->name('gallery_view');
+
+    //blog view
+    Route::get('blog', 'globals\global_view@blog')->name('blog');
 });
 //=========================================
 

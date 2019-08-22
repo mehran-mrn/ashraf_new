@@ -531,5 +531,6 @@ return [
     'show'=>'نمایش',
     'zoom_in'=>'بزرگ نمایی',
     'description_more'=>'توضیحات بیشتر',
-    'image_gallery_ashraf'=>'نگارخانه خیریه اشرف النبیاء'
+    'image_gallery_ashraf'=>'نگارخانه خیریه اشرف النبیاء',
+    'continue_post'=>'ادامه مطلب'
 ];

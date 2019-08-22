@@ -159,7 +159,6 @@ function image_saver($image_input, $folder = 'photos', $module = 'none', $custom
 }
 
 
-
 function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_size = [], $image_name = null)
 {
 
@@ -246,23 +245,26 @@ function get_cites($id = null)
     if ($id) {
         $cities = \App\city::with('province')->find($id);
     } else {
-        $cities = \App\city::with(['province'=>function($q){$q->with('province');}])->where('parent', '!=', '0')->get();
+        $cities = \App\city::with(['province' => function ($q) {
+            $q->with('province');
+        }])->where('parent', '!=', '0')->get();
     }
     return $cities;
 }
+
 function get_cites_parent($id)
 {
 
     $this_city = \App\city::find($id);
-    if ($this_city['parent']!=0){
+    if ($this_city['parent'] != 0) {
         $parent = \App\city::find($this_city['parent']);
-    }
-    else{
-        $parent =false;
+    } else {
+        $parent = false;
     }
 
     return $parent;
 }
+
 function get_provinces($id = null)
 {
     if ($id) {
@@ -272,6 +274,7 @@ function get_provinces($id = null)
     }
     return $provinces;
 }
+
 function get_building_type($id = null)
 {
     if ($id) {
@@ -292,30 +295,30 @@ function get_images()
 
 function get_building_items($project_id)
 {
-    $items = \App\building_item::where('building_id',$project_id)->get();
+    $items = \App\building_item::where('building_id', $project_id)->get();
     return $items;
 }
-function get_building_tickets($project_id,$ticket_item_checkbox=null,$ticket_item_filter=null,$ticket_status_checkbox=null,$ticket_status_filter=null)
+
+function get_building_tickets($project_id, $ticket_item_checkbox = null, $ticket_item_filter = null, $ticket_status_checkbox = null, $ticket_status_filter = null)
 {
     $tickets_query = \App\building_ticket::query();
     $tickets_query->with('building_item');
-    $tickets_query->where('building_id',$project_id);
-    $tickets_query->orderBy('created_at','desc');
-    if ($ticket_item_checkbox == "on" and $ticket_item_filter){
-        $items=[];
-        foreach ($ticket_item_filter as $item){
-            $items[]=$item;
+    $tickets_query->where('building_id', $project_id);
+    $tickets_query->orderBy('created_at', 'desc');
+    if ($ticket_item_checkbox == "on" and $ticket_item_filter) {
+        $items = [];
+        foreach ($ticket_item_filter as $item) {
+            $items[] = $item;
         }
-        $tickets_query->whereIn('item_id',$items);
+        $tickets_query->whereIn('item_id', $items);
     }
-    if ($ticket_status_checkbox == "on" and $ticket_status_filter){
-            foreach ($ticket_status_filter as $status){
-                if ($status == 'in_progress'){
-                    $tickets_query->whereNull('closed');
-                }
-                elseif($status == 'closed'){
-                    $tickets_query->whereNotNull('closed');
-                }
+    if ($ticket_status_checkbox == "on" and $ticket_status_filter) {
+        foreach ($ticket_status_filter as $status) {
+            if ($status == 'in_progress') {
+                $tickets_query->whereNull('closed');
+            } elseif ($status == 'closed') {
+                $tickets_query->whereNotNull('closed');
+            }
         }
     }
     $tickets = $tickets_query->get();
@@ -353,7 +356,6 @@ function get_user($user_id)
     $user = \App\User::find($user_id);
     return $user;
 }
-
 
 function count_caravan_useage_history($person_id, $current_caravan_id = null)
 {
@@ -457,11 +459,12 @@ function shamsi_to_miladi($input)
     return $date_gregorian;
 
 }
-function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false)
+
+function miladi_to_shamsi_date($date = null, $be_array = null, $with_time = false)
 {  //2017-01-01 20:30:00
-    $time="";
+    $time = "";
     if ($with_time) {
-        $time = substr(explode(" ", $date)[1],0,5);
+        $time = substr(explode(" ", $date)[1], 0, 5);
     }
     if (!isset($date)) {
         $date = date("Y-m-d");
@@ -477,11 +480,12 @@ function miladi_to_shamsi_date($date = null, $be_array = null,$with_time = false
         return $date_jalali;
     } else {
         $date_jalali = gregorian_to_jalali($new_date_year, $new_date_month, $new_date_day, "-");
-        return $time."  ".$date_jalali ;
+        return $time . "  " . $date_jalali;
 
     }
 
 }
+
 function persian_num($string)
 {
     //arrays of persian and latin numbers
@@ -492,6 +496,7 @@ function persian_num($string)
 
     return $string;
 }
+
 function latin_num($string)
 {
     //arrays of persian and latin numbers
@@ -541,22 +546,22 @@ function get_parent_child_checkbox($id, $parent = 0, $table)
     return $html;
 }
 
-function treeView($checked=[])
+function treeView($checked = [])
 {
     $Categorys = store_category::where('parent_id', '=', 0)->get();
     $tree = '<ul id="browser" class="list-unstyled"><li class="pt-2"></li>';
     foreach ($Categorys as $Category) {
-        $check='';
-        if(in_array($Category->id,$checked)){
-            $check="checked='checked'";
+        $check = '';
+        if (in_array($Category->id, $checked)) {
+            $check = "checked='checked'";
         }
         $tree .= '<li class="pt-2 closed"<a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" '.$check.' class="custom-control-input" id="cat_'.$Category->id.'" name="cats[]" value="'.$Category->id.'">
-    <label class="custom-control-label" for="cat_'.$Category->id.'">' . $Category->title . '</label>
+    <input type="checkbox" ' . $check . ' class="custom-control-input" id="cat_' . $Category->id . '" name="cats[]" value="' . $Category->id . '">
+    <label class="custom-control-label" for="cat_' . $Category->id . '">' . $Category->title . '</label>
 </div></a>';
         if (count($Category->childs)) {
-            $tree .= childView($Category,$checked);
+            $tree .= childView($Category, $checked);
         }
     }
     $tree .= '<ul>';
@@ -564,29 +569,29 @@ function treeView($checked=[])
     return $tree;
 }
 
-function childView($Category,$checked=[])
+function childView($Category, $checked = [])
 {
     $html = '<ul>';
     foreach ($Category->childs as $arr) {
-        $check='';
-        if(in_array($arr->id,$checked)){
-            $check="checked='checked'";
+        $check = '';
+        if (in_array($arr->id, $checked)) {
+            $check = "checked='checked'";
         }
         if (count($arr->childs)) {
 
             $html .= '<li class="pt-2 closed list-unstyled">
 <a class="tree-name">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" class="custom-control-input" '.$check.' id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
-    <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
+    <input type="checkbox" class="custom-control-input" ' . $check . ' id="cat_' . $arr->id . '"  name="cats[]" value="' . $Category->id . '">
+    <label class="custom-control-label" for="cat_' . $arr->id . '">' . $arr->title . '</label>
 </div>
 </a>';
             $html .= childView($arr);
         } else {
             $html .= '<li class="pt-2 list-unstyled">
 <div class="custom-control custom-checkbox custom-control-inline">
-    <input type="checkbox" '.$check.' class="custom-control-input" id="cat_'.$arr->id.'"  name="cats[]" value="'.$Category->id.'">
-    <label class="custom-control-label" for="cat_'.$arr->id.'">' . $arr->title . '</label>
+    <input type="checkbox" ' . $check . ' class="custom-control-input" id="cat_' . $arr->id . '"  name="cats[]" value="' . $Category->id . '">
+    <label class="custom-control-label" for="cat_' . $arr->id . '">' . $arr->title . '</label>
 </div>';
             $html .= "</li>";
         }
@@ -598,68 +603,110 @@ function childView($Category,$checked=[])
 }
 
 
-function get_inventory_size_max_time($pro_id){
+function get_inventory_size_max_time($pro_id)
+{
 
 }
-function get_blog_categories(){
+
+function get_blog_categories()
+{
     $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
     return $categories;
 }
 
-function get_posts($limit=null,$main_page=null,$categories=[],$paginate=10){
+function get_posts($limit = null, $main_page = null, $categories = [], $paginate = 10)
+{
 
-    $posts_query =  WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
+    $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
     $posts_query->orderBy("posted_at", "desc");
-    if (!empty($main_page)){    }
-    if (!empty($categories)){    }
-    if (!empty($limit)){
+    if (!empty($main_page)) {
+    }
+    if (!empty($categories)) {
+    }
+    if (!empty($limit)) {
         $posts_query->take($limit);
     }
-       $posts=  $posts_query->take($limit)->get();
+    $posts = $posts_query->take($limit)->get();
     return $posts;
 }
 
-function get_photo_gallery($limit=12,$gallery=false,$random=true,$gallery_id=[]){
-    if ($gallery){
+function get_photo_gallery($limit = 12, $gallery = false, $random = true, $gallery_id = [])
+{
+    if ($gallery) {
         $response_query = \App\gallery_category::query();
-    }
-    else{
+    } else {
         $response_query = \App\media::query();
-        $response_query->where('module','gallery');
-        if (!empty($gallery_id)){
-            $response_query->whereIn('category_id',$gallery_id);
+        $response_query->where('module', 'gallery');
+        if (!empty($gallery_id)) {
+            $response_query->whereIn('category_id', $gallery_id);
         }
     }
     $response_query->limit($limit);
-    if ($random){
+    if ($random) {
         $response_query->inRandomOrder();
     }
-    if ($limit==1){
+    if ($limit == 1) {
         $response = $response_query->first();
-    }
-    else{
+    } else {
         $response = $response_query->get();
     }
 
     return $response;
 }
-function get_video_gallery($limit=1,$random=false,$video_id=[]){
 
-        $response_query = \App\video_gallery::query();
-        if (!empty($video_id)){
-            $response_query->whereIn('id',$video_id);
-        }
+function get_video_gallery($limit = 1, $random = false, $video_id = [])
+{
+
+    $response_query = \App\video_gallery::query();
+    if (!empty($video_id)) {
+        $response_query->whereIn('id', $video_id);
+    }
 
     $response_query->limit($limit);
-    if ($random){
+    if ($random) {
         $response_query->inRandomOrder();
     }
-    if ($limit==1){
+    if ($limit == 1) {
         $response = $response_query->first();
-    }
-    else{
+    } else {
         $response = $response_query->get();
     }
 
     return $response;
+}
+
+function uploadGallery($file, $custom_size = array(), $cat_id, $title, $parent_id = 0, $time)
+{
+    $size = array('100,100');
+    $size = array_merge($size, $custom_size);
+    $year = jdate("Y", time(), '', '', 'en');
+    $month = jdate("m", time(), '', '', 'en');
+    $day = jdate("d", time(), '', '', 'en');
+    $fileSize = $file->getSize();
+    foreach ($size as $value) {
+        $si = explode(',', $value);
+        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1])) {
+            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1], 0775, true);
+        }
+        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1];
+        $img = Image::make($file->getRealPath());
+        $filename = $time . "_" . $file->getClientOriginalName();
+        $img->resize($si[0], $si[1], function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($thumbnailPath . '/' . $filename);
+        \App\media::create([
+            'name' => $filename,
+            'url' => $thumbnailPath . "/" . $filename,
+            'path' => $thumbnailPath,
+            'org_name' => $file->getClientOriginalName(),
+            'mime' => $file->getClientMimeType(),
+            'module' => "gallery",
+            'size' => $fileSize,
+            'category_id' => $cat_id,
+            'title' => $title,
+            'parent_id' => $parent_id,
+            'type' => $file->getClientOriginalExtension(),
+            'thumbnail_size' => $si[0] . "x" . $si[1]
+        ]);
+    }
 }

@@ -65,7 +65,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @endforeach
+                            @endforeach
                         </table>
                         <div class='text-center'>
                             {{$posts->appends( [] )->links()}}
