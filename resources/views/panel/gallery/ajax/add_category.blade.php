@@ -32,6 +32,7 @@
 
     $("#frm_gallery_category_add").on('submit', function (e) {
         e.preventDefault();
+        CKEDITOR.instances['more_description'].updateElement();
         $(".btn-submit").attr("disabled", true);
         $.ajax({
             url: "{{route('gallery_category_add')}}",
@@ -41,6 +42,7 @@
                 'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
             },
             success: function (response) {
+                console.log(response)
                 new PNotify({
                     title: '',
                     text: response.message,
@@ -50,6 +52,7 @@
                     location.reload();
                 }, 1000)
             }, error: function () {
+                console.log(response)
 
             }
         });

@@ -30,7 +30,8 @@
                             <div id="grid" class="gallery-isotope grid-4 gutter clearfix rtl">
                                 @foreach($medias as $media)
                                     @if(count($media['media'])>1)
-                                        <div class="gallery-item branding " style="left: unset!important;right: 0!important;">
+                                        <div class="gallery-item branding "
+                                             style="left: unset!important;right: 0!important;">
                                             <div class="thumb">
                                                 <img class="img-fullwidth"
                                                      src="{{asset('/public/assets/global/images/gallery/2.jpg')}}"

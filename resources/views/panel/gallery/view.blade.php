@@ -28,6 +28,7 @@
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
                     maxFilesize: 5,
                     maxFiles: 10,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
                     autoProcessQueue: false,
                     addRemoveLinks: true,
                     sending: function (file, xhr, formData) {
@@ -59,7 +60,7 @@
                                 type: 'success'
                             });
                             setTimeout(function () {
-                                // location.reload();
+                                location.reload();
                             }, 1000)
 
                         });
@@ -116,7 +117,6 @@
                         'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
                     },
                     success: function (response) {
-                        console.log(response)
                         if (response.message.status === 200) {
                             new PNotify({
                                 title: '',
@@ -211,7 +211,7 @@
         </div>
     </section>
 
-    <div id="general_modal" class="modal fade ">
+    <div id="general_modal" class="modal fade">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header bg-info">

@@ -6,7 +6,9 @@ use App\gallery_category;
 use App\Http\Controllers\Controller;
 use App\video_gallery;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Validation\Rules\In;
+use Image;
 
 class Media extends Controller
 {
@@ -21,15 +23,14 @@ class Media extends Controller
         return $fileName;
     }
 
-
     public function upload_files_category(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|file',
+            'file' => 'required|image',
             'cat_id' => 'required',
         ]);
         $fileSize = request()->file->getSize();
-        $getRealPath = $request->file('file')->getRealPath();
+        $getRealPath = $request->file('file');
         $year = jdate("Y", time(), '', '', 'en');
         $month = jdate("m", time(), '', '', 'en');
         $day = jdate("d", time(), '', '', 'en');
@@ -54,49 +55,27 @@ class Media extends Controller
         }
 
         $destinationPath = 'public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day;
-        $image_name = mt_rand() . '.' . request()->file->getClientOriginalExtension();
-
-        $filename = request()->file->getClientOriginalName();
-
-        request()->file->move($destinationPath, $image_name);
-        \App\media::create([
+        $time = time();
+        $image_name = $time . '_' . request()->file->getClientOriginalName();
+        $parent = \App\media::create([
             'name' => $image_name,
             'url' => $destinationPath . "/" . $image_name,
             'path' => $destinationPath,
             'org_name' => request()->file->getClientOriginalName(),
             'mime' => request()->file->getClientMimeType(),
             'module' => "gallery",
+            'type' => request()->file->getClientOriginalExtension(),
             'size' => $fileSize,
             'category_id' => $request['cat_id'],
-            'title' => $request['title']
+            'title' => $request['title'],
         ]);
-
-        $file = $request['file'];
-        $image_resize = Image::make($file->getRealPath());
-        $sizes = array('100x700', '600x400', '150x150');
-        foreach ($sizes as $size) {
-            $sizeEx = explode("x", $size);
-            $w = $sizeEx[0];
-            $h = $sizeEx[1];
-            if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day . "/" . $w . "-" . $h)) {
-                mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day . "/" . $w . "-" . $h, 0775, true);
-            }
-            $filename = time() . $file->getClientOriginalName();
-            $destinationPath = '/public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day . "/" . $w . "-" . $h."/";
-
-//            Image::make($request['file'])->resize($w, $h)->save($destinationPath .  $filename);
-
-            $image_resize->resize($w, $h, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $image_resize->save($destinationPath .  $filename);
-        }
+        uploadGallery(request()->file, array('367,250', '267,250'), $request['cat_id'], $request['title'], $parent['id'], $time);
+        request()->file->move($destinationPath, $image_name);
 
 
         $messages = trans('messages.item_created', ['item' => trans('messages.image')]);
         return back_normal($request, $messages);
     }
-
 
     public function gallery_category_add(Request $request)
     {
@@ -111,7 +90,6 @@ class Media extends Controller
                 'more_description' => $request['more_description']
             ]
         );
-
         $messages = trans('messages.item_created', ['item' => trans('messages.category')]);
         return back_normal($request, $messages);
     }
@@ -144,7 +122,6 @@ class Media extends Controller
             return back_normal($request, $messages);
         }
     }
-
 
     public function gallery_category_remove(Request $request)
     {
@@ -186,6 +163,5 @@ class Media extends Controller
             return back_normal($request, $data);
         }
     }
-
 
 }

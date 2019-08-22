@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\globals;
 
 use App\bank;
+use App\blog_categories;
 use App\blog_slider;
 use App\charity_payment_patern;
 use App\charity_payment_title;
@@ -27,6 +28,7 @@ use Swis\LaravelFulltext\Search;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
 use WebDevEtc\BlogEtc\Models\BlogEtcPost;
+
 class global_view extends Controller
 {
     use UsesCaptcha;
@@ -37,7 +39,7 @@ class global_view extends Controller
         return view('global.index', compact('sliders'));
     }
 
-    public function post_page($blogPostSlug,Request $request)
+    public function post_page($blogPostSlug, Request $request)
     {
         $blog_post = BlogEtcPost::where("slug", $blogPostSlug)
             ->firstOrFail();;
@@ -55,6 +57,7 @@ class global_view extends Controller
             'captcha' => $captcha,
         ]);
     }
+
     public function register_form()
     {
         return view('global.materials.register');
@@ -86,10 +89,10 @@ class global_view extends Controller
         $periods = charity_period::where('user_id', Auth::id())->get();
         $unpaidPeriod = charity_periods_transaction::where(
             [
-                ['status','=','unpaid'],
-                ['user_id','=',Auth::id()],
-        ])->get();
-        return view('global.profile', compact('periods','unpaidPeriod'));
+                ['status', '=', 'unpaid'],
+                ['user_id', '=', Auth::id()],
+            ])->get();
+        return view('global.profile', compact('periods', 'unpaidPeriod'));
     }
 
     public function change_password()
@@ -168,7 +171,7 @@ class global_view extends Controller
             $trans->status = 'pending';
             $trans->save();
             $transInfo = $trans->id;
-            if(isset($request['field'])) {
+            if (isset($request['field'])) {
                 foreach ($request['field'] as $item => $value) {
                     if ($value != "") {
                         charity_transactions_value::create(
@@ -215,14 +218,31 @@ class global_view extends Controller
 
     public function gallery()
     {
-        $medias = gallery_category::where('status','active')->with('media')->get();
-        return view('global.gallery',compact('medias'));
+        $medias = gallery_category::where('status', 'active')->with('media')->get();
+        return view('global.gallery', compact('medias'));
     }
 
     public function gallery_view(Request $request)
     {
-        $pics = media::where('category_id',$request['id'])->get();
+        $pics = media::where(
+            [
+                ['category_id','=',$request['id']],
+                ['thumbnail_size','=',null],
+            ])->get();
         $categoryInfo = gallery_category::find($request['id']);
-        return view('global.gallery.gallery_view',compact('pics','categoryInfo'));
+        return view('global.gallery.gallery_view', compact('pics', 'categoryInfo'));
+    }
+
+    public function blog($category_slug = null)
+    {
+        if ($category_slug) {
+            $category = BlogEtcCategory::where("slug", $category_slug)->firstOrFail();
+            $posts = $category->posts()->where("blog_etc_post_categories.blog_etc_category_id", $category->id);
+        } else {
+            $posts = BlogEtcPost::query();
+        }
+        $posts = $posts->orderBy("posted_at", "desc")
+            ->paginate(config("blogetc.per_page", 10));
+        return view('global.blog', compact('posts'));
     }
 }
