@@ -520,4 +520,6 @@ return array (
   'please_no_any_comment' => 'هیچ نظری در سیستم یافت نشد.',
   'blog_album' => 'البوم وبلاگ',
   'show' => 'نمایش',
+    'show_site'=>'نمایش سایت',
+    'approve_image_text'=>'آیا از ثبت تصویر اصلی دسته بندی اطمینان دارید؟'
 );

@@ -2,11 +2,15 @@
 @section('meta')
     <meta name="token" content="{{csrf_token()}}">
 @stop
+@section('css')
+    <link rel="stylesheet" href="{{URL::asset('/public/assets/global/js/fancybox/dist/jquery.fancybox.min.css')}}"
+          type="text/css" media="screen"/>
+@stop
 @section('js')
     <script src="{{ URL::asset('node_modules/pnotify/dist/iife/PNotify.js') }}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
-    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/media/fancybox.min.js')}}"></script>
-    <script src="{{URL::asset('/public/assets/panel/global_assets/js/demo_pages/gallery.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/global/js/fancybox/dist/jquery.fancybox.min.js')}}"></script>
+    {{--    <script src="{{URL::asset('/public/assets/panel/global_assets/js/demo_pages/gallery.js')}}"></script>--}}
     <script>
         $.ajaxSetup({
             headers: {
@@ -27,10 +31,11 @@
                     paramName: "file",
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
                     maxFilesize: 5,
-                    maxFiles: 10,
+                    maxFiles: 30,
                     acceptedFiles: ".jpeg,.jpg,.png,.gif",
                     autoProcessQueue: false,
                     addRemoveLinks: true,
+                    parallelUploads: 30,
                     sending: function (file, xhr, formData) {
                         formData.append("_token", token);
                         formData.append("cat_id", cat_id);
@@ -131,6 +136,35 @@
                     }
                 });
             })
+
+            $('[data-fancybox="images"]').fancybox({
+                closeExisting: false,
+                gutter: 50,
+                keyboard: true,
+                arrows: true,
+                protect: true,
+                image: {
+                    preload: true
+                },
+                buttons: [
+                    "zoom",
+                    "slideShow",
+                    "fullScreen",
+                    "thumbs",
+                    "close"
+                ],
+                thumbs: {
+                    autoStart: true
+                },
+                afterLoad: function (instance, current) {
+                    var pixelRatio = window.devicePixelRatio || 1;
+
+                    if (pixelRatio > 1.5) {
+                        current.width = current.width / pixelRatio;
+                        current.height = current.height / pixelRatio;
+                    }
+                }
+            })
         })
 
     </script>
@@ -143,6 +177,8 @@
                 <section>
                     <a href="{{route('gallery_add')}}"
                        class="btn btn-outline-dark m-2 py-2 px-3">{{__('messages.back')}}</a>
+                    <a href="{{route('gallery_view',['id'=>$catInfo['id']])}}"
+                       class="btn btn-outline-dark m-2 py-2 px-3" target="_blank">{{__('messages.show_site')}}</a>
                     <button
                             class="btn btn-primary m-2 py-2 px-3"
                             data-toggle="modal"
@@ -150,6 +186,8 @@
                             data-target="#general_modal">
                         {{__('messages.add_image')}}
                     </button>
+
+
                 </section>
             </div>
             <section>
@@ -165,25 +203,24 @@
                                     <div class="col-sm-6 col-lg-3">
                                         <div class="card">
                                             <div class="card-img-actions m-1">
-                                                <img class="card-img img-responsive " width="200" height="250"
-                                                     src="/{{$media['url']}}"
+                                                <img class="card-img img-responsive" width="267" height="178"
+                                                     src="/{{$media['path']."/267-178/".$media['name']}}"
                                                      alt="">
                                                 <div class="card-img-actions-overlay card-img">
                                                     <a href="/{{$media['url']}}"
-                                                       class="btn btn-outline fancybox-thumb bg-white text-white border-white border-2 btn-icon rounded-round"
-                                                       data-popup="lightbox"
-                                                       title="{{$media['title']}}"
-                                                       rel="fancybox-thumb">
+                                                       class="btn btn-outline fancybox-thumb bg-white text-white border-white border-2 btn-icon rounded-round "
+                                                       data-fancybox="images"
+                                                       data-caption="{{$media['title']}}">
                                                         <i class="icon-eye"></i>
                                                     </a>
 
                                                     <a href="javascript:;" onclick="editMedia({{$media['id']}})"
-                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round m-1">
                                                         <i class="icon-database-edit2"></i>
                                                     </a>
 
                                                     <a href="javascript:;"
-                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round swal-alert "
+                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round swal-alert m-1"
                                                        data-ajax-link="{{route('gallery_category_image_remove',['id'=>$media['id']])}}"
                                                        data-method="DELETE"
                                                        data-csrf="{{csrf_token()}}"
@@ -194,6 +231,51 @@
                                                        data-confirm-text="{{trans('messages.delete')}}"
                                                        data-cancel-text="{{trans('messages.cancel')}}"><i
                                                                 class="icon-trash"></i>
+                                                    </a>
+
+                                                    <a href="javascript:;"
+                                                       class="btn btn-outline
+                                                        {{$catInfo['media_id_one']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
+                                                        text-white border-2 btn-icon rounded-round swal-alert m-1"
+                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'one'])}}"
+                                                       data-method="GET"
+                                                       data-csrf="{{csrf_token()}}"
+                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
+                                                       data-text="{{trans('messages.approve_image_text')}}"
+                                                       data-type="warning"
+                                                       data-cancel="true"
+                                                       data-confirm-text="{{trans('messages.approve')}}"
+                                                       data-cancel-text="{{trans('messages.cancel')}}">1
+                                                    </a>
+
+                                                    <a href="javascript:;"
+                                                       class="btn btn-outline
+                                                       {{$catInfo['media_id_two']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
+                                                               text-white border-2 btn-icon rounded-round swal-alert m-1"
+                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'two'])}}"
+                                                       data-method="GET"
+                                                       data-csrf="{{csrf_token()}}"
+                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
+                                                       data-text="{{trans('messages.approve_image_text')}}"
+                                                       data-type="warning"
+                                                       data-cancel="true"
+                                                       data-confirm-text="{{trans('messages.approve')}}"
+                                                       data-cancel-text="{{trans('messages.cancel')}}">2
+                                                    </a>
+
+                                                    <a href="javascript:;"
+                                                       class="btn btn-outline
+                                                       {{$catInfo['media_id_three']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
+                                                       text-white border-2 btn-icon rounded-round swal-alert m-1"
+                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'three'])}}"
+                                                       data-method="GET"
+                                                       data-csrf="{{csrf_token()}}"
+                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
+                                                       data-text="{{trans('messages.approve_image_text')}}"
+                                                       data-type="warning"
+                                                       data-cancel="true"
+                                                       data-confirm-text="{{trans('messages.approve')}}"
+                                                       data-cancel-text="{{trans('messages.cancel')}}">3
                                                     </a>
                                                 </div>
                                                 <div class="caption">
@@ -240,8 +322,6 @@
             </div>
         </div>
     </div>
-
-
     <div id="edit_modal" class="modal fade ">
         <div class="modal-dialog ">
             <div class="modal-content">

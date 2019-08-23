@@ -235,6 +235,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::delete('category/image/{id}','panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
         Route::POST('media/info','panel\Media@gallery_media_info')->name('gallery_media_info');
         Route::post('media/edit','panel\Media@gallery_media_edit')->name('gallery_media_edit');
+        Route::get('media/default/{cat_id}/{media_id}','panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
     });
     //======================================
     //-----------End Panel View------------

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\category;
 use App\gallery_category;
 use App\Http\Controllers\Controller;
 use App\video_gallery;
@@ -30,31 +31,25 @@ class Media extends Controller
             'cat_id' => 'required',
         ]);
         $fileSize = request()->file->getSize();
-        $getRealPath = $request->file('file');
         $year = jdate("Y", time(), '', '', 'en');
         $month = jdate("m", time(), '', '', 'en');
-        $day = jdate("d", time(), '', '', 'en');
 
         if (!file_exists('public/images')) {
-            mkdir('public/images', 0644, true);
+            mkdir('public/images', 0755, true);
         }
         if (!file_exists('public/images/gallery')) {
-            mkdir('public/images/gallery', 0644, true);
+            mkdir('public/images/gallery', 0755, true);
         }
         if (!file_exists('public/images/gallery/' . $request['cat_id'])) {
-            mkdir('public/images/gallery/' . $request['cat_id'], 0644, true);
+            mkdir('public/images/gallery/' . $request['cat_id'], 0755, true);
         }
         if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year)) {
-            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year, 0644, true);
+            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year, 0755, true);
         }
         if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month)) {
-            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month, 0644, true);
+            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month, 0755, true);
         }
-        if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day)) {
-            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day, 0644, true);
-        }
-
-        $destinationPath = 'public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month . "/" . $day;
+        $destinationPath = 'public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month;
         $time = time();
         $image_name = $time . '_' . request()->file->getClientOriginalName();
         $parent = \App\media::create([
@@ -69,7 +64,7 @@ class Media extends Controller
             'category_id' => $request['cat_id'],
             'title' => $request['title'],
         ]);
-        uploadGallery(request()->file, array('367,250', '267,250'), $request['cat_id'], $request['title'], $parent['id'], $time);
+        uploadGallery(request()->file, array('267,178', '300,200'), $request['cat_id'], $request['title'], $parent['id'], $time);
         request()->file->move($destinationPath, $image_name);
 
 
@@ -162,6 +157,24 @@ class Media extends Controller
             $data['status'] = 200;
             return back_normal($request, $data);
         }
+    }
+
+    public function gallery_category_image_default(Request $request)
+    {
+        $catInfo = gallery_category::find($request['cat_id']);
+        if ($catInfo) {
+            if ($request['id'] == "one") {
+                $catInfo->media_id_one = $request['media_id'];
+            } elseif ($request['id'] == "two") {
+                $catInfo->media_id_two = $request['media_id'];
+            } elseif ($request['id'] == "three") {
+                $catInfo->media_id_three = $request['media_id'];
+            } else {
+                $catInfo->media_id_one = $request['media_id'];
+            }
+            $catInfo->save();
+        }
+        return back_normal($request, trans('messages.item_updated', ['item' => trans('messages.category')]));
     }
 
 }

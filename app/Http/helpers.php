@@ -675,25 +675,23 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
     return $response;
 }
 
-function uploadGallery($file, $custom_size = array(), $cat_id, $title, $parent_id = 0, $time)
+function uploadGallery($file, $custom_size, $cat_id, $title, $parent_id = 0, $time)
 {
-    $size = array('100,100');
+    $size = array();
     $size = array_merge($size, $custom_size);
     $year = jdate("Y", time(), '', '', 'en');
     $month = jdate("m", time(), '', '', 'en');
-    $day = jdate("d", time(), '', '', 'en');
     $fileSize = $file->getSize();
     foreach ($size as $value) {
         $si = explode(',', $value);
-        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1])) {
-            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1], 0775, true);
+        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0] . "-" . $si[1])) {
+            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0] . "-" . $si[1], 0755, true);
         }
-        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $day . "/" . $si[0] . "-" . $si[1];
+        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $si[0] . "-" . $si[1];
         $img = Image::make($file->getRealPath());
         $filename = $time . "_" . $file->getClientOriginalName();
-        $img->resize($si[0], $si[1], function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($thumbnailPath . '/' . $filename);
+        $img->resize($si[0], $si[1]);
+        $img->save($thumbnailPath . '/' . $filename);
         \App\media::create([
             'name' => $filename,
             'url' => $thumbnailPath . "/" . $filename,

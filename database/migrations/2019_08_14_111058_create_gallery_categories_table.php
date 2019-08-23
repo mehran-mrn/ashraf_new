@@ -19,6 +19,9 @@ class CreateGalleryCategoriesTable extends Migration
             $table->string('description')->nullable();
             $table->longText('more_description')->nullable();
             $table->string('status')->default('active');
+            $table->integer('media_id_one')->default('0');
+            $table->integer('media_id_two')->default('0');
+            $table->integer('media_id_three')->default('0');
             $table->softDeletes();
             $table->timestamps();
         });

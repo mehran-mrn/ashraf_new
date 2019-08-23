@@ -15,6 +15,7 @@
                             data-modal-title="{{trans('messages.add_category',['item'=>trans('messages.category')])}}"
                             data-target="#general_modal">{{__('messages.add_gallery_category')}}
                     </button>
+
                 </section>
             </div>
 

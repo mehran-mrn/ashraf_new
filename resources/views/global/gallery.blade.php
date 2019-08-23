@@ -1,4 +1,52 @@
 @extends('layouts.global.global_layout')
+@section('css')
+    <style>
+        .flip-box {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            border: 1px solid #f1f1f1;
+            perspective: 1000px;
+            margin: auto;
+        }
+
+        /* This container is needed to position the front and back side */
+        .flip-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        /* Do an horizontal flip when you move the mouse over the flip box container */
+        .flip-box:hover .flip-box-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Position the front and back side */
+        .flip-box-front, .flip-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        /* Style the front side (fallback if image is missing) */
+        .flip-box-front {
+            background-color: #bbb;
+            color: black;
+        }
+
+        /* Style the back side */
+        .flip-box-back {
+            background-color: rgba(225, 238, 225, 0.03);
+            color: white;
+            transform: rotateY(180deg);
+        }
+    </style>
+@stop
 @section('content')
     <div class="main-content rtl">
 
@@ -23,40 +71,40 @@
             </div>
         </section>
         <section>
-            <div class="container-fluid pb-0  ">
+            <div class="container ">
                 <div class="section-content">
                     <div class="row ">
-                        <div class="col-md-12">
-                            <div id="grid" class="gallery-isotope grid-4 gutter clearfix rtl">
-                                @foreach($medias as $media)
-                                    @if(count($media['media'])>1)
-                                        <div class="gallery-item branding "
-                                             style="left: unset!important;right: 0!important;">
-                                            <div class="thumb">
-                                                <img class="img-fullwidth"
-                                                     src="{{asset('/public/assets/global/images/gallery/2.jpg')}}"
-                                                     alt="project">
-                                                <div class="overlay-shade"></div>
-                                                <div class="icons-holder">
-                                                    <div class="icons-holder-inner">
-                                                        <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                            <a href="{{route('gallery_view',['id'=>$media['id']])}}"><i
-                                                                        class="fa fa-link"></i></a>
-                                                        </div>
+                        @foreach($medias as $media)
+                            @if(count($media['media'])>1)
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="{{route('gallery_view',['id'=>$media['id']])}}">
+                                            <div class="flip-box">
+                                                <div class="flip-box-inner">
+                                                    <div class="flip-box-front">
+                                                        <img src="{{$media['media_two']['path']."/300-200/".$media['media_two']['name']}}"
+                                                             alt="Paris" style="width:300px;height:200px">
+                                                    </div>
+                                                    <div class="flip-box-back">
+{{--                                                        <img src="{{$media['media_one']['path']."/300-200/".$media['media_one']['name']}}"--}}
+{{--                                                             alt="Paris" style="width:300px;height:200px">--}}
+                                                        <h3>{{$media['title']}}</h3>
+                                                        <p>{{$media['description']}}</p>
                                                     </div>
                                                 </div>
-                                                <a class="hover-link" data-lightbox="image"
-                                                   href="{{asset('/public/assets/global/images/gallery/2.jpg')}}">View
-                                                    more</a>
                                             </div>
-                                            <h5 class="text-center mt-15 mb-40">{{$media['title']}}</h5>
+                                        </a>
+                                        <div class="caption text-center">
+                                            <p>{{$media['description']}}</p>
+                                            <p>
+                                                <a href="{{route('gallery_view',['id'=>$media['id']])}}"
+                                                   class="btn btn-default"
+                                                   role="button">{{__('messages.show')}}</a>
                                         </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                            <!-- End Portfolio Gallery Grid -->
-
-                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>

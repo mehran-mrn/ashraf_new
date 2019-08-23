@@ -218,7 +218,7 @@ class global_view extends Controller
 
     public function gallery()
     {
-        $medias = gallery_category::where('status', 'active')->with('media')->get();
+        $medias = gallery_category::where('status', 'active')->with('media','media_one','media_two')->get();
         return view('global.gallery', compact('medias'));
     }
 

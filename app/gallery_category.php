@@ -15,4 +15,20 @@ class gallery_category extends Model
     {
         return $this->hasMany('App\media', 'category_id', 'id');
     }
+
+
+    public function media_one()
+    {
+        return $this->hasOne('App\media', 'id', 'media_id_one');
+    }
+
+    public function media_two()
+    {
+        return $this->hasOne('App\media', 'id', 'media_id_two');
+    }
+
+    public function media_three()
+    {
+        return $this->hasOne('App\media', 'id', 'media_id_three');
+    }
 }
