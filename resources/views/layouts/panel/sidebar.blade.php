@@ -137,8 +137,8 @@ if (!isset($active_sidbare)) {
                             <a href="#" class="nav-link {{in_array("blog_images", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_setting')}}</a>
                             <ul class="nav nav-group-sub"
                                 style="display:{{in_array("blog_images", $active_sidbare) ? 'block' : 'none' }}">
-                                <li class="nav-item {{in_array("blog_posts_list", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.all') }}"
-                                                        class="nav-link ">{{trans('messages.site_info')}}</a>
+                                <li class="nav-item {{in_array("display_statistics", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('display_statistics') }}"
+                                                        class="nav-link ">{{trans('messages.display_statistics')}}</a>
                                 </li>
                                 <li class="nav-item {{in_array("add_blog_images", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.upload') }}"
                                                         class="nav-link ">{{trans('messages.adv_links')}}</a>

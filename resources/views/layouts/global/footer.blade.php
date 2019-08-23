@@ -5,14 +5,14 @@
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
                     <img class="mt-10 mb-20" alt="" src="{{ URL::asset('/public/assets/global/images/logo-wide-white-footer.png') }}">
-                    <p>تهران - شمیران - بزرگراه ارتش - پلاک 99
-                        صندوق پستی: 4459-19395
+                    <p>
+                        {{trans('site_info.address')}}
                     </p>
                     <ul class="list-inline mt-5">
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored mr-5"></i> <a class="text-gray" href="#">021-22454646</a> </li><br>
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-fax text-theme-colored mr-5"></i> <a class="text-gray" href="#">021-22491185</a> </li>
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored mr-5"></i> <a class="text-gray" href="#">info@ashrafolanbia.ir</a> </li>
-                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored mr-5"></i> <a class="text-gray" href="#">www.ashrafolanbia.ir</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored mr-5"></i> <a class="text-gray" href="#">{{trans('site_info.phone')}}</a> </li><br>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-fax text-theme-colored mr-5"></i> <a class="text-gray" href="#">{{trans('site_info.fax')}}</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored mr-5"></i> <a class="text-gray" href="#">{{trans('site_info.email')}}</a> </li>
+                        <li class="m-0 pl-10 pr-10"> <i class="fa fa-globe text-theme-colored mr-5"></i> <a class="text-gray" href="#">{{trans('site_info.site_address')}}</a> </li>
 
                     </ul>
                 </div>
@@ -134,9 +134,9 @@
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <div class="widget dark">
-                    <h5 class="widget-title mb-10">صندوق دریافت پیامک</h5>
+                    <h5 class="widget-title mb-10">{{trans('messages.sms_box')}}</h5>
                     <div class="text-gray">
-                        1000454646 <br>
+                        {{trans('site_info.sms_box')}} <br>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
         <div class="container pt-15 pb-10">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="font-11 text-black-777 m-0">&copy; {{trans('messages.copyright')}} </p>
+                    <p class="font-11 text-black-777 m-0">&copy; {{trans('site_info.copyright')}} </p>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="widget no-border m-0">

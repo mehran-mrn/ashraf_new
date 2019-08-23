@@ -614,6 +614,12 @@ function get_blog_categories()
     return $categories;
 }
 
+function get_option($option_name)
+{
+    $options = \App\blog_option::where('name',$option_name)->get();
+    return $options;
+}
+
 function get_posts($limit = null, $main_page = null, $categories = [], $paginate = 10)
 {
 

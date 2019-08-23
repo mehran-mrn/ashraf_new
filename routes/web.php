@@ -236,6 +236,16 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::POST('media/info','panel\Media@gallery_media_info')->name('gallery_media_info');
         Route::post('media/edit','panel\Media@gallery_media_edit')->name('gallery_media_edit');
     });
+
+    Route::group(['prefix' => 'blog_setting'], function () {
+        Route::get('/display_statistics',
+            'panel\panel_view@display_statistics')
+            ->name('display_statistics');
+        Route::get('/display_statistics_form/{option_id?}', 'panel\panel_view@load_display_statistics_form')->name('load_display_statistics_form');
+        Route::post('/submit_display_statistics', 'panel\setting@submit_display_statistics')->name('submit_display_statistics');
+        Route::post('/delete_display_statistics/{option_id}', 'panel\setting@delete_display_statistics')->name('delete_display_statistics');
+
+    });
     //======================================
     //-----------End Panel View------------
     //======================================
