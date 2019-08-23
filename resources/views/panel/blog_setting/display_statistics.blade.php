@@ -18,6 +18,8 @@
                     <div class="card-header bg-light">
                         <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
                                 data-ajax-link="{{route('load_display_statistics_form')}}" data-toggle="modal"
+                                data-modal-size="modal-lg"
+
                                 data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.display_statistics')])}}"
                                 data-target="#general_modal"><i
                                     class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.display_statistics')])}}
@@ -46,6 +48,7 @@
                                              modal-ajax-load"
                                             data-ajax-link="{{route('load_display_statistics_form',[$statistic['id']])}}"
                                             data-toggle="modal"
+                                            data-modal-size="modal-lg"
                                             data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.display_statistics')])}}"
                                             data-target="#general_modal">
                                         <i class="icon-pencil"></i>
