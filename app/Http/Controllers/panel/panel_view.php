@@ -5,6 +5,7 @@ namespace App\Http\Controllers\panel;
 use App\bank;
 use App\blog;
 use App\blog_categories;
+use App\blog_option;
 use App\building_item;
 use App\building_project;
 use App\building_ticket;
@@ -226,6 +227,36 @@ class panel_view extends Controller
         $cat_info = category::find($request['cat_id']);
         return view('panel.blog.category_edit', compact('cat_info'));
     }
+
+    public function display_statistics(Request $request){
+        $statistics = blog_option::where('name','display_statistic')->get();
+        return view('panel.blog_setting.display_statistics',compact('statistics'));
+
+    }
+    public function load_display_statistics_form($option_id=null ,Request $request)
+    {
+        $icons = [];
+        $handle = fopen(url("public/assets/global/css/pe-icon-7-stroke.css"), "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+                if (preg_match('/\.(.*?)(:before)/',$line,$matches)){
+                    $icons[]=$matches[1];
+                }
+            }
+            fclose($handle);
+        } else {
+            // error opening the file.
+        }
+
+        if ($option_id) {
+            $option = blog_option::find($option_id);
+        } else {
+            $option = null;
+        }
+        return view('panel.blog_setting.materials.display_statistic_form', compact('option','icons'));
+    }
+
+
 //end blog module
 
 

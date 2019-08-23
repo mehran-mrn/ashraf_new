@@ -204,6 +204,9 @@ return array (
   'every_3_months' => 'هر سه ماه یک بار',
   'every_6_months' => 'هر شش ماه یک بار',
   'yearly' => 'سالانه',
+  'icon' => 'آیکون',
+  'value' => 'مقدار',
+  'display_statistics' => 'آمار نمایشی',
   'copyright' => 'کلیه حقوق این وب سایت متعلق به موسسه خیریه اشرف الانبیاء (ص) می باشد',
   'html_title' => 'موسسه خیریه اشرف الانبیا',
   'Loading' => 
@@ -510,6 +513,7 @@ return array (
   'activate' => 'فعال سازی',
   'inactivate' => 'غیر فعال سازی',
   'unpaid' => 'پرداخت نشده',
+    'sms_box' => 'صندوق دریافت پیامک',
   'no_any_post' => 'هیچ پستی یافت نشد.',
   'not_found_any_data' => 'اطلاعاتی یافت نشد',
   'please_insert_post' => 'لطفاً پست جدید اضافه نمایید.',

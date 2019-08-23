@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\blog_option;
 use App\gateway;
 use App\Http\Controllers\Controller;
 use App\setting_transportation;
@@ -147,6 +148,47 @@ class setting extends Controller
 
         $message = trans("messages.item_updated", ['item' => trans('messages.transportation')]);
 
+        return back_normal($request, $message);
+    }
+
+    public function submit_display_statistics(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'icon' => 'required',
+            'value' => 'required',
+        ]);
+        $value = [
+            'title'=>$request['title'],
+            'icon'=>$request['icon'],
+            'value'=>$request['value'],
+        ];
+        if (!empty($request['option_id'])){
+            $option = blog_option::find($request['option_id']);
+        }
+        else{
+            $option = new blog_option();
+        }
+        $option->name = 'display_statistic';
+        $option->key = $request['title'];
+        $option->value = json_encode($value);
+        $option->json = true;
+        $option->save();
+
+        $message = trans("messages.item_updated", ['item' => trans('messages.display_statistics')]);
+        return back_normal($request, $message);
+    }
+
+    public function delete_display_statistics($option_id ,Request $request)
+    {
+        $option = blog_option::find($option_id);
+
+        if ($option != 'display_statistic'){
+            $errors[]='invalid';
+        }
+        $option->delete();
+
+        $message = trans("messages.item_deleted", ['item' => trans('messages.display_statistics')]);
         return back_normal($request, $message);
     }
 }

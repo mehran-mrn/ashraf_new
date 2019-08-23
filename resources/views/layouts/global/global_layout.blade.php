@@ -11,7 +11,7 @@
 @yield('meta')
 
 <!-- Page Title -->
-    <title>{{trans('messages.html_title')}}</title>
+    <title>{{trans('site_info.web_title')}}</title>
 
     <!-- Favicon and Touch Icons -->
     <link href="{{ URL::asset('/public/assets/global/images/favicon.png') }}" rel="shortcut icon" type="image/png">
