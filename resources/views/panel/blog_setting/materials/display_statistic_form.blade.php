@@ -47,9 +47,9 @@
                 @foreach($chunk as $key => $icon)
 
                     <div class="col-sm-2">
-                        <a href="#" value="{{$icon}}" id="{{$icon}}" class="icon-selection text-dark card bordered {{$selected_icon==$icon ? " bg-white border-2 " :""}}" style="background-color: #{{substr(md5(rand()), 0, 6)}}6e">
+                        <a href="#" value="{{$icon}}" id="{{$icon}}" class="icon-selection text-dark card bordered {{$selected_icon==$icon ? " bg-white border-2 " :""}}" style="background-color: #{{substr(md5(rand()), 0, 6)}}2e">
                             <div class="card-body p-1">
-                                <i style="font-size: 45px;"  class="text-black text-center {{$icon}}"></i>
+                                <i style="font-size: 25px;"  class="text-black text-center {{$icon}}"></i>
                             </div>
                         </a>
                     </div>

@@ -245,6 +245,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/display_statistics_form/{option_id?}', 'panel\panel_view@load_display_statistics_form')->name('load_display_statistics_form');
         Route::post('/submit_display_statistics', 'panel\setting@submit_display_statistics')->name('submit_display_statistics');
         Route::post('/delete_display_statistics/{option_id}', 'panel\setting@delete_display_statistics')->name('delete_display_statistics');
+        Route::get('/adv_links', 'panel\panel_view@adv_links')->name('adv_links');
+        Route::get('/adv_bar_form/{option_id?}', 'panel\panel_view@load_adv_bar_form')->name('adv_bar_form');
+        Route::post('/submit_adv_bar', 'panel\setting@submit_adv_bar')->name('submit_adv_bar');
+        Route::post('/delete_adv_bar/{option_id}', 'panel\setting@delete_adv_bar')->name('delete_adv_bar');
+        Route::get('/adv_card_form/{option_id?}', 'panel\panel_view@load_adv_card_form')->name('adv_card_form');
+        Route::post('/submit_adv_card', 'panel\setting@submit_adv_card')->name('submit_adv_card');
+        Route::post('/delete_adv_card/{option_id}', 'panel\setting@delete_adv_card')->name('delete_adv_card');
 
     });
     //======================================

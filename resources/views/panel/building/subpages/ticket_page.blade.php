@@ -14,10 +14,6 @@
         var DropzoneUploader = function () {
 
 
-            //
-            // Setup module components
-            //
-
             // Dropzone file uploader
             var _componentDropzone = function () {
                 if (typeof Dropzone == 'undefined') {

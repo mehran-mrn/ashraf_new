@@ -233,6 +233,7 @@ class panel_view extends Controller
         return view('panel.blog_setting.display_statistics',compact('statistics'));
 
     }
+
     public function load_display_statistics_form($option_id=null ,Request $request)
     {
         $icons = [];
@@ -256,6 +257,32 @@ class panel_view extends Controller
         return view('panel.blog_setting.materials.display_statistic_form', compact('option','icons'));
     }
 
+    public function adv_links(Request $request){
+        $adv_links = blog_option::where('name','adv_link')->get();
+        return view('panel.blog_setting.adv_links',compact('adv_links'));
+    }
+
+    public function load_adv_card_form($option_id=null ,Request $request)
+    {
+
+        if ($option_id) {
+            $option = blog_option::find($option_id);
+        } else {
+            $option = null;
+        }
+        return view('panel.blog_setting.materials.adv_card_form', compact('option'));
+    }
+
+    public function load_adv_bar_form($option_id=null ,Request $request)
+    {
+
+        if ($option_id) {
+            $option = blog_option::find($option_id);
+        } else {
+            $option = null;
+        }
+        return view('panel.blog_setting.materials.adv_bar_form', compact('option'));
+    }
 
 //end blog module
 

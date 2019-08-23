@@ -30,6 +30,8 @@
             </div>
             <div class="col-md-12">
                 <div class="card pt-3">
+                    <div class="row">
+
                     @foreach($statistics as $statistic)
                         <div class="col-md-4">
                             <div class="card">
@@ -74,6 +76,7 @@
 
 
                     @endforeach
+                </div>
                 </div>
             </div>
         </div>

@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\setting_transportation;
 use App\setting_transportation_cost;
 use Illuminate\Http\Request;
+use Image;
+
 
 class setting extends Controller
 {
@@ -189,6 +191,134 @@ class setting extends Controller
         $option->delete();
 
         $message = trans("messages.item_deleted", ['item' => trans('messages.display_statistics')]);
+        return back_normal($request, $message);
+    }
+
+    public function submit_adv_bar(Request $request)
+    {
+        if (!empty($request['option_id'])){
+            $option = blog_option::find($request['option_id']);
+            $this->validate($request, [
+                'link' => 'required',
+            ]);
+        }
+        else{
+            $option = new blog_option();
+            $this->validate($request, [
+                'link' => 'required',
+                'image' => 'required|image|dimensions:ratio=5/3|mimes:jpeg,png,jpg,gif,svg|max:512',
+            ]);
+        }
+
+        if (!empty($request['image'])){
+            $image = $request['image'];
+            $destinationPath = 'public/assets/global/images/adv';
+            $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $image_name);
+            $img = Image::make($destinationPath.'/'.$image_name)->resize(200, 120);
+            $img->save($destinationPath.'/'.$image_name);
+
+            $value = [
+                'link'=>$request['link'],
+                'image'=>$destinationPath.'/'.$image_name,
+            ];
+        }
+        else{
+            $value = [
+                'link'=>$request['link'],
+                'image'=>json_decode($option['value'],true)['image'],
+            ];
+        }
+
+        $option->name = 'adv_bar';
+        $option->key = $request['link'];
+        $option->value = json_encode($value);
+        $option->json = true;
+        $option->save();
+
+        $message = trans("messages.item_updated", ['item' => trans('messages.adv_bar')]);
+        return back_normal($request, $message);
+    }
+
+    public function delete_adv_bar($option_id ,Request $request)
+    {
+        $option = blog_option::find($option_id);
+
+        if ($option != 'adv_bar'){
+            $errors[]='invalid';
+        }
+        $option->delete();
+
+        $message = trans("messages.item_deleted", ['item' => trans('messages.adv_bar')]);
+        return back_normal($request, $message);
+    }
+
+    public function submit_adv_card(Request $request)
+    {
+        $this->validate($request, [
+            'link' => 'required',
+        ]);
+
+        if (!empty($request['option_id'])){
+            $option = blog_option::find($request['option_id']);
+            $old_image =json_decode($option['value'],true)['image'];
+            $old_title =json_decode($option['value'],true)['title'];
+        }
+        else{
+            $option = new blog_option();
+        }
+        $title = "";
+        if (!empty($request['title'])){
+            $title = $request['title'];
+
+        }
+        elseif(isset($old_title)){
+            $title = $old_title;
+
+        }
+        else{
+            $title = "";
+
+        }
+        if (!empty($request['image'])){
+            $image = $request['image'];
+            $destinationPath = 'public/assets/global/images/adv';
+            $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $image_name);
+            $value = [
+                'title'=>$title,
+                'link'=>$request['link'],
+                'image'=>$destinationPath.'/'.$image_name
+            ];
+        }
+        else{
+            $value = [
+                'title'=>$title,
+                'link'=>$request['link'],
+                'image'=>(isset($old_image)?$old_image:"")
+            ];
+        }
+
+        $option->name = 'adv_card';
+        $option->key = $request['link'];
+        $option->value = json_encode($value);
+        $option->json = true;
+        $option->save();
+
+        $message = trans("messages.item_updated", ['item' => trans('messages.adv_card')]);
+        return back_normal($request, $message);
+    }
+
+    public function delete_adv_card($option_id ,Request $request)
+    {
+        $option = blog_option::find($option_id);
+
+        if ($option != 'adv_card'){
+            $errors[]='invalid';
+        }
+        $option->delete();
+
+        $message = trans("messages.item_deleted", ['item' => trans('messages.adv_card')]);
         return back_normal($request, $message);
     }
 }
