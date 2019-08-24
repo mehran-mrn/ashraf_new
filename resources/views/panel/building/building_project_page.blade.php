@@ -815,12 +815,10 @@
 @endsection
 
 @section('footer_js')
-
     <script type="text/javascript">
 
         jssor_1_slider_init();
     </script>
-
     <script>
 
         var Dashboard = function () {
@@ -1167,7 +1165,6 @@
             Dashboard.initCharts();
         });
     </script>
-
     <script>
 
         // Setup module

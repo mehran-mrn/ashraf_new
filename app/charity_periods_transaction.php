@@ -10,4 +10,9 @@ class charity_periods_transaction extends Model
     //
     use SoftDeletes;
     protected $guarded=[];
+
+    public function period()
+    {
+        return $this->hasOne('App\charity_period','id','period_id')->with('user');
+    }
 }

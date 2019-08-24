@@ -18,7 +18,6 @@
 
                 </section>
             </div>
-
             <section>
                 <div class="card">
                     <div class="card-header">

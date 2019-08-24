@@ -10,4 +10,9 @@ class charity_period extends Model
     //
     use SoftDeletes;
     protected $guarded=[];
+
+    public function user()
+    {
+        return $this->hasOne('App\User','id','user_id');
+    }
 }

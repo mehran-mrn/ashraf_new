@@ -16,6 +16,8 @@ use App\caravan_host;
 use App\category;
 use App\charity_payment_patern;
 use App\charity_payment_title;
+use App\charity_period;
+use App\charity_periods_transaction;
 use App\city;
 use App\gallery_category;
 use App\gateway;
@@ -586,6 +588,13 @@ class panel_view extends Controller
             $payment_pattern = charity_payment_patern::with('fields')->find($payment_pattern_id);
         }
         return view('panel.charity.setting.module.add_new_payment_pattern_form', compact('payment_pattern'));
+    }
+
+    public function charity_payment_list()
+    {
+        $periods = charity_period::with('user')->get();
+        $payments = charity_periods_transaction::with('period')->get();
+        return view('panel.charity.list',compact('periods','payments'));
     }
 
 //end charity module

@@ -253,8 +253,8 @@ if (!isset($active_sidbare)) {
 
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.Charity')}}"
                         style="display:{{in_array("charity", $active_sidbare) ? 'block' : 'none' }}">
-                        <li class="nav-item"><a href="{{route('building_dashboard')}}"
-                                                class="nav-link {{in_array("building_dashboard", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_list')}}</a>
+                        <li class="nav-item"><a href="{{route('charity_payment_list')}}"
+                                                class="nav-link {{in_array("charity_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_list')}}</a>
                         </li>
                         <li class="nav-item"><a href="{{route('building_types')}}"
                                                 class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.request_hook')}}</a>
