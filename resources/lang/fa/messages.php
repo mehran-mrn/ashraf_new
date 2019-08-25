@@ -350,7 +350,7 @@ return array(
     'refer' => 'ارجاع',
     'assign_to_self' => 'پذیرش بررسی',
     'close' => 'بستن',
-    'approved' => 'موافقت',
+    'approved' => 'تایید شد',
     'reject' => 'عدم تایید',
     'caravan' => 'کاروان',
     'person_count' => 'تعداد افراد',
@@ -539,5 +539,11 @@ return array(
     'for_submit_period_payment_first_login_or_register'=>'برای ثبت پرداخت دوره ای ابتدا وارد سیستم شوید یا اگر عضو سامانه نیستید عضویت خود را تکمیل نمایید.',
     'waiting'=>'منتظر بررسی',
     'admin_review'=>'بررسی مدیر',
-    'payment_status'=>'وضعیت پرداخت'
+    'payment_status'=>'وضعیت پرداخت',
+    'waiting_list'=>'لیست منتظر بررسی',
+    'payment_approved'=>'تاییده پرداخت انجام شد.',
+    'payment_approve'=>'تاییده پرداخت',
+    'approved_list'=>'لیست تایید شده',
+    'approve_time'=>'زمان تایید',
+    'approve_user'=>'کاربر تایید کننده'
 );

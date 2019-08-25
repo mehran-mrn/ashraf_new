@@ -593,8 +593,18 @@ class panel_view extends Controller
     public function charity_payment_list()
     {
         $periods = charity_period::with('user')->get();
-        $payments = charity_periods_transaction::with('period')->get();
-        return view('panel.charity.list',compact('periods','payments'));
+        $payments = charity_periods_transaction::where(
+            [
+                ['review','=','waiting']
+            ]
+        )->with('period')->get();
+        $paymentsApprove = charity_periods_transaction::where(
+            [
+                ['review','=','approved']
+            ]
+        )->
+        with('period')->get();
+        return view('panel.charity.list',compact('periods','payments','paymentsApprove'));
     }
 
 //end charity module

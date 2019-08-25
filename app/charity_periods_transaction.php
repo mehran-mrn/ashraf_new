@@ -15,4 +15,9 @@ class charity_periods_transaction extends Model
     {
         return $this->hasOne('App\charity_period','id','period_id')->with('user');
     }
+
+    public function admin()
+    {
+        return $this->hasOne('App\User','id','review_user_id');
+    }
 }

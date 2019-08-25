@@ -102,12 +102,26 @@ class charity extends Controller
     {
         $paymentList = charity_periods_transaction::where(
             [
-                ['period_id','=',$request['id']],
-                ['user_id','=',$request['user_id']]
+                ['period_id', '=', $request['id']],
+                ['user_id', '=', $request['user_id']]
             ])
             ->get();
         $periodInfo = charity_period::find($request['id']);
         $userInfo = User::find($request['user_id']);
-        return view('panel.charity.pages.show',compact('paymentList','userInfo','periodInfo'));
+        return view('panel.charity.pages.show', compact('paymentList', 'userInfo', 'periodInfo'));
+    }
+
+
+    public function charity_payment_approve(Request $request)
+    {
+        $charity = charity_periods_transaction::find($request['id']);
+        if ($charity) {
+            $charity->review = 'approved';
+            $charity->review_datetime = date("Y-m-d H:i:s");
+            $charity->review_user_id = \Auth::id();
+            $charity->save();
+            $message = trans('messages.payment_approved');
+            return back_normal($request, $message);
+        }
     }
 }

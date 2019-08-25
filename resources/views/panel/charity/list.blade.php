@@ -100,8 +100,13 @@
                             <li class="nav-item">
                                 <a href="#centered-pill1" class="nav-link active"
                                    data-toggle="tab">{{__('messages.period_list')}}</a></li>
-                            <li class="nav-item"><a href="#centered-pill2" class="nav-link"
-                                                    data-toggle="tab">{{__('messages.payment_list')}}</a>
+                            <li class="nav-item">
+                                <a href="#centered-pill2" class="nav-link"
+                                   data-toggle="tab">{{__('messages.waiting_list')}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#centered-pill3" class="nav-link"
+                                   data-toggle="tab">{{__('messages.approved_list')}}</a>
                             </li>
                         </ul>
 
@@ -166,9 +171,59 @@
                                                 @if($payment['status']=="unpaid")
                                                     <a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
                                                 @endif
-                                                @if($payment['status']=='paid')
-                                                    <a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
+                                                @if($payment['status']=='unpaid')
+                                                    <button type="button"
+                                                            class="btn btn-success btn-sm swal-alert"
+                                                            data-ajax-link="{{route('charity_payment_approve',['id'=>$payment['id']])}}"
+                                                            data-method="POST"
+                                                            data-csrf="{{csrf_token()}}"
+                                                            data-title="{{trans('messages.payment_approve')}}"
+                                                            data-text="{{trans('messages.approve',['item'=>trans('messages.pay')])}}"
+                                                            data-type="warning"
+                                                            data-cancel="true"
+                                                            data-confirm-text="{{trans('messages.approve')}}"
+                                                            data-cancel-text="{{trans('messages.cancel')}}">
+                                                        <i class="icon-check"></i>
+                                                    </button>
                                                 @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="centered-pill3">
+                                <table class="table datatable-payments table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>{{__('messages.name_family')}}</th>
+                                        <th>{{__('messages.amount')}}</th>
+                                        <th>{{{__('messages.it\'s_over_date')}}}</th>
+                                        <th>{{__('messages.payment_date')}}</th>
+                                        <th>{{__('messages.payment_status')}}</th>
+                                        <th>{{__('messages.status')}}</th>
+                                        <th>{{__('messages.approve_time')}}</th>
+                                        <th>{{__('messages.approve_user')}}</th>
+                                        <th class="text-center">{{__('messages.description')}}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($paymentsApprove as $payment)
+                                        <tr>
+                                            <td>{{$payment['period']['user']['name']}}</td>
+                                            <td>{{number_format($payment['amount'])}}</td>
+                                            <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
+                                            <td>
+                                                @if($payment['pay_date']!= null?jdate("Y-m-d",strtotime($period['pay_date'])):'') @endif
+                                            </td>
+                                            <td>{{__('messages.'.$payment['status'])}}</td>
+                                            <td>{{__('messages.'.$payment['review'])}}</td>
+                                            <td>{{jdate("Y/m/d",strtotime($payment['review_datetime']))}}</td>
+                                            <td>{{$payment['admin']['name']}}</td>
+                                            <td>{{$payment['description']}}</td>
+                                            <td>
+                                                <a href="#" class="btn btn-info btn-sm"><i class="icon-eye"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -193,6 +193,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('charity/payment_list/', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
         Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
         Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');
+        Route::post('periods/show/approve/{id}', 'panel\charity@charity_payment_approve')->name('charity_payment_approve');
 
     });
     Route::prefix('ajax')->group(function () {
