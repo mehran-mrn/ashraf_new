@@ -57,6 +57,7 @@
                         </li>
 
                         <li><a href="{{route('home')}}">{{__('messages.FAQ')}}</a></li>
+
                         <li><a href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
 
                         <li><a href="{{route('blog')}}">{{trans('messages.blog')}}</a></li>

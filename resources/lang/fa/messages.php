@@ -535,5 +535,9 @@ return array(
     'payment_date'=>'تاریخ پرداخت',
     'period_payment_list'=>'لیست پرداخت های دوره',
     'next_payment_date'=>'تاریخ پرداخت بعدی',
-    'send_sms'=>'ارسال پیامک'
+    'send_sms'=>'ارسال پیامک',
+    'for_submit_period_payment_first_login_or_register'=>'برای ثبت پرداخت دوره ای ابتدا وارد سیستم شوید یا اگر عضو سامانه نیستید عضویت خود را تکمیل نمایید.',
+    'waiting'=>'منتظر بررسی',
+    'admin_review'=>'بررسی مدیر',
+    'payment_status'=>'وضعیت پرداخت'
 );

@@ -228,17 +228,17 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('list_video_galleries', 'panel\panel_view@list_video_galleries')->name('list_video_galleries');
         Route::get('video/add_modal', 'panel\panel_view@add_video_galleries_modal')->name('add_video_galleries_modal');
         Route::post('video/add', 'panel\Media@add_video')->name('add_video');
-        Route::delete('video_remove/{id}','panel\Media@video_remove')->name('video_remove');
+        Route::delete('video_remove/{id}', 'panel\Media@video_remove')->name('video_remove');
 
         Route::get('list', 'panel\panel_view@gallery_add')->name('gallery_add');
         Route::get('category/add', 'panel\panel_view@gallery_add_modal')->name('gallery_add_modal');
         Route::post('category/add', 'panel\Media@gallery_category_add')->name('gallery_category_add');
         Route::get('category/{id}', 'panel\panel_view@gallery_category_view')->name('gallery_category_view');
-        Route::delete('category/{id}','panel\Media@gallery_category_remove')->name('gallery_category_remove');
-        Route::delete('category/image/{id}','panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
-        Route::POST('media/info','panel\Media@gallery_media_info')->name('gallery_media_info');
-        Route::post('media/edit','panel\Media@gallery_media_edit')->name('gallery_media_edit');
-        Route::get('media/default/{cat_id}/{media_id}','panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
+        Route::delete('category/{id}', 'panel\Media@gallery_category_remove')->name('gallery_category_remove');
+        Route::delete('category/image/{id}', 'panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
+        Route::POST('media/info', 'panel\Media@gallery_media_info')->name('gallery_media_info');
+        Route::post('media/edit', 'panel\Media@gallery_media_edit')->name('gallery_media_edit');
+        Route::get('media/default/{cat_id}/{media_id}', 'panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
     });
 
     Route::group(['prefix' => 'blog_setting'], function () {
@@ -457,7 +457,11 @@ Route::group(
 
 //charity view
     Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');
-    Route::get('vow/periodic', 'globals\global_view@vow_period')->name('vow_periodic');
+
+    Route::middleware('global_auth')->group(function () {
+        Route::get('vow/periodic', 'globals\global_view@vow_period')->name('vow_periodic');
+    });
+
     Route::post('vow/periodic/add', 'globals\global_controller@add_charity_period')->name('add_charity_period');
     Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
     Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');

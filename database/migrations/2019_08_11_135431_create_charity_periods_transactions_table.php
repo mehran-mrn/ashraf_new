@@ -20,9 +20,12 @@ class CreateCharityPeriodsTransactionsTable extends Migration
             $table->date('payment_date');
             $table->string('amount');
             $table->text('description')->nullable();
-            $table->date('pay_date')->nullable();
+            $table->dateTime('pay_date')->nullable();
             $table->integer('gateway_id')->nullable();
             $table->string('status')->default('pending');
+            $table->string('review')->default('waiting');
+            $table->dateTime('review_datetime')->nullable();
+            $table->integer('review_user_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

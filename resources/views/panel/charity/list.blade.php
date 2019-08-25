@@ -144,6 +144,7 @@
                                         <th>{{__('messages.amount')}}</th>
                                         <th>{{{__('messages.it\'s_over_date')}}}</th>
                                         <th>{{__('messages.payment_date')}}</th>
+                                        <th>{{__('messages.payment_status')}}</th>
                                         <th>{{__('messages.status')}}</th>
                                         <th class="text-center">{{__('messages.description')}}</th>
                                         <th>{{__('messages.send_sms')}}</th>
@@ -159,8 +160,15 @@
                                                 @if($payment['pay_date']!= null?jdate("Y-m-d",strtotime($period['pay_date'])):'') @endif
                                             </td>
                                             <td>{{__('messages.'.$payment['status'])}}</td>
+                                            <td>{{__('messages.'.$payment['review'])}}</td>
                                             <td>{{$payment['description']}}</td>
-                                            <td><a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
+                                            <td>
+                                                @if($payment['status']=="unpaid")
+                                                    <a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
+                                                @endif
+                                                @if($payment['status']=='paid')
+                                                    <a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
