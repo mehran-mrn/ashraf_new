@@ -18,6 +18,7 @@ use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
 use App\charity_periods_transaction;
+use App\charity_transaction;
 use App\city;
 use App\gallery_category;
 use App\gateway;
@@ -602,9 +603,9 @@ class panel_view extends Controller
             [
                 ['review','=','approved']
             ]
-        )->
-        with('period')->get();
-        return view('panel.charity.list',compact('periods','payments','paymentsApprove'));
+        )->with('period')->get();
+        $otherPayments = charity_transaction::with('values','user','patern')->get();
+        return view('panel.charity.list',compact('periods','payments','paymentsApprove','otherPayments'));
     }
 
 //end charity module

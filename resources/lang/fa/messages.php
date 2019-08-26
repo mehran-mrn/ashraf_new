@@ -546,5 +546,6 @@ return array(
     'approved_list'=>'لیست تایید شده',
     'approve_time'=>'زمان تایید',
     'approve_user'=>'کاربر تایید کننده',
-    'other_payments'=>'سایر پرداخت ها'
+    'other_payments'=>'سایر پرداخت ها',
+    'patern'=>'الگو'
 );

@@ -26,6 +26,8 @@ class CreateCharityTransactionsTable extends Migration
             $table->string('amount');
             $table->integer('gateway_id');
             $table->string('status');
+            $table->dateTime('payment_date')->nullable();
+            $table->string('trans_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

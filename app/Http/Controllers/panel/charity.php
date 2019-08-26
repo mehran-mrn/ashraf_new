@@ -97,7 +97,6 @@ class charity extends Controller
         return back_normal($request);
     }
 
-
     public function charity_periods_show(Request $request)
     {
         $paymentList = charity_periods_transaction::where(
@@ -110,7 +109,6 @@ class charity extends Controller
         $userInfo = User::find($request['user_id']);
         return view('panel.charity.pages.show', compact('paymentList', 'userInfo', 'periodInfo'));
     }
-
 
     public function charity_payment_approve(Request $request)
     {

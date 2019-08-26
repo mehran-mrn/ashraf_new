@@ -109,7 +109,7 @@
                                    data-toggle="tab">{{__('messages.approved_list')}}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#centered-pill3" class="nav-link"
+                                <a href="#centered-pill4" class="nav-link"
                                    data-toggle="tab">{{__('messages.other_payments')}}</a>
                             </li>
                         </ul>
@@ -234,7 +234,38 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                            <div class="tab-pane fade" id="centered-pill4">
+                                <table class="table datatable-payments table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>{{__('messages.name_family')}}</th>
+                                        <th>{{__('messages.phone')}}</th>
+                                        <th>{{__('messages.amount')}}</th>
+                                        <th>{{{__('messages.payment_date')}}}</th>
+                                        <th>{{__('messages.patern')}}</th>
+                                        <th>{{__('messages.status')}}</th>
+                                        <th class="text-center">{{__('messages.description')}}</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($otherPayments as $payment)
+                                        <tr>
+                                            <td>{{$payment['name']}}</td>
+                                            <td>{{$payment['phone']}}</td>
+                                            <td>{{number_format($payment['amount'])}}</td>
+                                            <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
+                                            <td>{{$payment['patern']['title']}}</td>
+                                            <td>{{__('messages.'.$payment['status'])}}</td>
+                                            <td>{{$payment['description']}}</td>
+                                            <td>
+                                                <a href="#" class="btn btn-info btn-sm"><i class="icon-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
