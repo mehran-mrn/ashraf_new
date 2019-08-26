@@ -64,6 +64,16 @@
 
         </div>
     </div>
+    <div class="col-12 col-md-12">
+        <div class="form-group">
+            <label for="lang">{{__('messages.language')}}</label>
+            <select name="lang" id="lang" class="form-control">
+                <option value="fa">FA</option>
+                <option value="en">EN</option>
+                <option value="ar">AR</option>
+            </select>
+        </div>
+    </div>
 </div>
 <script>
     if (document.getElementById("category_slug").value.length < 1) {

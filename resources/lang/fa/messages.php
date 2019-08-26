@@ -547,5 +547,13 @@ return array(
     'approve_time'=>'زمان تایید',
     'approve_user'=>'کاربر تایید کننده',
     'other_payments'=>'سایر پرداخت ها',
-    'patern'=>'الگو'
+    'patern'=>'الگو',
+    'language'=>'زبان',
+    'model'=>'مدل',
+    'code'=>'کد',
+    'new_orders'=>'سفارشات جدید',
+    'approved_orders'=>'سفارشات تایید شده',
+    'ready_for_sent'=>'آماده ارسال',
+    'sent'=>'ارسال شده',
+    'final_orders'=>'نهایی',
 );

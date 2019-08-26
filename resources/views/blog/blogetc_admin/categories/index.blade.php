@@ -65,8 +65,8 @@ $active_sidbare = ['blog', 'blog_categories', 'all_blog_categories']
                 </div>
             </section>
         @else
-            @include('panel.not_found',['html'=>'<a class="btn btn-primary" href="'.route('blogetc.admin.categories.create_category').'">
-                '.__('messages.add_new_category').'</a>',
+            @include('panel.not_found',['html'=>'<button class="btn btn-primary" data-toggle="modal" data-target="#general_modal">
+                '.__('messages.add_new_category').'</button>',
                               'msg'=>__('messages.not_found_any_data'),
                            'des'=>__('messages.no_found_any',['item'=>__('messages.category')])])
         @endif

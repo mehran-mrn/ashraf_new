@@ -7,7 +7,6 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-
             var DatatableBasic = function () {
                 var _componentDatatableBasic = function () {
                     if (!$().DataTable) {

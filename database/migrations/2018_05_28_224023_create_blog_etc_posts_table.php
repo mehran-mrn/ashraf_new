@@ -32,6 +32,8 @@ class CreateBlogEtcPostsTable extends Migration
             $table->string('image_medium')->nullable();
             $table->string('image_thumbnail')->nullable();
 
+            $table->string("lang")->default('fa');
+
             $table->timestamps();
         });
 
@@ -41,6 +43,7 @@ class CreateBlogEtcPostsTable extends Migration
             $table->string("category_name")->nullable();
             $table->string("slug")->unique();
             $table->mediumText("category_description")->nullable();
+            $table->string("lang")->default('fa');
 
             $table->unsignedInteger("created_by")->nullable()->index()->comment("user id");
 
