@@ -545,5 +545,6 @@ return array(
     'payment_approve'=>'تاییده پرداخت',
     'approved_list'=>'لیست تایید شده',
     'approve_time'=>'زمان تایید',
-    'approve_user'=>'کاربر تایید کننده'
+    'approve_user'=>'کاربر تایید کننده',
+    'other_payments'=>'سایر پرداخت ها'
 );

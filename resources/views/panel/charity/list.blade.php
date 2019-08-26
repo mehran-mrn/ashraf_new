@@ -108,6 +108,10 @@
                                 <a href="#centered-pill3" class="nav-link"
                                    data-toggle="tab">{{__('messages.approved_list')}}</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="#centered-pill3" class="nav-link"
+                                   data-toggle="tab">{{__('messages.other_payments')}}</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
