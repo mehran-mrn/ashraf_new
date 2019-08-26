@@ -143,7 +143,7 @@ if (!isset($active_sidbare)) {
                                 <li class="nav-item {{in_array("adv_links", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('adv_links') }}"
                                                         class="nav-link ">{{trans('messages.adv_links')}}</a>
                                 </li>
-                                <li class="nav-item {{in_array("add_blog_images", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.upload') }}"
+                                <li class="nav-item {{in_array("social_media", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.images.upload') }}"
                                                         class="nav-link ">{{trans('messages.social_media')}}</a>
                                 </li>
                             </ul>
