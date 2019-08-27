@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\users_address;
+use Validator;
 use App\charity_period;
 use App\charity_periods_transaction;
+use App\city;
 use App\store_product;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
@@ -319,5 +322,67 @@ class global_controller extends Controller
             }
         }
     }
+
     //end cart actions
+
+    public function get_city_list(Request $request)
+    {
+        $this->validate($request,
+            [
+                'proID' => 'required|integer'
+            ]);
+        $cities = city::where('parent', $request['proID'])->get();
+        return response()->json($cities);
+    }
+
+    public function store_order_add_address(Request $request)
+    {
+        $request['mobile'] = latin_num($request['mobile']);
+        $request['phone'] = latin_num($request['phone']);
+
+        $this->validate($request,
+            [
+                'province' => 'required',
+                'cities' => 'required',
+                'address' => 'required',
+                'receiver' => 'required',
+            ]
+        );
+        $address = users_address::create(
+            [
+                'user_id' => Auth::id(),
+                'address' => $request['address'],
+                'province_id' => $request['province'],
+                'city_id' => $request['cities'],
+                'receiver' => $request['receiver'],
+                'phone' => $request['phone'],
+                'mobile' => $request['mobile'],
+                'zip_code' => $request['zip_code'],
+                'lat' => $request['lat'],
+                'lon' => $request['lon'],
+            ]
+        );
+        users_address::where(
+            [
+                ['user_id', '=', Auth::id()],
+                ['id', '!=', $address['id']],
+            ])->update(
+            [
+                'default' => 0
+            ]
+        );
+        return back_normal($request, ['message' => __("messages.address_added"), 'status' => 200]);
+    }
+
+    public function store_order_remove_address(Request $request)
+    {
+        $address = users_address::findOrFail($request['id']);
+        if ($address && $address['user_id'] == Auth::id()) {
+            $address->delete();
+            $maxAddress = users_address::where('user_id', Auth::id())->max('id');
+            users_address::where('id', $maxAddress)->update(['default' => 1]);
+            return back_normal($request, ['message' => __("messages.address_deleted"), 'status' => 200]);
+        }
+    }
+
 }

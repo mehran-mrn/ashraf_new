@@ -224,7 +224,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/upload_files', 'panel\Media@upload_files')->name('upload_files');
         Route::post('/upload_files_category/', 'panel\Media@upload_files_category')->name('upload_files_category');
     });
-
     Route::prefix('gallery')->group(function () {
         Route::get('list_video_galleries', 'panel\panel_view@list_video_galleries')->name('list_video_galleries');
         Route::get('video/add_modal', 'panel\panel_view@add_video_galleries_modal')->name('add_video_galleries_modal');
@@ -241,7 +240,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('media/edit', 'panel\Media@gallery_media_edit')->name('gallery_media_edit');
         Route::get('media/default/{cat_id}/{media_id}', 'panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
     });
-
     Route::group(['prefix' => 'blog_setting'], function () {
         Route::get('/display_statistics',
             'panel\panel_view@display_statistics')
@@ -421,15 +419,19 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //=========================================
 // ------------Global View-----------------
 //=========================================
+
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 
     ], function () {
+
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
         Route::post('/register', 'globals\global_controller@register_form_store')->name('global_register_form_store');
+        Route::get('/', 'globals\global_view@index')->name('index');
 
         Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
 
@@ -449,8 +451,15 @@ Route::group(
     Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
     Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');
     Route::post('/add_to_cart', 'globals\global_controller@add_to_cart')->name('add_to_cart');
+
+
     Route::get('/order/cart', 'globals\global_view@store_cart')->name('store_cart');
-    Route::get('/order/order', 'globals\global_view@store_order')->name('store_order');
+
+
+    Route::get('/order/order', 'globals\global_view@store_order')->name('store_order')->middleware('global_auth');
+    Route::post('/order/add/address', 'globals\global_controller@store_order_add_address')->name('store_order_add_address');
+    Route::delete('/order/remove/address', 'globals\global_controller@store_order_remove_address')->name('store_order_delete_address');
+
     Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
     Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
     Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
@@ -477,6 +486,8 @@ Route::group(
 
     //blog view
     Route::get('blog', 'globals\global_view@blog')->name('blog');
+
+    Route::post('city/list', 'globals\global_controller@get_city_list')->name('get_city_list');
 });
 //=========================================
 

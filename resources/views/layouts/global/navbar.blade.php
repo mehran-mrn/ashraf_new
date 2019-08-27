@@ -24,17 +24,16 @@
                                    href="{{route('global_register_form')}}"> {{trans('messages.register')}}</a>
                             </li>
                         @endif
-                            @if(session()->get('cart'))
-
+                        @if(session()->get('cart'))
                             <li>
-                            <a class="btn btn-success  mt-15 ">{{__('messages.buy_basket')}}</a>
-                        </li>
-                                @endif
+                                <a href="{{route('store_order')}}" class="btn btn-success  mt-15 ">{{__('messages.buy_basket')}}</a>
+                            </li>
+                        @endif
                     </ul>
                     <a class="menuzord-brand pull-left flip" href="{{route('home')}}"><img
                                 src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png') }}" alt=""></a>
                     <ul class="menuzord-menu pull-left flip">
-                        <li><a href="{{route('home')}}">{{trans('messages.home')}}</a></li>
+                        <li><a href="{{route('index')}}">{{trans('messages.home')}}</a></li>
 
                         <li><a href="#home">{{trans('messages.cooperation')}}</a>
                             <ul class="dropdown">
@@ -51,8 +50,6 @@
                                 </li>
                                 <li><a href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
                                 <li><a href="{{route('vow_periodic')}}">{{__("messages.Periodic_assistance")}}</a></li>
-
-
                             </ul>
                         </li>
 
@@ -65,7 +62,7 @@
                         <li><a href="{{route('home')}}">{{trans('messages.support')}}</a></li>
 
                         @if(session()->get('cart'))
-                            <li><a href="{{route('home')}}">{{__('messages.buy_basket')}}</a></li>
+                            <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
                     </ul>
 

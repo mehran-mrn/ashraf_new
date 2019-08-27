@@ -11,6 +11,7 @@ use App\charity_period;
 use App\charity_periods_transaction;
 use App\charity_transaction;
 use App\charity_transactions_value;
+use App\city;
 use App\gallery_category;
 use App\gateway;
 use App\media;
@@ -128,7 +129,9 @@ class global_view extends Controller
     public function store_order()
     {
         $tran = setting_transportation::where('status', "active")->get();
-        return view('global.store.order', compact('tran'));
+        $userInfo = User::with('addresses')->findOrFail(Auth::id());
+        $provinces = city::where('parent',0)->get();
+        return view('global.store.order', compact('tran','userInfo','provinces'));
     }
 
     public function store_payment()

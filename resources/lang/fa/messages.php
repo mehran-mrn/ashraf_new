@@ -555,7 +555,13 @@ return array(
     'approved_orders'=>'سفارشات تایید شده',
     'ready_for_sent'=>'آماده ارسال',
     'sent'=>'ارسال شده',
-
-
     'final_orders'=>'نهایی',
+
+    'for_submit_order_need_to_login'=>'برای ثبت سفارش نیاز است وارد سیستم شوید.',
+    'receiver_name'=>'نام دریافت کننده',
+    'add_new_address'=>'ثبت آدرس جدید',
+    'no_any_address_submit'=>'هیچ آدرسی در سیستم ثبت نشد.',
+    'address_added'=>'آدرس اضافه گردید.',
+    'address_deleted'=>'آدرس حذف گردید.',
+    'your_location'=>'موقعیت شما'
 );
