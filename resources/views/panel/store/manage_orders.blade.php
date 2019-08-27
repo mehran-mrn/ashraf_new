@@ -72,6 +72,7 @@
     @php
         $active_sidbare = ['store', 'manage_orders']
     @endphp
+
     <section>
         <div class="content">
             <div class="card">
@@ -185,6 +186,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+
                         <div class="tab-pane fade" id="highlighted-justified-tab6">
                             <table class="table datatable-basic table-striped">
                                 <thead>

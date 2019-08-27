@@ -75,6 +75,7 @@
         </div>
     </div>
 </div>
+
 <script>
     if (document.getElementById("category_slug").value.length < 1) {
         SHOULD_AUTO_GEN_SLUG = true;

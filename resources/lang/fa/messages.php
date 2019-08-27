@@ -555,5 +555,7 @@ return array(
     'approved_orders'=>'سفارشات تایید شده',
     'ready_for_sent'=>'آماده ارسال',
     'sent'=>'ارسال شده',
+
+
     'final_orders'=>'نهایی',
 );
