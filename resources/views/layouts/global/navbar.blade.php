@@ -1,5 +1,5 @@
 <!-- Header -->
-<header id="header" class="header mb-5">
+<header id="header" class="header ">
     <div class="header-top sm-text-center bg-theme-colored">
         <div class="container">
             <div class="row">
