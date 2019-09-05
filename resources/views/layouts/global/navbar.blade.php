@@ -1,10 +1,53 @@
 <!-- Header -->
-<header id="header" class="header mb-30">
-    <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated animated-active">
-        <div class="header-nav-wrapper">
+<header id="header" class="header mb-5">
+    <div class="header-top sm-text-center bg-theme-colored">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a class=" pull-left flip m-1" href="{{route('home')}}"><img
+                                src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png') }}" alt=""></a>
+                </div>
+                <div class="col-md-3">
+                    <nav>
+                        <ul class="list-inline sm-text-center text-left flip mt-0">
+
+                            <li> <a class="text-white" href="{{route('home')}}">{{__('messages.FAQ')}}</a> </li>
+                            <li class="text-white">|</li>
+                            <li> <a class="text-white" href="{{route('home')}}">{{trans('messages.support')}}</a> </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget m-0 mt-5 no-border">
+                        <ul class="list-inline text-right sm-text-center">
+                            <li class="pl-10 pr-10 mb-0 pb-0">
+                                <div class="header-widget text-white"><i class="fa fa-phone"></i> {{trans('site_info.phone')}} </div>
+                            </li>
+                            <li class="pl-10 pr-10 mb-0 pb-0">
+                                <div class="header-widget text-white"><i class="fa fa-envelope-o"></i> {{trans('site_info.email')}} </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 text-right flip sm-text-center">
+                    <div class="widget m-0">
+                        <ul class="styled-icons icon-dark icon-circled icon-theme-colored icon-sm">
+                            <li class="mb-0 pb-0"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li class="mb-0 pb-0"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li class="mb-0 pb-0"><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li class="mb-0 pb-0"><a href="#"><i class="fa fa-linkedin text-white"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-nav">
+        <div class="header-nav-wrapper  bg-lighter">
             <div class="container">
-                <nav id="menuzord-right" class="menuzord default no-bg">
-                    <ul class="list-inline pull-right flip hidden-sm hidden-xs">
+                <nav id="menuzord-right" class="menuzord default no-bg"> <a class="menuzord-brand pull-left flip" href="index-mp-layout1.html"><img src="images/logo-wide.png" alt=""></a>
+
+                    <ul class="list-inline pull-right flip hidden-sm hidden-xs ">
                         @if (Auth::check())
                             <li>
                                 <a class="btn btn-colored  btn-theme-colored mt-15"
@@ -30,9 +73,7 @@
                             </li>
                         @endif
                     </ul>
-                    <a class="menuzord-brand pull-left flip" href="{{route('home')}}"><img
-                                src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png') }}" alt=""></a>
-                    <ul class="menuzord-menu pull-left flip">
+                    <ul class="menuzord-menu pull-left flip ">
                         <li><a href="{{route('index')}}">{{trans('messages.home')}}</a></li>
 
                         <li><a href="#home">{{trans('messages.cooperation')}}</a>
@@ -53,22 +94,21 @@
                             </ul>
                         </li>
 
-                        <li><a href="{{route('home')}}">{{__('messages.FAQ')}}</a></li>
 
                         <li><a href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
 
                         <li><a href="{{route('blog')}}">{{trans('messages.blog')}}</a></li>
 
-                        <li><a href="{{route('home')}}">{{trans('messages.support')}}</a></li>
 
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
                     </ul>
-
-
                 </nav>
             </div>
         </div>
     </div>
 </header>
+
+
+

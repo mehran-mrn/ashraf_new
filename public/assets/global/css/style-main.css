@@ -1102,7 +1102,7 @@ section > .container-fluid {
 /* -------- Menuzord ---------- */
 .menuzord-menu > li > a {
   color: #333333;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
 }
 .menuzord .menuzord-menu > li.active > a i,
@@ -1125,7 +1125,7 @@ section > .container-fluid {
 .menuzord-menu > li > .megamenu .megamenu-row li {
   border: 0 none;
   clear: both;
-  font-size: 12px;
+  font-size: 16px;
   margin: 0;
   padding: 2px;
   position: relative;
@@ -1460,7 +1460,7 @@ section > .container-fluid {
   display: none;
 }
 .menu-full-page #fullpage-nav ul ul li a {
-  font-size: 13px;
+  font-size: 16px;
 }
 .menu-full-page #fullpage-nav ul ul li a:hover {
   color: #888;

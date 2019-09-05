@@ -30,10 +30,10 @@
     <link href="{{ URL::asset('/public/assets/global/css/css-plugin-collections.css') }}" rel="stylesheet"/>
     <!-- CSS | menuzord megamenu skins -->
     <link id="menuzord-menu-skins"
-          href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}"
+          href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=2"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
-    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=3" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
     <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Custom Margin Padding Collection -->
@@ -57,9 +57,9 @@
           type="text/css"/>
 
     <!-- CSS | Theme Color -->
-    <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-green.css') }}" rel="stylesheet"
+    <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-blue.css') }}" rel="stylesheet"
           type="text/css">
-    <link href="{{ URL::asset('/public/assets/global/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style.css') }}?v=4" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/fonts.css') }}" rel="stylesheet" type="text/css">
     <link href="{{URL::asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
 

@@ -16,7 +16,6 @@ Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
-
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -31,11 +30,11 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     //--------------Panel View-------------
     //======================================
     Route::get('dashboard', 'panel\panel_view@dashboard')->name('dashboard');
-    Route::get('images/users/{media_id}', [
-        'as' => 'images.show',
-        'uses' => 'private_doc@show',
-        'middleware' => 'auth',
-    ]);
+//    Route::get('images/users/{media_id}', [
+//        'as' => 'images.show',
+//        'uses' => 'private_doc@show',
+//        'middleware' => 'auth',
+//    ]);
     Route::prefix('user_manager')->group(function () {
 
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
@@ -254,6 +253,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('/adv_card_form/{option_id?}', 'panel\panel_view@load_adv_card_form')->name('adv_card_form');
         Route::post('/submit_adv_card', 'panel\setting@submit_adv_card')->name('submit_adv_card');
         Route::post('/delete_adv_card/{option_id}', 'panel\setting@delete_adv_card')->name('delete_adv_card');
+        Route::get('/more_setting', 'panel\panel_view@more_blog_setting')->name('more_blog_setting');
 
     });
     //======================================

@@ -51,3 +51,13 @@ input:-moz-placeholder {
     height:85px;
     object-fit:cover;
 }
+
+.bordered_box_bottom{
+    border-bottom: 2px solid;
+    border-color: #4c9fa7;
+}
+.bordered_box{
+    border-bottom: 2px solid;
+    border-top: 1px solid;
+    border-color: #4c9fa7;
+}

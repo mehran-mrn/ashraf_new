@@ -243,6 +243,7 @@ return array(
     'all_blog_images' => 'همه تصاویر',
     'add_blog_images' => 'افزودن تصویر',
     'blog_setting' => 'تنظیمات سایت',
+    'more_setting' => 'تنظیمات بیشتر',
     'site_info' => 'اطلاعات سایت',
     'link' => 'لینک',
     'adv_links' => 'لینک های تبلیغی',

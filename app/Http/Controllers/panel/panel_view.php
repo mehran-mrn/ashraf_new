@@ -287,6 +287,11 @@ class panel_view extends Controller
         return view('panel.blog_setting.materials.adv_bar_form', compact('option'));
     }
 
+    public function more_blog_setting(Request $request){
+        return view('panel.blog_setting.more_setting');
+
+    }
+
 //end blog module
 
 
