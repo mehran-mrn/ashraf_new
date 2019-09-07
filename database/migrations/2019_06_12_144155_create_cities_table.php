@@ -18,6 +18,7 @@ class CreateCitiesTable extends Migration
             $table->string('name')->nullable();
             $table->integer('parent')->default('0');
             $table->string('status');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -617,11 +617,11 @@ class panel_view extends Controller
 
 
 //setting module
-    public function cities_list()
-    {
-        $cities = city::where('parent', '0')->orderBy('name')->paginate(32);
-        return view('panel.setting.cities_list', compact('cities'));
-    }
+//    public function cities_list()
+//    {
+//        $cities = city::where('parent', '0')->orderBy('name')->paginate(32);
+//        return view('panel.setting.cities_list', compact('cities'));
+//    }
 
     public function gateway_setting()
     {

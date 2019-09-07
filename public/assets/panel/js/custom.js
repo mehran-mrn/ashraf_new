@@ -24,6 +24,7 @@ var swal_alert = function () {
         var title = this.getAttribute("data-title");
         var text = this.getAttribute("data-text");
         var type = this.getAttribute("data-type");
+        var redirect = this.getAttribute("data-redirect");
         var cancel = this.getAttribute("data-cancel");
         var confirmText = this.getAttribute("data-confirm-text");
         Swal.fire({
@@ -50,7 +51,12 @@ var swal_alert = function () {
                             type: 'success'
                         });
                         setTimeout(function () {
+                            if (redirect){
+                                window.location.replace(redirect);
+                            }
+                            else {
                             location.reload();
+                            }
                         }, 1000)
                     },
                     error: function (response) {
