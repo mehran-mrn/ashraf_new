@@ -92,7 +92,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('category_update/{cat_id}', 'panel\blogs@category_update')->name('category_update');
     });
     Route::prefix('setting')->group(function () {
-        Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
+//        Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
+        Route::resource('cities','panel\cities_controller');
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
         Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
         Route::post('gateway_add', 'panel\setting@gateway_add')->name('gateway_add_store');

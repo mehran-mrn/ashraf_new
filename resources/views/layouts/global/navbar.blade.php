@@ -1,14 +1,18 @@
 <!-- Header -->
 <header id="header" class="header ">
-    <div class="header-top sm-text-center bg-theme-colored">
+    <div class="header-top sm-text-center bg-lighter">
         <div class="container">
+            <div class="row">
+                <br>
+                <br>
+            </div>
             <div class="row">
                 <div class="col-md-4">
                     <nav>
                         <ul class="list-inline sm-text-center text-left flip mt-0">
-                            <li> <a class="text-white" href="{{route('home')}}">{{__('messages.FAQ')}}</a> </li>
-                            <li class="text-white">|</li>
-                            <li> <a class="text-white" href="{{route('home')}}">{{trans('messages.support')}}</a> </li>
+                            <li> <a class="text-black" href="{{route('home')}}">{{__('messages.FAQ')}}</a> </li>
+                            <li class="text-black">|</li>
+                            <li> <a class="text-black" href="{{route('home')}}">{{trans('messages.support')}}</a> </li>
                         </ul>
                     </nav>
                 </div>
@@ -16,10 +20,10 @@
                     <div class="widget m-0 mt-5 no-border">
                         <ul class="list-inline text-right sm-text-center">
                             <li class="pl-10 pr-10 mb-0 pb-0">
-                                <div class="header-widget text-white"><i class="fa fa-phone"></i> {{trans('site_info.phone')}} </div>
+                                <div class="header-widget text-black"><i class="fa fa-phone"></i> {{trans('site_info.phone')}} </div>
                             </li>
                             <li class="pl-10 pr-10 mb-0 pb-0">
-                                <div class="header-widget text-white"><i class="fa fa-envelope-o"></i> {{trans('site_info.email')}} </div>
+                                <div class="header-widget text-black"><i class="fa fa-envelope-o"></i> {{trans('site_info.email')}} </div>
                             </li>
                         </ul>
                     </div>
@@ -38,7 +42,7 @@
         </div>
     </div>
     <div class="header-nav">
-        <div class="header-nav-wrapper  bg-lighter">
+        <div class="header-nav-wrapper bg-theme-colored ">
             <div class="container">
                 <nav id="menuzord-right" class="menuzord default no-bg"> <a class="menuzord-brand pull-left flip" href="index-mp-layout1.html"><img src="images/logo-wide.png" alt=""></a>
                     <ul class="list-inline pull-right flip hidden-sm hidden-xs ">

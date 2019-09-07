@@ -298,7 +298,7 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{url(config('translation-manager.route.prefix'))}}"
                                                 class="nav-link {{in_array("translations", $active_sidbare) ? 'active' : '' }}">{{trans('messages.translation_maganger')}}</a>
                         </li>
-                        <li class="nav-item"><a href="{{route('cities_list')}}"
+                        <li class="nav-item"><a href="{{route('cities.index ')}}"
                                                 class="nav-link {{in_array("cities_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.cities')}}</a>
                         </li>
 
