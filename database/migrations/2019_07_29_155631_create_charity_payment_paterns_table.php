@@ -44,7 +44,16 @@ class CreateCharityPaymentPaternsTable extends Migration
                     'max' => '9000000000',
                     'type' => 'online'
 
-                ]
+                ],[
+                    'title' => 'کمپن پرداخت',
+                    'description' => '',
+                    'periodic' => '0',
+                    'system' => '1',
+                    'min' => '10000',
+                    'max' => '9000000000',
+                    'type' => 'champion'
+
+                ],
             ]
 
         );

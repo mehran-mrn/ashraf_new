@@ -43,13 +43,13 @@
                                                                href="#">{{__('messages.add_to_cart')}}</a>
                                                         </div>
                                                         <div class="btn-product-view-details">
-                                                            <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
+                                                            <a class="b{{route('store_detail',['pro_id'=>$pro['product_id']])}}tn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
                                                                href="{{route('store_detail',['pro_id'=>$pro['product_id']])}}">{{__('messages.view_detail')}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="product-details text-center bg-lighter pt-15 pb-10">
-                                                    <a href="#">
+                                                    <a href="{{route('store_detail',['pro_id'=>$pro['product_id']])}}">
                                                         <h5 class="product-title mt-0">{{$pro->store_product['title']}}
                                                             <small>{{__('messages.size')}} {{$pro['size']}}</small>
                                                         </h5>

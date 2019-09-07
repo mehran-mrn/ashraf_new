@@ -9,15 +9,13 @@
         $(document).on('click', ".btn-address", function () {
             $("#frm_add_address").toggleClass('hidden')
         });
-
-
         $(document).ready(function () {
             var mymap = L.map('mapid').setView([36.00000, 51.2769549], 13);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                attribution: '',
                 maxZoom: 18,
                 id: 'mapbox.streets',
-                accessToken: 'your.mapbox.access.token'
+                accessToken: 'sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg'
             }).addTo(mymap);
 
             mymap.on('click', function (e) {
@@ -124,7 +122,7 @@
                     }
                 });
             })
-            $(document).on('click','.btn-delete',function () {
+            $(document).on('click', '.btn-delete', function () {
                 var id = $(this).data('id');
                 Swal.fire({
                     title: '{{__('messages.delete')}}',
@@ -168,17 +166,96 @@
                     }
                 })
             })
+
+
+
+
+            $("#frm_order").validate({
+                lang: "fa",
+                rules: {
+                    transportation: {
+                        required: true,
+                    },
+                    cities: {
+                        required: true,
+                    },
+                    address: {
+                        required: true,
+                        minlength: 3
+                    },
+                    receiver: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 100,
+                    },
+                    mobile: {
+                        minlength: 11,
+                        maxlength: 11,
+                        number: true
+                    },
+                    phone: {
+                        minlength: 11,
+                        maxlength: 11,
+                        number: true
+                    }
+                },
+                submitHandler: function (form) {
+                    var form_btn = $(form).find('button[type="submit"]');
+                    var form_result_div = '#form-result';
+                    $(form_result_div).remove();
+                    form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                    var form_btn_old_msg = form_btn.html();
+                    form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+                    $(form).ajaxSubmit({
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
+                        },
+                        success: function (data) {
+
+                            if (data.message.status === 200) {
+                                PNotify.success({
+                                    text: data.message.message,
+                                    delay: 3000,
+                                });
+                                $("#frm_add_address").toggleClass('hidden');
+                                $(form).find('.form-control').val('');
+                            }
+                            form_btn.prop('disabled', false).html(form_btn_old_msg);
+                            $(form_result_div).html(data.message).fadeIn('slow');
+                            setTimeout(function () {
+                                $(form_result_div).fadeOut('slow')
+                            }, 6000);
+                        }, error: function (error) {
+                            $.each(error.responseJSON.errors, function (i, item) {
+                                PNotify.error({
+                                    text: item,
+                                    delay: 3000,
+                                });
+                            });
+                            form_btn.prop('disabled', false).html(form_btn_old_msg);
+                            setTimeout(function () {
+                                return window.location.reload();
+                            }, 1000);
+                        }
+                    });
+                }
+            });
+
         })
 
     </script>
 @stop
 @section('css')
-    <link rel="stylesheet" href="{{asset('public/assets/global/js/leatflat/leaflet.css')}}" />
+    <link rel="stylesheet" href="{{asset('public/assets/global/js/leatflat/leaflet.css')}}"/>
     <style>
         .border {
             border: 2px solid #88e0a1 !important;
         }
-        #mapid { height: 180px; }
+
+        #mapid {
+            height: 180px;
+        }
 
     </style>
 @stop
@@ -280,7 +357,7 @@
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="zip_code">{{__('messages.zip_code')}}</label>
-                                        <input type="text" class="form-control"  name="zip_code">
+                                        <input type="text" class="form-control" name="zip_code">
                                     </div>
                                     <div class="col-md-6 col-xs-12 form-group pt-10">
                                         <label for="phone">{{__('messages.phone')}}</label>
@@ -304,7 +381,6 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="col-md-12">
                         <label><i class="fa fa-angle-left"></i> {{__('messages.address')}}</label>
                         <table class="table table-bordered border text-center" style="vertical-align: middle">
@@ -317,9 +393,10 @@
                                     <td class="align-middle" style="vertical-align: middle">
                                         <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
                                         <span class="pull-right btn  btn-sm align-middle mr-20">{{$tra['address']}}</span>
-                                        <button class="btn btn-default btn-sm pull-right">{{__('messages.edit')}}</button>
-                                        <button class="btn btn-default btn-sm pull-right btn-delete" data-id="{{$tra['id']}}">{{__('messages.delete')}}</button>
-                                        <span class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
+                                        <button class="btn btn-default btn-sm pull-right btn-delete"
+                                                data-id="{{$tra['id']}}">{{__('messages.delete')}}</button>
+                                        <span class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong
+                                                class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
                                     </td>
                                     <td>
                                         <div class="radio">
@@ -336,71 +413,134 @@
                             </tbody>
                         </table>
                     </div>
-
-
-                    <div class="col-md-12">
-                        <label><i class="fa fa-angle-left"></i> {{__('messages.how_to_send')}}</label>
-                        <table class="table table-bordered border text-center" style="vertical-align: middle">
-                            <tbody>
-                            @foreach($tran as $tra)
+                    <form action="" method="post" id="frm_order">
+                        <div class="col-md-6">
+                            <label><i class="fa fa-angle-left"></i> {{__('messages.how_to_send')}}</label>
+                            <table class="table table-bordered border text-center" style="vertical-align: middle">
+                                <tbody>
+                                @foreach($tran as $tra)
+                                    <tr>
+                                        <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                            <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                        </td>
+                                        <td class="align-middle" style="vertical-align: middle">
+                                            <i class="fa fa-truck fa-2x pull-right mr-20"></i>
+                                            <span class="pull-right align-middle mr-20">{{$tra['title']}}</span>
+                                            <span class="pull-left align-middle ml-20 text-success">{{__("messages.free")}}</span>
+                                        </td>
+                                        <td>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="transportation"
+                                                           id="trans_radio_{{$tra['id']}}" value="option1" checked>
+                                                    {{__('messages.select')}}
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <label><i class="fa fa-angle-left"></i> {{__('messages.payment_type')}}</label>
+                            <table class="table table-bordered border text-center" style="vertical-align: middle">
+                                <tbody>
+                                <tr>
+                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                    </td>
+                                    <td class="align-middle" style="vertical-align: middle">
+                                        <i class="fa fa-anchor fa-2x pull-right mr-20"></i>
+                                        <span class="pull-right align-middle mr-20">{{__('messages.online')}}</span>
+                                        <span class="pull-left align-middle ml-20 text-success"></span>
+                                    </td>
+                                    <td>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="payment" id="payment_radio_online"
+                                                       value="pay_online" checked>
+                                                {{__('messages.select')}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                    </td>
+                                    <td class="align-middle" style="vertical-align: middle">
+                                        <i class="fa fa-credit-card fa-2x pull-right mr-20"></i>
+                                        <span class="pull-right align-middle mr-20">{{__('messages.cart_to_cart')}}</span>
+                                        <span class="pull-left align-middle ml-20 text-success"></span>
+                                    </td>
+                                    <td>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="payment" id="payment_radio_cart"
+                                                       value="pay_cart" checked>
+                                                {{__('messages.select')}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                    </td>
+                                    <td class="align-middle" style="vertical-align: middle">
+                                        <i class="fa fa-money fa-2x pull-right mr-20"></i>
+                                        <span class="pull-right align-middle mr-20">{{__('messages.send_to_account')}}</span>
+                                        <span class="pull-left align-middle ml-20 text-success"></span>
+                                    </td>
+                                    <td>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="transportation" id="payment_radio_account"
+                                                       value="option1" checked>
+                                                {{__('messages.select')}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <label><i class="fa fa-angle-left"></i> {{__('messages.send_time')}}</label>
+                            <table class="table table-bordered border text-center" style="vertical-align: middle">
+                                <tbody>
+                                <?php
+                                $time = 0;
+                                ?>
+                                @if(session('cart'))
+                                    @foreach(session('cart') as $id => $details)
+                                        <?php
+                                        if ($details['time'] > $time) {
+                                            $time = $details['time'];
+                                        }
+                                        ?>
+                                    @endforeach
+                                @endif
                                 <tr>
                                     <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
                                         <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
                                     </td>
                                     <td class="align-middle" style="vertical-align: middle">
                                         <i class="fa fa-truck fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{$tra['title']}}</span>
-                                        <span class="pull-left align-middle ml-20 text-success">{{__("messages.free")}}</span>
-                                    </td>
-                                    <td>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="transportation" id="trans_radio_{{$tra['id']}}" value="option1" checked>
-                                                {{__('messages.select')}}
-                                            </label>
-                                        </div>
+                                        <span class="pull-right align-middle mr-20">{{__('messages.max_send_time_your_order')}}</span>
+                                        <span class="pull-left align-middle ml-20 text-success">{{$time."  ". __("messages.work_day")}}</span>
                                     </td>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label><i class="fa fa-angle-left"></i> {{__('messages.send_time')}}</label>
-                        <table class="table table-bordered border text-center" style="vertical-align: middle">
-                            <tbody>
-                            <?php
-                            $time = 0;
-                            ?>
-                            @if(session('cart'))
-                                @foreach(session('cart') as $id => $details)
-                                    <?php
-                                    if ($details['time'] > $time) {
-                                        $time = $details['time'];
-                                    }
-                                    ?>
-                                @endforeach
-                            @endif
-                            <tr>
-                                <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
-                                    <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
-                                </td>
-                                <td class="align-middle" style="vertical-align: middle">
-                                    <i class="fa fa-truck fa-2x pull-right mr-20"></i>
-                                    <span class="pull-right align-middle mr-20">{{__('messages.max_send_time_your_order')}}</span>
-                                    <span class="pull-left align-middle ml-20 text-success">{{$time."  ". __("messages.work_day")}}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="submit"
+                                class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}}
+                            <i class="fa fa-caret-left pr-10"></i></button>
+                    </form>
                 </div>
 
-                <a href="{{route('store_payment')}}"
-                   class="btn btn-success pull-left p-10 pr-20 pl-20">{{__('messages.continue_shopping')}} <i
-                            class="fa fa-caret-left pr-10"></i></a>
 
             </div>
         </section>

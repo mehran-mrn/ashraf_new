@@ -566,7 +566,9 @@ class panel_view extends Controller
         $system_title = charity_payment_patern::with('titles')->where('system', 1)->where('periodic', 0)->first();
         $deleted_titles = charity_payment_title::where('ch_pay_pattern_id', $system_title['id'])->onlyTrashed()->get();
         $other_titles = charity_payment_patern::with('titles')->with('fields')->where('system', 0)->where('periodic', 0)->get();
-        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles'));
+        $champion_titles = charity_payment_patern::with('titles')->where('type', '=','champion')->first();
+        $banks = bank::groupBy('name')->get();
+        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles','champion_titles','banks'));
     }
 
     public function charity_payment_title_add($payment_pattern_id, $payment_title_id = null)
@@ -612,7 +614,6 @@ class panel_view extends Controller
         $otherPayments = charity_transaction::with('values','user','patern')->get();
         return view('panel.charity.list',compact('periods','payments','paymentsApprove','otherPayments'));
     }
-
 //end charity module
 
 

@@ -19,7 +19,7 @@ Boxed Skin
 
 /* Dropdown */
 .menuzord-menu ul.dropdown{
-	top: 71px;
+	top: 48px;
 }
 .menuzord-menu ul.dropdown li ul.dropdown{
     top: 0;
@@ -33,7 +33,7 @@ Boxed Skin
 
 /* Megamenu */
 .menuzord-menu > li > .megamenu{
-	top: 71px;
+	top: 51px;
 }
 
 /* Search Field */

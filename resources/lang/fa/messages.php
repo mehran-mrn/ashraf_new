@@ -564,5 +564,10 @@ return array(
     'no_any_address_submit'=>'هیچ آدرسی در سیستم ثبت نشد.',
     'address_added'=>'آدرس اضافه گردید.',
     'address_deleted'=>'آدرس حذف گردید.',
-    'your_location'=>'موقعیت شما'
+    'your_location'=>'موقعیت شما',
+    'payment_type'=>'نحوه پرداخت',
+    'target_amount'=>'مبلغ هدف',
+    'payment_code'=>'شناسه پرداخت',
+    'add_champion'=>'افزودن کمپین',
+    'please_click_or_drop_and_down_file_for_upload'=>'برای بارگذاری فایل لطفاً کلیک نمایید یا فایل به در اینجا رها نمایید.'
 );

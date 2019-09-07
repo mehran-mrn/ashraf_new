@@ -1,10 +1,126 @@
 @extends('layouts.panel.panel_layout')
+@section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
+@stop
 @section('js')
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('#start_date_btn').MdPersianDateTimePicker({
+                targetTextSelector: '#start_date',
+                fromDate: true,
+                groupId: 'dateRangeSelector1',
+                enableTimePicker: true
+            });
+            $('#end_date_btn').MdPersianDateTimePicker({
+                targetTextSelector: '#end_date',
+                toDate: true,
+                groupId: 'dateRangeSelector1',
+                enableTimePicker: true
+            });
+            $(document).on('keyup', '.price', function (e) {
+                if (e.which >= 37 && e.which <= 40) return;
+                $(this).val(function (index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        ;
+                });
+            })
+
+            CKEDITOR.replace('description', {
+                language: 'fa',
+                uiColor: '#9AB8F3',
+                extraPlugins: 'filebrowser',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+            });
+        })
+        var DropzoneUploader = function () {
+            var _componentDropzone = function () {
+                if (typeof Dropzone == 'undefined') {
+                    console.warn('Warning - dropzone.min.js is not loaded.');
+                    return;
+                }
+                var token = $('meta[name="token"]').attr('content');
+
+                Dropzone.options.dropzoneRemove = {
+                    url: "{{route('upload_files_category')}}",
+                    paramName: "file",
+                    dictDefaultMessage: '{{__('messages.please_click_or_drop_and_down_file_for_upload')}}',
+                    maxFilesize: 10,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                    autoProcessQueue: false,
+                    addRemoveLinks: true,
+                    parallelUploads: 1,
+                    sending: function (file, xhr, formData) {
+                        formData.append("_token", token);
+                    },
+                    init: function () {
+                        var myDropzone = this;
+                        $("#frm_add_champion").on('submit', function (e) {
+                            e.preventDefault();
+                            myDropzone.processQueue();
+                        })
+                        this.on('sending', function (file, xhr, formData) {
+                            var data = $('#frm_add_champion').serializeArray();
+                            $.each(data, function (key, el) {
+                                formData.append(el.name, el.value);
+                            });
+                        });
+                        this.on("success", function (file, response) {
+                            console.log(response);
+                            var org_name = file.name;
+                            var new_name = org_name.replace(".", "_");
+                            $("#file_names").append(
+                                '<input class="' + new_name + '" name="file_name[]" type="hidden" value="' + response + '" />'
+                            );
+                            new PNotify({
+                                title: '',
+                                text: response.message,
+                                type: 'success'
+                            });
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+
+                        });
+                        this.on("complete", function (file, response) {
+                            $("input").remove(".dz-hidden-input");
+                            $('.dz-hidden-input').hide();
+                        });
+                        this.on("removedfile", function (file) {
+                            var org_name = file.name;
+                            var new_name = org_name.replace(".", "_");
+                            $('.' + new_name).remove();
+                        });
+                    }
+                };
+
+            };
+            return {
+                init: function () {
+                    _componentDropzone();
+                }
+            }
+        }();
+        DropzoneUploader.init();
+    </script>
 @endsection
+<?php
+$active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']
+?>
+@section('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@stop
 @section('content')
-    <?php     $active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']?>
     <div class="content">
         {{--    <div class="row">--}}
         {{--        <div class="col-md-12">--}}
@@ -28,10 +144,7 @@
 
         <div class="row">
             <div class="col-md-12">
-
                 <div class="card">
-
-
                     <div class="card-body">
                         <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                             <li class="nav-item"><a href="#custom_payment_types" class="nav-link active"
@@ -44,12 +157,11 @@
                             <li class="nav-item"><a href="#periodic_title" class="nav-link" data-toggle="tab">
                                     {{$periodic_title['title']}}
                                 </a></li>
-
-
+                            <li class="nav-item"><a href="#payment_champion" class="nav-link" data-toggle="tab">
+                                    {{$champion_titles['title']}}
+                                </a></li>
                         </ul>
-
                         <div class="tab-content">
-
                             <div class="tab-pane fade  show active" id="custom_payment_types">
                                 <div class="row mb-2">
                                     <button type="button" class="btn btn-outline-warning btn-lg modal-ajax-load"
@@ -126,7 +238,7 @@
                                                                                 {{trans('messages.time_input')}}
                                                                                 @break
                                                                             @endswitch
-                                                                            </td>
+                                                                        </td>
                                                                         <td>
                                                                             @switch($field['require'])
                                                                                 @case(0)
@@ -149,19 +261,18 @@
 
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="system_title">
                                 <div class="card border-secondary">
                                     <div class="card-body">
                                         {!! $system_title['description'] !!}
                                         <span class="text-danger-300 float-right">
-                                            <a href="#"  class=" m-0 ml-2
+                                            <a href="#" class=" m-0 ml-2
                                              modal-ajax-load"
-                                                    data-ajax-link="{{route('charity_payment_pattern_add',['payment_pattern_id'=>$system_title['id']])}}"
-                                                    data-toggle="modal"
-                                                    data-modal-size="modal-full"
-                                                    data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.payment_pattern')])}}"
-                                                    data-target="#general_modal">
+                                               data-ajax-link="{{route('charity_payment_pattern_add',['payment_pattern_id'=>$system_title['id']])}}"
+                                               data-toggle="modal"
+                                               data-modal-size="modal-full"
+                                               data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.payment_pattern')])}}"
+                                               data-target="#general_modal">
                                                         {{trans('messages.edit')}}
                                                     </a>
                                         </span>
@@ -290,12 +401,11 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="periodic_title">
                                 <div class="card border-secondary">
                                     <div class="card-body">
                                         {!! $periodic_title['description'] !!}
-                                        <span class="text-danger-300 float-right"><a href="#"  class=" m-0 ml-2
+                                        <span class="text-danger-300 float-right"><a href="#" class=" m-0 ml-2
                                              modal-ajax-load"
                                                                                      data-ajax-link="{{route('charity_payment_pattern_add',['payment_pattern_id'=>$periodic_title['id']])}}"
                                                                                      data-toggle="modal"
@@ -351,16 +461,137 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            <div class="tab-pane fade" id="payment_champion">
+                                <div class="card border-secondary">
+                                    <div class="card-body">
+                                        {!! $champion_titles['description'] !!}
+                                    </div>
+                                    <hr>
+                                    <button class="btn btn-primary m-2 py-2 px-3 "
+                                            data-toggle="modal"
+                                            data-target="#general_modal">{{__('messages.add_champion')}}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
-
     </div>
-
+    <div id="general_modal" class="modal fade" data-backdrop="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <spans class="modal-title">{{__('messages.add_image')}}</spans>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="frm_add_champion" autocomplete="off">
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.title")}}</label>
+                                <input type="text" class="form-control" name="title" required="required">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.start_date")}}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" readonly="readonly" id="start_date"
+                                           name="start_date"
+                                           required="required">
+                                    <button class="btn btn-outline-dark btn-sm" type="button" id="start_date_btn"><i
+                                                class="icon-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.end_date")}}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" readonly="readonly" id="end_date"
+                                           name="end_date"
+                                           required="required">
+                                    <button class="btn btn-outline-dark btn-sm" type="button" id="end_date_btn"><i
+                                                class="icon-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.target_amount")}}</label>
+                                <input type="text" class="form-control price" name="target" required="required">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.payment_code")}}</label>
+                                <input type="text" class="form-control" name="payment_code" required="required">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.gateway")}}</label>
+                                <select name="gateway" id="gateway" class="form-control">
+                                    @foreach($banks as $bank)
+                                        <option value="{{$bank['id']}}">{{$bank['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.account_number")}}</label>
+                                <input type="text" class="form-control" name="account_number">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.card_number")}}</label>
+                                <input type="text" class="form-control" name="card_number">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__("messages.sheba_number")}}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="sheba_number">
+                                    <span class="input-group-prepend">
+                                        <span class="input-group-text">ID</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label for="">{{__('messages.status')}}</label>
+                                <div class="d-flex justify-content-around">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="status" id="status"
+                                               value="active"
+                                               checked data-fouc>
+                                        <label class="custom-control-label text-success"
+                                               for="status">{{__('messages.active')}}
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="status" id="status2"
+                                               value="inactive">
+                                        <label class="custom-control-label text-danger"
+                                               for="status2">{{__('messages.inactive')}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8 form-group">
+                                <label for="">{{__('messages.description')}}</label>
+                                <textarea class="form-control" name="description" id="description" cols="30"
+                                          rows="5"></textarea>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label for="">{{__('messages.image')}}</label>
+                                <div class="dropzone" id="dropzone_remove">
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-default px-3 py-1" type="button"
+                                            data-dismiss="modal">{{__('messages.close')}}</button>
+                                    <button class="btn btn-primary px-3 py-1"
+                                            type="submit">{{__('messages.submit')}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

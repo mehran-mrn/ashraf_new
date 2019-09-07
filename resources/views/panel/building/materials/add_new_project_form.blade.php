@@ -241,8 +241,6 @@
         $('#lfmMain').filemanager('image', {prefix: route_prefix});
     });
 
-</script>
-<script>
     $(function(){
         var locationPicker = $('.location-picker').locationPicker({
             zoomControl:false,
@@ -255,8 +253,6 @@
             }
         });
     });
-</script>
-<script>
     $(document).ready(function () {
         $("#type_selection_{{$rand_id}}").select2();
         $("#select_city_{{$rand_id}}").select2();

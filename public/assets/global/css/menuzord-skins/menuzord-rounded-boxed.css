@@ -4,7 +4,7 @@ Rounded Boxed Skin
 
 /* Menu items */
 .menuzord-menu > li{
-	padding: 9px 0;
+	padding: 2px 0;
 }
 .menuzord-menu > li > a{
 	padding: 8px 16px;
@@ -20,7 +20,7 @@ Rounded Boxed Skin
 
 /* Dropdown */
 .menuzord-menu ul.dropdown{
-	top: 71px;
+	top: 50px;
 }
 .menuzord-menu ul.dropdown li ul.dropdown{
     top: 0;

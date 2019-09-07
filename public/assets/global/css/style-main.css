@@ -1056,7 +1056,7 @@ section > .container-fluid {
   }
 }
 .menuzord-brand img {
-  max-height: 38px;
+  max-height: 68px;
 }
 /* -------- Inner Header ---------- */
 .inner-header .title {
@@ -1101,7 +1101,8 @@ section > .container-fluid {
 }
 /* -------- Menuzord ---------- */
 .menuzord-menu > li > a {
-  color: #333333;
+  /*color: #333333;*/
+  color: #e7dbdb;
   font-size: 16px;
   font-weight: 600;
 }
