@@ -3,24 +3,17 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>--}}
+        <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#tablePost').dataTable({
                 "columnDefs": [
-                    {"width": "20%", "targets": 0},
-                    {"width": "20%", "targets": 1},
-                    {"width": "10%", "targets": 2},
-                    {"width": "15%", "targets": 3},
-                    {"width": "15%", "targets": 4},
-                    {"width": "20%", "targets": 5},
                     {"orderable": false, "targets": 5 }
                 ],
                 "order": [[ 3, 'desc' ]]
 
             });
         })
-
     </script>
 @stop
 <?php
@@ -31,13 +24,15 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
     <section>
         <div class="content">
             @if(sizeof($posts)>=1)
-                <div class="card">
+                <div class="row">
+                <div class="col-lg-12">
+                <div class="card ">
                     <div class="card-header bg-light">
                         <span class="card-title">{{__('messages.post_list')}}</span>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-scrollable table-responsive table-striped" id="tablePost">
-                            <thead>
+                    <div class="card-body ">
+                        <table class="table table-scrollable  table-striped" id="tablePost">
+                            <thead class="fullwidth">
                             <tr>
                                 <th>{{__('messages.title')}}</th>
                                 <th>{{__('messages.subtitle')}}</th>
@@ -103,6 +98,8 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                             {{$posts->appends( [] )->links()}}
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
             @else
                 @include('panel.not_found',['html'=>'<a class="btn btn-primary" href="'.route('blogetc.admin.create_post').'">
