@@ -4,7 +4,6 @@
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
     <script>
         $(document).ready(function () {
-
             $('#blog_posted_at_btn').MdPersianDateTimePicker({
                 targetTextSelector: '#blog_posted_at',
                 enableTimePicker: true,
