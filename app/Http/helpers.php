@@ -242,13 +242,6 @@ function user_information($type)
     }
 }
 
-function get_cites_list($lvl)
-{
-
-        $cities = \App\city::where('lvl', $lvl)->get();
-
-    return $cities;
-}
 function get_cites($id = null)
 {
     if ($id) {
@@ -633,10 +626,24 @@ function get_posts($limit = null, $main_page = null, $categories = [], $paginate
 {
 
     if ($type == "last_post") {
-        $category = BlogEtcCategory::where('last_post', '=', 1)->with('posts')->firstOrFail();
+
+        $category = BlogEtcCategory::where('last_post', '=', 1)->
+        with(
+            [
+                'posts' => function ($q) {
+                     $q->limit(1);
+                },
+            ])->firstOrFail();
     } elseif ($type == 'articles') {
-        $category = BlogEtcCategory::where('articles', '=', 1)->with('posts')->firstOrFail();
+        $category = BlogEtcCategory::where('articles', '=', 1)-> with(
+            [
+                'posts' => function ($q) use ($limit) {
+                    $q->limit($limit);
+                },
+            ])->firstOrFail();
     }
+
+    return $category;
 
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
     $posts_query->orderBy("posted_at", "desc");

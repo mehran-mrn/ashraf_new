@@ -4,7 +4,7 @@
         <div class="section-content">
             <div class="row">
                 <div class="col-md-6 bordered_box_bottom">
-                    @foreach(get_posts(1,'','','','articles')['posts'] as $news)
+                    @foreach(get_posts(1,'','','','articles')['posts'] as $key=> $news)
                             <img class="img-fullwidth"
                                  src="{{$news['image_large']? URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
                                  alt="">
