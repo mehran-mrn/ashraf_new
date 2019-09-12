@@ -626,53 +626,24 @@ function get_option($option_name)
 
 function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 10)
 {
-//    if ($type == "last_post") {
-//
-//        $category = BlogEtcCategory::where('last_post', '=', 1)
-//            ->with(
-//            [
-//                'posts' => function ($q) use ($limit){
-//                     $q->limit($limit);
-//                },
-//            ])->get();
-//    } elseif ($type == 'articles') {
-//        $category = BlogEtcCategory::where('articles', '=', 1)
-//            ->with(
-//            [
-//                'posts' => function ($q) use ($limit) {
-//                    $q->limit($limit);
-//                },
-//            ])->get();
-//    }
-//    else{
-//
-//    }
-//
-//
-//    return $category;
-
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
-
-    if ($main_page and in_array('last_post', $main_page)) {
-        $posts_query->whereHas(['categories' => function ($q) {
-            $q->where('last_post', true);
-        }]);
+    if ($main_page and  in_array('last_post',$main_page)){
+        $posts_query->whereHas('categories',function($q){
+            $q->where('last_post',true);
+        });
     }
-    if ($main_page and in_array('articles', $main_page)) {
-        $posts_query->whereHas(['categories' => function ($q) {
-            $q->where('articles', true);
-        }]);
+    if ($main_page and in_array('articles',$main_page)){
+        $posts_query->whereHas('categories',function($q){
+            $q->where('articles',true);
+        });
     }
     $posts_query->orderBy("posted_at", "desc");
-    if (!empty($main_page)) {
-    }
     if (!empty($categories)) {
         $posts_query->take($categories);
     }
     if (!empty($limit)) {
         $posts_query->take($limit);
     }
-
     $posts = $posts_query->take($limit)->with('categories')->get();
     return $posts;
 }
