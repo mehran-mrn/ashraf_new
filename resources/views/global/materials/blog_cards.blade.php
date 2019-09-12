@@ -11,7 +11,7 @@
         </div>
         <div class="section-content">
             <div class="row">
-                @forelse(get_posts(3,'','','','articles')['posts'] as $key=> $news)
+                @forelse(get_posts(3,['articles']) as $news)
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <article class="post clearfix mb-sm-30 bg-silver-light">
                             <div class="entry-header">

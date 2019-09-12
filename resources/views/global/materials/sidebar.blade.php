@@ -32,7 +32,7 @@
         <h5 class="widget-title line-bottom">{{trans('messages.latest_post')}}</h5>
 
         <div class="latest-posts">
-            @foreach(get_posts(8,'','','','articles')['posts'] as $key=> $news)
+            @foreach(get_posts(8) as  $news)
                 <article class="post media-post clearfix pb-0 mb-10">
                     <a class="post-thumb" href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"><img
                                 class="post-side-thumb-img"

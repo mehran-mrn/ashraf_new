@@ -4,10 +4,10 @@
         <div class="section-content">
             <div class="row">
                 <div class="col-md-6 bordered_box_bottom">
-                    @foreach(get_posts(1,'','','','articles')['posts'] as $key=> $news)
-                            <img class="img-fullwidth"
-                                 src="{{$news['image_large']? URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
-                                 alt="">
+                    @foreach(get_posts(1,['last_post']) as $news)
+                        <img class="img-fullwidth"
+                             src="{{$news['image_large']? URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
+                             alt="">
 
                         <h5 class="line-bottom"><strong>{{$news['title']}}</strong></h5>
                         <p>{{$news['short_description'] }}</p>
@@ -21,7 +21,8 @@
                     <h3 class="text-uppercase title line-bottom mt-0 mb-20"><i
                                 class="fa fa-calendar text-gray-darkgray mr-10"></i>{!!  trans('messages.latest_posts')!!}
                     </h3>
-                    @foreach(get_posts(4,'','','','articles')['posts'] as $key=> $news)
+                    @foreach(get_posts(4,['last_post']) as $key=> $news)
+
                         @if($key !=0)
                             <article class="post media-post clearfix pb-0 mb-10">
                                 <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"
@@ -46,6 +47,7 @@
                             </article>
                             <hr class="bordered_box p-0 m-0">
                         @endif
+
                     @endforeach
 
 

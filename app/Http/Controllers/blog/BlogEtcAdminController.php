@@ -127,7 +127,7 @@ class BlogEtcAdminController extends Controller
         $this->processUploadedImages($request, $new_blog_post);
 
         if (!$new_blog_post->posted_at) {
-            $new_blog_post->posted_at = Carbon::now();
+            $new_blog_post->posted_at = date('Y-m-d H:i:s');
         }
 
         $new_blog_post->user_id = \Auth::user()->id;

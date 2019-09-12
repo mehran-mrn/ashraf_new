@@ -16,6 +16,9 @@ Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
+Route::get('/test', function () {
+    return get_posts(1,['last_post']);
+});
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');

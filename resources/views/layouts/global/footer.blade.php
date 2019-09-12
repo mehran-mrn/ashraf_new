@@ -21,7 +21,7 @@
                 <div class="widget dark">
                     <h5 class="widget-title line-bottom">{!! trans('messages.latest_posts') !!}</h5>
                     <div class="latest-posts">
-                        @forelse(get_posts(3,'','','','articles')['posts'] as $key=> $news)
+                        @forelse(get_posts(3) as $key=> $news)
                             <article class="post media-post clearfix pb-0 mb-10">
                                 <a class="post-thumb" href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"><img
                                             class="post-side-thumb-img"
