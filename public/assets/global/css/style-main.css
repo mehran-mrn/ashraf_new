@@ -1225,6 +1225,11 @@ section > .container-fluid {
   object-fit: cover;
 }
 
+.gallery-img img {
+  height: 175px;
+  width: auto;
+  object-fit: cover!important;
+}
 
 
 .header-nav.navbar-white .menuzord {

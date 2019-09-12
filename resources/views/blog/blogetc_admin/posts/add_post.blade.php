@@ -1,7 +1,22 @@
 @extends("blog.blogetc_admin.layouts.admin_layout")
 @section("js")
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#blog_posted_at_btn').MdPersianDateTimePicker({
+                targetTextSelector: '#blog_posted_at',
+                enableTimePicker: true,
+                englishNumber:true,
+            });
+        });
+    </script>
 @endsection
+@section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
+@stop
 <?php
 $active_sidbare = ['blog', 'blog_posts', 'blog_posts_add']
 ?>

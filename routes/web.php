@@ -280,6 +280,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 
 Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 
+
+
     /** The main public facing blog routes - show all posts, view a category, rss feed, view a single post, also the add comment route */
     Route::group(['prefix' => config('blogetc.blog_prefix', 'blog')], function () {
 

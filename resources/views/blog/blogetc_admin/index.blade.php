@@ -1,8 +1,33 @@
 @extends("blog.blogetc_admin.layouts.admin_layout")
+@section('js')
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>--}}
+    <script>
+        $(document).ready(function () {
+            $('#tablePost').dataTable({
+                "columnDefs": [
+                    {"width": "20%", "targets": 0},
+                    {"width": "20%", "targets": 1},
+                    {"width": "10%", "targets": 2},
+                    {"width": "15%", "targets": 3},
+                    {"width": "15%", "targets": 4},
+                    {"width": "20%", "targets": 5},
+                    {"orderable": false, "targets": 5 }
+                ],
+                "order": [[ 3, 'desc' ]]
+
+            });
+        })
+
+    </script>
+@stop
+<?php
+$active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
+?>
 @section("content")
-    <?php
-    $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
-    ?>
+
     <section>
         <div class="content">
             @if(sizeof($posts)>=1)
@@ -11,7 +36,8 @@
                         <span class="card-title">{{__('messages.post_list')}}</span>
                     </div>
                     <div class="card-body">
-                        <table class="table table-scrollable table-striped">
+                        <table class="table table-scrollable table-responsive table-striped" id="tablePost">
+                            <thead>
                             <tr>
                                 <th>{{__('messages.title')}}</th>
                                 <th>{{__('messages.subtitle')}}</th>
@@ -20,12 +46,14 @@
                                 <th>{{__('messages.Categories')}}</th>
                                 <th></th>
                             </tr>
+                            </thead>
+                            <tbody>
                             @forelse($posts as $post)
                                 <tr>
-                                    <td><a href='{{$post->url()}}'>{{$post->title}}</a>
+                                    <td><a href='{{$post->url()}}'>{{substr($post->title,0,100)}}</a>
                                         {!!($post->is_published ? "" : 'Draft')!!}
                                     </td>
-                                    <td>{{$post->subtitle}}</td>
+                                    <td>{{substr($post->subtitle,0,100)}}</td>
                                     <td>{{$post->author_string()}}</td>
                                     <td>{{miladi_to_shamsi_date($post->posted_at)}}</td>
                                     <td>
@@ -43,29 +71,33 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{$post->url()}}" class="float-right btn alpha-success border-success-400 text-success-800 btn-icon rounded-round ml-2
-                                             ">
-                                            <i class="icon-eye8"></i>
-                                        </a>
-                                        <a href="{{$post->edit_url()}}" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
-                                             ">
-                                            <i class="icon-pencil"></i>
-                                        </a>
-
-
-                                        <form onsubmit="return confirm('Are you sure you want to delete this blog post?\n You cannot undo this action!');"
-                                              method='post' action='{{route("blogetc.admin.destroy_post", $post->id)}}'
-                                              class='float-right'>
-                                            @csrf
-                                            <input name="_method" type="hidden" value="DELETE"/>
+                                        <div class="btn-group">
+                                            <a href='{{route('post_page',$post->slug)}}' target="_blank"
+                                               class="float-right btn alpha-success border-success-400 text-success-800 btn-icon rounded-round ml-2">
+                                                <i class="icon-eye8"></i>
+                                            </a>
+                                            <a href="{{$post->edit_url()}}"
+                                               class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2">
+                                                <i class="icon-pencil"></i>
+                                            </a>
                                             <button type="submit"
-                                                    class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2">
+                                                    class="legitRipple  float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2 swal-alert "
+                                                    data-ajax-link="{{route("blogetc.admin.destroy_post", $post->id)}}"
+                                                    data-method="delete"
+                                                    data-csrf="{{csrf_token()}}"
+                                                    data-title="{{trans('messages.delete_item',['item'=>trans('messages.post')])}}"
+                                                    data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.post')])}}"
+                                                    data-type="warning"
+                                                    data-cancel="true"
+                                                    data-confirm-text="{{trans('messages.delete')}}"
+                                                    data-cancel-text="{{trans('messages.cancel')}}">
                                                 <i class="icon-trash"></i>
                                             </button>
-                                        </form>
+                                        </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
+                            </tbody>
                         </table>
                         <div class='text-center'>
                             {{$posts->appends( [] )->links()}}
@@ -78,7 +110,6 @@
                'msg'=>__('messages.not_found_any_data'),
                'des'=>__('messages.please_insert_post')])
             @endif
-
         </div>
     </section>
 @endsection

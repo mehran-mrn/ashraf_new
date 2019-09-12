@@ -50,7 +50,7 @@ class BlogEtcAdminController extends Controller
         $posts = BlogEtcPost::orderBy("posted_at", "desc")
             ->paginate(10);
 
-        return view("blog.blogetc_admin.index", ['posts'=>$posts]);
+        return view("blog.blogetc_admin.index", ['posts' => $posts]);
     }
 
     public function slider()
@@ -59,45 +59,47 @@ class BlogEtcAdminController extends Controller
 
         return view("blog.blogetc_admin.slider.index", compact('sliders'));
     }
+
     public function slider_page($slider_id = null)
     {
         $slider = null;
-        if ($slider_id){
+        if ($slider_id) {
             $slider = blog_slider::find($slider_id);
         }
 
         return view("blog.blogetc_admin.slider.slider_page", compact('slider'));
     }
-    public function save_slider($slider_id = null,Request $request)
+
+    public function save_slider($slider_id = null, Request $request)
     {
         $this->validate($request, [
             'filepath' => 'required',
         ]);
-        if ($request['slider_id']){
+        if ($request['slider_id']) {
             $slider = blog_slider::find($request['slider_id']);
-        }
-        else{
+        } else {
             $slider = new blog_slider();
         }
-        $slider->image_large= $request['filepath'];
-        $slider->text_1= $request['text_1'] or null;
-        $slider->text_1_dir= $request['text_1_dir'] or null;
-        $slider->text_2= $request['text_2'] or null;
-        $slider->text_2_dir= $request['text_2_dir'] or null;
-        $slider->text_3= $request['text_3'] or null;
-        $slider->text_3_dir= $request['text_3_dir'] or null;
-        $slider->btn_text= $request['btn_text'] or null;
-        $slider->btn_link= $request['btn_link'] or null;
-        $slider->btn_dir= $request['btn_dir'] or null;
+        $slider->image_large = $request['filepath'];
+        $slider->text_1 = $request['text_1'] or null;
+        $slider->text_1_dir = $request['text_1_dir'] or null;
+        $slider->text_2 = $request['text_2'] or null;
+        $slider->text_2_dir = $request['text_2_dir'] or null;
+        $slider->text_3 = $request['text_3'] or null;
+        $slider->text_3_dir = $request['text_3_dir'] or null;
+        $slider->btn_text = $request['btn_text'] or null;
+        $slider->btn_link = $request['btn_link'] or null;
+        $slider->btn_dir = $request['btn_dir'] or null;
         $slider->save();
         return redirect()->route('blog_slider');
     }
-    public function delete_slider($slider_id = null,Request $request)
+
+    public function delete_slider($slider_id = null, Request $request)
     {
         $slider = blog_slider::find($slider_id);
         $slider->delete();
         $messages = trans('messages.item_deleted', ['item' => trans('messages.blog_slider')]);
-        return back_normal($request,$messages);
+        return back_normal($request, $messages);
 
     }
 
@@ -119,6 +121,7 @@ class BlogEtcAdminController extends Controller
      */
     public function store_post(CreateBlogEtcPostRequest $request)
     {
+        $request['posted_at']  = shamsi_to_miladi($request['posted_at']);
         $new_blog_post = new BlogEtcPost($request->all());
 
         $this->processUploadedImages($request, $new_blog_post);
@@ -143,7 +146,7 @@ class BlogEtcAdminController extends Controller
      * @param $blogPostId
      * @return mixed
      */
-    public function edit_post( $blogPostId)
+    public function edit_post($blogPostId)
     {
         $post = BlogEtcPost::findOrFail($blogPostId);
         return view("blog.blogetc_admin.posts.edit_post")->withPost($post);
@@ -160,6 +163,7 @@ class BlogEtcAdminController extends Controller
     public function update_post(UpdateBlogEtcPostRequest $request, $blogPostId)
     {
         /** @var BlogEtcPost $post */
+        $request['posted_at']  = shamsi_to_miladi($request['posted_at']);
         $post = BlogEtcPost::findOrFail($blogPostId);
         $post->fill($request->all());
 
@@ -235,7 +239,7 @@ class BlogEtcAdminController extends Controller
 
         // store the image upload.
         // todo: link this to the blogetc_post row.
-        if (count(array_filter($uploaded_image_details))>0) {
+        if (count(array_filter($uploaded_image_details)) > 0) {
             BlogEtcUploadedPhoto::create([
                 'source' => "BlogFeaturedImage",
                 'uploaded_images' => $uploaded_image_details,

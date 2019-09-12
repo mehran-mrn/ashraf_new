@@ -4,9 +4,11 @@
         .glyphicon-ok:before {
             content: "\f00c";
         }
+
         .glyphicon-remove:before {
             content: "\f00d";
         }
+
         .glyphicon {
             display: inline-block;
             font: normal normal normal 14px/1 FontAwesome;
@@ -20,8 +22,8 @@
           rel="stylesheet"/>
 @endsection
 @section("js")
-{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"--}}
-{{--          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">--}}
+    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"--}}
+    {{--          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">--}}
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -391,207 +393,226 @@
         })
     </script>
 @endsection
+<?php
+$active_sidbare = ['setting', 'translations']
+?>
 @section("content")
-    <?php
-    $active_sidbare = ['setting', 'translations']
-    ?>
-
-<div class="content">
-    <div class="container-fluid">
-        <p>{{trans('trans.trans_warning')}} {{trans('trans.trans_publish_guide')}}<code>{{trans('trans.trans_publish_composer')}}</code></p>
-        <div class="alert alert-success success-import" style="display:none;">
-            <p><strong class="counter">N</strong>  {{trans('trans.trans_importing_done')}}</p>
-        </div>
-        <div class="alert alert-success success-find" style="display:none;">
-            <p>{{trans('trans.searching_done')}}</p>
-        </div>
-        <div class="alert alert-success success-publish" style="display:none;">
-            <p>{{trans('trans.searching_done',['group'=>$group])}} </p>
-        </div>
-        <div class="alert alert-success success-publish-all" style="display:none;">
-            <p>{{trans('trans.publish_done_all')}}</p>
-        </div>
-        <?php if(Session::has('successPublish')) : ?>
-        <div class="alert alert-info">
-            <?php echo Session::get('successPublish'); ?>
-        </div>
-        <?php endif; ?>
-        <p>
-        <?php if(!isset($group)) : ?>
-        <form class="form-import" method="POST"
-              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postImport') ?>" data-remote="true"
-              role="form">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <select name="replace" class="form-control">
-                            <option value="0">{{trans('trans.append_new_translation')}}</option>
-                            <option value="1">{{trans('trans.replace_existing_translation')}}</option>
-                        </select>
+    <section>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-header bg-light ">
+                        <span class="card-title text-black ">{{__("messages.translation_maganger")}}</span>
                     </div>
-                    <div class="col-sm-2">
-                        <button type="submit" class="btn btn-success btn-block" data-disable-with="Loading..">
-                            {{trans('trans.import_groups')}}
-                        </button>
+                    <div class="card-body">
+                        <p>{{trans('trans.trans_warning')}} {{trans('trans.trans_publish_guide')}}
+                            <code>{{trans('trans.trans_publish_composer')}}</code></p>
+                        <div class="alert alert-success success-import" style="display:none;">
+                            <p><strong class="counter">N</strong> {{trans('trans.trans_importing_done')}}</p>
+                        </div>
+                        <div class="alert alert-success success-find" style="display:none;">
+                            <p>{{trans('trans.searching_done')}}</p>
+                        </div>
+                        <div class="alert alert-success success-publish" style="display:none;">
+                            <p>{{trans('trans.searching_done',['group'=>$group])}} </p>
+                        </div>
+                        <div class="alert alert-success success-publish-all" style="display:none;">
+                            <p>{{trans('trans.publish_done_all')}}</p>
+                        </div>
+                        <?php if(Session::has('successPublish')) : ?>
+                        <div class="alert alert-info">
+                            <?php echo Session::get('successPublish'); ?>
+                        </div>
+                        <?php endif; ?>
+                        <p>
+                        <?php if(!isset($group)) : ?>
+                        <form class="form-import" method="POST"
+                              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postImport') ?>"
+                              data-remote="true"
+                              role="form">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select name="replace" class="form-control">
+                                            <option value="0">{{trans('trans.append_new_translation')}}</option>
+                                            <option value="1">{{trans('trans.replace_existing_translation')}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-success btn-block"
+                                                data-disable-with="Loading..">
+                                            {{trans('trans.import_groups')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-find" method="POST"
+                              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postFind') ?>"
+                              data-remote="true"
+                              role="form"
+                              data-confirm="{{trans('trans.scan_confirm')}}">
+                            <div class="form-group">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                <button type="submit" class="btn btn-info"
+                                        data-disable-with="{{trans('trans.searching')}}">{{trans('trans.find_translation_files')}}</button>
+                            </div>
+                        </form>
+                        <?php endif; ?>
+                        <?php if(isset($group)) : ?>
+                        <form class="form-inline form-publish" method="POST"
+                              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postPublish', $group) ?>"
+                              data-remote="true" role="form"
+                              data-confirm="{{trans('trans.publish_group_confirm',['group'=>$group])}}">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <button type="submit" class="btn btn-info"
+                                    data-disable-with="Publishing..">{{trans('trans.publish_translation')}}</button>
+                            <a href="<?= action('\Barryvdh\TranslationManager\Controller@getIndex') ?>"
+                               class="btn btn-default">{{trans('messages.back')}}</a>
+                        </form>
+                        <?php endif; ?>
+                        </p>
+                        <form role="form" method="POST"
+                              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAddGroup') ?>">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <div class="form-group">
+                                <p>{{trans('trans.choose_trans_group')}}</p>
+                                <select name="group" id="group" class="form-control group-select">
+                                    <?php foreach($groups as $key => $value): ?>
+                                    <option value="<?php echo $key ?>"<?php echo $key == $group ? ' selected' : '' ?>><?php echo $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>{{trans('trans.enter_new_group_name')}}</label>
+                                <input type="text" class="form-control" name="new-group"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-default" name="add-group"
+                                       value="{{trans('trans.add_and_edit_keys')}}"/>
+                            </div>
+                        </form>
+                        <?php if($group): ?>
+                        <form action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAdd', array($group)) ?>"
+                              method="POST" role="form">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <div class="form-group">
+                                <label>{{trans('trans.add_new_key')}}</label>
+                                <textarea class="form-control" rows="3" name="keys"
+                                          placeholder="Add 1 key per line, without the group prefix"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="{{trans('trans.add_keys')}}" class="btn btn-primary">
+                            </div>
+                        </form>
+                        <hr>
+                        <h4>{{trans('trans.total')}}: <?= $numTranslations ?>, {{trans('trans.changed')}}
+                            : <?= $numChanged ?></h4>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th width="15%">Key</th>
+                                <?php foreach ($locales as $locale): ?>
+                                <th><?= $locale ?></th>
+                                <?php endforeach; ?>
+                                <?php if ($deleteEnabled): ?>
+                                <th>&nbsp;</th>
+                                <?php endif; ?>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php foreach ($translations as $key => $translation): ?>
+                            <tr id="<?php echo htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?>">
+                                <td><?php echo htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?></td>
+                                <?php foreach ($locales as $locale): ?>
+                                <?php $t = isset($translation[$locale]) ? $translation[$locale] : null ?>
+
+                                <td>
+                                    <a href="#edit"
+                                       class="editable status-<?php echo $t ? $t->status : 0 ?> locale-<?php echo $locale ?>"
+                                       data-locale="<?php echo $locale ?>"
+                                       data-name="<?php echo $locale . "|" . htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?>"
+                                       id="username" data-type="textarea" data-pk="<?php echo $t ? $t->id : 0 ?>"
+                                       data-url="<?php echo $editUrl ?>"
+                                       data-title="Enter translation"><?php echo $t ? htmlentities($t->value, ENT_QUOTES, 'UTF-8', false) : '' ?></a>
+                                </td>
+                                <?php endforeach; ?>
+                                <?php if ($deleteEnabled): ?>
+                                <td>
+                                    <a href="<?php echo action('\Barryvdh\TranslationManager\Controller@postDelete', [$group, $key]) ?>"
+                                       class="delete-key"
+                                       data-confirm="{{trans('trans.delete_key_confirm',['key'=>htmlentities($key, ENT_QUOTES, 'UTF-8', false)])}} "><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                                <?php endif; ?>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <?php else: ?>
+                        <fieldset>
+                            <legend>{{trans('trans.supported_locales')}}</legend>
+                            <p>
+                                {{trans('trans.current_supported_locales')}}
+                            </p>
+                            <form class="form-remove-locale" method="POST" role="form"
+                                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postRemoveLocale') ?>"
+                                  data-confirm="{{trans('trans.delete_local_confirm')}}">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                <ul class="list-locales">
+                                    <?php foreach($locales as $locale): ?>
+                                    <li>
+                                        <div class="form-group">
+                                            <button type="submit" name="remove-locale[<?php echo $locale ?>]"
+                                                    class="btn btn-danger btn-xs" data-disable-with="...">
+                                                &times;
+                                            </button>
+                                            <?php echo $locale ?>
+
+                                        </div>
+                                    </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </form>
+                            <form class="form-add-locale" method="POST" role="form"
+                                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAddLocale') ?>">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                <div class="form-group">
+                                    <p>
+                                        {{trans('trans.new_local_key')}}
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <input type="text" name="new-locale" class="form-control"/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-default btn-block"
+                                                    data-disable-with="Adding..">
+                                                {{trans('trans.add_new_local')}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </fieldset>
+                        <fieldset>
+                            <form class="form-inline form-publish-all" method="POST"
+                                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postPublish', '*') ?>"
+                                  data-remote="true" role="form"
+                                  data-confirm="Are you sure you want to publish all translations group? This will overwrite existing language files.">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                <button type="submit" class="btn btn-primary"
+                                        data-disable-with="Publishing..">{{trans('trans.publish_all')}}</button>
+                            </form>
+                        </fieldset>
+
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-        </form>
-        <form class="form-find" method="POST"
-              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postFind') ?>" data-remote="true"
-              role="form"
-              data-confirm="{{trans('trans.scan_confirm')}}">
-            <div class="form-group">
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <button type="submit" class="btn btn-info" data-disable-with="{{trans('trans.searching')}}">{{trans('trans.find_translation_files')}}</button>
-            </div>
-        </form>
-        <?php endif; ?>
-        <?php if(isset($group)) : ?>
-        <form class="form-inline form-publish" method="POST"
-              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postPublish', $group) ?>"
-              data-remote="true" role="form"
-              data-confirm="{{trans('trans.publish_group_confirm',['group'=>$group])}}">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-            <button type="submit" class="btn btn-info" data-disable-with="Publishing..">{{trans('trans.publish_translation')}}</button>
-            <a href="<?= action('\Barryvdh\TranslationManager\Controller@getIndex') ?>" class="btn btn-default">{{trans('messages.back')}}</a>
-        </form>
-        <?php endif; ?>
-        </p>
-        <form role="form" method="POST"
-              action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAddGroup') ?>">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-            <div class="form-group">
-                <p>{{trans('trans.choose_trans_group')}}</p>
-                <select name="group" id="group" class="form-control group-select">
-                    <?php foreach($groups as $key => $value): ?>
-                    <option value="<?php echo $key ?>"<?php echo $key == $group ? ' selected' : '' ?>><?php echo $value ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>{{trans('trans.enter_new_group_name')}}</label>
-                <input type="text" class="form-control" name="new-group"/>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-default" name="add-group" value="{{trans('trans.add_and_edit_keys')}}"/>
-            </div>
-        </form>
-        <?php if($group): ?>
-        <form action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAdd', array($group)) ?>"
-              method="POST" role="form">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-            <div class="form-group">
-                <label>{{trans('trans.add_new_key')}}</label>
-                <textarea class="form-control" rows="3" name="keys"
-                          placeholder="Add 1 key per line, without the group prefix"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="{{trans('trans.add_keys')}}" class="btn btn-primary">
-            </div>
-        </form>
-        <hr>
-        <h4>{{trans('trans.total')}}: <?= $numTranslations ?>, {{trans('trans.changed')}}: <?= $numChanged ?></h4>
-        <table class="table">
-            <thead>
-            <tr>
-                <th width="15%">Key</th>
-                <?php foreach ($locales as $locale): ?>
-                <th><?= $locale ?></th>
-                <?php endforeach; ?>
-                <?php if ($deleteEnabled): ?>
-                <th>&nbsp;</th>
-                <?php endif; ?>
-            </tr>
-            </thead>
-            <tbody>
-
-            <?php foreach ($translations as $key => $translation): ?>
-            <tr id="<?php echo htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?>">
-                <td><?php echo htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?></td>
-                <?php foreach ($locales as $locale): ?>
-                <?php $t = isset($translation[$locale]) ? $translation[$locale] : null ?>
-
-                <td>
-                    <a href="#edit"
-                       class="editable status-<?php echo $t ? $t->status : 0 ?> locale-<?php echo $locale ?>"
-                       data-locale="<?php echo $locale ?>"
-                       data-name="<?php echo $locale . "|" . htmlentities($key, ENT_QUOTES, 'UTF-8', false) ?>"
-                       id="username" data-type="textarea" data-pk="<?php echo $t ? $t->id : 0 ?>"
-                       data-url="<?php echo $editUrl ?>"
-                       data-title="Enter translation"><?php echo $t ? htmlentities($t->value, ENT_QUOTES, 'UTF-8', false) : '' ?></a>
-                </td>
-                <?php endforeach; ?>
-                <?php if ($deleteEnabled): ?>
-                <td>
-                    <a href="<?php echo action('\Barryvdh\TranslationManager\Controller@postDelete', [$group, $key]) ?>"
-                       class="delete-key"
-                       data-confirm="{{trans('trans.delete_key_confirm',['key'=>htmlentities($key, ENT_QUOTES, 'UTF-8', false)])}} "><span
-                                class="glyphicon glyphicon-trash"></span></a>
-                </td>
-                <?php endif; ?>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php else: ?>
-        <fieldset>
-            <legend>{{trans('trans.supported_locales')}}</legend>
-            <p>
-                {{trans('trans.current_supported_locales')}}
-            </p>
-            <form class="form-remove-locale" method="POST" role="form"
-                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postRemoveLocale') ?>"
-                  data-confirm="{{trans('trans.delete_local_confirm')}}">
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <ul class="list-locales">
-                    <?php foreach($locales as $locale): ?>
-                    <li>
-                        <div class="form-group">
-                            <button type="submit" name="remove-locale[<?php echo $locale ?>]"
-                                    class="btn btn-danger btn-xs" data-disable-with="...">
-                                &times;
-                            </button>
-                            <?php echo $locale ?>
-
-                        </div>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            </form>
-            <form class="form-add-locale" method="POST" role="form"
-                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postAddLocale') ?>">
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <div class="form-group">
-                    <p>
-                        {{trans('trans.new_local_key')}}
-                    </p>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <input type="text" name="new-locale" class="form-control"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-default btn-block" data-disable-with="Adding..">
-                                {{trans('trans.add_new_local')}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </fieldset>
-        <fieldset>
-            <form class="form-inline form-publish-all" method="POST"
-                  action="<?php echo action('\Barryvdh\TranslationManager\Controller@postPublish', '*') ?>"
-                  data-remote="true" role="form"
-                  data-confirm="Are you sure you want to publish all translations group? This will overwrite existing language files.">
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <button type="submit" class="btn btn-primary" data-disable-with="Publishing..">{{trans('trans.publish_all')}}</button>
-            </form>
-        </fieldset>
-
-        <?php endif; ?>
-    </div>
-</div>
+        </div>
+    </section>
 @endsection
 

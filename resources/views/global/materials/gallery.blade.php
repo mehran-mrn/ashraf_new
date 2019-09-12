@@ -13,12 +13,12 @@
                             <!-- Portfolio Item Start -->
                                 <div class="gallery-item ">
                                     <div class="thumb random-gallery">
-                                        <img alt="project" src="{{ URL::asset($photo['url']) }}" class="img-fullwidth">
+                                        <img alt="project" src="{{url($photo['path']."/300/".$photo['name'])}}" class="img-fullwidth">
                                         <div class="overlay-shade"></div>
                                         <div class="icons-holder">
                                             <div class="icons-holder-inner">
                                                 <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                    <a href="{{ URL::asset($photo['url']) }}"  data-lightbox-gallery="gallery"  data-title="My caption"><i class="fa fa-picture-o"></i></a>
+                                                    <a href="{{url($photo['url'])}}"  data-lightbox-gallery="gallery"  data-title="My caption"><i class="fa fa-picture-o"></i></a>
                                                 </div>
                                             </div>
                                         </div>

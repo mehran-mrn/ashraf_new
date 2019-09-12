@@ -64,7 +64,7 @@ class Media extends Controller
             'category_id' => $request['cat_id'],
             'title' => $request['title'],
         ]);
-        uploadGallery(request()->file, array('267,178', '300,200'), $request['cat_id'], $request['title'], $parent['id'], $time);
+        uploadGallery(request()->file, array('150,178', '300,200','600,400'), $request['cat_id'], $request['title'], $parent['id'], $time);
         request()->file->move($destinationPath, $image_name);
 
 

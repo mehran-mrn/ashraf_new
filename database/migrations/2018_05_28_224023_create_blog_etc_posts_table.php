@@ -47,6 +47,9 @@ class CreateBlogEtcPostsTable extends Migration
 
             $table->unsignedInteger("created_by")->nullable()->index()->comment("user id");
 
+            $table->boolean("last_post")->default(0);
+            $table->boolean("articles")->default(0);
+
             $table->timestamps();
         });
 
@@ -59,7 +62,6 @@ class CreateBlogEtcPostsTable extends Migration
             $table->unsignedInteger("blog_etc_category_id")->index();
             $table->foreign('blog_etc_category_id')->references('id')->on('blog_etc_categories')->onDelete("cascade");
         });
-
 
         Schema::create('blog_etc_comments', function (Blueprint $table) {
             $table->increments('id');

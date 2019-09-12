@@ -204,7 +204,7 @@
                                         <div class="card">
                                             <div class="card-img-actions m-1">
                                                 <img class="card-img img-responsive" width="267" height="178"
-                                                     src="/{{$media['path']."/267-178/".$media['name']}}"
+                                                     src="/{{$media['path']."/600/".$media['name']}}"
                                                      alt="">
                                                 <div class="card-img-actions-overlay card-img">
                                                     <a href="/{{$media['url']}}"

@@ -21,9 +21,9 @@
         <div class="categories">
             <ul class="list list-border angle-double-right">
                 @forelse(get_blog_categories() as $category)
+                    <li><a href="{{$category['slug']}}">{{$category['category_name']}}</a></li>
                 @empty
                 @endforelse
-                <li><a href="{{$category['slug']}}">{{$category['category_name']}}</a></li>
 
             </ul>
         </div>

@@ -569,5 +569,13 @@ return array(
     'target_amount'=>'مبلغ هدف',
     'payment_code'=>'شناسه پرداخت',
     'add_champion'=>'افزودن کمپین',
-    'please_click_or_drop_and_down_file_for_upload'=>'برای بارگذاری فایل لطفاً کلیک نمایید یا فایل به در اینجا رها نمایید.'
+    'please_click_or_drop_and_down_file_for_upload'=>'برای بارگذاری فایل لطفاً کلیک نمایید یا فایل به در اینجا رها نمایید.',
+    'show_on'=>'نمایش در',
+    'show_on_last_post'=>'نمایش در قسمت اخرین مطالب',
+    'show_on_articles'=>'نمایش در قسمت مقالات',
+    'preview'=>'پیش نمایش',
+    'edit_post'=>'ویرایش مطلب',
+    'show_post'=>'نمایش مطلب',
+    'date_not_valid'=>'تاریخ وارد شده صحیح نمی باشد.',
+    'author_website'=>'آدرس سایت'
 );

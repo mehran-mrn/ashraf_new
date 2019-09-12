@@ -39,14 +39,14 @@
             <div class="container">
                 <div class="section-content">
                     <div class="row">
-                            @foreach($pics as $pic)
-                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                    <a href="{{url($pic['url'])}}" data-fancybox="images"
-                                       data-caption="{{$pic['title']}}" >
-                                        <img src="{{url($pic['path']."/267-178/".$pic['name'])}}" />
-                                    </a>
-                                </div>
-                            @endforeach
+                        @foreach($pics as $pic)
+                            <div class="col-lg-3 col-md-4 col-xs-6 thumb" >
+                                <a href="{{url($pic['url'])}}" data-fancybox="images"
+                                   data-caption="{{$pic['title']}}" >
+                                    <img src="{{url($pic['path']."/600/".$pic['name'])}}" />
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

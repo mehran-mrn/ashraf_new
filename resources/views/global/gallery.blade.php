@@ -82,7 +82,7 @@
                                             <div class="flip-box">
                                                 <div class="flip-box-inner">
                                                     <div class="flip-box-front">
-                                                        <img src="{{$media['media_two']['path']."/300-200/".$media['media_two']['name']}}"
+                                                        <img src="{{$media['media_two']['path']."/600/".$media['media_two']['name']}}"
                                                              alt="Paris" style="width:300px;height:200px">
                                                     </div>
                                                     <div class="flip-box-back">

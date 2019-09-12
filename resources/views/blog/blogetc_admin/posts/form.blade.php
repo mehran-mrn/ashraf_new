@@ -29,8 +29,6 @@
 
     </div>
     <div class='col-12 col-md-4'>
-
-
         <div class="form-group">
             <label for="blog_is_published">{{trans('messages.is_published')}}</label>
 
@@ -49,20 +47,20 @@
         </div>
 
     </div>
-    <div class='col-12 col-md-4'>
-
-        <div class="form-group">
-            <label for="blog_posted_at">{{trans('messages.posted_at')}}</label>
-            <input type="text" class="form-control" id="blog_posted_at" aria-describedby="blog_posted_at_help"
+    <div class="col-12 col-md-4 form-group">
+        <label for="">{{__("messages.posted_at")}}</label>
+        <div class="input-group">
+            <input type="text" class="form-control" readonly="readonly" id="blog_posted_at"
+                   aria-describedby="blog_posted_at_help"
                    name='posted_at'
-                   value="{{old("posted_at",$post->posted_at ?? \Carbon\Carbon::now())}}">
-            <small id="blog_posted_at_help" class="form-text text-muted">
-                {!! trans('messages.posted_at_help',['format'=>'<code dir="ltr">YYYY-MM-DD
-                    HH:MM:SS</code>' ,'now'=> \Carbon\Carbon::now()]) !!}
-            </small>
+                   value="
+{{old('posted_at')!=""?old('posted_at'):
+$post['posted_at']!=""?miladi_to_shamsi_date($post->posted_at,'','',true):''}}"
+                   required="required">
+            <button class="btn btn-outline-dark btn-sm" type="button" id="blog_posted_at_btn"><i
+                        class="icon-calendar"></i>
+            </button>
         </div>
-
-
     </div>
     <div class="col-12 col-md-12">
         <div class="form-group">
@@ -80,7 +78,6 @@
 
         </div>
     </div>
-
     @if(config("blogetc.use_custom_view_files",true))
         <div class="col-12 col-md-6">
             <div class="form-group">
@@ -191,13 +188,16 @@
         </div>
     </div>
     <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="lang">{{__('messages.language')}}</label>
-            <select name="lang" id="lang" class="form-control">
-                <option value="fa">FA</option>
-                <option value="en">EN</option>
-                <option value="ar">AR</option>
-            </select>
+        <div class='bg-white pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
+
+            <div class="form-group">
+                <label for="lang">{{__('messages.language')}}</label>
+                <select name="lang" id="lang" class="form-control">
+                    <option value="fa">FA</option>
+                    <option value="en">EN</option>
+                    <option value="ar">AR</option>
+                </select>
+            </div>
         </div>
     </div>
 </div>

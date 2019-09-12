@@ -790,7 +790,6 @@ class panel_view extends Controller
         $catInfo = gallery_category::find($request['id']);
         $medias = \App\media::where(
             [
-                ['thumbnail_size', '=', null],
                 ['category_id', '=', $request['id']],
             ])->get();
         return view('panel.gallery.view', compact('medias', 'catInfo'));

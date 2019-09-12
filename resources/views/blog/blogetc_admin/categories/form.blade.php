@@ -45,12 +45,9 @@
             >
 
             <small id="category_slug_help" class="form-text text-muted">
-                Letters, numbers, dash only. The slug
-                i.e. {{route("blogetc.view_category","")}}/<u><em>this_part</em></u>. This must be unique (two
-                categories
-                can't
-                share the same slug).
-
+                {{trans('messages.post_slug')}}
+                ({{trans('messages.optional')}}) -<br>
+                {{trans('messages.i_e')}} {{route("blogetc.view_category","")}}/<u><em>this_part</em></u>
             </small>
         </div>
     </div>
@@ -72,6 +69,24 @@
                 <option value="en">EN</option>
                 <option value="ar">AR</option>
             </select>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-12">
+        <div class='bg-white pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox ">
+                    <input type="checkbox" class="custom-control-input" id="last_post" name="last_post" value="1"
+                            {{$category['last_post']==1?'checked="checked"':''}}>
+                    <label class="custom-control-label" for="last_post">{{__('messages.show_on_last_post')}}</label>
+                </div>
+
+                <div class="custom-control custom-checkbox ">
+                    <input type="checkbox" class="custom-control-input" id="articles" name="articles" value="1"
+                            {{$category['articles']==1?'checked="checked"':''}}>
+                    <label class="custom-control-label" for="articles">{{__('messages.show_on_articles')}}</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>

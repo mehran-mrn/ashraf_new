@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use App\Team;
+use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
+use WebDevEtc\BlogEtc\Models\BlogEtcPost;
 
 /**
  * Created by PhpStorm.
@@ -616,23 +618,31 @@ function get_blog_categories()
 
 function get_option($option_name)
 {
-    $options = \App\blog_option::where('name',$option_name)->get();
+    $options = \App\blog_option::where('name', $option_name)->get();
     return $options;
 }
 
-function get_posts($limit = null, $main_page = null, $categories = [], $paginate = 10)
+function get_posts($limit = null, $main_page = null, $categories = [], $paginate = 10, $type = 'last_post')
 {
+
+    if ($type == "last_post") {
+        $category = BlogEtcCategory::where('last_post', '=', 1)->with('posts')->firstOrFail();
+    } elseif ($type == 'articles') {
+        $category = BlogEtcCategory::where('articles', '=', 1)->with('posts')->firstOrFail();
+    }
 
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
     $posts_query->orderBy("posted_at", "desc");
     if (!empty($main_page)) {
     }
     if (!empty($categories)) {
+        $posts_query->take($categories);
     }
     if (!empty($limit)) {
         $posts_query->take($limit);
     }
-    $posts = $posts_query->take($limit)->get();
+
+    $posts = $posts_query->take($limit)->with('categories')->get();
     return $posts;
 }
 
@@ -690,27 +700,30 @@ function uploadGallery($file, $custom_size, $cat_id, $title, $parent_id = 0, $ti
     $fileSize = $file->getSize();
     foreach ($size as $value) {
         $si = explode(',', $value);
-        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0] . "-" . $si[1])) {
-            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0] . "-" . $si[1], 0755, true);
+        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0])) {
+            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0], 0755, true);
         }
-        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $si[0] . "-" . $si[1];
+        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $si[0];
         $img = Image::make($file->getRealPath());
         $filename = $time . "_" . $file->getClientOriginalName();
-        $img->resize($si[0], $si[1]);
+
+        $img->resize($si[0], null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
         $img->save($thumbnailPath . '/' . $filename);
-        \App\media::create([
-            'name' => $filename,
-            'url' => $thumbnailPath . "/" . $filename,
-            'path' => $thumbnailPath,
-            'org_name' => $file->getClientOriginalName(),
-            'mime' => $file->getClientMimeType(),
-            'module' => "gallery",
-            'size' => $fileSize,
-            'category_id' => $cat_id,
-            'title' => $title,
-            'parent_id' => $parent_id,
-            'type' => $file->getClientOriginalExtension(),
-            'thumbnail_size' => $si[0] . "x" . $si[1]
-        ]);
+//        \App\media::create([
+//            'name' => $filename,
+//            'url' => $thumbnailPath . "/" . $filename,
+//            'path' => $thumbnailPath,
+//            'org_name' => $file->getClientOriginalName(),
+//            'mime' => $file->getClientMimeType(),
+//            'module' => "gallery",
+//            'size' => $fileSize,
+//            'category_id' => $cat_id,
+//            'title' => $title,
+//            'parent_id' => $parent_id,
+//            'type' => $file->getClientOriginalExtension(),
+//            'thumbnail_size' => $si[0] . "x" . $si[1]
+//        ]);
     }
 }
