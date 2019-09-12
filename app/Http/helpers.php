@@ -622,30 +622,46 @@ function get_option($option_name)
     return $options;
 }
 
-function get_posts($limit = null, $main_page = null, $categories = [], $paginate = 10, $type = 'last_post')
+function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 10)
 {
 
-    if ($type == "last_post") {
-
-        $category = BlogEtcCategory::where('last_post', '=', 1)->
-        with(
-            [
-                'posts' => function ($q) {
-                     $q->limit(1);
-                },
-            ])->firstOrFail();
-    } elseif ($type == 'articles') {
-        $category = BlogEtcCategory::where('articles', '=', 1)-> with(
-            [
-                'posts' => function ($q) use ($limit) {
-                    $q->limit($limit);
-                },
-            ])->firstOrFail();
-    }
-
-    return $category;
+//    if ($type == "last_post") {
+//
+//        $category = BlogEtcCategory::where('last_post', '=', 1)
+//            ->with(
+//            [
+//                'posts' => function ($q) use ($limit){
+//                     $q->limit($limit);
+//                },
+//            ])->get();
+//    } elseif ($type == 'articles') {
+//        $category = BlogEtcCategory::where('articles', '=', 1)
+//            ->with(
+//            [
+//                'posts' => function ($q) use ($limit) {
+//                    $q->limit($limit);
+//                },
+//            ])->get();
+//    }
+//    else{
+//
+//    }
+//
+//
+//    return $category;
 
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
+
+    if (in_array('last_post',$main_page)){
+        $posts_query->whereHas(['categories'=>function($q){
+            $q->where('last_post',true);
+        }]);
+    }
+    if (in_array('articles',$main_page)){
+        $posts_query->whereHas(['categories'=>function($q){
+            $q->where('articles',true);
+        }]);
+    }
     $posts_query->orderBy("posted_at", "desc");
     if (!empty($main_page)) {
     }

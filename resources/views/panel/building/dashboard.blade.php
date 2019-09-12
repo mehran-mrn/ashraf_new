@@ -57,7 +57,7 @@
                                         <div class="card border-2px border-info alpha-info mb-0">
                                             <div class="card-img-actions px-1 pt-1 pb-1">
                                                 <img class="card-img img-fluid img-absolute "
-                                                     src="{{$lvl=='project' ? url($province['media']['url']): asset('/public/assets/panel/images/3.png')}}" alt="">
+                                                     src="{{$lvl=='project' ? asset($province['media']['url']) : asset('/public/assets/panel/images/3.png')}}" alt="">
                                                 <div class="card-img-actions-overlay  card-img bg-dark-alpha">
 
                                                 </div>
@@ -80,20 +80,7 @@
                                                             </a>
 
                                                             @else
-{{--                                                        @switch($lvl)--}}
-{{--                                                            @case('city_id')--}}
-{{--                                                            @php $get_link ='province'; @endphp--}}
-{{--                                                            @break--}}
-{{--                                                            @case('city_id_2')--}}
-{{--                                                            @php $get_link ='sub_province'; @endphp--}}
-{{--                                                            @break--}}
-{{--                                                            @case('city_id_3')--}}
-{{--                                                            @php $get_link ='city'; @endphp--}}
-{{--                                                            @break--}}
-{{--                                                            @default--}}
-{{--                                                            @php $get_link ='province'; @endphp--}}
-{{--                                                            @break--}}
-{{--                                                        @endswitch--}}
+
                                                         <a href="{{route('building_dashboard')}}/?city={{$province[$lvl]}}">
                                                             <h3>
                                                                 <b class="text-info">{{get_cites($province[$lvl])['name']}}</b>
