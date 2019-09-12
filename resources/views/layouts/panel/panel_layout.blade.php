@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ Session::token() }}">
+
     @yield('meta')
     <title>{{trans('messages.html_title')}}</title>
     <link href="{{ URL::asset('/public/assets/global/images/favicon.png') }}" rel="shortcut icon" type="image/png">
@@ -89,12 +91,11 @@ if(!isset($active_sidbare)){
     <div class="page-content">
         @include('layouts.panel.sidebar')
         <!-- Main content -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="background-image: url({{URL::asset('/public/assets/panel/images/b-pattern.png')}});">
                 @yield('content')
             </div>
     </div>
     <!-- /page content -->
-
 
 <!-- Info modal -->
 <div id="general_modal" class="modal fade " >

@@ -8,13 +8,22 @@
 
 @endsection
 @section('css')
-    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
     <style>
-        #map { height: 400px; width:100%;}
-        .map-container { margin-top: 10px;}
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        .map-container {
+            margin-top: 10px;
+        }
 
 
-        textarea {width:100%}
+        textarea {
+            width: 100%
+        }
 
 
     </style>
@@ -26,7 +35,7 @@
     ?>
     <div class="content">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card">
 
                     <div class="card-header bg-light">
@@ -40,59 +49,71 @@
                     </div>
 
                     <div class="card-body">
-
                         @foreach($projects->chunk(3) as $chunk)
                             <div class="row">
-                                @foreach($chunk as $project)
+                                @foreach($chunk as $province)
                                     <div class="col-md-4">
 
-                                        <div class="card">
-
-                                            <div class="card-img-actions px-1 pt-1">
+                                        <div class="card border-2px border-info alpha-info mb-0">
+                                            <div class="card-img-actions px-1 pt-1 pb-1">
                                                 <img class="card-img img-fluid img-absolute "
-                                                     src="{{'/'.$project['media']['url']}}" alt="">
+                                                     src="{{$lvl=='project' ? url($province['media']['url']): asset('/public/assets/panel/images/3.png')}}" alt="">
                                                 <div class="card-img-actions-overlay  card-img bg-dark-alpha">
 
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="card border-2px border-info alpha-info mt-0">
 
-                                            <div class="card-body">
-                                                <a href="{{route('building_project',['project_id'=>$project['id']])}}" class="text-teal-800 font-weight-semibold">
+                                            <div class="card-body border-2px border-info  p-0 m-0">
+                                                <div class="row p-0 m-0">
 
-                                                    <b>{{$project['title']}}</b></a><br>
-                                                {{$project['description']}}
-                                                <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
-                                             modal-ajax-load"
-                                                        data-ajax-link="{{route('load_new_building_form',['project_id'=>$project['id']])}}"
-                                                        data-toggle="modal"
-                                                        data-modal-title="{{trans('messages.edit_item',['item'=>$project['title']])}}"
-                                                        data-target="#general_modal"
-                                                        data-modal-size="modal-lg">
-                                                    <i class="icon-pencil"></i>
-                                                </button>
-                                                <button type="button"
-                                                        class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
-                                                        data-ajax-link="{{route('delete_caravan_host',['host_id'=>$project['id']])}}"
-                                                        data-method="POST"
-                                                        data-csrf="{{csrf_token()}}"
-                                                        data-title="{{trans('messages.delete_item',['item'=>$project['title']])}}"
-                                                        data-text="{{trans('messages.delete_item_text',['item'=>$project['title']])}}"
-                                                        data-type="warning"
-                                                        data-cancel="true"
-                                                        data-confirm-text="{{trans('messages.delete')}}"
-                                                        data-cancel-text="{{trans('messages.cancel')}}">
-                                                <i class="icon-trash"></i>
-                                                </button>
+                                                    <div class="m-0  col-sm-5 bg-info">
+                                                        <h1>{{$lvl=='project' ? "":$province['total'] }} </h1>
+                                                    </div>
+                                                    <div class="m-0  col-sm-7 ">
+                                                        @if($lvl == 'project')
+                                                            <a href={{route('building_project',['project_id'=>$province['id']])}}>
+                                                                <h3>
+                                                                    <b class="text-info">{{$province['title']}}</b>
+                                                                </h3>
+                                                            </a>
+
+                                                            @else
+{{--                                                        @switch($lvl)--}}
+{{--                                                            @case('city_id')--}}
+{{--                                                            @php $get_link ='province'; @endphp--}}
+{{--                                                            @break--}}
+{{--                                                            @case('city_id_2')--}}
+{{--                                                            @php $get_link ='sub_province'; @endphp--}}
+{{--                                                            @break--}}
+{{--                                                            @case('city_id_3')--}}
+{{--                                                            @php $get_link ='city'; @endphp--}}
+{{--                                                            @break--}}
+{{--                                                            @default--}}
+{{--                                                            @php $get_link ='province'; @endphp--}}
+{{--                                                            @break--}}
+{{--                                                        @endswitch--}}
+                                                        <a href="{{route('building_dashboard')}}/?city={{$province[$lvl]}}">
+                                                            <h3>
+                                                                <b class="text-info">{{get_cites($province[$lvl])['name']}}</b>
+                                                            </h3>
+                                                        </a>
+                                                            @endif
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 @endforeach
                             </div>
                         @endforeach
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4">
+                @include('panel.building.materials.tree_view');
             </div>
         </div>
     </div>

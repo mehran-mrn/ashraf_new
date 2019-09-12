@@ -19,4 +19,7 @@ class building_project extends Model
     {
         return $this->hasMany('App\building_user','building_id');
     }
+    public function city(){
+        return $this->belongsTo('App\city','city_id');
+    }
 }

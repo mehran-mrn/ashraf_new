@@ -17,6 +17,7 @@ class CreateCitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->integer('parent')->default('0');
+            $table->integer('lvl')->default('1'); // 1 = ostan 2-shahrestan 3-shahr
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

@@ -242,6 +242,13 @@ function user_information($type)
     }
 }
 
+function get_cites_list($lvl)
+{
+
+        $cities = \App\city::where('lvl', $lvl)->get();
+
+    return $cities;
+}
 function get_cites($id = null)
 {
     if ($id) {

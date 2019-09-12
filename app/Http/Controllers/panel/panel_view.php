@@ -41,6 +41,7 @@ use App\video_gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Laratrust\Models\LaratrustPermission;
 use Laratrust\Models\LaratrustRole;
 
@@ -420,13 +421,55 @@ class panel_view extends Controller
 
 
 //building module
-    public function building_dashboard()
+    public function building_dashboard(Request $request)
     {
-        $projects = building_project::with('media')->get();
 
-        return view('panel.building.dashboard', compact('projects'));
+        $projects_query = building_project::query();
+        $projects_query->with('media','city.all_provinces');
+        $lvl = "city_id";
+        if ($request['city']) {
+            $this_city = city::find($request['city']);
+            switch ($this_city['lvl']){
+                case 1 :
+                    $projects_query->select('city_id_2', DB::raw('count(*) as total'));
+                    $projects_query->where('city_id',$request['city']);
+                    $projects_query->groupBy('city_id_2');
+                    $lvl = "city_id_2";
+                    break;
+                case 2 :
+                    $projects_query->select('city_id_3', DB::raw('count(*) as total'));
+                    $projects_query->where('city_id_2',$request['city']);
+                    $projects_query->groupBy('city_id_3');
+                    $lvl = "city_id_3";
+                    break;
+                case 3 :
+                    $projects_query->where('city_id_3',$request['city']);
+                    $lvl = "project";
+                    break;
+                default:
+                    $projects_query->select('city_id', DB::raw('count(*) as total'));
+                    $projects_query->groupBy('city_id');
+                    $lvl = "city_id";
+            }
+        }
+        else{
+            $projects_query->select('city_id', DB::raw('count(*) as total'));
+            $projects_query->groupBy('city_id');
+            $lvl = "city_id";
+
+        }
+        $selected_city =$request['city'];
+        $projects = $projects_query->get();
+        $provinces = city::where('parent', '=', 0)->whereHas('province_project')->get();
+        return view('panel.building.dashboard', compact('projects','lvl','provinces','selected_city'));
     }
 
+    public function building_tree_view()
+    {
+        $provinces = city::where('parent', '=', 0)->get();
+        $all_cities = city::pluck('name','id')->all();
+        return view('panel.building.materials.tree_view',compact('provinces','all_cities'));
+    }
     public function building_project($project_id, Request $request)
     {
         $ticket_item_checkbox = $request->input('ticket_item_checkbox');
