@@ -15,7 +15,7 @@ class cities_controller extends Controller
      */
     public function index()
     {
-        $cities = city::where('parent', '0')->orderBy('name')->paginate(32);
+        $cities = city::where('lvl', '1')->orderBy('name')->paginate(32);
         return view('panel.setting.cities.cities_list', compact('cities'));
     }
 
@@ -44,14 +44,20 @@ class cities_controller extends Controller
             'name' => 'required|max:255',
             'parent' => 'nullable',
         ]);
-        if ($validatedData['parent']) {
+        $lvl =1;
+        if (!empty($request['parent'])) {
             $parent = city::with('province')->find($validatedData['parent']);
-            if (!empty($parent['province']) and $parent['province']['parent'] != 0) {
-                $errors[] = 'unavailable';
+            $lvl = $parent['lvl'] + 1;
+            if ($parent['lvl'] >= 3) {
+                $errors[] = 'not available now';
                 return back_error($request, $errors);
             }
         }
-        city::create($validatedData);
+        city::create([
+            'name'=>$validatedData['name'],
+            'parent'=>(empty($request['parent'])? 0:$request['parent']) ,
+            'lvl'=>$lvl,
+        ]);
         return back_normal($request);
     }
 

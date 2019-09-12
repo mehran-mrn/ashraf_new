@@ -160,6 +160,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
         Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
         Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');
+        Route::get('building_tree_view','panel\panel_view@building_tree_view')->name('building_tree_view');
+        Route::post('/get_city_select_option', 'panel\building@get_city_select_option')->name('get_city_select_option');
         Route::post('submit_project_type_data', 'panel\building@submit_project_type_data')->name('submit_project_type_data');
         Route::get('building_type_page/{building_type_id}', 'panel\panel_view@building_type_page')->name('building_type_page');
         Route::get('building_type_item_add_form/{type_id}/{item_id?}', 'panel\panel_view@building_type_item_add_form')->name('building_type_item_add_form');

@@ -12,6 +12,7 @@ use App\building_ticket_user;
 use App\building_type;
 use App\building_type_itme;
 use App\building_user;
+use App\city;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,16 @@ class building extends Controller
 
     }
 
+    public function get_city_select_option(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+        $cities = city::where('parent',$request['id'])->get();
+        return view('panel.building.materials.city_select_option', compact('cities'));
+
+    }
+
     public function delete_building_type($building_type_id, Request $request)
     {
         $host = building_type::find($building_type_id);
@@ -89,7 +100,9 @@ class building extends Controller
             'description' => 'required',
             'image' => 'bail|image|mimes:jpeg,png,jpg,gif|max:5000|dimensions:min_width=200,min_height=100',
             'project_type' => 'required|exists:building_types,id',
-            'city_id' => 'required|exists:cities,id',
+            'province_id' => 'required|exists:cities,id',
+            'city_id_2' => 'required|exists:cities,id',
+            'city_id_3' => 'required|exists:cities,id',
             'address' => 'required|max:2150',
             'lat' => ['required', 'regex:/' . $regex_lat_long . '/'],
             'long' => ['required', 'regex:/' . $regex_lat_long . '/'],
@@ -120,7 +133,9 @@ class building extends Controller
             $the_project->address = $request['address'];
             $the_project->start_date = $start_date;
             $the_project->end_date_prediction = $end_date;
-            $the_project->city_id = $request['city_id'];
+            $the_project->city_id = $request['province_id'];
+            $the_project->city_id_2 = $request['city_id_2'];
+            $the_project->city_id_3 = $request['city_id_3'];
             $the_project->province_id = $request['province_id'];
             $the_project->media_id = $image_id;
             $the_project->project_type_id = $request['project_type'];
@@ -134,7 +149,9 @@ class building extends Controller
             $the_project->address = $request['address'];
             $the_project->start_date = $start_date;
             $the_project->end_date_prediction = $end_date;
-            $the_project->city_id = $request['city_id'];
+            $the_project->city_id = $request['province_id'];
+            $the_project->city_id_2 = $request['city_id_2'];
+            $the_project->city_id_3 = $request['city_id_3'];
             $the_project->province_id = $request['province_id'];
             $the_project->media_id = $image_id;
             $the_project->project_type_id = $request['project_type'];

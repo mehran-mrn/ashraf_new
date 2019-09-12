@@ -24,7 +24,9 @@ class CreateBuildingProjectsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date_prediction')->nullable();
             $table->dateTime('end_date_actual')->nullable();
-            $table->unsignedInteger('city_id')->nullable();//city _id
+            $table->unsignedInteger('city_id')->nullable();// ostan lvl1
+            $table->unsignedInteger('city_id_2')->nullable();//shahrestan lvl2
+            $table->unsignedInteger('city_id_3')->nullable();// shahr/rosta lvl3
             $table->unsignedInteger('province_id')->nullable();//province id
             $table->unsignedInteger('media_id')->nullable();//title image
             $table->unsignedInteger('project_type_id')->nullable();//title image

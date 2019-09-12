@@ -363,6 +363,7 @@ return array(
     'capacity' => 'ظرفیت',
     'no_limit' => 'بدون محدودیت',
     'province' => 'استان',
+    'sub_province' => 'شهرستان',
     'departure' => 'مبداء',
     'budget' => 'بودجه',
     'transport_type' => 'نوع وسیله نقلیه',

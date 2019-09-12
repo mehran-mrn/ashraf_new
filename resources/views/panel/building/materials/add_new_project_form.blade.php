@@ -1,4 +1,37 @@
 <?php $rand_id = rand(1, 8000); ?>
+<script>
+    function getSubProvince(val) {
+        $.ajax({
+            type: "POST",
+            url: "{{route('get_city_select_option')}}",
+            data: {
+                '_token': $('meta[name=csrf-token]').attr('content'),
+                'id': val,
+            },
+            success: function(data){
+                $("#select_sub_province_{{$rand_id}}").html(data);
+                getCity();
+            }
+        });
+    }
+
+
+    function getCity(val) {
+        $.ajax({
+            type: "POST",
+            url: "{{route('get_city_select_option')}}",
+            data: {
+                '_token': $('meta[name=csrf-token]').attr('content'),
+                'id': val,
+            },
+            success: function(data){
+                $("#select_city_{{$rand_id}}").html(data);
+            }
+        });
+    }
+
+</script>
+
 <form method="POST" id="" class="form-ajax-submit" action="{{route('submit_project_data')}}"
       autocomplete="off">
     @csrf
@@ -11,13 +44,13 @@
             <div class="form-group row">
 
                 <label for="project_title"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.project_title') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.project_title') }}</label>
+                <div class="col-md-10">
                     <input id="project_title" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="project_title"
                            value="{{$project['title']}}" autocomplete="capacity" autofocus>
 
-                    @error('name')
+                    @error('project_title')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
             </span>
@@ -28,26 +61,16 @@
             <div class="form-group row">
 
                 <label for="start_date_{{$rand_id}}"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.start_date') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.start_date') }}</label>
+                <div class="col-md-4">
                     <input id="start_date_{{$rand_id}}" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="start_date"
                            value="{{$project['start_date']? miladi_to_shamsi_date($project['start_date']):""}}" autocomplete="capacity" autofocus>
-
-
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-            </span>
-                    @enderror
                 </div>
 
-            </div>
-            <div class="form-group row">
-
                 <label for="end_date_{{$rand_id}}"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.end_date') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.end_date') }}</label>
+                <div class="col-md-4">
                     <input id="end_date_{{$rand_id}}" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="end_date"
                            value="{{$project['end_date_prediction'] ? miladi_to_shamsi_date($project['end_date_prediction']):""}}" autocomplete="capacity" autofocus>
@@ -59,48 +82,39 @@
                     @enderror
                 </div>
 
+
             </div>
             <div class="form-group row">
 
+
+
                 <label for="description"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.description') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.description') }}</label>
+                <div class="col-md-10">
                     <textarea id="description" class="form-control @error('capacity') is-invalid @enderror"
                            name="description" >{{$project['description']}}</textarea>
 
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-            </span>
-                    @enderror
                 </div>
 
             </div>
 
             <div class="form-group row">
-                <label for="image" class="col-md-3 col-form-label text-md-right" >{{ __('messages.image') }}</label>
+                <label for="image" class="col-md-2 col-form-label text-md-right" >{{ __('messages.image') }}</label>
 
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <input class="form-control form-control-file" type="file" name="image" id="fileToUpload">
                 </div>
-            </div>
-                <div class="form-group row">
-
-                <div class="col-lg-6">
 
 
-                </div>
                 <img id="holder" style="margin-top:15px;max-height:100px;">
-            </div>
-
-            <div class="form-group row">
 
                 <label for="type_selection_{{$rand_id}}"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.building_types') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.building_types') }}</label>
+                <div class="col-md-4">
                     <select id="type_selection_{{$rand_id}}" name="project_type" class="form-control select-search"
                             data-fouc>
-                        @foreach(get_building_type() as $type)
+                        <option value="0">---</option>
+                    @foreach(get_building_type() as $type)
                             <option {{$type['id'] == $project['project_type_id']?"selected":""}} value="{{$type['id']}}">{{$type['title']}} - {{$type['description']}}</option>
                         @endforeach
                     </select>
@@ -111,56 +125,65 @@
 
             <div class="form-group row">
 
-                <label for="select_city_{{$rand_id}}"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.city') }}</label>
-                <div class="col-md-9">
-                    <select id="select_city_{{$rand_id}}" name="{{isset($city_name)?$city_name:"city_id"}}" class="form-control select-search" data-fouc>
-                        @foreach(get_cites() as $city)
-                            <option {{$city['id'] == $project['city_id']?"selected":""}} value="{{$city['id']}}">{{$city['name']."  "}}
-                                <div class="text-muted">
-                            <?php $parent =  get_cites_parent($city['id']) ?>
-                            @while($parent)
-                                {{" > ".$parent['name']}}
-                                    <?php $parent =  get_cites_parent($parent['id']) ?>
-                            @endwhile
-                                </div>
+                <label for="select_province_{{$rand_id}}"
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.province') }}</label>
+                <div class="col-md-4">
+                    <select id="select_province_{{$rand_id}}" name="province_id" class="form-control select-search"
+                            onChange="getSubProvince(this.value);" data-fouc>
+                        <option value="0">---</option>
+
+                    @foreach(get_cites_list(1) as $province)
+                            <option {{$province['id'] == $project['city_id']?"selected":""}} value="{{$province['id']}}">{{$province['name']."  "}}
                             </option>
                         @endforeach
+                    </select>
+                </div>
+
+                <label for="select_sub_province_{{$rand_id}}"
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.sub_province') }}</label>
+                <div class="col-md-4">
+                    <select id="select_sub_province_{{$rand_id}}" name="city_id_2" class="form-control select-search"
+                            onChange="getCity(this.value);" data-fouc>
+                        <option value="0">---</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label for="select_city_{{$rand_id}}"
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.city') }}</label>
+                <div class="col-md-4">
+                    <select id="select_city_{{$rand_id}}" name="city_id_3" class="form-control select-search" data-fouc>
+                        <option value="0">---</option>
+
                     </select>
                 </div>
             </div>
             <div class="form-group row">
 
                 <label for="address"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.address') }}</label>
-                <div class="col-md-9">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.address') }}</label>
+                <div class="col-md-10">
                     <textarea id="address" type="text" class="form-control @error('address') is-invalid @enderror"
                               name="address" > {{$project['address']}}</textarea>
-
-                    @error('address')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-            </span>
-                    @enderror
                 </div>
 
             </div>
             <div class="form-group row">
                 <label for="lat"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.lat') }}</label>
-                <div class="col-md-3">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.lat') }}</label>
+                <div class="col-md-4">
 
                     <input id="lat" type="text" class="form-control "
                            name="lat"
                            value="{{$project['lat']}}"  autofocus>
                 </div>
 
-            </div>
-            <div class="form-group row">
 
                 <label for="long"
-                       class="col-md-3 col-form-label text-md-right">{{ __('messages.long') }}</label>
-                <div class="col-md-3">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.long') }}</label>
+                <div class="col-md-4">
 
                 <input id="long" type="text" class="form-control "
                        name="long"
@@ -256,6 +279,8 @@
     $(document).ready(function () {
         $("#type_selection_{{$rand_id}}").select2();
         $("#select_city_{{$rand_id}}").select2();
+        $("#select_province_{{$rand_id}}").select2();
+        $("#select_sub_province_{{$rand_id}}").select2();
 
 
         $('#start_date_{{$rand_id}}').MdPersianDateTimePicker({
