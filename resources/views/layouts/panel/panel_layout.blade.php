@@ -91,12 +91,11 @@ if(!isset($active_sidbare)){
     <div class="page-content">
         @include('layouts.panel.sidebar')
         <!-- Main content -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="background-image: url({{URL::asset('/public/assets/panel/images/b-pattern.png')}});">
                 @yield('content')
             </div>
     </div>
     <!-- /page content -->
-
 
 <!-- Info modal -->
 <div id="general_modal" class="modal fade " >
