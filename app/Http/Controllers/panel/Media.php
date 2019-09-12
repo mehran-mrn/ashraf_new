@@ -30,43 +30,8 @@ class Media extends Controller
             'file' => 'required|image',
             'cat_id' => 'required',
         ]);
-        $fileSize = request()->file->getSize();
-        $year = jdate("Y", time(), '', '', 'en');
-        $month = jdate("m", time(), '', '', 'en');
 
-        if (!file_exists('public/images')) {
-            mkdir('public/images', 0755, true);
-        }
-        if (!file_exists('public/images/gallery')) {
-            mkdir('public/images/gallery', 0755, true);
-        }
-        if (!file_exists('public/images/gallery/' . $request['cat_id'])) {
-            mkdir('public/images/gallery/' . $request['cat_id'], 0755, true);
-        }
-        if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year)) {
-            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year, 0755, true);
-        }
-        if (!file_exists('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month)) {
-            mkdir('public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month, 0755, true);
-        }
-        $destinationPath = 'public/images/gallery/' . $request['cat_id'] . "/" . $year . "/" . $month;
-        $time = time();
-        $image_name = $time . '_' . request()->file->getClientOriginalName();
-        $parent = \App\media::create([
-            'name' => $image_name,
-            'url' => $destinationPath . "/" . $image_name,
-            'path' => $destinationPath,
-            'org_name' => request()->file->getClientOriginalName(),
-            'mime' => request()->file->getClientMimeType(),
-            'module' => "gallery",
-            'type' => request()->file->getClientOriginalExtension(),
-            'size' => $fileSize,
-            'category_id' => $request['cat_id'],
-            'title' => $request['title'],
-        ]);
-        uploadGallery(request()->file, array('150,178', '300,200','600,400'), $request['cat_id'], $request['title'], $parent['id'], $time);
-        request()->file->move($destinationPath, $image_name);
-
+        uploadGallery($request['file'], 'gallery', array('category_id' => $request['cat_id'], 'title' => $request['title']));
 
         $messages = trans('messages.item_created', ['item' => trans('messages.image')]);
         return back_normal($request, $messages);

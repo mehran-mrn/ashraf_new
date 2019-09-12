@@ -578,5 +578,8 @@ return array(
     'edit_post'=>'ویرایش مطلب',
     'show_post'=>'نمایش مطلب',
     'date_not_valid'=>'تاریخ وارد شده صحیح نمی باشد.',
-    'author_website'=>'آدرس سایت'
+    'author_website'=>'آدرس سایت',
+    'first'=>'اول',
+    'last'=>'آخر',
+
 );

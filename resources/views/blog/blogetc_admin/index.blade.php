@@ -3,7 +3,7 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>--}}
+        <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('#tablePost').dataTable({
@@ -16,8 +16,13 @@
                     {"width": "20%", "targets": 5},
                     {"orderable": false, "targets": 5 }
                 ],
-                "order": [[ 3, 'desc' ]]
-
+                "order": [[ 3, 'desc' ]],
+                language: {
+                    search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
+                    searchPlaceholder: '{{__('messages.search')}}...',
+                    lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
+                    paginate: { 'first': '{{__('messages.first')}}', 'last': '{{__('messages.last')}}', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+                }
             });
         })
 

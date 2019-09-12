@@ -44,7 +44,6 @@
                         </h5>
                     </div>
                 </article>
-
             @endforeach
 
         </div>

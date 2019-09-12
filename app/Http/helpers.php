@@ -428,13 +428,13 @@ function get_age($date)
     return $age;
 }
 
-function shamsi_to_miladi($input=null)
+function shamsi_to_miladi($input)
 {
     // yyyy/mm/dd
     // yyyy/mm/dd hh:MM:ss
     // yyyy-mm-dd
     // yyyy-mm-dd hh:MM:ss
-    if (!$input){
+    if (!$input) {
         return date('Y-m-d H:i:s');
     }
     $input = str_replace("    ", " ", $input);
@@ -624,22 +624,48 @@ function get_option($option_name)
     return $options;
 }
 
-function get_posts($limit = null, $main_page=[], $categories = [], $paginate = 10)
+function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 10)
 {
+//    if ($type == "last_post") {
+//
+//        $category = BlogEtcCategory::where('last_post', '=', 1)
+//            ->with(
+//            [
+//                'posts' => function ($q) use ($limit){
+//                     $q->limit($limit);
+//                },
+//            ])->get();
+//    } elseif ($type == 'articles') {
+//        $category = BlogEtcCategory::where('articles', '=', 1)
+//            ->with(
+//            [
+//                'posts' => function ($q) use ($limit) {
+//                    $q->limit($limit);
+//                },
+//            ])->get();
+//    }
+//    else{
+//
+//    }
+//
+//
+//    return $category;
+
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
 
-    if ($main_page and  in_array('last_post',$main_page)){
-        $posts_query->whereHas('categories',function($q){
-            $q->where('last_post',true);
-        });
+    if ($main_page and in_array('last_post', $main_page)) {
+        $posts_query->whereHas(['categories' => function ($q) {
+            $q->where('last_post', true);
+        }]);
     }
-    if ($main_page and in_array('articles',$main_page)){
-        $posts_query->whereHas('categories',function($q){
-            $q->where('articles',true);
-        });
+    if ($main_page and in_array('articles', $main_page)) {
+        $posts_query->whereHas(['categories' => function ($q) {
+            $q->where('articles', true);
+        }]);
     }
     $posts_query->orderBy("posted_at", "desc");
-
+    if (!empty($main_page)) {
+    }
     if (!empty($categories)) {
         $posts_query->take($categories);
     }
@@ -648,7 +674,6 @@ function get_posts($limit = null, $main_page=[], $categories = [], $paginate = 1
     }
 
     $posts = $posts_query->take($limit)->with('categories')->get();
-
     return $posts;
 }
 
@@ -697,19 +722,50 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
     return $response;
 }
 
-function uploadGallery($file, $custom_size, $cat_id, $title, $parent_id = 0, $time)
+
+function uploadGallery($file, $folder = 'photos',$additional=['category_id'=>'','title'=>''], $custom_size = array('150,178', '300,200', '600,400'))
 {
-    $size = array();
-    $size = array_merge($size, $custom_size);
+
+    $fileSize = $file->getSize();
     $year = jdate("Y", time(), '', '', 'en');
     $month = jdate("m", time(), '', '', 'en');
-    $fileSize = $file->getSize();
+
+    if (!file_exists('public/images')) {
+        mkdir('public/images', 0755, true);
+    }
+    if (!file_exists('public/images/' . $folder)) {
+        mkdir('public/images/' . $folder, 0755, true);
+    }
+    if (!file_exists('public/images/' . $folder . "/" . $year)) {
+        mkdir('public/images/' . $folder . "/" . $year, 0755, true);
+    }
+    if (!file_exists('public/images/' . $folder . "/" . $year . "/" . $month)) {
+        mkdir('public/images/' . $folder . "/" . $year . "/" . $month, 0755, true);
+    }
+    $destinationPath = 'public/images/' . $folder . "/" . $year . "/" . $month;
+    $time = time();
+    $image_name = $time . '_' . request()->file->getClientOriginalName();
+    \App\media::create([
+        'name' => $image_name,
+        'url' => $destinationPath . "/" . $image_name,
+        'path' => $destinationPath,
+        'org_name' => request()->file->getClientOriginalName(),
+        'mime' => request()->file->getClientMimeType(),
+        'module' => $folder,
+        'type' => request()->file->getClientOriginalExtension(),
+        'size' => $fileSize,
+        'category_id' => $additional['category_id'],
+        'title' => $additional['title'],
+    ]);
+
+    $size = array();
+    $size = array_merge($size, $custom_size);
     foreach ($size as $value) {
         $si = explode(',', $value);
-        if (!file_exists('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0])) {
-            mkdir('public/images/gallery/' . $cat_id . "/" . $year . "/" . $month . "/" . $si[0], 0755, true);
+        if (!file_exists('public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0])) {
+            mkdir('public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0], 0755, true);
         }
-        $thumbnailPath = 'public/images/gallery/' . $cat_id . '/' . $year . "/" . $month . "/" . $si[0];
+        $thumbnailPath = 'public/images/' . $folder . '/' . $year . "/" . $month . "/" . $si[0];
         $img = Image::make($file->getRealPath());
         $filename = $time . "_" . $file->getClientOriginalName();
 
@@ -717,19 +773,8 @@ function uploadGallery($file, $custom_size, $cat_id, $title, $parent_id = 0, $ti
             $constraint->aspectRatio();
         });
         $img->save($thumbnailPath . '/' . $filename);
-//        \App\media::create([
-//            'name' => $filename,
-//            'url' => $thumbnailPath . "/" . $filename,
-//            'path' => $thumbnailPath,
-//            'org_name' => $file->getClientOriginalName(),
-//            'mime' => $file->getClientMimeType(),
-//            'module' => "gallery",
-//            'size' => $fileSize,
-//            'category_id' => $cat_id,
-//            'title' => $title,
-//            'parent_id' => $parent_id,
-//            'type' => $file->getClientOriginalExtension(),
-//            'thumbnail_size' => $si[0] . "x" . $si[1]
-//        ]);
     }
+
+    $file->move($destinationPath, $image_name);
+
 }
