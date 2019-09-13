@@ -581,5 +581,6 @@ return array(
     'author_website'=>'آدرس سایت',
     'first'=>'اول',
     'last'=>'آخر',
-
+    'account_information'=>'اطلاعات حساب کاربری',
+    'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء'
 );

@@ -693,7 +693,6 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
     return $response;
 }
 
-
 function uploadGallery($file, $folder = 'photos',$additional=['category_id'=>'','title'=>''], $custom_size = array('150,178', '300,200', '600,400'))
 {
 
