@@ -55,12 +55,15 @@ return array(
     'delete_item' => 'حذف :item',
     'delete_item_text' => 'آیا از حذف :item اطمینان دارید؟',
     'delete' => 'حذف',
+    'madadjoo' => 'مددجو',
     'cancel' => 'انصراف',
     'add_new_category' => 'دسته بندی جدید اضافه کنید.',
     'add_image' => 'افزودن تصویر',
     'comment_list' => 'لیست نظرات',
     'image_upload' => 'بارگزاری تصویر',
     'title' => 'عنوان',
+    'upload' => 'بارگزاری',
+    'file_uploaded' => 'فایل با موفقیت بارگزاری شد',
     'image_title' => 'عنوان تصویر',
     'select_image' => 'انتخاب عکس',
     'change_size_to' => 'تغییر اندازه به',
@@ -425,6 +428,7 @@ return array(
     'back' => 'برگشت',
     'bank_information' => 'اطلاعات بانک',
     'bank_name' => 'نام بانک',
+    'id' => 'شناسه',
     'account_number' => 'شماره حساب',
     'sheba_number' => 'شماره شبا',
     'branch' => 'شعبه',
@@ -584,5 +588,7 @@ return array(
     'last'=>'آخر',
     'account_information'=>'اطلاعات حساب کاربری',
     'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء',
-    'transaction_file'=>'فایل تراکنش'
+    'transaction_file'=>'فایل تراکنش',
+    'download_sample_file'=>'دانلود فایل نمونه',
+    'register_by_excel'=>'ثبت افراد با فایل اکسل'
 );
