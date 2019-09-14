@@ -78,25 +78,28 @@ class caravan extends Controller
         $request['end'] = latin_num($request['end']);
         $regex_date = "([1][3,4]\d{2}['\-'|'\/'](0[1-9]|[1-9]|1[0-2])['\-'|'\/'](0[1-9]|[12]\d|3[01]|\d))";
         $this->validate($request, [
+            'title' => 'required',
             'capacity' => 'required|numeric|between:0,1000000',
             'host_id' => 'required|exists:caravan_hosts,id',
             'province_id' => 'required|exists:cities,id',
-            'city_id' => 'required|exists:cities,id',
+            'city_id_2' => 'required|exists:cities,id',
             'user_id' => 'required|exists:users,id',
             'budget' => ['nullable', 'numeric'],
-            'start' => ['required', 'regex:/' . $regex_date . '/'],
-            'arrival' => ['nullable', 'regex:/' . $regex_date . '/'],
-            'departure' => ['nullable', 'regex:/' . $regex_date . '/'],
-            'end' => ['nullable', 'regex:/' . $regex_date . '/'],
+//            'start' => ['required', 'regex:/' . $regex_date . '/'],
+            'start' => 'required',
+            'arrival' => 'nullable',
+            'departure' => 'nullable',
+            'end' => 'nullable',
         ]);
         $arrival = $request['arrival'] ? shamsi_to_miladi($request['arrival']) : null;
         $departure = $request['departure'] ? shamsi_to_miladi($request['departure']) : null;
         $end = $request['end'] ? shamsi_to_miladi($request['end']) : null;
 
         $caravan = new \App\caravan();
+        $caravan->title = $request['title'];
         $caravan->capacity = $request['capacity'];
         $caravan->dep_province = $request['province_id'];
-        $caravan->dep_city = $request['city_id'];
+        $caravan->dep_city = $request['city_id_2'];
         $caravan->caravan_host_id = $request['host_id'];
         $caravan->duty = $request['user_id'];
         $caravan->budget = $request['budget'] or null;
@@ -146,6 +149,10 @@ class caravan extends Controller
             $this->validate($request, [
                 'national_code' => 'required|unique:people,national_code',
             ]);
+            if ($this->validate_national_code($request) != 'true'){
+                $errors[]=trans('errors.national_code_is_incorrect');
+                return back_error($request,$errors);
+            }
 
             $person = new person();
             $person->sh_code = $request['sh_code'];

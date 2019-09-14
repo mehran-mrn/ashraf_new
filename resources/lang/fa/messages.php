@@ -366,6 +366,7 @@ return array(
     'sub_province' => 'شهرستان',
     'departure' => 'مبداء',
     'budget' => 'بودجه',
+    'executer' => 'مجری',
     'transport_type' => 'نوع وسیله نقلیه',
     'entrance' => 'ورود',
     'exit' => 'خروج',

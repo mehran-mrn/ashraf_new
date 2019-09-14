@@ -266,7 +266,15 @@ function get_cites_parent($id)
 
     return $parent;
 }
+function get_cites_list($lvl)
+{
 
+    $cities = \App\city::with(['province' => function ($q) {
+        $q->with('province');
+    }])->where('lvl', $lvl)->get();
+
+    return $cities;
+}
 function get_provinces($id = null)
 {
     if ($id) {

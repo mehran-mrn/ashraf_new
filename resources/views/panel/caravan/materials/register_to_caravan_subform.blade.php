@@ -15,9 +15,9 @@
                        class="col-md-4 col-form-label text-md-right">{{ __('messages.national_code') }}</label>
 
                 <div class="col-md-6">
-                    <input id="form_national_code" readonly class="form-control @error('capacity') is-invalid @enderror"
+                    <input id="form_national_code"  class="form-control @error('capacity') is-invalid @enderror"
                            name="national_code"
-                           value="{{$national_code}}" autocomplete="national_code" autofocus>
+                           value="{{isset($national_code)?$national_code:""}}" autocomplete="national_code" autofocus>
 
                 </div>
 

@@ -6,4 +6,5 @@ return array (
   'caravan_is_not_open' => 'کاروان در مرحله ثبت نام نیست!',
   'person_already_exists' => 'این فرد در لیست موجود میباشد',
   'pending_person_exists' => 'وضعیت تمام افراد مشخص نشده است.',
+  'national_code_is_incorrect' => 'کد ملی معتبر نیست',
 );

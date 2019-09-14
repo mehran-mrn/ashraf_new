@@ -15,12 +15,14 @@ class CreateCaravansTable extends Migration
     {
         Schema::create('caravans', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('executer')->nullable();//mojri karevan
             $table->integer('capacity');//null => infinite
             $table->unsignedInteger('dep_province')->nullable();
             $table->unsignedInteger('dep_city')->nullable();
             $table->unsignedInteger('caravan_host_id');
             $table->unsignedInteger('duty');
             $table->string('budget')->nullable();
+            $table->string('title')->nullable();
             $table->string('transport')->nullable();
             $table->dateTime('start');
             $table->dateTime('arrival')->nullable();

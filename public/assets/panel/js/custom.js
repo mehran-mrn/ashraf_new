@@ -130,7 +130,7 @@ var modal_ajax_load_from = function () {
             success: function (response) {
                 $(target + " .modal-body").html(response);
                 setTimeout(function () {
-                    location.reload();
+                    // location.reload();
                 }, 1000)
             },
 
