@@ -7,76 +7,7 @@
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
     <script>
-        var DropzoneUploader = function () {
-            var _componentDropzone = function () {
-                if (typeof Dropzone == 'undefined') {
-                    console.warn('Warning - dropzone.min.js is not loaded.');
-                    return;
-                }
-                var token = $('meta[name="csrf-token"]').attr('content');
 
-                Dropzone.options.dropzoneRemove = {
-                    url: "{{route('gateway_add_store')}}",
-                    paramName: "file",
-                    dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
-                    maxFilesize: 5,
-                    maxFiles: 30,
-                    acceptedFiles: ".php",
-                    autoProcessQueue: false,
-                    addRemoveLinks: true,
-                    parallelUploads: 30,
-                    sending: function (file, xhr, formData) {
-                        formData.append("_token", token);
-                    },
-                    init: function () {
-                        var myDropzone = this;
-                        $("#frm_gateway_add").on('submit', function (e) {
-                            e.preventDefault();
-                            myDropzone.processQueue();
-                        })
-
-                        this.on('sending', function (file, xhr, formData) {
-                            var data = $('#frm_gateway_add').serializeArray();
-                            $.each(data, function (key, el) {
-                                formData.append(el.name, el.value);
-                            });
-                        });
-                        this.on("success", function (file, response) {
-                            console.log(response);
-                            var org_name = file.name;
-                            var new_name = org_name.replace(".", "_");
-                            $("#file_names").append(
-                                '<input class="' + new_name + '" name="file_name[]" type="hidden" value="' + response + '" />'
-                            );
-                            new PNotify({
-                                title: '',
-                                text: response.message,
-                                type: 'success'
-                            });
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1000)
-
-                        });
-                        this.on("complete", function (file, response) {
-                            $("input").remove(".dz-hidden-input");
-                            $('.dz-hidden-input').hide();
-                        });
-                        this.on("removedfile", function (file) {
-                            var org_name = file.name;
-                            var new_name = org_name.replace(".", "_");
-                            $('.' + new_name).remove();
-                        });
-                    }
-                };
-            };
-            return {
-                init: function () {
-                    _componentDropzone();
-                }
-            }
-        }();
-        DropzoneUploader.init();
 
         $(document).ready(function () {
             $(document).on('change', '#name', function () {
@@ -149,10 +80,48 @@
                         maxlength: 50,
                     }
                 },
-                submitHandler: function (form) {
-                    form.submit();
+                submitHandler: function (e, form) {
+                    e.preventDefault();
+                    var form_btn = $(form).find('button[type="submit"]');
+                    var form_result_div = '#form-result';
+                    $(form_result_div).remove();
+                    form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                    var form_btn_old_msg = form_btn.html();
+                    form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+                    $(form).ajaxSubmit({
+                        dataType: '',
+                        success: function (data) {
+                            PNotify.success({
+                                text: data.message,
+                                delay: 3000,
+                            });
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                            $(form).find('.form-control').val('');
+                            $(form_btn).html(form_btn_old_msg);
+                            $(form_result_div).html(data.message).fadeIn('slow');
+                            setTimeout(function () {
+                                $(form_result_div).fadeOut('slow')
+                            }, 3000);
+                        }, error: function (response) {
+                            var errors = response.responseJSON.errors;
+                            $.each(errors, function (index, value) {
+                                PNotify.error({
+                                    delay: 3000,
+                                    title: index,
+                                    text: value,
+                                });
+                            });
+                            setTimeout(function () {
+                                $('[type="submit"]').prop('disabled', false);
+                            }, 2500);
+                            $(form_btn).html(form_btn_old_msg);
+                        }
+                    });
                 }
             });
+
         })
 
     </script>

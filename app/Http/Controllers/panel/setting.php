@@ -22,7 +22,6 @@ class setting extends Controller
 //            'logo' => 'required',
         ]);
 
-        $fileAddress = uploadFile($request['file'],'gateways');
 //        $file_id = get_file_id($request['filepath']);
         gateway::create([
             "title" => $request['title'],
@@ -42,7 +41,6 @@ class setting extends Controller
             "online" => $request['pay_online'],
             "account" => $request['pay_account'],
             "cart" => $request['pay_cart'],
-            'file_address' => $fileAddress,
 //            "logo_id" => $file_id,
         ]);
         $message = trans("messages.item_created", ['item' => trans('messages.gateway')]);

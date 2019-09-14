@@ -33,7 +33,6 @@ class CreateGatewaysTable extends Migration
             $table->integer('online')->nullable();
             $table->integer('cart')->nullable();
             $table->integer('account')->nullable();
-            $table->string('file_address')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
