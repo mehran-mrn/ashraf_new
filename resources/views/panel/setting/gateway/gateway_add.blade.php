@@ -149,6 +149,13 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="dropzone" id="dropzone_remove">
+                <div class="fallback">
+                    <input name="file" type="file" multiple/>
+                </div>
+            </div>
+        </div>
 
         <div class="col-md-12">
             <div class="d-flex justify-content-center">
@@ -185,7 +192,74 @@
     </div>
 </form>
 <script>
+    var DropzoneUploader = function () {
+        var _componentDropzone = function () {
+            if (typeof Dropzone == 'undefined') {
+                console.warn('Warning - dropzone.min.js is not loaded.');
+                return;
+            }
+            var token = $('meta[name="token"]').attr('content');
 
+            Dropzone.options.dropzoneRemove = {
+                url: "{{route('upload_files_category')}}",
+                paramName: "file",
+                dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
+                maxFilesize: 1,
+                maxFiles: 1,
+                acceptedFiles: ".php",
+                autoProcessQueue: false,
+                addRemoveLinks: true,
+                parallelUploads: 30,
+                sending: function (file, xhr, formData) {
+                    formData.append("_token", token);
+                },
+                init: function () {
+                    // var myDropzone = this;
+                    // $("#frm_add_image").on('submit', function (e) {
+                    //     e.preventDefault();
+                    //     myDropzone.processQueue();
+                    // })
+                    // this.on('sending', function (file, xhr, formData) {
+                    //     var data = $('#frm_add_image').serializeArray();
+                    //     $.each(data, function (key, el) {
+                    //         formData.append(el.name, el.value);
+                    //     });
+                    // });
+                    // this.on("success", function (file, response) {
+                    //     console.log(response);
+                    //     var org_name = file.name;
+                    //     var new_name = org_name.replace(".", "_");
+                    //     $("#file_names").append(
+                    //         '<input class="' + new_name + '" name="file_name[]" type="hidden" value="' + response + '" />'
+                    //     );
+                    //     new PNotify({
+                    //         title: '',
+                    //         text: response.message,
+                    //         type: 'success'
+                    //     });
+                    //     setTimeout(function () {
+                    //         location.reload();
+                    //     }, 1000)
+                    //
+                    // });
+                    this.on("complete", function (file, response) {
+                        $("input").remove(".dz-hidden-input");
+                        $('.dz-hidden-input').hide();
+                    });
+                    this.on("removedfile", function (file) {
+                        var org_name = file.name;
+                        var new_name = org_name.replace(".", "_");
+                        $('.' + new_name).remove();
+                    });
+                }
+            };
+        };
+        return {
+            init: function () {
+                _componentDropzone();
+            }
+        }
+    }();
 
     $("#name").on("change", function () {
         var logo = $(this).find(':selected').data('logo');
@@ -295,7 +369,6 @@
                         $('[type="submit"]').prop('disabled', false);
                     }, 2500);
                     $(form_btn).html(form_btn_old_msg);
-
                 }
             });
         }

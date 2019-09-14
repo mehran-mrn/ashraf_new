@@ -397,7 +397,6 @@ class DatabaseSeeder extends Seeder
             ],
             ]
         );
-
         DB::table('charity_payment_paterns')->insert(
             [
                 'title' => 'قربانی',
@@ -420,7 +419,6 @@ class DatabaseSeeder extends Seeder
                 'type' => 'vow',
             ]
         );
-
 
         DB::table('charity_payment_fields')->insert(
             [

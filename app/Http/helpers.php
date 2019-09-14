@@ -627,14 +627,14 @@ function get_option($option_name)
 function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 10)
 {
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
-    if ($main_page and  in_array('last_post',$main_page)){
-        $posts_query->whereHas('categories',function($q){
-            $q->where('last_post',true);
+    if ($main_page and in_array('last_post', $main_page)) {
+        $posts_query->whereHas('categories', function ($q) {
+            $q->where('last_post', true);
         });
     }
-    if ($main_page and in_array('articles',$main_page)){
-        $posts_query->whereHas('categories',function($q){
-            $q->where('articles',true);
+    if ($main_page and in_array('articles', $main_page)) {
+        $posts_query->whereHas('categories', function ($q) {
+            $q->where('articles', true);
         });
     }
     $posts_query->orderBy("posted_at", "desc");
@@ -693,7 +693,7 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
     return $response;
 }
 
-function uploadGallery($file, $folder = 'photos',$additional=['category_id'=>'','title'=>''], $custom_size = array('150,178', '300,200', '600,400'))
+function uploadGallery($file, $folder = 'photos', $additional = ['category_id' => '', 'title' => ''], $custom_size = array('150,178', '300,200', '600,400'))
 {
 
     $fileSize = $file->getSize();
@@ -747,4 +747,44 @@ function uploadGallery($file, $folder = 'photos',$additional=['category_id'=>'',
 
     $file->move($destinationPath, $image_name);
 
+}
+
+
+function uploadFile($file, $folder = 'files')
+{
+
+    if (!file_exists('public/files')) {
+        mkdir('public/files', 0755, true);
+    }
+    if (!file_exists('public/files/' . $folder)) {
+        mkdir('public/files/' . $folder, 0755, true);
+    }
+
+    $destinationPath = 'public/files/' . $folder;
+    $fileName = request()->file->getClientOriginalName();
+
+    $file->move($destinationPath, $fileName);
+    return $destinationPath . '/' . $fileName;
+}
+
+function samanGateway()
+{
+
+    $client = new soapclient('https://sep.shaparak.ir/Payments/InitPayment.asmx?WSDL');
+    $result = $client->RequestToken(
+        '10993518',            /// MID
+        '1021',        /// ResNum
+        '1000'            /// TotalAmount
+        , '0'            /// Optional
+        , 'ResNum1'        /// Optional
+        , 'ResNum2'        /// Optional
+        , '0'            /// Optional
+        , '' //$RedirectURL	/// Optional
+    );
+///var_dump($result);
+    echo "<form action='https://sep.shaparak.ir/payment.aspx' method='POST'>
+				<input name='token' type='hidden' value='" . $result . "'>
+				<input name='RedirectURL' type='hidden' value='http://Your_Domain/result_page'>
+				<input name='btn' type='submit' value='Send'>
+			</form>";
 }

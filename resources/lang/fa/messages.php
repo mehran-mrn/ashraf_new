@@ -582,5 +582,6 @@ return array(
     'first'=>'اول',
     'last'=>'آخر',
     'account_information'=>'اطلاعات حساب کاربری',
-    'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء'
+    'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء',
+    'transaction_file'=>'فایل تراکنش'
 );

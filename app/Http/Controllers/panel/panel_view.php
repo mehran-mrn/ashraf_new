@@ -670,7 +670,9 @@ class panel_view extends Controller
     public function gateway_setting()
     {
         $gateways = gateway::get();
-        return view('panel.setting.gateway_setting', compact('gateways'));
+        $banks = bank::groupBy('name')->get();
+
+        return view('panel.setting.gateway_setting', compact('gateways','banks'));
     }
 
     public function gateway_add()

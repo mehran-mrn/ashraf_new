@@ -17,11 +17,12 @@ class setting extends Controller
 
     public function gateway_add(Request $request)
     {
-
         $this->validate($request, [
             'title' => 'required',
 //            'logo' => 'required',
         ]);
+
+        $fileAddress = uploadFile($request['file'],'gateways');
 //        $file_id = get_file_id($request['filepath']);
         gateway::create([
             "title" => $request['title'],
@@ -41,6 +42,7 @@ class setting extends Controller
             "online" => $request['pay_online'],
             "account" => $request['pay_account'],
             "cart" => $request['pay_cart'],
+            'file_address' => $fileAddress,
 //            "logo_id" => $file_id,
         ]);
         $message = trans("messages.item_created", ['item' => trans('messages.gateway')]);
@@ -161,14 +163,13 @@ class setting extends Controller
             'value' => 'required',
         ]);
         $value = [
-            'title'=>$request['title'],
-            'icon'=>$request['icon'],
-            'value'=>$request['value'],
+            'title' => $request['title'],
+            'icon' => $request['icon'],
+            'value' => $request['value'],
         ];
-        if (!empty($request['option_id'])){
+        if (!empty($request['option_id'])) {
             $option = blog_option::find($request['option_id']);
-        }
-        else{
+        } else {
             $option = new blog_option();
         }
         $option->name = 'display_statistic';
@@ -181,12 +182,12 @@ class setting extends Controller
         return back_normal($request, $message);
     }
 
-    public function delete_display_statistics($option_id ,Request $request)
+    public function delete_display_statistics($option_id, Request $request)
     {
         $option = blog_option::find($option_id);
 
-        if ($option != 'display_statistic'){
-            $errors[]='invalid';
+        if ($option != 'display_statistic') {
+            $errors[] = 'invalid';
         }
         $option->delete();
 
@@ -196,13 +197,12 @@ class setting extends Controller
 
     public function submit_adv_bar(Request $request)
     {
-        if (!empty($request['option_id'])){
+        if (!empty($request['option_id'])) {
             $option = blog_option::find($request['option_id']);
             $this->validate($request, [
                 'link' => 'required',
             ]);
-        }
-        else{
+        } else {
             $option = new blog_option();
             $this->validate($request, [
                 'link' => 'required',
@@ -210,23 +210,22 @@ class setting extends Controller
             ]);
         }
 
-        if (!empty($request['image'])){
+        if (!empty($request['image'])) {
             $image = $request['image'];
             $destinationPath = 'public/assets/global/images/adv';
             $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
             $image->move($destinationPath, $image_name);
-            $img = Image::make($destinationPath.'/'.$image_name)->resize(200, 120);
-            $img->save($destinationPath.'/'.$image_name);
+            $img = Image::make($destinationPath . '/' . $image_name)->resize(200, 120);
+            $img->save($destinationPath . '/' . $image_name);
 
             $value = [
-                'link'=>$request['link'],
-                'image'=>$destinationPath.'/'.$image_name,
+                'link' => $request['link'],
+                'image' => $destinationPath . '/' . $image_name,
             ];
-        }
-        else{
+        } else {
             $value = [
-                'link'=>$request['link'],
-                'image'=>json_decode($option['value'],true)['image'],
+                'link' => $request['link'],
+                'image' => json_decode($option['value'], true)['image'],
             ];
         }
 
@@ -240,12 +239,12 @@ class setting extends Controller
         return back_normal($request, $message);
     }
 
-    public function delete_adv_bar($option_id ,Request $request)
+    public function delete_adv_bar($option_id, Request $request)
     {
         $option = blog_option::find($option_id);
 
-        if ($option != 'adv_bar'){
-            $errors[]='invalid';
+        if ($option != 'adv_bar') {
+            $errors[] = 'invalid';
         }
         $option->delete();
 
@@ -259,43 +258,39 @@ class setting extends Controller
             'link' => 'required',
         ]);
 
-        if (!empty($request['option_id'])){
+        if (!empty($request['option_id'])) {
             $option = blog_option::find($request['option_id']);
-            $old_image =json_decode($option['value'],true)['image'];
-            $old_title =json_decode($option['value'],true)['title'];
-        }
-        else{
+            $old_image = json_decode($option['value'], true)['image'];
+            $old_title = json_decode($option['value'], true)['title'];
+        } else {
             $option = new blog_option();
         }
         $title = "";
-        if (!empty($request['title'])){
+        if (!empty($request['title'])) {
             $title = $request['title'];
 
-        }
-        elseif(isset($old_title)){
+        } elseif (isset($old_title)) {
             $title = $old_title;
 
-        }
-        else{
+        } else {
             $title = "";
 
         }
-        if (!empty($request['image'])){
+        if (!empty($request['image'])) {
             $image = $request['image'];
             $destinationPath = 'public/assets/global/images/adv';
             $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
             $image->move($destinationPath, $image_name);
             $value = [
-                'title'=>$title,
-                'link'=>$request['link'],
-                'image'=>$destinationPath.'/'.$image_name
+                'title' => $title,
+                'link' => $request['link'],
+                'image' => $destinationPath . '/' . $image_name
             ];
-        }
-        else{
+        } else {
             $value = [
-                'title'=>$title,
-                'link'=>$request['link'],
-                'image'=>(isset($old_image)?$old_image:"")
+                'title' => $title,
+                'link' => $request['link'],
+                'image' => (isset($old_image) ? $old_image : "")
             ];
         }
 
@@ -309,12 +304,12 @@ class setting extends Controller
         return back_normal($request, $message);
     }
 
-    public function delete_adv_card($option_id ,Request $request)
+    public function delete_adv_card($option_id, Request $request)
     {
         $option = blog_option::find($option_id);
 
-        if ($option != 'adv_card'){
-            $errors[]='invalid';
+        if ($option != 'adv_card') {
+            $errors[] = 'invalid';
         }
         $option->delete();
 
