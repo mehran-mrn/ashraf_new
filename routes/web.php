@@ -496,6 +496,16 @@ Route::group(
     Route::get('blog', 'globals\global_view@blog')->name('blog');
 
     Route::post('city/list', 'globals\global_controller@get_city_list')->name('get_city_list');
+
+
+
+    Route::get('payment', 'globals\global_view@payment')->name('payment');
+    Route::get('callback', 'globals\global_view@callback')->name('callback');
+
+    Route::any('/{gateway}/callback/{invoiceId}', ['as' => 'payment::callback', 'uses' => 'GatewayController@callback']);
+
+
+
 });
 //=========================================
 

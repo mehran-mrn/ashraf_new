@@ -1,5 +1,7 @@
 <?php
 
+use Larabookir\Gateway\GatewayServiceProvider;
+
 return [
 
     /*
@@ -110,7 +112,7 @@ return [
     /**
      * List of alternative languages (not including the one specified as 'locale')
      */
-    'alt_langs' => array ('en', 'fa'),
+    'alt_langs' => array('en', 'fa'),
 
     /**
      *  Prefix of selected locale  - leave empty (set in runtime)
@@ -188,6 +190,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        GatewayServiceProvider::class
 
     ],
 
@@ -241,8 +244,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\ImageManagerStatic::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
-        'Laratrust'   => Laratrust\LaratrustFacade::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
         'Nestable' => Nestable\Facades\NestableService::class,
+        'Gateway' => \Larabookir\Gateway\Gateway::class,
     ],
 
 ];

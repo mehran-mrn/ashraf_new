@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.35 on 2019-09-07 15:36:45.
+ * Generated for Laravel 5.8.35 on 2019-09-15 09:17:10.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -17856,13 +17856,79 @@ namespace Nestable\Facades {
  
 }
 
+namespace Larabookir\Gateway { 
+
+    /**
+     * 
+     *
+     * @see \Larabookir\Gateway\GatewayResolver
+     */ 
+    class Gateway {
+        
+        /**
+         * Get supported ports
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getSupportedPorts()
+        {
+                        /** @var \Larabookir\Gateway\GatewayResolver $instance */
+                        return $instance->getSupportedPorts();
+        }
+        
+        /**
+         * Gets query builder from you transactions table
+         *
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getTable()
+        {
+                        /** @var \Larabookir\Gateway\GatewayResolver $instance */
+                        return $instance->getTable();
+        }
+        
+        /**
+         * Callback
+         *
+         * @return \Larabookir\Gateway\$this->port 
+         * @throws InvalidRequestException
+         * @throws NotFoundTransactionException
+         * @throws PortNotFoundException
+         * @throws RetryException
+         * @static 
+         */ 
+        public static function verify()
+        {
+                        /** @var \Larabookir\Gateway\GatewayResolver $instance */
+                        return $instance->verify();
+        }
+        
+        /**
+         * Create new object from port class
+         *
+         * @param int $port
+         * @throws PortNotFoundException
+         * @static 
+         */ 
+        public static function make($port)
+        {
+                        /** @var \Larabookir\Gateway\GatewayResolver $instance */
+                        return $instance->make($port);
+        }
+         
+    }
+ 
+}
+
 namespace Laravelium\Feed { 
 
     /**
      * Feed generator class for laravel-feed package.
      *
      * @author Roumen Damianoff <roumen@damianoff.com>
-     * @version 3.1
+     * @version 6.0.1
      * @link https://laravelium.com
      * @license http://opensource.org/licenses/mit-license.php MIT License
      */ 
@@ -21098,6 +21164,8 @@ namespace  {
     class Laratrust extends \Laratrust\LaratrustFacade {}
 
     class Nestable extends \Nestable\Facades\NestableService {}
+
+    class Gateway extends \Larabookir\Gateway\Gateway {}
 
     class Feed extends \Laravelium\Feed\Feed {}
 

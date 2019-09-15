@@ -267,7 +267,6 @@
     </section>
 
 
-
     <div id="general_modal" class="modal fade">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -276,7 +275,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" id="frm_gateway_add">
+                    <form action="{{route('gateway_add')}}" method="post" id="frm_gateway_add">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -435,14 +434,6 @@
                                     <input type="text" name="password" id="password" class="form-control text-right">
                                     <div class="form-control-feedback form-control-feedback-lg">
                                         <i class="icon-star-full2"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 form-group">
-                                <label for="">{{__('messages.transaction_file')}}</label>
-                                <div class="dropzone" id="dropzone_remove">
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple/>
                                     </div>
                                 </div>
                             </div>
