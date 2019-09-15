@@ -146,14 +146,16 @@ class caravan extends Controller
         if (!$request['person_id']) {
 
             $this->validate($request, [
-                'national_code' => 'required|unique:people,national_code',
+                'national_code' => 'required',
             ]);
-            if ($this->validate_national_code($request) != 'true') {
-                $errors[] = trans('errors.national_code_is_incorrect');
-                return back_error($request, $errors);
-            }
+
             $person = person::where('national_code', $request['national_code'])->first();
             if (!$person) {
+                if ($this->validate_national_code($request) != 'true') {
+                    $errors[] = trans('errors.national_code_is_incorrect');
+                    return back_error($request, $errors);
+                }
+
                 $person = new person();
                 $person->sh_code = $request['sh_code'];
                 $person->name = $request['name'];
@@ -161,31 +163,61 @@ class caravan extends Controller
                 $person->gender = ($request['gender'] == 1 ? true : false);
                 $person->father_name = $request['father_name'];
                 $person->national_code = $request['national_code'];
+                $person->phone = $request['phone'];
                 $person->madadjoo_id = $request['madadjoo_id'];
                 $person->birth_date = shamsi_to_miladi($request['birth_date']);
                 $person->save();
             }
+            else{
+                if ($request['phone']){
+                    $person->phone = $request['phone'];
+                    $person->save();
+
+                }
+            }
+            $check_duplicate = person_caravan::where('caravan_id', $request['caravan_id'])->where('person_id', $person->id)->exists();
+            if (!$check_duplicate) {
+                $person_caravan = new person_caravan();
+                $person_caravan->caravan_id = $request['caravan_id'];
+                $person_caravan->person_id = $person->id;
+                $person_caravan->relation = $request['relation'];
+                $person_caravan->parent_id = $request['parent_id'];
+                $person_caravan->save();
+            } else {
+                $errors[] = trans('errors.person_already_exists');
+                return back_error($request, $errors);
+            }
         } else {
 
-            $this->validate($request, [
-                'person_id' => 'required|exists:people,id',
-            ]);
-            $person = person::find($request['person_id']);
+            $this->update_person_caravan_data($request,$request['person_id']);
         }
-        $check_duplicate = person_caravan::where('caravan_id', $request['caravan_id'])->where('person_id', $person->id)->exists();
-        if (!$check_duplicate) {
-            $person_caravan = new person_caravan();
-            $person_caravan->caravan_id = $request['caravan_id'];
-            $person_caravan->person_id = $person->id;
-            $person_caravan->save();
-        } else {
-            $errors[] = trans('errors.person_already_exists');
-            return back_error($request, $errors);
-        }
+
 
         return redirect(route('caravan', ['caravan_id' => $request['caravan_id']]));
     }
-
+    public function update_person_caravan_data(Request $request,$person_caravan_id)
+    {
+        if ($this->validate_national_code($request) != 'true') {
+            $errors[] = trans('errors.national_code_is_incorrect');
+            return back_error($request, $errors);
+        }
+        $person_caravan = person_caravan::find($person_caravan_id);
+        $person_caravan->relation = $request['relation'];
+        $person_caravan->parent_id = $request['parent_id'];
+        $person_caravan->save();
+        $person = person::find($person_caravan['person_id']);
+        $person->sh_code = $request['sh_code'];
+        $person->name = $request['name'];
+        $person->family = $request['family'];
+        $person->gender = ($request['gender'] == 1 ? true : false);
+        $person->father_name = $request['father_name'];
+        $person->national_code = $request['national_code'];
+        $person->phone = $request['phone'];
+        $person->madadjoo_id = $request['madadjoo_id'];
+        $person->birth_date = shamsi_to_miladi($request['birth_date']);
+        $person->save();
+        return redirect(route('caravan', ['caravan_id' => $person_caravan['caravan_id']]));
+    }
     public function add_person_to_caravan_excel(Request $request)
     {
         $this->validate($request, [
@@ -210,25 +242,34 @@ class caravan extends Controller
 
 
             if (!empty($data)) {
+                $parent_id = null;
                 foreach ($data as $key => $value) {
-
                     $validator = Validator::make($value, [
                         'name' => 'bail|required|max:255',
                         'family' => 'bail|required|max:255',
                         'father_name' => 'bail|required|max:255',
                         'meli' => 'required|unique:people,national_code',
                         'gender' => 'required',
+                        'relation' => 'required',
+                        'phone' => 'nullable',
                         'day' => 'numeric|digits_between:1,2',
                         'month' => 'numeric|digits_between:1,2',
                         'year' => 'numeric|digits:4',
                     ]);
-                    if (!$validator->fails() and in_array($value['gender'], ['زن', 'ز', '1', 'موئنث', 'خانم', 'دختر', 'دختربچه', 'دختر بچه', 'موءنث', 'g', 'w', 'f', 'girl', 'women', 'woman'])) {
+                    if (!$validator->fails() and in_array(trim($value['gender']), ['زن', 'ز', '1', 'موئنث', 'خانم', 'دختر', 'دختربچه', 'دختر بچه', 'موءنث', 'g', 'w', 'f', 'girl', 'women', 'woman'])) {
                         $value['gender'] = 1;
                     } else {
                         $value['gender'] = 0;
                     }
                     if ($validator->fails()) {
-                        $excel_response[] = "line - " . ($key + 2) . "  " . $validator->messages() . "\r\n";
+                        if (implode($value)){
+                        $validate_response= __('words.row') . ($key + 2) . " : " . "\r\n";
+                        foreach ($validator->messages()->messages() as $key=>$value){
+                            $validate_response .=  $value[0] . "\r\n";
+                        }
+                        $validate_response .=  "\r\n";
+                        $excel_response[] =$validate_response;
+                        }
                         continue;
                     } else {
                         if ($this->validate_national_code($request, $value['meli']) != 'true') {
@@ -245,16 +286,40 @@ class caravan extends Controller
                                 $person->gender = ($value['gender'] == 1 ? true : false);
                                 $person->father_name = $value['father_name'];
                                 $person->national_code = $value['meli'];
+                                $person->phone = $value['phone'];
                                 $person->madadjoo_id = $value['madadjoo_id'];
                                 $person->birth_date = shamsi_to_miladi($birt_date);
                                 $person->save();
                             }
+                            $relation ="";
+                            switch ($value['relation']){
+                                case "سرپرست":
+                                    $parent_id=$person['id'];
+                                    $relation="supervisor";
+                                    break;
+                                case "مربی":
+                                    $parent_id=$person['id'];
+                                    $relation="handler";
+                                    break;
+                                case "فرزند":
+                                    $relation="child";
+                                    break;
+                                case "نوه":
+                                    $relation="grandchild";
+                                    break;
+                                case "همسر":
+                                    $relation="partner";
+                                    break;
+                                default:
 
+                            }
                             $check_duplicate = person_caravan::where('caravan_id', $request['caravan_id'])->where('person_id', $person->id)->exists();
                             if (!$check_duplicate) {
                                 $person_caravan = new person_caravan();
                                 $person_caravan->caravan_id = $request['caravan_id'];
                                 $person_caravan->person_id = $person->id;
+                                $person_caravan->relation = $relation;
+                                $person_caravan->parent_id = $parent_id==$person->id ? "":$parent_id;
                                 $person_caravan->save();
                             } else {
                                 $excel_response[] = "line - " . ($key + 2) . "  " . trans('errors.person_already_exists');
@@ -269,6 +334,14 @@ class caravan extends Controller
 
     }
 
+    public function delete_person_from_caravan($id, Request $request)
+    {
+        $person_caravan = person_caravan::find($id);
+        $person_caravan->delete();
+        $messages = trans('messages.item_deleted', ['item' => trans('words.person')]);
+        return back_normal($request, $messages);
+    }
+
     public function action_to_person_caravan_status(Request $request)
     {
         $currentUser = Auth::user();
@@ -277,16 +350,13 @@ class caravan extends Controller
         ]);
         $person_caravan = person_caravan::find($request['person_caravan_id']);
         $caravan = \App\caravan::find($person_caravan['caravan_id']);
-        if (!in_array($caravan['status'], ['1'])) {
-            $errors[] = trans('errors.caravan_is_not_open');
-            return back_error($request, $errors);
-        }
         if ($request['accept']) {
             $person_caravan->accepted = $currentUser['id'];
+            $person_caravan->comment = $request['comment'];
             $person_caravan->save();
         } elseif ($request['reject']) {
-
             $person_caravan->accepted = 0;
+            $person_caravan->comment = $request['comment'];
             $person_caravan->save();
         } else {
 

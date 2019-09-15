@@ -361,11 +361,11 @@ class panel_view extends Controller
     public function register_to_caravan($caravan_id, $person_caravan_id = null)
     {
         $caravan = caravan::find($caravan_id);
-        $person_caravan = null;
+        $person = null;
         if (!empty($person_caravan_id)) {
-            $person_caravan = person_caravan::with('person')->find($person_caravan_id);
+            $person = person_caravan::with('person')->find($person_caravan_id);
         }
-        return view('panel.caravan.register_to_caravan_form', compact('caravan', 'person_caravan'));
+        return view('panel.caravan.register_to_caravan_form', compact('caravan', 'person'));
     }
 
     public function register_to_caravan_post(Request $request)
@@ -391,6 +391,17 @@ class panel_view extends Controller
         //$status "back" "next" "cancel"
         $caravan = caravan::find($caravan_id);
         return view('panel.caravan.materials.change_caravan_status', compact('caravan', 'status'));
+    }
+
+    public function action_to_person_caravan_status($person_caravan_id)
+    {
+        //$status "back" "next" "cancel"
+        $person_caravan = person_caravan::find($person_caravan_id);
+        $person_history = person_caravan::with('caravan')->where('person_id',$person_caravan['person_id'])
+            ->where('id','!=',$person_caravan_id)
+            ->get();
+
+        return view('panel.caravan.materials.caravan_person_action', compact('person_caravan','person_history'));
     }
 
     public function caravans_echart_data()

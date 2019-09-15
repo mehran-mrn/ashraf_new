@@ -74,10 +74,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
         Route::post('add_person_to_caravan', 'panel\caravan@add_person_to_caravan')->name('add_person_to_caravan');
         Route::post('add_person_to_caravan_excel', 'panel\caravan@add_person_to_caravan_excel')->name('add_person_to_caravan_excel');
+        Route::get('action_to_person_caravan_status/{person_caravan_id}', 'panel\panel_view@action_to_person_caravan_status')->name('action_to_person_caravan_status_form');
         Route::post('action_to_person_caravan_status', 'panel\caravan@action_to_person_caravan_status')->name('action_to_person_caravan_status');
         Route::post('/change_caravan_status', 'panel\caravan@change_caravan_status')->name('change_caravan_status');
         Route::post('/cancel_caravan_status', 'panel\caravan@cancel_caravan_status')->name('cancel_caravan_status');
         Route::post('/back_caravan_status', 'panel\caravan@back_caravan_status')->name('back_caravan_status');
+        Route::post('/delete_caravan_member/{id}', 'panel\caravan@delete_person_from_caravan')->name('delete_caravan_member');
+
     });
     Route::prefix('blog')->group(function () {
         Route::get('post_add', 'panel\panel_view@post_add')->name('post_add');

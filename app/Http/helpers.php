@@ -430,6 +430,13 @@ function get_caravans_status_text($status)
     }
     return $response;
 }
+function get_caravan_supervisor($caravan_id)
+{
+    $supervisors = \App\person_caravan::with('person')->where('caravan_id',$caravan_id)->where('parent_id',null)->get();
+    return $supervisors;
+
+}
+
 
 function get_age($date)
 {

@@ -18,6 +18,7 @@ class CreatePersonCaravansTable extends Migration
             $table->unsignedInteger('caravan_id');
             $table->unsignedInteger('person_id');
             $table->unsignedInteger('parent_id')->nullable();
+            $table->string('relation')->nullable();
             $table->dateTime('exit_date')->nullable();
             $table->string('comment')->nullable();
             $table->unsignedInteger('accepted')->nullable(); //null = pending // 0 reject // >=1 acceptor use id

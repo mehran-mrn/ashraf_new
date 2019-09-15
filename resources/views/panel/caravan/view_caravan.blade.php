@@ -137,6 +137,16 @@
         <div class="row">
 
             <div class="col-md-9">
+                @if(session()->get('excel_response'))
+                    <?php $excel_response = session()->get('excel_response') ?>
+                    <div class="card bordered border-danger bordered_box">
+                        <ul class="">
+                            @foreach($excel_response as $key => $value)
+                            <li class="list-feed-item">{!! nl2br(e($value)) !!}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 <div class="card">
                     <div class="card-header bg-indigo">
 
@@ -164,17 +174,16 @@
                             @endswitch
                         </span>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
 
-                        <table class="table tasks-list table-lg">
+                        <table class=" fullwidth table   table-lg">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Period</th>
+                                <th>parent</th>
                                 <th>{{trans('messages.name')}}</th>
                                 <th>{{trans('messages.national_code')}}</th>
                                 <th>{{trans('messages.birth_date')}}</th>
-                                <th>{{trans('messages.use_count')}}</th>
                                 <th>{{trans('messages.status')}}</th>
                                 <th class="text-center text-muted">
                                 </th>
@@ -184,15 +193,13 @@
 
                             @foreach($caravan['persons'] as $person_caravan)
                                 <tr>
-                                    <td></td>
-                                    <td>{{$person_caravan['parent_id']}}</td>
-                                    <td>{{$person_caravan['person']['name'] ." - ". $person_caravan['person']['family']}}</td>
-                                    <td>{{$person_caravan['person']['national_code']}}</td>
-                                    <td>{{miladi_to_shamsi_date($person_caravan['person']['birth_date'])}} </td>
-                                    <td><span class="badge badge-success"><b>
-                                           {{count_caravan_useage_history($person_caravan['person']['id'],$person_caravan['caravan_id'])}}
-                                        </b> </span></td>
-                                    <td>
+                                    <td class="p-2"></td>
+                                    <td class="p-2">{{$person_caravan['parent_id']}}</td>
+                                    <td class="p-2">{{$person_caravan['person']['name'] ." - ". $person_caravan['person']['family']}}</td>
+                                    <td class="p-2">{{$person_caravan['person']['national_code']}}</td>
+                                    <td class="p-2">{{miladi_to_shamsi_date($person_caravan['person']['birth_date'])}} </td>
+
+                                    <td class="p-2">
                                         @if($person_caravan['accepted'] >='1')
                                             <span class="badge badge-success">{{trans('messages.accepted')}}</span>
                                         @elseif($person_caravan['accepted'] =='0')
@@ -202,17 +209,39 @@
                                         @endif
 
                                     </td>
-                                    <td>
+                                    <td class="p-2">
                                         @if($caravan['status'] == 1)
                                             <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
                                              modal-ajax-load"
-                                                    data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id'],'person_caravan_id'=>$person_caravan['id']])}}"
+                                                    data-ajax-link="{{route('action_to_person_caravan_status_form',['person_caravan_id'=>$person_caravan['id']])}}"
                                                     data-toggle="modal"
                                                     data-modal-title="{{trans('messages.view')}}"
                                                     data-target="#general_modal">
                                                 <i class="icon-gear"></i>
                                             </button>
                                         @endif
+
+                                            <button type="button"
+                                                    class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                                    data-ajax-link="{{route('delete_caravan_member',['id'=>$person_caravan['id']])}}"
+                                                    data-method="POST"
+                                                    data-csrf="{{csrf_token()}}"
+                                                    data-title="{{trans('messages.delete_item',['item'=>trans('words.person')])}}"
+                                                    data-text="{{trans('messages.delete_item_text',['item'=>trans('words.person')])}}"
+                                                    data-type="warning"
+                                                    data-cancel="true"
+                                                    data-confirm-text="{{trans('messages.delete')}}"
+                                                    data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-trash"></i>
+                                            </button>
+                                            <button type="button" class="float-right btn alpha-orange border-orange-400 text-orange-800 btn-icon rounded-round ml-2
+                                             modal-ajax-load"
+                                                    data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id'],'person_caravan_id'=>$person_caravan['id']])}}"
+                                                    data-toggle="modal"
+                                                    data-modal-title="{{trans('messages.view')}}"
+                                                    data-target="#general_modal">
+                                                <i class="icon-pencil"></i>
+                                            </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -223,12 +252,13 @@
 
             </div>
             <div class="col-md-3">
+                @if(in_array($caravan['status'],["1"]))
+
                 <div class="card">
                     <div class="card-header bg-primary">
-                        <span class="card-title">{{trans('messages.destination')}}</span>
+                        <span class="card-title">{{trans('messages.register_btn')}}</span>
                     </div>
                     <div class="card-body">
-                    @if(in_array($caravan['status'],["1"]))
 
 
                             <button class="btn bg-success    modal-ajax-load"
@@ -243,7 +273,6 @@
 
                                 <span>{{trans('messages.new_register')}}</span>
                             </button>
-                    @endif
                         <hr>
                         <div class="header text-black text-lg-left text-info">
                             {{trans('messages.register_by_excel')}}
@@ -270,6 +299,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
                 <div class="row">
 
                     @if(in_array($caravan['status'],["1","2","3","4"]))

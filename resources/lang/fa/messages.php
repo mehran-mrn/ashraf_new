@@ -590,5 +590,5 @@ return array(
     'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء',
     'transaction_file'=>'فایل تراکنش',
     'download_sample_file'=>'دانلود فایل نمونه',
-    'register_by_excel'=>'ثبت افراد با فایل اکسل'
+    'register_by_excel'=>'ثبت دسته ای اسامی با فایل اکسل'
 );
