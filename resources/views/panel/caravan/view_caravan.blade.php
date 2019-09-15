@@ -223,12 +223,15 @@
 
             </div>
             <div class="col-md-3">
-                <div class="row">
+                <div class="card">
+                    <div class="card-header bg-primary">
+                        <span class="card-title">{{trans('messages.destination')}}</span>
+                    </div>
+                    <div class="card-body">
                     @if(in_array($caravan['status'],["1"]))
 
-                        <div class="col-md-6 mb-1">
 
-                            <button class="btn bg-success btn-block btn-float btn-float-lg modal-ajax-load"
+                            <button class="btn bg-success    modal-ajax-load"
                                     data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id']])}}"
                                     data-toggle="modal"
                                     data-modal-title="{{trans('messages.register_form_title')}}"
@@ -237,11 +240,38 @@
                                     data-placement="bottom"
                                     data-container="body"
                                     data-original-title="{{trans('messages.new_register')}}">
-                                <i class="icon-user-plus icon-3x"></i>
+
                                 <span>{{trans('messages.new_register')}}</span>
                             </button>
-                        </div>
                     @endif
+                        <hr>
+                        <div class="header text-black text-lg-left text-info">
+                            {{trans('messages.register_by_excel')}}
+                        </div>
+                        <p class="text-small">
+                            {{trans('long_msg.mass_register_caravan')}}
+                        </p>
+                        <a href="{{url('public/files/sample_file.xlsx')}}" ><i class="icon-file-excel"></i>  {{trans('messages.download_sample_file')}} </a>
+                        <hr>
+                        <form action="{{route('add_person_to_caravan_excel')}}" method="post" enctype="multipart/form-data">
+                            <div class="control-group">
+                                <div class="form-actions">
+                                    <div class="span4">
+                                        <input type="file"  name="import_file">
+                                        <input type="hidden"  name="caravan_id" value="{{$caravan['id']}}">
+                                        <br>
+                                        @csrf
+                                    </div>
+                                    <div class="span4">
+                                        <button class="btn btn-success">{{trans('messages.upload')}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+
                     @if(in_array($caravan['status'],["1","2","3","4"]))
                         <div class="col-md-6 mb-1">
 

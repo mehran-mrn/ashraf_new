@@ -1,5 +1,5 @@
 <?php $rand_id = rand(1, 8000); ?>
-<form method="POST" id="" class="" action="{{route('add_person_to_caravan')}}"
+<form method="POST" id="" class="form-ajax-submit" action="{{route('add_person_to_caravan')}}"
       autocomplete="off">
     @csrf
         <input type="hidden" name="caravan_id" value="{{$caravan['id']}}">
@@ -25,12 +25,29 @@
 
             <div class="form-group row">
 
-                <label for="sh_code{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{ __('messages.sh_code') }}</label>
+                <label for="sh_code{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{ __('messages.sh_code') }}
+                    <div class="text-small text-muted">{{trans('messages.optional')}}</div>
+                </label>
 
                 <div class="col-md-6">
                     <input id="sh_code{{$rand_id}}" {{!empty($person)?"readonly":""}} class="form-control"
                            name="sh_code" value="{{!empty($person)?$person['sh_code']:""}}"
                            autocomplete="sh_code" autofocus>
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label for="sh_code{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{  __('messages.id')." ".__('messages.madadjoo') }}
+                    <div class="text-small text-muted">{{trans('messages.optional')}}</div>
+                </label>
+
+                <div class="col-md-6">
+                    <input id="madadjoo_id_{{$rand_id}}" {{!empty($person)?"readonly":""}} class="form-control"
+                           name="madadjoo_id" value="{{!empty($person)?$person['madadjoo_id']:""}}"
+                           autocomplete="madadjoo_id" autofocus>
 
                 </div>
 

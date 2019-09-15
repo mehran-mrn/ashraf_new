@@ -27,7 +27,8 @@ class CreatePeopleTable extends Migration
             $table->string('en_known')->nullable();
             $table->dateTime('birth_date')->nullable();
             $table->string('national_code')->unique();
-            $table->string('sh_code')->unique();
+            $table->string('sh_code')->nullable();
+            $table->string('madadjoo_id')->nullable();
             $table->boolean('gender'); // 0=> male 1=>female
             $table->boolean('validate')->default('0'); // 0=> not  1=>validate
             $table->timestamps();

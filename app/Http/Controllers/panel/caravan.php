@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Excel;
+use App\Imports\UsersImport;
 
 class caravan extends Controller
 {
@@ -127,7 +131,6 @@ class caravan extends Controller
         $regex_date = "([1][3,4]\d{2}['\-'|'\/'](0[1-9]|[1-9]|1[0-2])['\-'|'\/'](0[1-9]|[12]\d|3[01]|\d))";
         $this->validate($request, [
             'caravan_id' => 'required',
-            'sh_code' => 'required',
             'name' => 'required',
             'family' => 'required',
             'gender' => 'required',
@@ -135,48 +138,135 @@ class caravan extends Controller
             'birth_date' => ['required', 'regex:/' . $regex_date . '/'],
         ]);
         $caravan = \App\caravan::find($request['caravan_id']);
-        if (!in_array($caravan['status'],['1'])){
-            $errors[] =trans('errors.caravan_is_not_open');
-            return back_error($request,$errors);
+        if (!in_array($caravan['status'], ['1'])) {
+            $errors[] = trans('errors.caravan_is_not_open');
+            return back_error($request, $errors);
         }
 
-        if ($request['person_id']) {
+        if (!$request['person_id']) {
+
+            $this->validate($request, [
+                'national_code' => 'required|unique:people,national_code',
+            ]);
+            if ($this->validate_national_code($request) != 'true') {
+                $errors[] = trans('errors.national_code_is_incorrect');
+                return back_error($request, $errors);
+            }
+            $person = person::where('national_code', $request['national_code'])->first();
+            if (!$person) {
+                $person = new person();
+                $person->sh_code = $request['sh_code'];
+                $person->name = $request['name'];
+                $person->family = $request['family'];
+                $person->gender = ($request['gender'] == 1 ? true : false);
+                $person->father_name = $request['father_name'];
+                $person->national_code = $request['national_code'];
+                $person->madadjoo_id = $request['madadjoo_id'];
+                $person->birth_date = shamsi_to_miladi($request['birth_date']);
+                $person->save();
+            }
+        } else {
+
             $this->validate($request, [
                 'person_id' => 'required|exists:people,id',
             ]);
             $person = person::find($request['person_id']);
-        } else {
-            $this->validate($request, [
-                'national_code' => 'required|unique:people,national_code',
-            ]);
-            if ($this->validate_national_code($request) != 'true'){
-                $errors[]=trans('errors.national_code_is_incorrect');
-                return back_error($request,$errors);
-            }
-
-            $person = new person();
-            $person->sh_code = $request['sh_code'];
-            $person->name = $request['name'];
-            $person->family = $request['family'];
-            $person->gender = ($request['gender'] == 1 ? true : false);
-            $person->father_name = $request['father_name'];
-            $person->national_code = $request['national_code'];
-            $person->birth_date = shamsi_to_miladi($request['birth_date']);
-            $person->save();
         }
-        $check_duplicate = person_caravan::where('caravan_id',$request['caravan_id'])->where('person_id',$person->id)->exists();
-        if (!$check_duplicate){
+        $check_duplicate = person_caravan::where('caravan_id', $request['caravan_id'])->where('person_id', $person->id)->exists();
+        if (!$check_duplicate) {
             $person_caravan = new person_caravan();
             $person_caravan->caravan_id = $request['caravan_id'];
             $person_caravan->person_id = $person->id;
             $person_caravan->save();
-        }
-        else{
+        } else {
             $errors[] = trans('errors.person_already_exists');
-            return back_error($request,$errors);
+            return back_error($request, $errors);
         }
 
         return redirect(route('caravan', ['caravan_id' => $request['caravan_id']]));
+    }
+
+    public function add_person_to_caravan_excel(Request $request)
+    {
+        $this->validate($request, [
+            'import_file' => 'bail|required|mimes:xlsx|max:60000',
+            'caravan_id' => 'required|exists:caravans,id',
+        ]);
+        $caravan = \App\caravan::find($request['caravan_id']);
+        if (!in_array($caravan['status'], ['1'])) {
+            $errors[] = trans('errors.caravan_is_not_open');
+            return back_error($request, $errors);
+        }
+
+        $excel_response[] = trans('messages.file_uploaded');
+        if (Input::hasFile('import_file')) {
+            $path = Input::file('import_file')->getRealPath();
+            $raw_data = Excel::toArray(new UsersImport, request()->file('import_file'));
+            $data = [];
+            foreach ($raw_data[0] as $key => $value) {
+                if ($key != 0 and count(array_filter($value)) > 0)
+                    $data[] = array_combine($raw_data[0][0], $value);
+            }
+
+
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
+
+                    $validator = Validator::make($value, [
+                        'name' => 'bail|required|max:255',
+                        'family' => 'bail|required|max:255',
+                        'father_name' => 'bail|required|max:255',
+                        'meli' => 'required|unique:people,national_code',
+                        'gender' => 'required',
+                        'day' => 'numeric|digits_between:1,2',
+                        'month' => 'numeric|digits_between:1,2',
+                        'year' => 'numeric|digits:4',
+                    ]);
+                    if (!$validator->fails() and in_array($value['gender'], ['زن', 'ز', '1', 'موئنث', 'خانم', 'دختر', 'دختربچه', 'دختر بچه', 'موءنث', 'g', 'w', 'f', 'girl', 'women', 'woman'])) {
+                        $value['gender'] = 1;
+                    } else {
+                        $value['gender'] = 0;
+                    }
+                    if ($validator->fails()) {
+                        $excel_response[] = "line - " . ($key + 2) . "  " . $validator->messages() . "\r\n";
+                        continue;
+                    } else {
+                        if ($this->validate_national_code($request, $value['meli']) != 'true') {
+
+                            $excel_response[] = "line - " . ($key + 2) . "  " . trans('errors.national_code_is_incorrect')." " . "\r\n";
+                        } else {
+                            $person = person::where('national_code', $request['meli'])->first();
+                            if (!$person) {
+                                $birt_date = sprintf("%04d", $value['year']) . "-" . sprintf("%02d", $value['month']) . "-" . sprintf("%02d", $value['day']);
+                                $person = new person();
+                                $person->sh_code = $value['shenasname'];
+                                $person->name = $value['name'];
+                                $person->family = $value['family'];
+                                $person->gender = ($value['gender'] == 1 ? true : false);
+                                $person->father_name = $value['father_name'];
+                                $person->national_code = $value['meli'];
+                                $person->madadjoo_id = $value['madadjoo_id'];
+                                $person->birth_date = shamsi_to_miladi($birt_date);
+                                $person->save();
+                            }
+
+                            $check_duplicate = person_caravan::where('caravan_id', $request['caravan_id'])->where('person_id', $person->id)->exists();
+                            if (!$check_duplicate) {
+                                $person_caravan = new person_caravan();
+                                $person_caravan->caravan_id = $request['caravan_id'];
+                                $person_caravan->person_id = $person->id;
+                                $person_caravan->save();
+                            } else {
+                                $excel_response[] = "line - " . ($key + 2) . "  " . trans('errors.person_already_exists');
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return redirect()->back()->with('excel_response', $excel_response);
+
     }
 
     public function action_to_person_caravan_status(Request $request)
@@ -187,30 +277,33 @@ class caravan extends Controller
         ]);
         $person_caravan = person_caravan::find($request['person_caravan_id']);
         $caravan = \App\caravan::find($person_caravan['caravan_id']);
-        if (!in_array($caravan['status'],['1'])){
-            $errors[] =trans('errors.caravan_is_not_open');
-            return back_error($request,$errors);
+        if (!in_array($caravan['status'], ['1'])) {
+            $errors[] = trans('errors.caravan_is_not_open');
+            return back_error($request, $errors);
         }
         if ($request['accept']) {
             $person_caravan->accepted = $currentUser['id'];
             $person_caravan->save();
-        }
-        elseif ($request['reject']){
+        } elseif ($request['reject']) {
 
             $person_caravan->accepted = 0;
             $person_caravan->save();
-        }
-        else{
+        } else {
 
         }
         return back_normal($request);
     }
 
-    public function validate_national_code(Request $request)
+    public function validate_national_code(Request $request, $national_code = null)
     {
-        $this->validate($request, [
-            'national_code' => 'required',
-        ]);
+        if ($national_code) {
+            $request['national_code'] = $national_code;
+        } else {
+            $this->validate($request, [
+                'national_code' => 'required',
+            ]);
+        }
+
         $response = national_code_validation($request['national_code']);
         if (!$response) {
             return 'false';
@@ -224,15 +317,15 @@ class caravan extends Controller
             'caravan_id' => 'required|exists:caravans,id',
         ]);
         $caravan = \App\caravan::find($request['caravan_id']);
-        if ($caravan['status'] == "1"){
-            $pending_exists = person_caravan::where('accepted',null)->where('caravan_id',$request['caravan_id'])->exists();
-            if ($pending_exists){
+        if ($caravan['status'] == "1") {
+            $pending_exists = person_caravan::where('accepted', null)->where('caravan_id', $request['caravan_id'])->exists();
+            if ($pending_exists) {
                 $errors[] = trans('errors.pending_person_exists');
-                return back_error($request,$errors);
+                return back_error($request, $errors);
             }
         }
-        if (in_array($caravan['status'],["1","2","3","4"])){
-            $caravan['status'] = $caravan['status']+1;
+        if (in_array($caravan['status'], ["1", "2", "3", "4"])) {
+            $caravan['status'] = $caravan['status'] + 1;
         }
         $caravan->save();
         $workflow = new caravan_workflow();
@@ -248,7 +341,7 @@ class caravan extends Controller
         $this->validate($request, [
             'caravan_id' => 'required|exists:caravans,id',
         ]);
-        person_caravan::where('caravan_id',$request['caravan_id'])->update(['accepted' => null]);
+        person_caravan::where('caravan_id', $request['caravan_id'])->update(['accepted' => null]);
 
         $caravan = \App\caravan::find($request['caravan_id']);
         $caravan['status'] = 0;
@@ -271,11 +364,10 @@ class caravan extends Controller
             'caravan_id' => 'required|exists:caravans,id',
         ]);
         $caravan = \App\caravan::find($request['caravan_id']);
-        if ($caravan['status']  == 0 ){
+        if ($caravan['status'] == 0) {
             $caravan['status'] = 1;
-        }
-        elseif (in_array($caravan['status'],["2","3","4","5"])){
-            $caravan['status'] = $caravan['status']-1;
+        } elseif (in_array($caravan['status'], ["2", "3", "4", "5"])) {
+            $caravan['status'] = $caravan['status'] - 1;
         }
         $caravan->save();
         $workflow = new caravan_workflow();

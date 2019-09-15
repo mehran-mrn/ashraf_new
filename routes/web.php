@@ -73,6 +73,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('caravan/{caravan_id}', 'panel\panel_view@caravan')->name('caravan');
         Route::post('caravan_data', 'panel\caravan@caravan_data')->name('caravan_data');
         Route::post('add_person_to_caravan', 'panel\caravan@add_person_to_caravan')->name('add_person_to_caravan');
+        Route::post('add_person_to_caravan_excel', 'panel\caravan@add_person_to_caravan_excel')->name('add_person_to_caravan_excel');
         Route::post('action_to_person_caravan_status', 'panel\caravan@action_to_person_caravan_status')->name('action_to_person_caravan_status');
         Route::post('/change_caravan_status', 'panel\caravan@change_caravan_status')->name('change_caravan_status');
         Route::post('/cancel_caravan_status', 'panel\caravan@cancel_caravan_status')->name('cancel_caravan_status');

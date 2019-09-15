@@ -338,17 +338,20 @@ function get_building_tickets($project_id, $ticket_item_checkbox = null, $ticket
     return $tickets;
 }
 
-function national_code_validation($natinoal_code)
+function national_code_validation($national_code_in)
 {
-    if (!preg_match('/^[0-9]{10}$/', $natinoal_code))
+    $national_code_in = latin_num($national_code_in);
+    $national_code = sprintf("%010d", $national_code_in);
+    if (!preg_match('/^[0-9]{10}$/', $national_code))
+
         return false;
     for ($i = 0; $i < 10; $i++)
-        if (preg_match('/^' . $i . '{10}$/', $natinoal_code))
+        if (preg_match('/^' . $i . '{10}$/', $national_code))
             return false;
     for ($i = 0, $sum = 0; $i < 9; $i++)
-        $sum += ((10 - $i) * intval(substr($natinoal_code, $i, 1)));
+        $sum += ((10 - $i) * intval(substr($national_code, $i, 1)));
     $ret = $sum % 11;
-    $parity = intval(substr($natinoal_code, 9, 1));
+    $parity = intval(substr($national_code, 9, 1));
     if (($ret < 2 && $ret == $parity) || ($ret >= 2 && $ret == 11 - $parity))
         return true;
     return false;
