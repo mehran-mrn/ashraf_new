@@ -208,6 +208,7 @@
 
         $('#birth_date_{{$rand_id}}').MdPersianDateTimePicker({
             targetTextSelector: '#birth_date_{{$rand_id}}',
+            selectedDate: new Date('1980/9/30'),
         });
 
 

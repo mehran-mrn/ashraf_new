@@ -8,9 +8,9 @@
 
     @include('global.materials.upcoming_events')
     @include('global.materials.counter')
+    @include('global.materials.home_boxes')
 
 {{--    @include('global.materials.our_mission')--}}
-    @include('global.materials.home_boxes')
 {{--    @include('global.materials.wide_banner')--}}
     @include('global.materials.cards')
     @include('global.materials.gallery')
