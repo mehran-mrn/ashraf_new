@@ -21,7 +21,7 @@
                                 delay: 3000,
                             });
                             setTimeout(function () {
-                                window.location.replace("cart/" + response.message.id);
+                                window.location.replace("/payment?id=" + response.message.id+"&type=charity_donate");
                             }, 2000);
 
                         }else{

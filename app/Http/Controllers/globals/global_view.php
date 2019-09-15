@@ -20,12 +20,16 @@ use App\store;
 use App\store_product;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
+use App\transaction;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Larabookir\Gateway\Saman\Saman;
 use Swis\LaravelFulltext\Search;
+use Tartan\Larapay\Facades\Larapay;
+use Tartan\Larapay\Transaction\TransactionInterface;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
 use WebDevEtc\BlogEtc\Models\BlogEtcPost;
@@ -130,8 +134,8 @@ class global_view extends Controller
     {
         $tran = setting_transportation::where('status', "active")->get();
         $userInfo = User::with('addresses')->findOrFail(Auth::id());
-        $provinces = city::where('parent',0)->get();
-        return view('global.store.order', compact('tran','userInfo','provinces'));
+        $provinces = city::where('parent', 0)->get();
+        return view('global.store.order', compact('tran', 'userInfo', 'provinces'));
     }
 
     public function store_payment()
@@ -187,6 +191,8 @@ class global_view extends Controller
                     }
                 }
             }
+
+
             $message = trans("messages.transaction_created");
             return back_normal($request, ['message' => $message, "code" => 200, 'id' => $transInfo]);
 
@@ -194,8 +200,7 @@ class global_view extends Controller
             $message = trans("messages.error");
             return back_normal($request, ['message' => $message, 'code' => 201]);
         }
-        $message = trans("messages.error2");
-        return back_normal($request, ['message' => $message, 'code' => 202]);
+
     }
 
     public function vow_cart(Request $request)
@@ -221,7 +226,7 @@ class global_view extends Controller
 
     public function gallery()
     {
-        $medias = gallery_category::where('status', 'active')->with('media','media_one','media_two')->get();
+        $medias = gallery_category::where('status', 'active')->with('media', 'media_one', 'media_two')->get();
         return view('global.gallery', compact('medias'));
     }
 
@@ -229,8 +234,8 @@ class global_view extends Controller
     {
         $pics = media::where(
             [
-                ['category_id','=',$request['id']],
-                ['thumbnail_size','=',null],
+                ['category_id', '=', $request['id']],
+                ['thumbnail_size', '=', null],
             ])->get();
         $categoryInfo = gallery_category::find($request['id']);
         return view('global.gallery.gallery_view', compact('pics', 'categoryInfo'));
@@ -247,5 +252,44 @@ class global_view extends Controller
         $posts = $posts->orderBy("posted_at", "desc")
             ->paginate(config("blogetc.per_page", 10));
         return view('global.blog', compact('posts'));
+    }
+
+    public function payment(Request $request)
+    {
+        $callBack = url('/callback');
+        $payInfo = $request->all();
+        if ($request['type'] == "charity_donate") {
+            $info = charity_transaction::findOrFail($request['id']);
+            if ($info['id']) {
+                $gatewayInfo = gateway::findOrFail($info['gateway_id']);
+                if ($gatewayInfo['function_name'] == "SamanGateway") {
+                    try {
+
+                        $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
+                        // $gateway->setCallback(url('/path/to/callback/route')); You can also change the callback
+                        $gateway
+                            ->price(1000)
+                            // setShipmentPrice(10) // optional - just for paypal
+                            // setProductName("My Product") // optional - just for paypal
+                            ->ready();
+
+                        $refId = $gateway->refId(); // ????? ????? ????
+                        $transID = $gateway->transactionId(); // ????? ??????
+
+                        // ?? ?????
+                        //  ????? ??????  ???? ?? ?? ???? ?? ??? ?????? ??????? ???
+                        //  ?? ????? ???? ???? ? ???? ?? ???? ????? ???
+                        // ????? ???? .
+
+                        return $gateway->redirect();
+
+                    } catch (\Exception $e) {
+
+                        echo $e->getMessage();
+                    }
+                }
+            }
+        }
+
     }
 }

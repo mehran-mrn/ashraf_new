@@ -1,5 +1,6 @@
 <?php
 
+use App\gateway;
 use App\store_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -266,6 +267,7 @@ function get_cites_parent($id)
 
     return $parent;
 }
+
 function get_cites_list($lvl)
 {
 
@@ -275,6 +277,7 @@ function get_cites_list($lvl)
 
     return $cities;
 }
+
 function get_provinces($id = null)
 {
     if ($id) {
@@ -785,24 +788,33 @@ function uploadFile($file, $folder = 'files')
     return $destinationPath . '/' . $fileName;
 }
 
-function samanGateway()
+function SamanGateway($gateway_id, $order_id, $type, $price, $callback)
 {
 
-    $client = new soapclient('https://sep.shaparak.ir/Payments/InitPayment.asmx?WSDL');
-    $result = $client->RequestToken(
-        '10993518',            /// MID
-        '1021',        /// ResNum
-        '1000'            /// TotalAmount
-        , '0'            /// Optional
-        , 'ResNum1'        /// Optional
-        , 'ResNum2'        /// Optional
-        , '0'            /// Optional
-        , '' //$RedirectURL	/// Optional
-    );
-///var_dump($result);
-    echo "<form action='https://sep.shaparak.ir/payment.aspx' method='POST'>
-				<input name='token' type='hidden' value='" . $result . "'>
-				<input name='RedirectURL' type='hidden' value='http://Your_Domain/result_page'>
-				<input name='btn' type='submit' value='Send'>
-			</form>";
+    $gatewayInfo = gateway::findOrFail($gateway_id);
+
+    $callbackUrl = $callback;
+
+    $client = new SoapClient('https://sep.shaparak.ir/payments/initpayment.asmx?wsdl');
+
+    $orderId = $type . "_" . $order_id;
+
+    try {
+        $token = $client->RequestToken($gatewayInfo['merchent'],           /// MID
+            $orderId,       /// ResNum
+            $price          /// TotalAmount
+        );
+
+    } catch (Exception $e) {
+        echo $e->error();
+    }
+
+    if ($token) {
+        $save[1]['bankid'] = 'saman';
+        $save[1]['orderid'] = $orderId;
+        \f\ttt::dal('core.setting.bank.savePay', $save);
+        return ['result' => 'success', 'message' => 'در حال اتصال به درگاه بانک سامان ...', 'params' => ['Token' => $token, 'RedirectURL' => $callbackUrl], 'func' => 'goToBank'];
+    } else {
+        return ['result' => 'error', 'message' => 'خطا در اتصال به درگاه بانک!'];
+    }
 }

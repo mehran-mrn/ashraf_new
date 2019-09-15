@@ -33,42 +33,46 @@ class CreateGatewaysTable extends Migration
             $table->integer('online')->nullable();
             $table->integer('cart')->nullable();
             $table->integer('account')->nullable();
+            $table->string('function_name')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
 
-//        DB::table('gateways')->insert(
-//            array(
-//                'title' => 'درگاه آنلاین',
-//                'bank_id' => '35',
-//                'account_number' => '0302470888002',
-//                'account_sheba' => '000000000000302470888002',
-//                'card_number' => '6037997130857253',
-//                'bank_branch' => 'امام',
-//                'status' => 'active',
-//                'merchant' => '000000140329876',
-//                'public_key' => 'RnszP6AYaaZCF4PoGnsCTQAOhAmMdYWZ',
-//                'terminal_id' => '24042986',
-//                'logo'=>'<i class="ibl64 ibl-bmi"></i>',
-//                'online'=>'1'
-//            )
-//        );
-//        DB::table('gateways')->insert(
-//            array(
-//                'title' => 'درگاه پرداخت',
-//                'bank_id' => '17',
-//                'account_number' => '4026505639',
-//                'account_sheba' => '0000000000004026505639',
-//                'card_number' => '6104337933280966',
-//                'bank_branch' => 'امیر کبیر',
-//                'status' => 'active',
-//                'merchant' => '3013',
-//                'password' => Hash::make('9542264'),
-//                'logo'=>'<i class="ibl64 ibl-sb"></i>',
-//                'cart'=>'1'
-//
-//            )
-//        );
+        DB::table('gateways')->insert(
+            array(
+                'title' => 'درگاه سامان',
+                'bank_id' => '17',
+                'account_number' => '',
+                'account_sheba' => '',
+                'card_number' => '',
+                'bank_branch' => 'امام',
+                'status' => 'active',
+                'merchant' => '3013',
+                'public_key' => '',
+                'terminal_id' => '',
+                'password' => '9542264',
+                'logo' => '<i class="ibl64 ibl-bmi"></i>',
+                'online' => '1',
+                'function_name' => 'SamanGateway'
+            )
+        );
+        DB::table('gateways')->insert(
+            array(
+                'title' => 'درگاه ملت',
+                'bank_id' => '33',
+                'account_number' => '',
+                'account_sheba' => '',
+                'card_number' => '',
+                'bank_branch' => 'امیر کبیر',
+                'status' => 'active',
+                'username' => 'aoaci',
+                'password' => Hash::make('aoaci'),
+                'terminal_id' => '969074',
+                'logo' => '<i class="ibl64 ibl-sb"></i>',
+                'online' => '1',
+                'function_name' => 'MellatGateway'
+            )
+        );
 //        DB::table('gateways')->insert(
 //            array(
 //                'title' => 'درگاه آنلاین',
@@ -85,6 +89,8 @@ class CreateGatewaysTable extends Migration
 //                'cart'=>'1'
 //            )
 //        );
+
+
     }
 
     /**
