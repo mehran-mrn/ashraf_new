@@ -151,17 +151,22 @@ class global_view extends Controller
 
     public function vow_payment(Request $request)
     {
+
+        if (!is_null($request['amount'])) {
+            $request['amount'] = str_replace(',', '', $request['amount']);
+        }
+        $patern = charity_payment_patern::find($request['charity_id']);
         $this->validate($request,
             [
-                'amount' => 'required',
+                'amount' => 'required|min:' . $patern['min'] . '|max:' . $patern['max'] . '|numeric',
                 'gateway' => 'required',
-                'email' => 'email'
+                'email' => 'nullable|email'
             ]);
         $user_id = 0;
         if (Auth::id()) {
             $user_id = Auth::id();
         }
-        if (charity_payment_patern::find($request['charity_id'])) {
+        if (!is_null($patern)) {
             $trans = new charity_transaction();
             $trans->user_id = $user_id OR null;
             $trans->charity_id = $request['charity_id'] OR null;
@@ -203,8 +208,13 @@ class global_view extends Controller
 
     public function vow_cart(Request $request)
     {
-        $charityIn = charity_periods_transaction::with('period')->find($request['id']);
-        return view('global.vows.cart', compact('charityIn'));
+        $charityIn = charity_periods_transaction::with('period')->findOrFail($request['id']);
+        if ($charityIn['user_id'] == Auth::id()) {
+            $gateways = gateway::with('bank')->get();
+            return view('global.vows.cart', compact('charityIn', 'gateways'));
+        } else {
+            return abort(403);
+        }
     }
 
     public function vow_donate()
@@ -266,13 +276,13 @@ class global_view extends Controller
         } elseif ($request['type'] == "charity_period") {
             $info = charity_periods_transaction::findOrFail($request['id']);
             if ($info['user_id']) {
-                if ($info['user_id'] != Auth::id()) {
+                if ($info['user_id'] != Auth::id() || $info['status'] != "unpaid") {
                     $con = false;
                 }
             }
         }
         if (!is_null($info) && $con) {
-            $gatewayInfo = gateway::findOrFail($info['gateway_id']);
+            $gatewayInfo = gateway::findOrFail($request['gateway_id']);
             if ($gatewayInfo['function_name'] == "SamanGateway") {
                 try {
                     $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
@@ -282,6 +292,7 @@ class global_view extends Controller
                     $transID = $gateway->transactionId();
 
                     $info->trans_id = $transID;
+                    $info->gateway_id = $gatewayInfo['id'];
                     $info->save();
                     return $gateway->redirect();
 

@@ -3,7 +3,20 @@
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 
     <script>
+
         $(document).ready(function () {
+            $(document).on("change keyup", '.amount', function (event) {
+                if (event.which >= 37 && event.which <= 40) return;
+                $(this).val(function (index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        ;
+                });
+            });
+
+
+
             $(document).on("submit", '#frm_add_period', function (e) {
                 e.preventDefault();
                 var submit = $(this).find("button[type=submit]");
@@ -17,7 +30,6 @@
                         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                     },
                     success: function (response) {
-                        console.log(response)
                         if (response.message.code === 200) {
                             PNotify.success({
                                 text: response.message.message,
@@ -35,9 +47,17 @@
                         }
                         submit.removeAttr("disabled");
                         submit.html("{{__('messages.pay')}}")
-                    }, error: function () {
-                        console.log(response)
-
+                    }, error: function (response) {
+                        var errors = response.responseJSON.errors;
+                        $.each(errors, function (index, value) {
+                            PNotify.error({
+                                delay: 3000,
+                                title: '',
+                                text: value,
+                            });
+                        });
+                        submit.removeAttr("disabled");
+                        submit.html("{{__('messages.pay')}}")
                     }
                 });
             })
@@ -49,8 +69,6 @@
 @stop
 @section('css')
     <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
-@stop
-@section('css')
     <style>
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
@@ -59,6 +77,7 @@
         }
     </style>
 @stop
+
 @section('content')
     <section>
         <div class="container">
@@ -73,9 +92,9 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="col-md-12 col-xs-12">
                                         <div class="form-group">
-                                            <label for="amount">{{__('messages.amount')}}</label>
-                                            <input type="number" min="{{$patern['min']}}" max="{{$patern['max']}}"
-                                                   class="form-control" name="amount">
+                                            <label for="amount">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></label>
+                                            <input type="text" min="{{$patern['min']}}" max="{{$patern['max']}}"
+                                                   class="form-control amount" name="amount" placeholder="{{__('messages.amount_rial')}}">
                                         </div>
                                     </div>
                                 </div>

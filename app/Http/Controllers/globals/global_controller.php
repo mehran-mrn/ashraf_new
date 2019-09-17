@@ -231,9 +231,12 @@ class global_controller extends Controller
 
     public function add_charity_period(Request $request)
     {
+        if (!is_null($request['amount'])) {
+            $request['amount'] = str_replace(',', '', $request['amount']);
+        }
         $this->validate($request,
             [
-                'amount' => 'required',
+                'amount' => 'required|min:10000|max:1000000000|numeric',
                 'start_date' => 'required',
                 'period' => 'required',
             ]);

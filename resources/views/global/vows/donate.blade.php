@@ -2,6 +2,17 @@
 @section('js')
     <script>
         $(document).ready(function () {
+
+            $(document).on("change keyup", '.amount', function (event) {
+                if (event.which >= 37 && event.which <= 40) return;
+                $(this).val(function (index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        ;
+                });
+            });
+
             $(document).on("submit", '#frm_add_charity', function (e) {
                 e.preventDefault();
                 var submit = $(this).find("button[type=submit]");
@@ -32,7 +43,17 @@
                         }
                         submit.removeAttr("disabled");
                         submit.html("{{__('messages.pay')}}")
-                    }, error: function () {
+                    }, error: function (response) {
+                        var errors = response.responseJSON.errors;
+                        $.each(errors, function (index, value) {
+                            PNotify.error({
+                                delay: 3000,
+                                title: '',
+                                text: value,
+                            });
+                        });
+                        submit.removeAttr("disabled");
+                        submit.html("{{__('messages.pay')}}")
                     }
                 });
             })
@@ -80,9 +101,10 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12">
                                         <div class="form-group">
-                                            <label for="amount">{{__('messages.amount')}}</label>
-                                            <input type="number" min="{{$patern['min']}}" max="{{$patern['max']}}"
-                                                   class="form-control" name="amount">
+                                            <label for="amount">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></label>
+                                            <input type="text" min="{{$patern['min']}}" max="{{$patern['max']}}"
+                                                   class="form-control amount" name="amount"
+                                                   placeholder="{{__('messages.amount_rial')}}">
                                         </div>
                                     </div>
                                 </div>

@@ -590,5 +590,8 @@ return array(
     'login_to_ashraf_crm'=>'ورود به سی ار ام موسسه اشرفالنباء',
     'transaction_file'=>'فایل تراکنش',
     'download_sample_file'=>'دانلود فایل نمونه',
-    'register_by_excel'=>'ثبت دسته ای اسامی با فایل اکسل'
+    'register_by_excel'=>'ثبت دسته ای اسامی با فایل اکسل',
+    'rial'=>'ریال',
+    'amount_rial'=>'مبلغ به ریال',
+    'is_going_connect_to_gateway'=>'در حال انتقال به درگاه پرداخت...'
 );
