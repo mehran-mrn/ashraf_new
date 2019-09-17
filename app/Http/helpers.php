@@ -724,19 +724,19 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
     $year = jdate("Y", time(), '', '', 'en');
     $month = jdate("m", time(), '', '', 'en');
 
-    if (!file_exists('public/images')) {
-        mkdir('public/images', 0755, true);
+    if (!file_exists('/public/images')) {
+        mkdir('/public/images', 0755, true);
     }
-    if (!file_exists('public/images/' . $folder)) {
-        mkdir('public/images/' . $folder, 0755, true);
+    if (!file_exists('/public/images/' . $folder)) {
+        mkdir('/public/images/' . $folder, 0755, true);
     }
-    if (!file_exists('public/images/' . $folder . "/" . $year)) {
-        mkdir('public/images/' . $folder . "/" . $year, 0755, true);
+    if (!file_exists('/public/images/' . $folder . "/" . $year)) {
+        mkdir('/public/images/' . $folder . "/" . $year, 0755, true);
     }
-    if (!file_exists('public/images/' . $folder . "/" . $year . "/" . $month)) {
-        mkdir('public/images/' . $folder . "/" . $year . "/" . $month, 0755, true);
+    if (!file_exists('/public/images/' . $folder . "/" . $year . "/" . $month)) {
+        mkdir('/public/images/' . $folder . "/" . $year . "/" . $month, 0755, true);
     }
-    $destinationPath = 'public/images/' . $folder . "/" . $year . "/" . $month;
+    $destinationPath = '/public/images/' . $folder . "/" . $year . "/" . $month;
     $time = time();
     $image_name = $time . '_' . request()->file->getClientOriginalName();
     \App\media::create([
@@ -756,10 +756,10 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
     $size = array_merge($size, $custom_size);
     foreach ($size as $value) {
         $si = explode(',', $value);
-        if (!file_exists('public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0])) {
-            mkdir('public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0], 0755, true);
+        if (!file_exists('/public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0])) {
+            mkdir('/public/images/' . $folder . "/" . $year . "/" . $month . "/" . $si[0], 0755, true);
         }
-        $thumbnailPath = 'public/images/' . $folder . '/' . $year . "/" . $month . "/" . $si[0];
+        $thumbnailPath = '/public/images/' . $folder . '/' . $year . "/" . $month . "/" . $si[0];
         $img = Image::make($file->getRealPath());
         $filename = $time . "_" . $file->getClientOriginalName();
 

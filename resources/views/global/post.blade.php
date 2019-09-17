@@ -47,6 +47,7 @@
                                     </div>
                                 </div>
                             </article>
+
                             <div class='tagline p-0 pt-20 mt-5'>
                                 @foreach($post->categories as $category)
                                     <a class='btn btn-outline-success btn-sm m-1' href='{{$category->url()}}'>
