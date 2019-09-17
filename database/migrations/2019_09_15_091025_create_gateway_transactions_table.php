@@ -22,7 +22,7 @@ class CreateGatewayTransactionsTable extends Migration
     {
         Schema::create($this->getTable(), function (Blueprint $table) {
             $table->engine = "innoDB";
-            $table->unsignedBigInteger('id', true);
+            $table->bigIncrements('id');
             $table->enum('port', [
                 Enum::MELLAT,
                 Enum::SADAD,
@@ -47,6 +47,8 @@ class CreateGatewayTransactionsTable extends Migration
             ])->default(Enum::TRANSACTION_INIT);
             $table->string('ip', 20)->nullable();
             $table->timestamp('payment_date')->nullable();
+            $table->string('module')->nullable();
+            $table->integer('module_id')->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
         });

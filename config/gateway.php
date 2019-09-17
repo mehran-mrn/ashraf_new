@@ -32,7 +32,7 @@ return [
     'saman' => [
         'merchant' => '3013',
         'password' => '9542264',
-        'callback-url' => env('APP_URL')."/callback"
+        'callback-url' => env('APP_URL')."/callback/saman"
     ],
     //--------------------------------
     // PayIr gateway
