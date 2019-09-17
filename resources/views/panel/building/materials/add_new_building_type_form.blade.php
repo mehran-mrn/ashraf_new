@@ -21,13 +21,6 @@
     </div>
 
 
-    <div class="form-group row">
-        <label for="image" class="col-md-4 col-form-label text-md-right" >{{ __('messages.image') }}</label>
-
-        <div class="col-lg-6">
-            <input class="form-control form-control-file" type="file" name="image" id="fileToUpload">
-        </div>
-    </div>
 
 
     <div class="form-group row ">

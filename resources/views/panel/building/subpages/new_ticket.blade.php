@@ -29,10 +29,10 @@
 
                 // Removable thumbnails
                 Dropzone.options.dropzoneRemove = {
-                    url: "{{route('upload_files')}}", // The name that will be used to transfer the file
+                    url: "{{route('upload_ticket_files')}}", // The name that will be used to transfer the file
                     paramName: "file", // The name that will be used to transfer the file
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
-                    maxFilesize: 5, // MB
+                    maxFilesize: 10, // MB
                     maxFiles: 10,
                     addRemoveLinks: true,
                     init: function () {
@@ -40,7 +40,7 @@
                             var org_name = file.name;
                             var new_name = org_name.replace(".", "_");
                             $("#file_names").append(
-                                '<input class="' + new_name + '" name="file_name[]" type="hidden" value="' + response + '" />'
+                                '<input class="' + new_name + '" name="doc_id[]" type="hidden" value="' + response + '" />'
                             );
                         });
                         this.on("complete", function (file) {

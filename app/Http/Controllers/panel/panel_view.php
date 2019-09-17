@@ -494,6 +494,7 @@ class panel_view extends Controller
         $all_cities = city::pluck('name','id')->all();
         return view('panel.building.materials.tree_view',compact('provinces','all_cities'));
     }
+
     public function building_project($project_id, Request $request)
     {
         $ticket_item_checkbox = $request->input('ticket_item_checkbox');
