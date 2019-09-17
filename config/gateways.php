@@ -24,7 +24,7 @@ return [
         'username' => 'aoaci',
         'password' => 'aoaci',
         'terminalId' => 969074,
-        'callback-url' => url('callback')
+        'callback-url' => env('APP_URL')."/callback"
     ],
     //--------------------------------
     // Saman gateway
@@ -32,7 +32,7 @@ return [
     'saman' => [
         'merchant' => '3013',
         'password' => '9542264',
-        'callback-url' => url('callback'),
+        'callback-url' => env('APP_URL')."/callback"
     ],
     //--------------------------------
     // PayIr gateway

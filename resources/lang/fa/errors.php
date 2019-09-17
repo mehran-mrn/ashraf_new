@@ -7,4 +7,5 @@ return array (
   'person_already_exists' => 'این فرد در لیست موجود میباشد',
   'pending_person_exists' => 'وضعیت تمام افراد مشخص نشده است.',
   'national_code_is_incorrect' => 'کد ملی معتبر نیست',
+  'file_not_found' => 'فایل پیدا نشد.',
 );

@@ -31,6 +31,8 @@ class CreateCaravansTable extends Migration
             $table->integer('status')->default('1');//0 cancel //1 in progress //2 closed list // 3 arrived // 4 exited // 5  archived
             $table->timestamps();
         });
+
+
     }
 
     /**

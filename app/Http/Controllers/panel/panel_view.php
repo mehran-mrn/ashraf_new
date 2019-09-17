@@ -12,6 +12,7 @@ use App\building_ticket;
 use App\building_type;
 use App\building_type_itme;
 use App\building_user;
+use App\caravan_doc;
 use App\caravan_host;
 use App\category;
 use App\charity_payment_patern;
@@ -300,6 +301,7 @@ class panel_view extends Controller
     public function caravan_dashboard()
     {
         $caravans_query = caravan::query();
+        $caravans_query->with('caravan_docs.doc');
         $caravans_query->whereIn('status', [1, 2, 3, 4]);
         $caravans = $caravans_query->get();
         return view('panel.caravan.dashboard', compact('caravans'));
@@ -402,6 +404,17 @@ class panel_view extends Controller
             ->get();
 
         return view('panel.caravan.materials.caravan_person_action', compact('person_caravan','person_history'));
+    }
+
+    public function caravan_upload_doc($caravan_id,$caravan_doc_id=null)
+    {
+
+        $caravan = caravan::find($caravan_id);
+        $caravan_doc=null;
+        if ($caravan_doc_id){
+            $caravan_doc = caravan_doc::find($caravan_doc_id);
+        }
+        return view('panel.caravan.materials.upload_doc_form',compact('caravan','caravan_doc'));
     }
 
     public function caravans_echart_data()

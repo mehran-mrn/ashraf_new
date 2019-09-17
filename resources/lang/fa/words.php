@@ -9,5 +9,6 @@ return array (
   'partner' => 'همسر',
   'row' => 'ردیف',
   'person' => 'فرد',
+  'download' => 'دانلود',
 
 );

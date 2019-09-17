@@ -130,7 +130,7 @@
 
 @section('content')
     <?php
-    $active_sidbare = ['caravans']
+    $active_sidbare = ['caravans','collapse']
     ?>
     <!-- Content area -->
     <div class="content">
@@ -356,23 +356,57 @@
                     @endif
                 </div>
                 <span class="divider"><hr></span>
-                <div class="card">
-                    <div class="card-header bg-primary">
-                        <span class="card-title">{{trans('messages.destination')}}</span>
-                    </div>
-                    <div class="card-img-actions px-1 pt-1">
-                        <img class="card-img img-fluid img-absolute "
-                             src="{{'/'.$caravan['host']['media']['url']}}" alt="">
-                        <div class="card-img-actions-overlay  card-img bg-dark-alpha">
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <span class="card-title">{{trans('messages.doc_upload')}}</span>
+                        </div>
 
+                        <div class="card-body">
+                        @forelse($caravan['caravan_docs'] as $caravan_doc)
+                            <div class="list-feed-item">
+
+                                <form method="post" action="{{route('download_doc')}}">
+                                    <div class="title">{{$caravan_doc['doc']['title']}} </div>
+                                    <div class="badge badge-info">{{miladi_to_shamsi_date($caravan_doc['created_date'])}}</div>
+                                    <div class="badge badge-warning">{{$caravan_doc['doc']['mime']}} </div>
+                                    @csrf
+                                    <input type="hidden" name="doc_id" value="{{$caravan_doc['doc']['id']}}">
+                                    <button class="btn btn-link" type="submit" >{{trans('words.download')}} <i class="icon-download"></i> </button>
+                                </form>
+                                 </div>
+                            @empty
+                            --
+                        @endforelse
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="float-right btn alpha-success border-success-400 text-success-800  ml-2
+                                             modal-ajax-load"
+                                    data-ajax-link="{{route('caravan_upload_doc',['caravan_id'=>$caravan['id']])}}"
+                                    data-toggle="modal"
+                                    data-modal-title="{{trans('messages.upload')}}"
+                                    data-target="#general_modal">
+                                {{trans('messages.add')}}
+                                <i class="icon-file-plus"></i>
+                            </button>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <span class="card-title">{{trans('messages.destination')}}</span>
+                        </div>
+                        <div class="card-img-actions px-1 pt-1">
+                            <img class="card-img img-fluid img-absolute "
+                                 src="{{'/'.$caravan['host']['media']['url']}}" alt="">
+                            <div class="card-img-actions-overlay  card-img bg-dark-alpha">
 
-                    <div class="card-body">
-                        <h6 class="font-weight-semibold"><b>{{$caravan['host']['name']}}</b></h6>
-                        {{$caravan['host']['city_name']}}
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h6 class="font-weight-semibold"><b>{{$caravan['host']['name']}}</b></h6>
+                            {{$caravan['host']['city_name']}}
+                        </div>
                     </div>
-                </div>
 
 
                 <div class="card">

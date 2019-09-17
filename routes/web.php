@@ -38,6 +38,9 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //        'uses' => 'private_doc@show',
 //        'middleware' => 'auth',
 //    ]);
+
+        Route::post('doc_download', 'Controller@download_doc')->name('download_doc');
+
     Route::prefix('user_manager')->group(function () {
 
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
@@ -80,6 +83,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/cancel_caravan_status', 'panel\caravan@cancel_caravan_status')->name('cancel_caravan_status');
         Route::post('/back_caravan_status', 'panel\caravan@back_caravan_status')->name('back_caravan_status');
         Route::post('/delete_caravan_member/{id}', 'panel\caravan@delete_person_from_caravan')->name('delete_caravan_member');
+        Route::get('/caravan_upload_doc/{caravan_id}/{caravan_doc_id?}', 'panel\panel_view@caravan_upload_doc')->name('caravan_upload_doc');
+        Route::post('/caravan_upload_doc/{caravan_id}', 'panel\caravan@upload_caravan_doc')->name('caravan_upload_doc');
 
     });
     Route::prefix('blog')->group(function () {

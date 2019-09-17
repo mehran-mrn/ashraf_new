@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\caravan_doc;
 use App\caravan_host;
 use App\caravan_workflow;
 use App\person;
@@ -447,6 +448,21 @@ class caravan extends Controller
         $workflow->save();
         return back_normal($request);
 
+    }
+
+    public function upload_caravan_doc(Request $request){
+        $this->validate($request, [
+            'file' => 'required|file|max:10240',
+            'title' => 'required',
+            'caravan_id' => 'required|exists:caravans,id',
+            'description' => 'required',
+        ]);
+        $doc_id = private_file_saver($request->file,'caravan',$request['title'],$request['description']);
+        $pivot = new caravan_doc();
+        $pivot->caravan_id=$request['caravan_id'];
+        $pivot->doc_id=$doc_id;
+        $pivot->save();
+        return back_normal($request);
     }
 
 }

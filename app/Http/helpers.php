@@ -191,38 +191,41 @@ function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_
     return $media_id;
 }
 
-function private_image_saver($image_input, $folder, $module, $image_name = null)
+function private_file_saver($file_input, $module="other",$title,$description="-")
 {
-//    $request->validate([
-//        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:8193|dimensions:min_width=75,min_height=75',
-//    ]);
-    if (!file_exists('storage/user_doc')) {
-        mkdir('storage/user_doc', 0644, true);
-    }
-    if (!file_exists('storage/user_doc/' . $folder)) {
-        mkdir('storage/user_doc/' . $folder, 0644, true);
-    }
-//    $image = $request->file('image');
-    $image = $image_input;
-    $destinationPath = 'storage/user_doc/' . $folder;
-    if (empty($image_name)) {
-        $image_name = mt_rand() . time() . '.' . $image->getClientOriginalExtension();
-    } else {
-        $image_name = pathinfo($image_name)['filename'] . '.' . $image->getClientOriginalExtension();
 
+    $year = jdate("Y", time(), '', '', 'en');
+    $month = jdate("m", time(), '', '', 'en');
+
+    if (!file_exists('storage/docs')) {
+        mkdir('storage/docs', 0644, true);
     }
-    $image->move($destinationPath, $image_name);
-    $media_info = \App\media::create([
-        'name' => $image_name,
-        'url' => $destinationPath . "/" . $image_name,
-        'path' => $destinationPath,
-        'org_name' => $image->getClientOriginalName(),
-        'mime' => $image->getClientMimeType(),
-        'module' => $module,
-        'size' => "1"
-    ]);
-    $media_id = $media_info->id;
-    return $media_id;
+    if (!file_exists('storage/docs/' . $module)) {
+        mkdir('storage/docs/' . $module, 0644, true);
+    }
+    if (!file_exists('storage/docs/' . $module . "/" . $year)) {
+        mkdir('storage/docs/' . $module . "/" . $year, 0644, true);
+    }
+    if (!file_exists('storage/docs/' . $module . "/" . $year . "/" . $month)) {
+        mkdir('storage/docs/' . $module . "/" . $year . "/" . $month, 0644, true);
+    }
+    $destinationPath = 'storage/docs/' . $module . "/" . $year . "/" . $month. "/";
+    $time = time();
+    $file_name = $time.rand(100000, 999999).$file_input->getClientOriginalName();
+    $file_input->move($destinationPath, $file_name);
+
+
+    $store_data = new  \App\uploaded_doc();
+    $store_data->file_name = $file_name;
+    $store_data->mime = $file_input->getClientOriginalExtension();
+    $store_data->path =$destinationPath;
+    $store_data->url =$destinationPath.$file_name;
+    $store_data->title =$title;
+    $store_data->description =$description;
+    $store_data->save();
+
+    return $store_data->id;
+
 }
 
 function user_information($type)
