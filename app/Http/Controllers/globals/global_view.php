@@ -14,6 +14,7 @@ use App\gallery_category;
 use App\gateway;
 use App\gateway_transaction;
 use App\media;
+use App\Role;
 use App\setting_transportation;
 use App\store_product;
 use App\store_product_inventory;
@@ -24,6 +25,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Larabookir\Gateway\Mellat\Mellat;
 use Larabookir\Gateway\Saman\Saman;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
@@ -200,8 +203,8 @@ class global_view extends Controller
 
     public function vow_cart(Request $request)
     {
-        $charityIn = charity_transaction::with('values')->find($request['id'])->with('charity_field');
-        return view('global.vows.vow_cart', compact('charityIn'));
+        $charityIn = charity_periods_transaction::with('period')->find($request['id']);
+        return view('global.vows.cart', compact('charityIn'));
     }
 
     public function vow_donate()
@@ -251,34 +254,65 @@ class global_view extends Controller
 
     public function payment(Request $request)
     {
-        if ($request['type'] == "charity_donate") {
+        $this->validate($request,
+            [
+                'type' => 'required',
+                'id' => 'required|int'
+            ]);
+        $con = true;
+        $vow = array('charity_vow', 'charity_donate');
+        if (in_array($request['type'], $vow)) {
             $info = charity_transaction::findOrFail($request['id']);
-            if ($info['id']) {
-                $gatewayInfo = gateway::findOrFail($info['gateway_id']);
-                if ($gatewayInfo['function_name'] == "SamanGateway") {
-                    try {
-                        $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
-                        $gateway->setCallback(route('callback', ['gateway' => 'saman']));
-                        $gateway->price($info['amount'])->moduleSet('charity_donate')->moduleIDSet($info['id'])->ready();
-                        $refId = $gateway->refId();
-                        $transID = $gateway->transactionId();
-
-                        $info->trans_id = $transID;
-                        $info->save();
-                        return $gateway->redirect();
-
-                    } catch (\Exception $e) {
-                        echo $e->getMessage();
-                    }
+        } elseif ($request['type'] == "charity_period") {
+            $info = charity_periods_transaction::findOrFail($request['id']);
+            if ($info['user_id']) {
+                if ($info['user_id'] != Auth::id()) {
+                    $con = false;
                 }
             }
         }
+        if (!is_null($info) && $con) {
+            $gatewayInfo = gateway::findOrFail($info['gateway_id']);
+            if ($gatewayInfo['function_name'] == "SamanGateway") {
+                try {
+                    $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
+                    $gateway->setCallback(route('callback', ['gateway' => 'saman']));
+                    $gateway->price($info['amount'])->moduleSet($request['type'])->moduleIDSet($info['id'])->ready();
+                    $refId = $gateway->refId();
+                    $transID = $gateway->transactionId();
+
+                    $info->trans_id = $transID;
+                    $info->save();
+                    return $gateway->redirect();
+
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+            } elseif ($gatewayInfo['function_name'] == "MellatGateway") {
+                try {
+                    $gateway = \Larabookir\Gateway\Gateway::make(new Mellat());
+                    $gateway->setCallback(route('callback', ['gateway' => 'mellat']));
+                    $gateway->price($info['amount'])->moduleSet($request['type'])->moduleIDSet($info['id'])->ready();
+                    $refId = $gateway->refId();
+                    $transID = $gateway->transactionId();
+
+                    $info->trans_id = $transID;
+                    $info->save();
+                    return $gateway->redirect();
+
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+        } else {
+            return back_normal($request, ['message' => trans('errors.payment_not_valid')]);
+        }
     }
+
 
     public function callback(Request $request)
     {
         try {
-
             $gateway = \Larabookir\Gateway\Gateway::verify();
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
@@ -292,10 +326,10 @@ class global_view extends Controller
             $messages['result'] = "repeat";
             return view('global.callback', compact('messages'));
         } catch (\Exception $e) {
-            $gatewayInfo = \Larabookir\Gateway\Gateway::spy();
-            return $gatewayInfo;
-            if ($gatewayInfo['module'] == "charity_donate") {
-                $charity = charity_transaction::findOrFail($gatewayInfo['module_id']);
+            $gateway = config('gateway.table', 'gateway_transactions');
+            $data = \DB::table($gateway)->find($request['transaction_id']);
+            if ($data->module == "charity_donate" || $data->module == "charity_vow") {
+                $charity = charity_transaction::findOrFail($data->module_id);
                 $charity->status = 'fail';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
                 $charity->save();

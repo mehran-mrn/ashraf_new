@@ -20,6 +20,7 @@ class CreateCharityPeriodsTransactionsTable extends Migration
             $table->date('payment_date');
             $table->string('amount');
             $table->text('description')->nullable();
+            $table->string('trans_id')->nullable();
             $table->dateTime('pay_date')->nullable();
             $table->integer('gateway_id')->nullable();
             $table->string('status')->default('pending');

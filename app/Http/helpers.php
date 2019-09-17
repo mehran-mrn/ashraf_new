@@ -770,7 +770,6 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
 
 }
 
-
 function uploadFile($file, $folder = 'files')
 {
 
