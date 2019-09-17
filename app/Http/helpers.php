@@ -787,34 +787,3 @@ function uploadFile($file, $folder = 'files')
     $file->move($destinationPath, $fileName);
     return $destinationPath . '/' . $fileName;
 }
-
-function SamanGateway($gateway_id, $order_id, $type, $price, $callback)
-{
-
-    $gatewayInfo = gateway::findOrFail($gateway_id);
-
-    $callbackUrl = $callback;
-
-    $client = new SoapClient('https://sep.shaparak.ir/payments/initpayment.asmx?wsdl');
-
-    $orderId = $type . "_" . $order_id;
-
-    try {
-        $token = $client->RequestToken($gatewayInfo['merchent'],           /// MID
-            $orderId,       /// ResNum
-            $price          /// TotalAmount
-        );
-
-    } catch (Exception $e) {
-        echo $e->error();
-    }
-
-    if ($token) {
-        $save[1]['bankid'] = 'saman';
-        $save[1]['orderid'] = $orderId;
-        \f\ttt::dal('core.setting.bank.savePay', $save);
-        return ['result' => 'success', 'message' => 'در حال اتصال به درگاه بانک سامان ...', 'params' => ['Token' => $token, 'RedirectURL' => $callbackUrl], 'func' => 'goToBank'];
-    } else {
-        return ['result' => 'error', 'message' => 'خطا در اتصال به درگاه بانک!'];
-    }
-}

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\globals;
 
-use App\bank;
-use App\blog_categories;
 use App\blog_slider;
 use App\charity_payment_patern;
 use App\charity_payment_title;
@@ -14,9 +12,9 @@ use App\charity_transactions_value;
 use App\city;
 use App\gallery_category;
 use App\gateway;
+use App\gateway_transaction;
 use App\media;
 use App\setting_transportation;
-use App\store;
 use App\store_product;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
@@ -27,9 +25,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Larabookir\Gateway\Saman\Saman;
-use Swis\LaravelFulltext\Search;
-use Tartan\Larapay\Facades\Larapay;
-use Tartan\Larapay\Transaction\TransactionInterface;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
 use WebDevEtc\BlogEtc\Models\BlogEtcPost;
@@ -256,40 +251,58 @@ class global_view extends Controller
 
     public function payment(Request $request)
     {
-        $callBack = url('/callback');
-        $payInfo = $request->all();
         if ($request['type'] == "charity_donate") {
             $info = charity_transaction::findOrFail($request['id']);
             if ($info['id']) {
                 $gatewayInfo = gateway::findOrFail($info['gateway_id']);
                 if ($gatewayInfo['function_name'] == "SamanGateway") {
                     try {
-
                         $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
-                        // $gateway->setCallback(url('/path/to/callback/route')); You can also change the callback
-                        $gateway
-                            ->price(1000)
-                            // setShipmentPrice(10) // optional - just for paypal
-                            // setProductName("My Product") // optional - just for paypal
-                            ->ready();
+                        $gateway->setCallback(route('callback', ['gateway' => 'saman']));
+                        $gateway->price($info['amount'])->moduleSet('charity_donate')->moduleIDSet($info['id'])->ready();
+                        $refId = $gateway->refId();
+                        $transID = $gateway->transactionId();
 
-                        $refId = $gateway->refId(); // ????? ????? ????
-                        $transID = $gateway->transactionId(); // ????? ??????
-
-                        // ?? ?????
-                        //  ????? ??????  ???? ?? ?? ???? ?? ??? ?????? ??????? ???
-                        //  ?? ????? ???? ???? ? ???? ?? ???? ????? ???
-                        // ????? ???? .
-
+                        $info->trans_id = $transID;
+                        $info->save();
                         return $gateway->redirect();
 
                     } catch (\Exception $e) {
-
                         echo $e->getMessage();
                     }
                 }
             }
         }
+    }
 
+    public function callback(Request $request)
+    {
+        try {
+
+            $gateway = \Larabookir\Gateway\Gateway::verify();
+            $trackingCode = $gateway->trackingCode();
+            $refId = $gateway->refId();
+            $cardNumber = $gateway->cardNumber();
+            $module = $gateway->module();
+            $moduleID = $gateway->moduleID();
+
+            return $moduleID;
+        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
+            $messages['message'] = $e->getMessage();
+            $messages['result'] = "repeat";
+            return view('global.callback', compact('messages'));
+        } catch (\Exception $e) {
+            $gatewayInfo = \Larabookir\Gateway\Gateway::spy();
+            return $gatewayInfo;
+            if ($gatewayInfo['module'] == "charity_donate") {
+                $charity = charity_transaction::findOrFail($gatewayInfo['module_id']);
+                $charity->status = 'fail';
+                $charity->payment_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+            }
+            $messages['message'] = $e->getMessage();
+            $messages['result'] = "fail";
+            return view('global.callback', compact('messages'));
+        }
     }
 }

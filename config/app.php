@@ -1,7 +1,5 @@
 <?php
 
-use Larabookir\Gateway\GatewayServiceProvider;
-
 return [
 
     /*
@@ -190,8 +188,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        GatewayServiceProvider::class
-
+        \Larabookir\Gateway\GatewayServiceProvider::class
     ],
 
     /*
