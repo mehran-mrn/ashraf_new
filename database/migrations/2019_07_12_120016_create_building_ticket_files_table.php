@@ -15,12 +15,8 @@ class CreateBuildingTicketFilesTable extends Migration
     {
         Schema::create('building_ticket_files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('url')->nullable();
-            $table->string('path')->nullable();
-            $table->string('mime');
-            $table->unsignedInteger('ticket_note_id');
-            $table->integer('size')->nullable();
+            $table->unsignedInteger('building_ticket_note_id');
+            $table->unsignedInteger('doc_id');
             $table->timestamps();
         });
     }

@@ -269,6 +269,7 @@ return array(
     'building_dashboard' => 'میز کار',
     'building_types' => 'تیپ ساختمان ها',
     'building_archive' => 'آرشیو پروژه ها',
+    'add_to_my_projects' => 'افزودن به پروژه های من',
     'Charity' => 'خیریه',
     'request_hook' => 'درخواست صندوق',
     'charity_setting' => 'تنظیمات خیریه',

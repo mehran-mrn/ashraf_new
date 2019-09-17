@@ -24,34 +24,22 @@ class building extends Controller
     {
         $this->validate($request, [
             'project_type_title' => 'required|max:150',
-            'image' => 'required_without_all:building_type_id|nullable|bail|image|mimes:jpeg,png,jpg,gif|max:5000|dimensions:min_width=200,min_height=100',
         ]);
         $building_type = null;
 
         if ($request['building_type_id']) {
             $building_type = building_type::with('media')->find($request['building_type_id']);
-            $image_id = $building_type['media']['id'];
         }
-        if ($request->hasFile('image')) {
-
-            if ($building_type and $building_type['media']) {
-                $image_id = image_saver($request['image'], 'building', 'building', [], $building_type['meida']['name']);
-
-            } else {
-                $image_id = image_saver($request['image'], 'building', 'building');
-            }
-        }
-
 
         if ($building_type) {
             $the_building_type = building_type::find($building_type['id']);
             $the_building_type->title = $request->project_type_title;
-            $the_building_type->media_id = $image_id;
+            $the_building_type->media_id = 0;
             $the_building_type->save();
         } else {
             building_type::create([
                 'title' => $request->project_type_title,
-                'media_id' => $image_id
+                'media_id' => "0"
             ]);
         }
         $message = trans("messages.item_created", ['item' => trans('messages.building_type')]);
@@ -320,35 +308,20 @@ class building extends Controller
         $building_ticket->item_id = $item_id;
         $building_ticket->save();
 
-        $building_ticket_note = new building_ticket_note();
-        $building_ticket_note->description = $request['description'];
-        $building_ticket_note->building_ticket_id = $building_ticket['id'];
-        $building_ticket_note->save();
+        $building_ticket_note = $this->set_ticket_note($request['description'],$building_ticket['id']);
+        $this->set_ticket_history($currentUser['id'],$now_time,$building_ticket['id'],$building_ticket_note['id']);
 
-        $building_ticket_history = new building_ticket_history();
-        $building_ticket_history->user_id = $currentUser['id'];
-        $building_ticket_history->time = $now_time;
-        $building_ticket_history->building_ticket_id = $building_ticket['id'];
-        $building_ticket_history->building_ticket_note_id = $building_ticket_note['id'];
-        $building_ticket_history->save();
-        if (isset($request['file_name'])) {
-            foreach ($request['file_name'] as $file_name) {
-                $temp = explode('.', $file_name);
-                $building_ticket_file = new building_ticket_file();
-                $building_ticket_file->name = $file_name;
-                $building_ticket_file->mime = $temp[count($temp) - 1];
-                $building_ticket_file->ticket_note_id = $building_ticket_note['id'];
-                $building_ticket_file->save();
+        if (isset($request['doc_id'])) {
+            foreach ($request['doc_id'] as $doc_id) {
+                $this->set_ticket_file($building_ticket_note['id'],$doc_id);
             }
         }
+        $this->set_ticket_user($building_ticket['id'],$currentUser['id']);
 
-        $building_ticket_user = new building_ticket_user();
-        $building_ticket_user->ticket_id = $building_ticket['id'];
-        $building_ticket_user->user_id = $currentUser['id'];
-        $building_ticket_user->save();
 
         return redirect()->route('building_project', ['project_id' => $project_id]);
     }
+
 
     public function add_ticket_note($ticket_id, Request $request)
     {
@@ -367,27 +340,13 @@ class building extends Controller
 
         $building_ticket = building_ticket::find($ticket_id);
 
-        $building_ticket_note = new building_ticket_note();
-        $building_ticket_note->description = $request['description'];
-        $building_ticket_note->building_ticket_id = $building_ticket['id'];
-        $building_ticket_note->save();
+        $building_ticket_note = $this->set_ticket_note($request['description'],$building_ticket['id']);
 
-        $building_ticket_history = new building_ticket_history();
-        $building_ticket_history->user_id = $currentUser['id'];
-        $building_ticket_history->time = $now_time;
-        $building_ticket_history->history_type = 1;
-        $building_ticket_history->building_ticket_id = $building_ticket['id'];
-        $building_ticket_history->building_ticket_note_id = $building_ticket_note['id'];
-        $building_ticket_history->save();
 
-        if (!empty($request['file_name'])) {
-            foreach ($request['file_name'] as $file_name) {
-                $temp = explode('.', $file_name);
-                $building_ticket_file = new building_ticket_file();
-                $building_ticket_file->name = $file_name;
-                $building_ticket_file->mime = $temp[count($temp) - 1];
-                $building_ticket_file->ticket_note_id = $building_ticket_note['id'];
-                $building_ticket_file->save();
+        $this->set_ticket_history($currentUser['id'],$now_time,$building_ticket['id'],$building_ticket_note['id']);
+        if (!empty($request['doc_id'])) {
+            foreach ($request['doc_id'] as $doc_id) {
+                $this->set_ticket_file($building_ticket_note['id'],$doc_id);
             }
         }
 
@@ -484,4 +443,43 @@ class building extends Controller
 
     }
 
+    public function upload_files(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|file|max:10240',
+        ]);
+        $doc_id = private_file_saver($request['file'],'buildings','z','z');
+        return $doc_id;
+    }
+
+    private function set_ticket_note($description,$building_ticket_id){
+        $building_ticket_note = new building_ticket_note();
+        $building_ticket_note->description = $description;
+        $building_ticket_note->building_ticket_id = $building_ticket_id;
+        $building_ticket_note->save();
+        return $building_ticket_note;
+    }
+    private function set_ticket_history($user_id,$time,$building_ticket_id,$building_ticket_note_id){
+        $building_ticket_history = new building_ticket_history();
+        $building_ticket_history->user_id = $user_id;
+        $building_ticket_history->time = $time;
+        $building_ticket_history->building_ticket_id = $building_ticket_id;
+        $building_ticket_history->building_ticket_note_id = $building_ticket_note_id;
+        $building_ticket_history->save();
+        return $building_ticket_history;
+    }
+    private function set_ticket_file($building_ticket_note_id,$doc_id){
+        $building_ticket_file = new building_ticket_file();
+        $building_ticket_file->building_ticket_note_id = $building_ticket_note_id;
+        $building_ticket_file->doc_id = $doc_id;
+        $building_ticket_file->save();
+        return $building_ticket_file;
+    }
+    private function set_ticket_user($ticket_id,$user_id){
+        $building_ticket_user = new building_ticket_user();
+        $building_ticket_user->ticket_id = $ticket_id;
+        $building_ticket_user->user_id = $user_id;
+        $building_ticket_user->save();
+        return $$building_ticket_user;
+    }
 }

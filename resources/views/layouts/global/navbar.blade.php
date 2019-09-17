@@ -61,7 +61,17 @@
                             </ul>
                         </li>
                         <li><a href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
-                        <li><a href="{{route('blog')}}">{{trans('messages.blog')}}</a></li>
+                        <li><a href="{{route('blog')}}">{{trans('messages.blog')}}</a>
+                            @if(sizeof($categories))
+
+                            <ul class="dropdown">
+                                @foreach ($categories as $category)
+                                <li><a href="{{route('blog')}}">{{$category['category_name']}}</a></li>
+                                @endforeach
+                            </ul>
+                            @endif
+
+                        </li>
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif

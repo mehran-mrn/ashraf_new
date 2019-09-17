@@ -39,7 +39,8 @@ class global_view extends Controller
     public function index()
     {
         $sliders = blog_slider::get();
-        return view('global.index', compact('sliders'));
+        $categories = BlogEtcCategory::orderBy("category_name")->get();
+        return view('global.index', compact('sliders','categories'));
     }
 
     public function post_page($blogPostSlug, Request $request)

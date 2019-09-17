@@ -192,6 +192,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('edit_project_users/{project_id}', 'panel\building@edit_project_users')->name('edit_project_users');
         Route::get('load_building_ticket_close_form/{ticket_id}', 'panel\panel_view@load_building_ticket_close_form')->name('load_building_ticket_close_form');
         Route::post('close_building_ticket/{ticket_id}', 'panel\building@close_building_ticket')->name('close_building_ticket');
+        Route::post('/upload_files', 'panel\building@upload_files')->name('upload_ticket_files');
 
     });
     Route::prefix('charity')->group(function () {

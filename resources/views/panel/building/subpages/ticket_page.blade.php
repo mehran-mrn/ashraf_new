@@ -23,18 +23,21 @@
 
                 // Removable thumbnails
                 Dropzone.options.dropzoneRemove = {
-                    url: "{{route('upload_files')}}", // The name that will be used to transfer the file
+                    url: "{{route('upload_ticket_files')}}", // The name that will be used to transfer the file
                     paramName: "file", // The name that will be used to transfer the file
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
-                    maxFilesize: 5, // MB
+                    maxFilesize: 10, // MB
                     maxFiles: 10,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     addRemoveLinks: true,
                     init: function () {
                         this.on("success", function (file, response) {
                             var org_name = file.name;
                             var new_name = org_name.replace(".", "_");
                             $("#file_names").append(
-                                '<input class="' + new_name + '" name="file_name[]" type="hidden" value="' + response + '" />'
+                                '<input class="' + new_name + '" name="doc_id[]" type="hidden" value="' + response + '" />'
                             );
                         });
                         this.on("complete", function (file) {
@@ -134,10 +137,18 @@
                                         </div>
                                         <?php $i = 1;?>
                                         @foreach($history['note']['files'] as $file)
-                                            <div><a href="{{storage_path('test.jpg')}}"><i
-                                                            class="icon-file-media"></i> {{__('messages.attachment') . $i}}
-                                                </a></div>
+                                            <div>
+                                                <form method="post" action="{{route('download_doc')}}">
+                                                    <div class="badge badge-warning">{{$file['doc']['mime']}} </div>
+                                                    {{__('messages.attachment') . $i}}
+
+                                                    @csrf
+                                                    <input type="hidden" name="doc_id" value="{{$file['doc']['id']}}">
+                                                    <button class="btn btn-link" type="submit" >{{trans('words.download')}} <i class="icon-download"></i> </button>
+                                                </form>
+                                            </div>
                                             <?php $i++; ?>
+
                                         @endforeach
 
                                     </div>

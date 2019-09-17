@@ -20,7 +20,7 @@ Rounded Boxed Skin
 
 /* Dropdown */
 .menuzord-menu ul.dropdown{
-	top: 50px;
+	top: 45px;
 }
 .menuzord-menu ul.dropdown li ul.dropdown{
     top: 0;
@@ -29,7 +29,7 @@ Rounded Boxed Skin
 /* Dropdown items */
 .menuzord .menuzord-menu ul.dropdown li:hover > a{
 	background: #333;
-	color: #fff;
+	color: #dbffff;
 }
 
 /* Megamenu */

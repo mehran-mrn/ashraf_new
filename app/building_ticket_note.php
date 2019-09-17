@@ -9,7 +9,7 @@ class building_ticket_note extends Model
     //
     public function files()
     {
-        return $this->hasMany('App\building_ticket_file','ticket_note_id');
+        return $this->hasMany('App\building_ticket_file','building_ticket_note_id');
     }
     public function history()
     {

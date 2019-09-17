@@ -648,6 +648,15 @@
 
                             <div class="col-md-6 ">
                                 <a type="button"
+                                   class="btn bg-info btn-block btn-float btn-float-lg "
+                                   href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
+                                   data-original-title="{{trans('messages.add_to_my_projects')}}">
+                                    <div class="row">
+                                        <div class="col-md-2"><i class="icon-star-empty3 icon-2x"></i></div>
+                                        <div class="col-md-10"> <span class="font-size-sm">{{trans('messages.add_to_my_projects')}}</span></div>
+                                    </div>
+                                </a>
+                                <a type="button"
                                    class="btn bg-success btn-block btn-float btn-float-lg "
                                    href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
                                    data-original-title="{{trans('messages.add_new',['item'=>__('messages.ticket')])}}">
