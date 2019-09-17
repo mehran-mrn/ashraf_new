@@ -21,7 +21,7 @@
                                 delay: 3000,
                             });
                             setTimeout(function () {
-                                window.location.replace("cart/" + response.message.id);
+                                window.location.replace("/payment?id=" + response.message.id+"&type=charity_vow");
                             }, 2000);
 
                         } else {
@@ -38,6 +38,15 @@
             })
         })
     </script>
+@stop
+@section('css')
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 @stop
 @section('content')
     <section>

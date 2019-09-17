@@ -511,9 +511,7 @@ Route::group(
     Route::get('payment', 'globals\global_view@payment')->name('payment');
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');
 
-    Route::any('/{gateway}/callback/{invoiceId}', ['as' => 'payment::callback', 'uses' => 'GatewayController@callback']);
-
-
+//    Route::any('/{gateway}/callback/{invoiceId}', ['as' => 'payment::callback', 'uses' => 'GatewayController@callback']);
 
 });
 //=========================================
