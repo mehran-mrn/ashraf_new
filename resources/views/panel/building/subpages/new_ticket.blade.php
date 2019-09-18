@@ -34,6 +34,9 @@
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
                     maxFilesize: 10, // MB
                     maxFiles: 10,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     addRemoveLinks: true,
                     init: function () {
                         this.on("success", function (file, response) {

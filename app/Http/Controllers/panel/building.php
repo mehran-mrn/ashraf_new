@@ -529,6 +529,6 @@ class building extends Controller
         $building_ticket_user->ticket_id = $ticket_id;
         $building_ticket_user->user_id = $user_id;
         $building_ticket_user->save();
-        return $$building_ticket_user;
+        return $building_ticket_user;
     }
 }
