@@ -1,4 +1,6 @@
 @extends('layouts.global.global_layout')
+@section('title',__('messages.periodic_payment'). " |")
+
 @section('js')
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 

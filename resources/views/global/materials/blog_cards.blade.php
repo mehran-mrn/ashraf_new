@@ -17,7 +17,7 @@
                             <div class="entry-header">
                                 @if($news['image_large'])
                                     <div class="post-thumb thumb">
-                                        <img src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']}}"
+                                        <img src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']}}"
                                              alt="" class="img-responsive img-fullwidth">
                                     </div>
                                 @endif
@@ -26,23 +26,21 @@
                                 <div class="entry-meta media mt-0 no-bg no-border">
                                     <div class="entry-date media-left text-center flip bg-theme-colored pt-5 pr-15 pb-5 pl-15">
                                         <ul>
-                                            <li class="font-16 text-white font-weight-600 border-bottom">28</li>
-                                            <li class="font-12 text-white text-uppercase">آبان</li>
+                                            <li class="font-16 text-white font-weight-600 border-bottom">{{jdate('d',strtotime($news['created_at']))}}</li>
+                                            <li class="font-12 text-white text-uppercase">{{jdate('F',strtotime($news['created_at']))}}</li>
                                         </ul>
                                     </div>
                                     <div class="media-body pl-15">
                                         <div class="event-content pull-left flip">
-                                            <h4 class="entry-title text-white text-uppercase m-0 mt-5"><a
-                                                        href="#">{{$news['title']}}</a></h4>
+                                            <h5 class="entry-title text-white text-uppercase m-0 mt-5"><a
+                                                        href="{{route('post_page',['slug'=>$news['slug']])}}">{{$news['title']}}</a></h5>
                                             <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                        class="fa fa-commenting-o mr-5 text-theme-colored"></i> 214 Comments</span>
-                                            <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                        class="fa fa-heart-o mr-5 text-theme-colored"></i> 895 Likes</span>
+                                                        class="fa fa-commenting-o mr-5 text-theme-colored"></i> 214 {{__('messages.comment')}}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <p class="mt-10">{{$news['short_description'] }}</p>
-                                <a href="#" class="btn-read-more">{{trans('messages.read_more')}}</a>
+                                <a href="{{route('post_page',['slug'=>$news['slug']])}}" class="btn-read-more pull-left">{{trans('messages.read_more')}}</a>
                                 <div class="clearfix"></div>
                             </div>
                         </article>

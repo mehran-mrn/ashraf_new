@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Config;
 use Larabookir\Gateway\Mellat\Mellat;
 use Larabookir\Gateway\Saman\Saman;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
+use WebDevEtc\BlogEtc\Middleware\UserCanManageBlogPosts;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
 use WebDevEtc\BlogEtc\Models\BlogEtcPost;
 
@@ -252,14 +253,23 @@ class global_view extends Controller
 
     public function blog($category_slug = null)
     {
+        $this->middleware(UserCanManageBlogPosts::class);
+
         if ($category_slug) {
             $category = BlogEtcCategory::where("slug", $category_slug)->firstOrFail();
             $posts = $category->posts()->where("blog_etc_post_categories.blog_etc_category_id", $category->id);
         } else {
             $posts = BlogEtcPost::query();
         }
-        $posts = $posts->orderBy("posted_at", "desc")
-            ->paginate(config("blogetc.per_page", 10));
+
+//        $posts = $posts->orderBy("posted_at", "desc")
+//            ->paginate(config("blogetc.per_page", 10));
+
+
+        $posts = BlogEtcPost::orderBy("posted_at", "desc")
+            ->paginate(10);
+        return view("global.blog", ['posts'=>$posts]);
+
         return view('global.blog', compact('posts'));
     }
 

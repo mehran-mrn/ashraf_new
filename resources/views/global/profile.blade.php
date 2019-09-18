@@ -1,4 +1,5 @@
 @extends('layouts.global.global_layout')
+@section('title',__('messages.my_profile'). " |")
 
 @section('content')
     <div class="main-content">

@@ -1,18 +1,19 @@
 @extends('layouts.global.global_layout')
+@section('title',$post->gen_seo_title(). " |")
+
+@section('meta_description',$post['meta_desc'])
+
 @section('content')
     <div class="main-content">
-        <!-- Section: inner-header -->
-
-        <!-- Section: Blog -->
         <section>
             <div class="container mt-30 mb-30 pt-30 pb-30">
                 <div class="row">
-                    <div class="col-md-9 pull-right flip sm-pull-none">
+                    <div class="col-md-9 pull-right sm-pull-none">
                         <div class="blog-posts single-post">
                             <article class="post clearfix mb-0">
                                 <div class="entry-header">
                                     <div class="post-thumb thumb"><img
-                                                src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$post['image_large']}}"
+                                                src="{{$post->image_url('large')}}"
                                                 alt="" class="img-responsive img-fullwidth"></div>
                                 </div>
                                 <div class="entry-content">
@@ -37,7 +38,7 @@
                                     <b class="mb-20 mt-15">{{$post['subtitle']}}</b>
                                     <hr>
                                     <div class="text-justify m-10">
-                                        {!! $post['post_body'] !!}
+                                        {!! $post->post_body_output() !!}
                                     </div>
                                     <div class="mt-30 mb-0">
                                         <p class="mt-10 text-theme-colored small">
@@ -47,7 +48,6 @@
                                     </div>
                                 </div>
                             </article>
-
                             <div class='tagline p-0 pt-20 mt-5'>
                                 @foreach($post->categories as $category)
                                     <a class='btn btn-outline-success btn-sm m-1' href='{{$category->url()}}'>
@@ -73,17 +73,18 @@
                                     <h5 class="comments-title">{{trans('messages.comments')}}</h5>
                                     <ul class="comment-list">
                                         @forelse($comments as $comment)
-
                                             <li>
-                                                <div class="media comment-author"><a class="media-left pull-left flip"
-                                                                                     href="#"><img
-                                                                class="comment-thumb-img img-thumbnail"
-                                                                src="{{url('public/assets/global/images/unknown-avatar.png')}}"
-                                                                alt=""></a>
+                                                <div class="media comment-author">
+                                                    <a class="media-left pull-left flip" href="#">
+                                                        <img class="comment-thumb-img img-thumbnail"
+                                                             src="{{url('public/assets/global/images/unknown-avatar.png')}}"
+                                                             alt="{{__('messages.ashraf')}}"></a>
                                                     <div class="media-body">
                                                         <h5 class="media-heading comment-heading">{{$comment->author()}}
-                                                            :</h5>
-                                                        <div class="comment-date">{{miladi_to_shamsi_date($comment->created_at)}}</div>
+                                                            :
+                                                            <div class="comment-date pull-left">{{jdate("d F Y",strtotime($comment->created_at))}}</div>
+                                                        </h5>
+
                                                         @if(config("blogetc.comments.ask_for_author_website") && $comment->author_website)
                                                             <div class="comment-date">
                                                                 (<a href='{{$comment->author_website}}' target='_blank'
@@ -94,6 +95,7 @@
 
                                                     </div>
                                                 </div>
+                                                <hr>
                                             </li>
                                         @empty
                                             <div class='alert alert-info'>{{trans('messages.no_comment_yet')}}</div>
@@ -125,7 +127,6 @@
                                                                        value="{{old("author_name")}}">
                                                             </div>
                                                             @if(config("blogetc.comments.ask_for_author_email"))
-
                                                                 <div class="form-group">
                                                                     <input type="text" required="" class="form-control"
                                                                            name="author_email" id="contact_email2"
@@ -169,8 +170,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {{--Comments are disabled--}}
                             @endif
                         </div>
                     </div>

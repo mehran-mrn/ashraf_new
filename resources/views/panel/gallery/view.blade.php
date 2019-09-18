@@ -35,25 +35,35 @@
                     acceptedFiles: ".jpeg,.jpg,.png,.gif",
                     autoProcessQueue: false,
                     addRemoveLinks: true,
-                    parallelUploads: 30,
+                    parallelUploads: 2,
                     sending: function (file, xhr, formData) {
                         formData.append("_token", token);
                         formData.append("cat_id", cat_id);
                     },
                     init: function () {
                         var myDropzone = this;
+                        var submit = $("#frm_add_image").find("button[type=submit]");
                         $("#frm_add_image").on('submit', function (e) {
                             e.preventDefault();
-                            myDropzone.processQueue();
-                        })
+                            submit.attr('disabled', 'disabled');
+                            submit.html("{{__('messages.please_waite')}}");
+                            startUpload();
+                        });
+
+                        function startUpload() {
+                            for (var i = 0; i < myDropzone.getAcceptedFiles().length; i++) {
+                                myDropzone.processFile(myDropzone.getAcceptedFiles()[i]);
+                            }
+                        }
+
                         this.on('sending', function (file, xhr, formData) {
                             var data = $('#frm_add_image').serializeArray();
                             $.each(data, function (key, el) {
                                 formData.append(el.name, el.value);
                             });
                         });
+
                         this.on("success", function (file, response) {
-                            console.log(response);
                             var org_name = file.name;
                             var new_name = org_name.replace(".", "_");
                             $("#file_names").append(
@@ -64,15 +74,20 @@
                                 text: response.message,
                                 type: 'success'
                             });
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1000)
+                            if (myDropzone.getQueuedFiles().length === 0 && myDropzone.getUploadingFiles().length === 0) {
+                                submit.removeAttr("disabled");
+                                submit.html("{{__('messages.add')}}");
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000)
+                            }
 
                         });
                         this.on("complete", function (file, response) {
                             $("input").remove(".dz-hidden-input");
                             $('.dz-hidden-input').hide();
                         });
+
                         this.on("removedfile", function (file) {
                             var org_name = file.name;
                             var new_name = org_name.replace(".", "_");
@@ -108,9 +123,13 @@
             });
         }
 
+
         $(document).ready(function () {
             $(document).on('submit', "#frm_edit_image", function (e) {
                 e.preventDefault();
+                var submit = $(this).find("button[type=submit]");
+                submit.attr('disabled', 'disabled');
+                submit.html("{{__('messages.please_waite')}}");
                 $.ajax({
                     url: "{{route('gallery_media_edit')}}",
                     method: 'POST',
@@ -126,10 +145,22 @@
                                 type: 'success'
                             });
                             setTimeout(function () {
+                                submit.removeAttr("disabled");
+                                submit.html("{{__('messages.edit')}}");
                                 location.reload();
                             }, 1000)
                         }
-                    }, error: function () {
+                    }, error: function (response) {
+                        var errors = response.responseJSON.errors;
+                        $.each(errors, function (index, value) {
+                            PNotify.error({
+                                delay: 3000,
+                                title: '',
+                                text: value,
+                            });
+                        });
+                        submit.removeAttr("disabled");
+                        submit.html("{{__('messages.edit')}}");
                     }
                 });
 
@@ -184,8 +215,6 @@
                             data-target="#general_modal">
                         {{__('messages.add_image')}}
                     </button>
-
-
                 </section>
             </div>
             <section>
@@ -234,7 +263,7 @@
                                                     <a href="javascript:;"
                                                        class="btn btn-outline
                                                         {{$catInfo['media_id_one']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
-                                                        text-white border-2 btn-icon rounded-round swal-alert m-1"
+                                                               text-white border-2 btn-icon rounded-round swal-alert m-1"
                                                        data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'one'])}}"
                                                        data-method="GET"
                                                        data-csrf="{{csrf_token()}}"
@@ -264,7 +293,7 @@
                                                     <a href="javascript:;"
                                                        class="btn btn-outline
                                                        {{$catInfo['media_id_three']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
-                                                       text-white border-2 btn-icon rounded-round swal-alert m-1"
+                                                               text-white border-2 btn-icon rounded-round swal-alert m-1"
                                                        data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'three'])}}"
                                                        data-method="GET"
                                                        data-csrf="{{csrf_token()}}"
@@ -333,11 +362,11 @@
                             <label for="">{{__('messages.title')}}</label>
                             <input type="text" name="title" class="form-control">
                         </div>
-                        <input type="hidden" name="media_id" id="media_id" >
+                        <input type="hidden" name="media_id" id="media_id">
                         <div class="form-group pull-left pt-2">
                             <button type="button" id="button" class="btn btn-default" class="close"
                                     data-dismiss="modal">{{__('messages.cancel')}}</button>
-                            <button type="submit" class="btn btn-primary">{{__('messages.add')}}</button>
+                            <button type="submit" class="btn btn-warning">{{__('messages.edit')}}</button>
                         </div>
                     </form>
                 </div>

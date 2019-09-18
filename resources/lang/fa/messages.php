@@ -597,5 +597,9 @@ return array(
     'register_by_excel'=>'ثبت دسته ای اسامی با فایل اکسل',
     'rial'=>'ریال',
     'amount_rial'=>'مبلغ به ریال',
-    'is_going_connect_to_gateway'=>'در حال انتقال به درگاه پرداخت...'
+    'is_going_connect_to_gateway'=>'در حال انتقال به درگاه پرداخت...',
+    'ashraf'=>'اشرف الانبیاء',
+    'continue_post'=>'ادامه مطلب...',
+    'your_comment_send_successfully'=>'دیدگاه شما با موفقیت ارسال شد.',
+    'your_comment_send_successfully_and_show_after_approve'=>'دیدگاه شما با موفقیت ارسال شد و پس از تایید نمایش داده میشود.'
 );

@@ -1,17 +1,47 @@
 <!DOCTYPE html>
-<html lang="{{ trim(str_replace('_', '-', app()->getLocale())) }}" dir="{{trim(str_replace('_', '-', app()->getLocale())) == 'fa'? 'rtl':'ltr'}}">
+<html lang="{{ trim(str_replace('_', '-', app()->getLocale())) }}"
+      dir="{{trim(str_replace('_', '-', app()->getLocale())) == 'fa'? 'rtl':'ltr'}}">
 <head>
-
-    <!-- Meta Tags -->
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="description" content="ngopress - Nonprofit, Crowdfunding & Charity HTML5 Template"/>
-    <meta name="keywords" content="charity,crowdfunding,nonprofit,orphan,Poor,funding,fundrising,ngo,children"/>
-    <meta name="author" content="ThemeMascot"/>
+    <meta name="description" content="{{config('site_setting.site_name')}}"/>
+    <meta name="keywords" content="{{config('site_setting.keyword')}}"/>
+    <meta name="author" content="Mehran Marandi - m.marandi@gmail.com"/>
+    <meta name="author" content="Milad Kardgar - mk.kardgar@gmail.com"/>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ashrafolanbia.ir"/>
+    <meta name="copyright" content="{{config('site_setting.copy_right')}}">
+    <meta name="language" content="fa">
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="index follow">
+    <meta name="googlebot" content="index follow">
+    <!--        <meta name="samandehi" content="712692104"/>-->
+    <meta property="og:title" content="{{config('site_setting.site_name')}}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{config('site_setting.site_url')}}"/>
+    <meta property="og:image" content="{{asset(url('/public/assets/global/images/logoImage.png'))}}"/>
+    <meta property="og:site_name" content="{{__('site_info.web_title')}}"/>
+    <meta property="og:description" content="{{config('site_setting.site_description')}}"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:description" content="{{config('site_setting.site_description')}}"/>
+    <meta name="twitter:title"
+          content="{{__('site_info.web_title')}}"/>
+
+    <script type="application/lds+json">{
+                   "@context": "http://schema.org",
+                    "@type": "Blog",
+                    "url": "{{config('site_setting.site_url')}}/blog"
+                    }
+    </script>
+    <meta name="viewport" content="width=device-width">
+
+
+    <meta name="description" content="@yield('meta_description')">
 @yield('meta')
 
 <!-- Page Title -->
-    <title>{{trans('site_info.web_title')}}</title>
+    <title>@yield('title') {{trans('site_info.web_title')}}</title>
 
     <!-- Favicon and Touch Icons -->
     <link href="{{ URL::asset('/public/assets/global/images/favicon.png') }}" rel="shortcut icon" type="image/png">
@@ -61,8 +91,7 @@
           type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/style.css') }}?v=4" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/fonts.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{URL::asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
-
+    <link href="{{URL::asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css"/>
 
 
     @yield('css')
@@ -78,15 +107,11 @@
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
 
 
-
-
-
     <!-- Revolution Slider 5.x SCRIPTS -->
     <script
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.tools.min.js') }}"></script>
+            src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.tools.min.js') }}"></script>
     <script
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.revolution.min.js') }}"></script>
-
+            src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.revolution.min.js') }}"></script>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -158,24 +183,24 @@
 @yield('footer_js')
 
 
-
 <script>
     $(document).ready(function () {
         @if(!$errors->isEmpty())
         @foreach ($errors->all() as $key => $error)
-            PNotify.error({
-                title: '{{$key}}',
-                text: '{{ $error }}',
-                delay: 5000,
-            });
+        PNotify.error({
+            title: '{{$key}}',
+            text: '{{ $error }}',
+            delay: 5000,
+        });
         @endforeach
         @endif
         @if ($message = Session::get('message'))
-            PNotify.success({
-                text: '{{$message}}',
-                delay: 3000,
-            });
+        PNotify.success({
+            text: '{{$message}}',
+            delay: 3000,
+        });
         @endif
+        {{Session::forget('message')}}
     });
 </script>
 </body>

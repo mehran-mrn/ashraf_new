@@ -43,7 +43,7 @@
                             <div class="col-lg-3 col-md-4 col-xs-6 thumb" >
                                 <a href="{{url($pic['url'])}}" data-fancybox="images"
                                    data-caption="{{$pic['title']}}" >
-                                    <img src="{{url($pic['path']."/600/".$pic['name'])}}" />
+                                    <img src="{{url($pic['path']."/600/".$pic['name'])}}" alt="{{$pic['title']}} - {{__('messages.ashraf')}}" />
                                 </a>
                             </div>
                         @endforeach

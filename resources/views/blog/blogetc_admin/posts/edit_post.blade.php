@@ -4,6 +4,12 @@
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
     <script>
         $(document).ready(function () {
+
+            CKEDITOR.replace('post_text', {
+                language: 'fa',
+                uiColor: '#9AB8F3',
+
+            });
             $('#blog_posted_at_btn').MdPersianDateTimePicker({
                 targetTextSelector: '#blog_posted_at',
                 enableTimePicker: true,
@@ -52,15 +58,4 @@ $active_sidbare = ['blog', 'blog_posts']
             </div>
         </div>
     </section>
-@endsection
-@section('footer_js')
-    <script>
-        $(document).ready(function () {
-            CKEDITOR.replace('post_text', {
-                language: 'fa',
-                uiColor: '#9AB8F3',
-
-            });
-        });
-    </script>
 @endsection

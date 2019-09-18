@@ -1,4 +1,6 @@
 @extends('layouts.global.global_layout')
+@section('title',$charity['title']. " |")
+
 @section('js')
     <script>
         $(document).ready(function () {

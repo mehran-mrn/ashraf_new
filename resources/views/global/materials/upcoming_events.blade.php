@@ -6,7 +6,7 @@
                 <div class="col-md-6 bordered_box_bottom">
                     @foreach(get_posts(1,['last_post']) as $news)
                         <img class="img-fullwidth"
-                             src="{{$news['image_large']? URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
+                             src="{{$news['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
                              alt="">
 
                         <h5 class="line-bottom"><strong>{{$news['title']}}</strong></h5>
@@ -28,7 +28,7 @@
                                 <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"
                                    class="post-thumb post-thumb-img mb-0">
                                     <img alt=""
-                                         src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}">
+                                         src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}">
                                     <ul class="list-inline font-12 mt-1 m-0 text-center">
                                         <li class="pr-0"><i
                                                     class="fa fa-calendar m-0"></i> {{jdate('d F',strtotime($news['posted_at']))}}

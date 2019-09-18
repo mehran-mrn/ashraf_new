@@ -1,4 +1,6 @@
 @extends('layouts.global.global_layout')
+@section('title',__('messages.blog'). " |")
+
 @section('content')
     <div class="main-content">
 
@@ -23,11 +25,11 @@
                     <div class="col-md-9 pull-right  sm-pull-none">
                         <div class="blog-posts">
                             @foreach($posts as $post)
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <article class="post clearfix mb-30 bg-lighter">
                                         <div class="entry-header">
                                             <div class="post-thumb thumb">
-                                                <img src="{{asset('/public/assets/global/images/blog/1.jpg')}}" alt=""
+                                                <img src="{{$post->image_url('large')}}" alt=""
                                                      class="img-responsive img-fullwidth">
                                             </div>
                                         </div>
@@ -42,16 +44,15 @@
                                                 <div class="media-body pl-15">
                                                     <div class="event-content pull-left flip">
                                                         <h4 class="entry-title text-white text-uppercase m-0 mt-5"><a
-                                                                    href="#">{{$post->title}}</a></h4>
+                                                                    href="{{route('post_page',$post->slug)}}">{{$post->title}}</a></h4>
                                                         <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                                    class="fa fa-commenting-o mr-5 text-theme-colored"></i> 214 Comments</span>
-                                                        <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                                    class="fa fa-heart-o mr-5 text-theme-colored"></i> 895 Likes</span>
+                                                                    class="fa fa-commenting-o mr-5 text-theme-colored"></i> {{$post->comments()->count()}}</span>
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="mt-10">{{$post->subtitle}}</p>
-                                            <a href="#" class="btn-read-more pull-left">
+                                            <a href="{{route('post_page',$post->slug)}}" class="btn-read-more pull-left">
                                                 {{__('messages.continue_post')}}
                                             </a>
                                             <div class="clearfix"></div>
@@ -77,16 +78,18 @@
                             </div>
 
                             <div class="widget">
-                                <h5 class="widget-title line-bottom">Image gallery with text</h5>
+                                <h5 class="widget-title line-bottom">{!! __('messages.photos_gallery') !!}</h5>
                                 <div class="owl-carousel-1col">
                                     @forelse(get_photo_gallery(5) as $photo)
                                         <div class="item">
-                                            <img src="{{url($photo['path']."/300/".$photo['name'])}}" alt="">
+                                            <img src="{{url($photo['path']."/300/".$photo['name'])}}"
+                                                 alt="{{$photo['title']}} - {{__('messages.ashraf')}}">
                                             <h4 class="title">{{$photo['title']}}</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae illum
-                                                amet illo.</p>
+
                                         </div>
-                                        @endforeach
+                                    @empty
+
+                                    @endforelse
                                 </div>
                             </div>
                             <div class="widget">

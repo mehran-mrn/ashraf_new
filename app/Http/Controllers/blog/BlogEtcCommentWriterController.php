@@ -46,6 +46,12 @@ class BlogEtcCommentWriterController extends Controller
 
         $new_comment = $this->createNewComment($request, $blog_post);
 
+        if(config('blogetc.comments.auto_approve_comments')) {
+            \Session::put('message', __('messages.your_comment_send_successfully'));
+        }else{
+            \Session::put('message', __('messages.your_comment_send_successfully_and_show_after_approve'));
+        }
+        return redirect()->back();
         return view("blogetc::saved_comment", [
             'captcha' => $captcha,
             'blog_post' => $blog_post,
