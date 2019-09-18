@@ -27,7 +27,7 @@
                 var cat_id = $('#cat_id').val();
 
                 Dropzone.options.dropzoneRemove = {
-                    url: "{{route('upload_files_category')}}",
+                    url: "{{route('upload_files_building_project')}}",
                     paramName: "file",
                     dictDefaultMessage: 'Drop files to upload <span>or CLICK</span>',
                     maxFilesize: 5,
@@ -115,6 +115,7 @@
                     url: "{{route('gallery_media_edit')}}",
                     method: 'POST',
                     data: $(this).serialize(),
+
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
                     },
@@ -132,8 +133,7 @@
                     }, error: function () {
                     }
                 });
-
-            });
+            })
 
             $('[data-fancybox="images"]').fancybox({
                 closeExisting: false,
@@ -168,15 +168,14 @@
     </script>
 @endsection
 @section('content')
-    <?php $active_sidbare = ['gallery', 'gallery_add']?>
+    <?php $active_sidbare = ['building', 'collapse']?>
     <section>
         <div class="content">
             <div class="container-fluid">
                 <section>
-                    <a href="{{route('gallery_add')}}"
+                    <a href="{{route('building_project',['id'=>$catInfo['id']])}}"
                        class="btn btn-outline-dark m-2 py-2 px-3">{{__('messages.back')}}</a>
-                    <a href="{{route('gallery_view',['id'=>$catInfo['id']])}}"
-                       class="btn btn-outline-dark m-2 py-2 px-3" target="_blank">{{__('messages.show_site')}}</a>
+
                     <button
                             class="btn btn-primary m-2 py-2 px-3"
                             data-toggle="modal"
@@ -231,50 +230,6 @@
                                                                 class="icon-trash"></i>
                                                     </a>
 
-                                                    <a href="javascript:;"
-                                                       class="btn btn-outline
-                                                        {{$catInfo['media_id_one']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
-                                                        text-white border-2 btn-icon rounded-round swal-alert m-1"
-                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'one'])}}"
-                                                       data-method="GET"
-                                                       data-csrf="{{csrf_token()}}"
-                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
-                                                       data-text="{{trans('messages.approve_image_text')}}"
-                                                       data-type="warning"
-                                                       data-cancel="true"
-                                                       data-confirm-text="{{trans('messages.approve')}}"
-                                                       data-cancel-text="{{trans('messages.cancel')}}">1
-                                                    </a>
-
-                                                    <a href="javascript:;"
-                                                       class="btn btn-outline
-                                                       {{$catInfo['media_id_two']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
-                                                               text-white border-2 btn-icon rounded-round swal-alert m-1"
-                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'two'])}}"
-                                                       data-method="GET"
-                                                       data-csrf="{{csrf_token()}}"
-                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
-                                                       data-text="{{trans('messages.approve_image_text')}}"
-                                                       data-type="warning"
-                                                       data-cancel="true"
-                                                       data-confirm-text="{{trans('messages.approve')}}"
-                                                       data-cancel-text="{{trans('messages.cancel')}}">2
-                                                    </a>
-
-                                                    <a href="javascript:;"
-                                                       class="btn btn-outline
-                                                       {{$catInfo['media_id_three']==$media['id']?' border-success bg-success ':' border-white bg-white '}}
-                                                       text-white border-2 btn-icon rounded-round swal-alert m-1"
-                                                       data-ajax-link="{{route('gallery_category_image_default',['cat_id'=>$media['category_id'],'media_id'=>$media['id'],'id'=>'three'])}}"
-                                                       data-method="GET"
-                                                       data-csrf="{{csrf_token()}}"
-                                                       data-title="{{trans('messages.approve',['item'=>trans('messages.image')])}}"
-                                                       data-text="{{trans('messages.approve_image_text')}}"
-                                                       data-type="warning"
-                                                       data-cancel="true"
-                                                       data-confirm-text="{{trans('messages.approve')}}"
-                                                       data-cancel-text="{{trans('messages.cancel')}}">3
-                                                    </a>
                                                 </div>
                                                 <div class="caption">
                                                     <h6 class="caption text-center pt-1">{{$media['title']}}</h6>
@@ -333,7 +288,7 @@
                             <label for="">{{__('messages.title')}}</label>
                             <input type="text" name="title" class="form-control">
                         </div>
-                        <input type="hidden" name="media_id" id="media_id" >
+                        <input type="hidden" name="media_id" id="media_id" value="">
                         <div class="form-group pull-left pt-2">
                             <button type="button" id="button" class="btn btn-default" class="close"
                                     data-dismiss="modal">{{__('messages.cancel')}}</button>

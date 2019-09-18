@@ -503,7 +503,7 @@ class panel_view extends Controller
         $ticket_status_filter = $request->input('ticket_status_filter');
 
 
-        $projects = building_project::with('media', 'building_items', 'building_users')->find($project_id);
+        $projects = building_project::with('gallery','media', 'building_items', 'building_users')->find($project_id);
         $progress_tickets = building_ticket::where('ticket_type', '0')
             ->where('building_id', $project_id)->get();
         $building_items_obj = building_item::where('building_id', $project_id)->get();
@@ -623,7 +623,16 @@ class panel_view extends Controller
         return view('panel.building.materials.close_ticket_form', compact('ticket_id', 'ticket'));
     }
 
-
+    public function building_gallery_view(Request $request)
+    {
+        $catInfo = building_project::find($request['id']);
+        $medias = \App\media::where(
+            [
+                ['category_id', '=', $request['id']],
+                ['module', '=', 'building'],
+            ])->get();
+        return view('panel.building.gallery.view', compact('medias', 'catInfo'));
+    }
 //end building module
 
 //charity module
@@ -861,6 +870,7 @@ class panel_view extends Controller
         $medias = \App\media::where(
             [
                 ['category_id', '=', $request['id']],
+                ['module', '=', 'gallery'],
             ])->get();
         return view('panel.gallery.view', compact('medias', 'catInfo'));
     }

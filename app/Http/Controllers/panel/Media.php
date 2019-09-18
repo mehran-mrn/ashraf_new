@@ -37,6 +37,19 @@ class Media extends Controller
         return back_normal($request, $messages);
     }
 
+    public function upload_files_building_project(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|image',
+            'cat_id' => 'required',
+        ]);
+
+        uploadGallery($request['file'], 'building', array('category_id' => $request['cat_id'], 'title' => $request['title']));
+
+        $messages = trans('messages.item_created', ['item' => trans('messages.image')]);
+        return back_normal($request, $messages);
+    }
+
     public function gallery_category_add(Request $request)
     {
         $this->validate($request,
@@ -112,6 +125,9 @@ class Media extends Controller
 
     public function gallery_media_edit(Request $request)
     {
+        $this->validate($request, [
+            'media_id' => 'required',
+        ]);
         if (\App\media::findOrFail($request['media_id'])) {
             \App\media::where('id', $request['media_id'])
                 ->update(

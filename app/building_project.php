@@ -11,6 +11,11 @@ class building_project extends Model
     {
         return $this->belongsTo('App\media','media_id');
     }
+    public function gallery()
+    {
+        return $this->hasMany('App\media', 'category_id', 'id')->where('media.module', '=', 'building');
+    }
+
     public function building_items()
     {
         return $this->hasMany('App\building_item','building_id');

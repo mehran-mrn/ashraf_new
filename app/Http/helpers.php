@@ -725,16 +725,16 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
     $month = jdate("m", time(), '', '', 'en');
 
     if (!file_exists('public/images')) {
-        mkdir('public/images', 0755, true);
+        mkdir('public/images', 0775, true);
     }
-    if (!file_exists('public/images/' . $folder)) {
-        mkdir('public/images/' . $folder, 0755, true);
+    if (!file_exists('public/images/'. $folder)) {
+        mkdir('public/images/' . $folder, 0775, true);
     }
     if (!file_exists('public/images/' . $folder . "/" . $year)) {
-        mkdir('public/images/' . $folder . "/" . $year, 0755, true);
+        mkdir('public/images/' . $folder . "/" . $year, 0775, true);
     }
     if (!file_exists('public/images/' . $folder . "/" . $year . "/" . $month)) {
-        mkdir('public/images/' . $folder . "/" . $year . "/" . $month, 0755, true);
+        mkdir('public/images/' . $folder . "/" . $year . "/" . $month, 0775, true);
     }
     $destinationPath = 'public/images/' . $folder . "/" . $year . "/" . $month;
     $time = time();

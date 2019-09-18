@@ -39,7 +39,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //        'middleware' => 'auth',
 //    ]);
 
-        Route::post('doc_download', 'Controller@download_doc')->name('download_doc');
 
     Route::prefix('user_manager')->group(function () {
 
@@ -193,6 +192,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('load_building_ticket_close_form/{ticket_id}', 'panel\panel_view@load_building_ticket_close_form')->name('load_building_ticket_close_form');
         Route::post('close_building_ticket/{ticket_id}', 'panel\building@close_building_ticket')->name('close_building_ticket');
         Route::post('/upload_files', 'panel\building@upload_files')->name('upload_ticket_files');
+        Route::get('category/{id}', 'panel\panel_view@building_gallery_view')->name('building_gallery_view');
 
     });
     Route::prefix('charity')->group(function () {
@@ -238,6 +238,9 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::prefix('media')->group(function () {
         Route::post('/upload_files', 'panel\Media@upload_files')->name('upload_files');
         Route::post('/upload_files_category/', 'panel\Media@upload_files_category')->name('upload_files_category');
+        Route::post('/upload_files_building_project/', 'panel\Media@upload_files_building_project')->name('upload_files_building_project');
+        Route::post('doc_download', 'Controller@download_doc')->name('download_doc');
+
     });
     Route::prefix('gallery')->group(function () {
         Route::get('list_video_galleries', 'panel\panel_view@list_video_galleries')->name('list_video_galleries');
@@ -252,7 +255,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::delete('category/{id}', 'panel\Media@gallery_category_remove')->name('gallery_category_remove');
         Route::delete('category/image/{id}', 'panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
         Route::POST('media/info', 'panel\Media@gallery_media_info')->name('gallery_media_info');
-        Route::post('media/edit', 'panel\Media@gallery_media_edit')->name('gallery_media_edit');
+        Route::POST('media/edit', 'panel\Media@gallery_media_edit')->name('gallery_media_edit');
         Route::get('media/default/{cat_id}/{media_id}', 'panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
     });
     Route::group(['prefix' => 'blog_setting'], function () {

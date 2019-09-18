@@ -277,7 +277,7 @@
 
                 if (containerWidth) {
 
-                    var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth)-20;
+                    var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth) - 20;
 
                     jssor_1_slider.$ScaleWidth(expectedWidth);
                 } else {
@@ -442,16 +442,25 @@
                 <div class="card ">
                     <div class="row">
                         <div class="col-md-12">
-                                <div class="m-0" id="jssor_1"
-                                     style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
-                                    <!-- Loading Screen -->
-                                    <div data-u="loading" class="jssorl-009-spin"
-                                         style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
-                                        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;"
-                                             src="{{url('public/assets/panel/images/spin.svg')}}"/>
-                                    </div>
-                                    <div data-u="slides"
-                                         style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden;">
+                            <div class="m-0" id="jssor_1"
+                                 style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
+                                <!-- Loading Screen -->
+                                <div data-u="loading" class="jssorl-009-spin"
+                                     style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+                                    <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;"
+                                         src="{{url('public/assets/panel/images/spin.svg')}}"/>
+                                </div>
+                                <div data-u="slides"
+                                     style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden;">
+                                    @forelse($projects['gallery'] as $gallery)
+                                        <div>
+
+                                            <img data-u="image" src="{{url($gallery['url'])}}"/>
+                                            <img data-u="thumb"
+                                                 src="{{url($gallery['path'])."/300/".$gallery['name']}}"/>
+                                        </div>
+
+                                    @empty
                                         <div>
                                             <img data-u="image" src="{{url('public/assets/panel/images/b-1.jpg')}}"/>
                                             <img data-u="thumb" src="{{url('public/assets/panel/images/b-1.jpg')}}"/>
@@ -484,44 +493,46 @@
                                             <img data-u="image" src="{{url('public/assets/panel/images/b-8.jpg')}}"/>
                                             <img data-u="thumb" src="{{url('public/assets/panel/images/b-8.jpg')}}"/>
                                         </div>
-                                    </div>
-                                    <!-- Thumbnail Navigator -->
-                                    <div data-u="thumbnavigator" class="jssort101"
-                                         style="position:absolute;left:0px;bottom:0px;width:980px;height:100px;background-color:#000;"
-                                         data-autocenter="1" data-scale-bottom="0.75">
-                                        <div data-u="slides">
-                                            <div data-u="prototype" class="p" style="width:190px;height:90px;">
-                                                <div data-u="thumbnailtemplate" class="t"></div>
-                                                <svg viewbox="0 0 16000 16000" class="cv">
-                                                    <circle class="a" cx="8000" cy="8000" r="3238.1"></circle>
-                                                    <line class="a" x1="6190.5" y1="8000" x2="9809.5" y2="8000"></line>
-                                                    <line class="a" x1="8000" y1="9809.5" x2="8000" y2="6190.5"></line>
-                                                </svg>
-                                            </div>
+                                    @endforelse
+
+                                </div>
+                                <!-- Thumbnail Navigator -->
+                                <div data-u="thumbnavigator" class="jssort101"
+                                     style="position:absolute;left:0px;bottom:0px;width:980px;height:100px;background-color:#000;"
+                                     data-autocenter="1" data-scale-bottom="0.75">
+                                    <div data-u="slides">
+                                        <div data-u="prototype" class="p" style="width:190px;height:90px;">
+                                            <div data-u="thumbnailtemplate" class="t"></div>
+                                            <svg viewbox="0 0 16000 16000" class="cv">
+                                                <circle class="a" cx="8000" cy="8000" r="3238.1"></circle>
+                                                <line class="a" x1="6190.5" y1="8000" x2="9809.5" y2="8000"></line>
+                                                <line class="a" x1="8000" y1="9809.5" x2="8000" y2="6190.5"></line>
+                                            </svg>
                                         </div>
                                     </div>
-                                    <!-- Arrow Navigator -->
-                                    <div data-u="arrowleft" class="jssora106"
-                                         style="width:55px;height:55px;top:162px;left:30px;" data-scale="0.75">
-                                        <svg viewbox="0 0 16000 16000"
-                                             style="position:absolute;top:0;left:0;width:100%;height:100%;">
-                                            <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
-                                            <polyline class="a"
-                                                      points="7930.4,5495.7 5426.1,8000 7930.4,10504.3 "></polyline>
-                                            <line class="a" x1="10573.9" y1="8000" x2="5426.1" y2="8000"></line>
-                                        </svg>
-                                    </div>
-                                    <div data-u="arrowright" class="jssora106"
-                                         style="width:55px;height:55px;top:162px;right:30px;" data-scale="0.75">
-                                        <svg viewbox="0 0 16000 16000"
-                                             style="position:absolute;top:0;left:0;width:100%;height:100%;">
-                                            <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
-                                            <polyline class="a"
-                                                      points="8069.6,5495.7 10573.9,8000 8069.6,10504.3 "></polyline>
-                                            <line class="a" x1="5426.1" y1="8000" x2="10573.9" y2="8000"></line>
-                                        </svg>
-                                    </div>
                                 </div>
+                                <!-- Arrow Navigator -->
+                                <div data-u="arrowleft" class="jssora106"
+                                     style="width:55px;height:55px;top:162px;left:30px;" data-scale="0.75">
+                                    <svg viewbox="0 0 16000 16000"
+                                         style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                        <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
+                                        <polyline class="a"
+                                                  points="7930.4,5495.7 5426.1,8000 7930.4,10504.3 "></polyline>
+                                        <line class="a" x1="10573.9" y1="8000" x2="5426.1" y2="8000"></line>
+                                    </svg>
+                                </div>
+                                <div data-u="arrowright" class="jssora106"
+                                     style="width:55px;height:55px;top:162px;right:30px;" data-scale="0.75">
+                                    <svg viewbox="0 0 16000 16000"
+                                         style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                        <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
+                                        <polyline class="a"
+                                                  points="8069.6,5495.7 10573.9,8000 8069.6,10504.3 "></polyline>
+                                        <line class="a" x1="5426.1" y1="8000" x2="10573.9" y2="8000"></line>
+                                    </svg>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -530,12 +541,12 @@
                 <div class="card">
                     <div class="card-header">
                         <form class="" method="get" action="">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <!-- Within a group with checkbox -->
-                                <label class="label"> {{__('messages.items')}} </label>
-                                <div class="form-group">
-                                    <div class="input-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Within a group with checkbox -->
+                                    <label class="label"> {{__('messages.items')}} </label>
+                                    <div class="form-group">
+                                        <div class="input-group">
 
                                 <span class="input-group-prepend">
 											<div class="input-group-text">
@@ -544,22 +555,23 @@
 											</div>
 										</span>
 
-                                        <select name="ticket_item_filter[]" class="form-control multiselect" multiple="multiple" data-fouc>
-                                            @foreach($projects['building_items'] as $item)
-                                                <option value="{{$item['id']}}">{{$item['title']}}</option>
-                                            @endforeach
+                                            <select name="ticket_item_filter[]" class="form-control multiselect"
+                                                    multiple="multiple" data-fouc>
+                                                @foreach($projects['building_items'] as $item)
+                                                    <option value="{{$item['id']}}">{{$item['title']}}</option>
+                                                @endforeach
 
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
+                                    <!-- /within a group with checkbox -->
                                 </div>
-                                <!-- /within a group with checkbox -->
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Within a group with checkbox -->
-                                <label class="label"> {{__('messages.status')}} </label>
+                                <div class="col-md-4">
+                                    <!-- Within a group with checkbox -->
+                                    <label class="label"> {{__('messages.status')}} </label>
 
-                                <div class="form-group">
-                                    <div class="input-group">
+                                    <div class="form-group">
+                                        <div class="input-group">
 
                                 <span class="input-group-prepend">
 											<div class="input-group-text">
@@ -568,71 +580,77 @@
 											</div>
 										</span>
 
-                                        <select name="ticket_status_filter[]" class="form-control multiselect" multiple="multiple" data-fouc>
-                                            <option value="in_progress">{{__('messages.in_progress')}}</option>
-                                            <option value="closed">{{__('messages.closed')}}</option>
+                                            <select name="ticket_status_filter[]" class="form-control multiselect"
+                                                    multiple="multiple" data-fouc>
+                                                <option value="in_progress">{{__('messages.in_progress')}}</option>
+                                                <option value="closed">{{__('messages.closed')}}</option>
 
-                                        </select>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- /within a group with checkbox -->
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="label">&nbsp;</label>
+                                    <div class="form-group">
+                                        <button class="btn-block btn btn-outline-danger"> {{__('messages.filter')}}</button>
                                     </div>
                                 </div>
-                                <!-- /within a group with checkbox -->
                             </div>
-                            <div class="col-md-4">
-                                <label class="label">&nbsp;</label>
-                                <div class="form-group">
-                                    <button class="btn-block btn btn-outline-danger"> {{__('messages.filter')}}</button>
-                                </div>
-                            </div>
-                        </div>
                         </form>
 
                     </div>
                     <div class="card-body">
                         <table class="table">
 
-                        @foreach(get_building_tickets($projects['id'],$ticket_item_checkbox,$ticket_item_filter,$ticket_status_checkbox,$ticket_status_filter) as $tickets)
-                            <tr class="@switch ($tickets['ticket_type'])
-                                    @case(0)
-                                    border-left-3 border-danger
-                                    @case(1)
-                                    border-left-3 border-info
-                                    @default
-                                    @endswitch">
+                            @foreach(get_building_tickets($projects['id'],$ticket_item_checkbox,$ticket_item_filter,$ticket_status_checkbox,$ticket_status_filter) as $tickets)
+                                <tr class="@switch ($tickets['ticket_type'])
+                                @case(0)
+                                        border-left-3 border-danger
+@case(1)
+                                        border-left-3 border-info
+@default
+                                @endswitch">
 
-                                <td>
-                                    <a href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
-                                @if($tickets['predict_percent'])
-                                    <span class="badge-warning badge-pill">{{$tickets['predict_percent']}} %</span>
-                                @endif
-                                @if($tickets['actual_percent'])
-                                    <span class="badge-success badge-pill">{{$tickets['actual_percent']}} %</span>
-                                @endif
-                                @if($tickets['ticket_type'] ==1)
-                                        <span class="badge-info badge-pill">{{trans('messages.normal_ticket')}}</span>
+                                    <td>
+                                        <a href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
+                                            @if($tickets['predict_percent'])
+                                                <span class="badge-warning badge-pill">{{$tickets['predict_percent']}} %</span>
+                                            @endif
+                                            @if($tickets['actual_percent'])
+                                                <span class="badge-success badge-pill">{{$tickets['actual_percent']}} %</span>
+                                            @endif
+                                            @if($tickets['ticket_type'] ==1)
+                                                <span class="badge-info badge-pill">{{trans('messages.normal_ticket')}}</span>
 
-                                    @endif
-                                    </a>
-                                </td>
-                                <td>
-                                    @if(!empty($tickets['building_item']))
-                                        <span class="badge bg-blue-600 ">{{$tickets['building_item']['title']}}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a style="color: black;" href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
-                                        <strong class="text-black">{{miladi_to_shamsi_date($tickets['created_at'])}} </strong><span class="text-muted font-size-xs ">{{__('messages.by')}}  </span><strong> {{get_user($tickets['creator'])['name']}}</strong>
-                                    </a>
-                                </td>
-                                <td>@if($tickets['closed'])
-                                <div class="badge badge-danger">{{__('messages.closed')}} <span class="font-weight-bold" >{{miladi_to_shamsi_date($tickets['closed'])}}</span></div>
-                                    @else
-                                        <div class="badge badge-info">{{__("messages.in_progress")}} <i class="icon-spinner"></i> </div>
-                                    @endif
-                                </td>
+                                            @endif
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if(!empty($tickets['building_item']))
+                                            <span class="badge bg-blue-600 ">{{$tickets['building_item']['title']}}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a style="color: black;"
+                                           href="{{route('ticket_page',['ticket_id'=>$tickets['id']])}}">
+                                            <strong class="text-black">{{miladi_to_shamsi_date($tickets['created_at'])}} </strong><span
+                                                    class="text-muted font-size-xs ">{{__('messages.by')}}  </span><strong> {{get_user($tickets['creator'])['name']}}</strong>
+                                        </a>
+                                    </td>
+                                    <td>@if($tickets['closed'])
+                                            <div class="badge badge-danger">{{__('messages.closed')}} <span
+                                                        class="font-weight-bold">{{miladi_to_shamsi_date($tickets['closed'])}}</span>
+                                            </div>
+                                        @else
+                                            <div class="badge badge-info">{{__("messages.in_progress")}} <i
+                                                        class="icon-spinner"></i></div>
+                                        @endif
+                                    </td>
 
-                                <td>{{$tickets['title']}} </td>
+                                    <td>{{$tickets['title']}} </td>
 
-                            </tr>
+                                </tr>
 
                             @endforeach
                         </table>
@@ -653,7 +671,9 @@
                                    data-original-title="{{trans('messages.add_to_my_projects')}}">
                                     <div class="row">
                                         <div class="col-md-2"><i class="icon-star-empty3 icon-2x"></i></div>
-                                        <div class="col-md-10"> <span class="font-size-sm">{{trans('messages.add_to_my_projects')}}</span></div>
+                                        <div class="col-md-10"><span
+                                                    class="font-size-sm">{{trans('messages.add_to_my_projects')}}</span>
+                                        </div>
                                     </div>
                                 </a>
                                 <a type="button"
@@ -662,16 +682,18 @@
                                    data-original-title="{{trans('messages.add_new',['item'=>__('messages.ticket')])}}">
                                     <div class="row">
                                         <div class="col-md-4"><i class="icon-ticket icon-2x"></i></div>
-                                        <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.ticket')])}}</span></div>
+                                        <div class="col-md-8">
+                                            <span> {{trans('messages.add_new',['item'=>__('messages.ticket')])}}</span>
+                                        </div>
                                     </div>
                                 </a>
                                 <a type="button"
-                                   class="disabled btn bg-violet-600 btn-block btn-float btn-float-lg "
-
-                                   data-original-title="{{trans('messages.add_new',['item'=>__('messages.image')])}}">
+                                   class="btn bg-violet-600 btn-block btn-float btn-float-lg "
+                                   href="{{route('building_gallery_view',['id'=>$projects['id']])}}"
+                                   data-original-title="{{trans('messages.gallery')}}">
                                     <div class="row">
                                         <div class="col-md-4"><i class="icon-image5 icon-2x"></i></div>
-                                        <div class="col-md-8"> <span> {{trans('messages.add_new',['item'=>__('messages.image')])}}</span></div>
+                                        <div class="col-md-8"><span> {{trans('messages.gallery')}}</span></div>
                                     </div>
                                 </a>
                                 <a type="button"
@@ -680,7 +702,8 @@
                                    data-original-title="{{trans('messages.set_project_finish')}}">
                                     <div class="row">
                                         <div class="col-md-4"><i class="icon-finish icon-2x"></i></div>
-                                        <div class="col-md-8"> <span> {{trans('messages.set_project_finish')}}</span></div>
+                                        <div class="col-md-8"><span> {{trans('messages.set_project_finish')}}</span>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
@@ -718,22 +741,26 @@
                             <strong>{{__('messages.title')}}</strong>:<b>{{$projects['title']}}</b></div>
                         <div class="list-feed-item">
 
-                        <p class="font-size-xs">{!! $projects['description'] !!}</p>
+                            <p class="font-size-xs">{!! $projects['description'] !!}</p>
                         </div>
                         <div class="list-feed-item">
 
-                            <strong>{{__('messages.address')}}</strong>:{{get_cites($projects['city_id'])['name']}} <p class="font-size-xs">{!! $projects['address'] !!}</p>
+                            <strong>{{__('messages.address')}}</strong>:{{get_cites($projects['city_id'])['name']}} <p
+                                    class="font-size-xs">{!! $projects['address'] !!}</p>
                         </div>
                         <div class="list-feed-item">
 
-                            <strong>{{__('messages.start_date')}}</strong>:<p class="font-size-xs">{!! miladi_to_shamsi_date($projects['start_date'] )!!}</p>
+                            <strong>{{__('messages.start_date')}}</strong>:<p
+                                    class="font-size-xs">{!! miladi_to_shamsi_date($projects['start_date'] )!!}</p>
                         </div>
 
                         <div class="list-feed-item">
 
-                            <strong>{{__('messages.predict_end_date')}}</strong>:<p class="font-size-xs">{!! miladi_to_shamsi_date($projects['end_date_prediction'] )!!}</p>
+                            <strong>{{__('messages.predict_end_date')}}</strong>:<p
+                                    class="font-size-xs">{!! miladi_to_shamsi_date($projects['end_date_prediction'] )!!}</p>
                         </div>
-                        <div class="list-feed-item" ><a href="">{{__('messages.show_in_map')}} <i class="icon-location3"></i> </a> </div>
+                        <div class="list-feed-item"><a href="">{{__('messages.show_in_map')}} <i
+                                        class="icon-location3"></i> </a></div>
                     </div>
                 </div>
 
@@ -771,33 +798,33 @@
                             <div class="col-md-12">
                                 @for($i=1 ;$i<=4 ;$i++)
                                     <div class="card  p-0 mr-0 ml-0 ">
-                                    <div class="card-header p-1 bg-teal">
-                                    @switch($i)
-                                        @case("1")
-                                        {{__('messages.project_manager')}}
-                                        @break
-                                        @case("2")
-                                        {{__('messages.project_officer')}}
-                                        @break
-                                        @case("3")
-                                        {{__('messages.project_worker')}}
-                                        @break
-                                        @case("4")
-                                        {{__('messages.project_watcher')}}
-                                        @break
+                                        <div class="card-header p-1 bg-teal">
+                                            @switch($i)
+                                                @case("1")
+                                                {{__('messages.project_manager')}}
+                                                @break
+                                                @case("2")
+                                                {{__('messages.project_officer')}}
+                                                @break
+                                                @case("3")
+                                                {{__('messages.project_worker')}}
+                                                @break
+                                                @case("4")
+                                                {{__('messages.project_watcher')}}
+                                                @break
 
-                                        @default
-                                    @endswitch
-                                    </div>
+                                                @default
+                                            @endswitch
+                                        </div>
                                         <div class="card-body p-1">
 
-                                        @foreach($projects['building_users'] as $building_user)
-                                        @if($building_user['level'] ==$i)
-                                            <div class="list-feed-item">
-                                            {{get_user($building_user['user_id'])['name']}}
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @foreach($projects['building_users'] as $building_user)
+                                                @if($building_user['level'] ==$i)
+                                                    <div class="list-feed-item">
+                                                        {{get_user($building_user['user_id'])['name']}}
+                                                    </div>
+                                                @endif
+                                            @endforeach
                                         </div>
 
                                     </div>
@@ -1160,7 +1187,7 @@
                         @foreach($projects['building_items'] as $item)
                             '{{isset($items_progress[$item['id']]['actual'])? $items_progress[$item['id']]['actual']: 0}}',
                         @endforeach
-                    ],40, true, 'elastic', 2200, 250, '#EC407A', 'hours');
+                    ], 40, true, 'elastic', 2200, 250, '#EC407A', 'hours');
 
                 }
             }
@@ -1278,7 +1305,7 @@
                             data:
                                 [
                                     @foreach($projects['building_items'] as $item)
-                                    '{{$item['title']}}',
+                                        '{{$item['title']}}',
                                     @endforeach
 
                                 ],
@@ -1324,7 +1351,7 @@
                                 },
                                 data: [
                                     @foreach($projects['building_items'] as $item)
-                                    '{{isset($items_progress[$item['id']]['actual'])? $items_progress[$item['id']]['actual']: ""}}',
+                                        '{{isset($items_progress[$item['id']]['actual'])? $items_progress[$item['id']]['actual']: ""}}',
                                     @endforeach
 
                                 ]
@@ -1346,7 +1373,7 @@
                                 },
                                 data: [
                                     @foreach($projects['building_items'] as $item)
-                                    '{{isset($items_progress[$item['id']]['predict'])?$items_progress[$item['id']]['predict'] : ""}}',
+                                        '{{isset($items_progress[$item['id']]['predict'])?$items_progress[$item['id']]['predict'] : ""}}',
                                     @endforeach
 
                                 ]
