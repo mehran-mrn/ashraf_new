@@ -83,10 +83,10 @@
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
-                                                <th>{{__('messages.amount')}}</th>
-                                                <th>{{__('messages.start_date')}}</th>
-                                                <th>{{__('messages.description')}}</th>
-                                                <th>{{__('messages.status')}}</th>
+                                                <th class="text-center">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></th>
+                                                <th class="text-center">{{__('messages.start_date')}}</th>
+                                                <th class="text-center">{{__('messages.description')}}</th>
+                                                <th class="text-center">{{__('messages.status')}}</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -101,7 +101,7 @@
                                                     <?php $btn_color = "warning" ?>
                                                 @endif
                                                 <tr>
-                                                    <td>{{$unpaid['amount']}}</td>
+                                                    <td>{{number_format($unpaid['amount'])}}</td>
                                                     <td>{{miladi_to_shamsi_date($unpaid['payment_date'])}}</td>
                                                     <td>{{$unpaid['description']}}</td>
                                                     <td>
@@ -109,7 +109,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="{{route('vow_cart',['id'=>$unpaid['id']])}}"
-                                                           class="btn btn-{{$btn_color}} btn-pay">
+                                                           class="btn btn-xs btn-{{$btn_color}} btn-pay">
                                                             {{__('messages.pay')}} <i class="fa fa-chevron-left"></i>
                                                         </a>
                                                     </td>

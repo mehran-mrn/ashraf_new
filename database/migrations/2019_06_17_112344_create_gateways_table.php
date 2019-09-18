@@ -51,7 +51,7 @@ class CreateGatewaysTable extends Migration
                 'public_key' => '',
                 'terminal_id' => '',
                 'password' => '9542264',
-                'logo' => '<i class="ibl64 ibl-bmi"></i>',
+                'logo' => '<i class="ibl64 ibl-sb"></i>',
                 'online' => '1',
                 'function_name' => 'SamanGateway'
             )
@@ -68,7 +68,7 @@ class CreateGatewaysTable extends Migration
                 'username' => 'aoaci',
                 'password' => Hash::make('aoaci'),
                 'terminal_id' => '969074',
-                'logo' => '<i class="ibl64 ibl-sb"></i>',
+                'logo' => '<i class="ibl64 ibl-mellat"></i>',
                 'online' => '1',
                 'function_name' => 'MellatGateway'
             )

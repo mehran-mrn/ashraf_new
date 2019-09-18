@@ -4,7 +4,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-xs-12">
-                    <a class="menuzord-brand pull-right sm-text-center xs-text-center xs-pull-center" href="{{route('home')}}">
+                    <a class="menuzord-brand pull-right sm-text-center xs-text-center xs-pull-center"
+                       href="{{route('home')}}">
                         <img class="img img-responsive sm-text-center xs-text-center"
                              src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png') }}" alt=""></a>
                 </div>
@@ -62,14 +63,14 @@
                         </li>
                         <li><a href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
                         <li><a href="{{route('blog')}}">{{trans('messages.blog')}}</a>
-                            @if(sizeof($categories))
+{{--                            @if(sizeof($categories)>=1)--}}
 
-                            <ul class="dropdown">
-                                @foreach ($categories as $category)
-                                <li><a href="{{route('blog')}}">{{$category['category_name']}}</a></li>
-                                @endforeach
-                            </ul>
-                            @endif
+{{--                                <ul class="dropdown">--}}
+{{--                                    @foreach ($categories as $category)--}}
+{{--                                        <li><a href="{{route('blog')}}">{{$category['category_name']}}</a></li>--}}
+{{--                                    @endforeach--}}
+{{--                                </ul>--}}
+{{--                            @endif--}}
 
                         </li>
                         @if(session()->get('cart'))

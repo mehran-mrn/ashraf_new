@@ -18,7 +18,7 @@
                                         <div class="icons-holder">
                                             <div class="icons-holder-inner">
                                                 <div class="styled-icons icon-sm icon-dark icon-circled icon-theme-colored">
-                                                    <a href="{{url($photo['url'])}}"  data-lightbox-gallery="gallery"  data-title="My caption"><i class="fa fa-picture-o"></i></a>
+                                                    <a href="{{url($photo['url'])}}"  data-lightbox-gallery="gallery"  data-title="{{$photo['title']}}"><i class="fa fa-picture-o"></i></a>
                                                 </div>
                                             </div>
                                         </div>
