@@ -11,8 +11,8 @@
                     <button
                             class="btn btn-primary m-2 py-2 px-3 modal-ajax-load"
                             data-ajax-link="{{route('add_video_galleries_modal')}}" data-toggle="modal"
-                            data-modal-title="{{trans('messages.add_category',['item'=>trans('messages.category')])}}"
-                            data-target="#general_modal">{{__('messages.add_gallery_category')}}
+                            data-modal-title="{{__('messages.add_item',['item'=>trans('messages.video')])}}"
+                            data-target="#general_modal">{{__('messages.add_item',['item'=>trans('messages.video')])}}
                     </button>
                 </section>
             </div>
