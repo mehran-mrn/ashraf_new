@@ -17,6 +17,7 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
     {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/form_multiselect.js') }}"></script>--}}
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 
     <!-- /theme JS files -->
 
@@ -296,6 +297,8 @@
 
 @endsection
 @section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
     <style>
         /*jssor slider loading skin spin css*/
         .jssorl-009-spin img {
@@ -665,17 +668,30 @@
                         <div class="row">
 
                             <div class="col-md-6 ">
-                                <a type="button"
-                                   class="btn bg-info btn-block btn-float btn-float-lg "
-                                   href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
-                                   data-original-title="{{trans('messages.add_to_my_projects')}}">
+                                <form method="post" action="{{route('follow_project')}}">
+                                    <?php
+                                        $temp = auth()->user()->building_users()->where('building_id',$projects['id'])->first();
+                                    if ($temp and $temp['follow']){
+                                        $followed = true;
+                                    }
+                                    else{
+                                        $followed = false;
+                                    }
+                                    ?>
+                                    <input type="hidden" value="{{$projects['id']}}" name="id">
+                                        @csrf
+                                <button type="submit"
+                                   class="btn {{$followed ? "bg-info" : "alpha-info"}} border-info-800  btn-block btn-float btn-float-lg mb-1"
+                                   >
                                     <div class="row">
-                                        <div class="col-md-2"><i class="icon-star-empty3 icon-2x"></i></div>
+                                        <div class="col-md-2"><i class="
+                                        {{$followed ? "icon-star-full2 text-orange-300" : "icon-star-empty3 "}}  icon-2x"></i></div>
                                         <div class="col-md-10"><span
-                                                    class="font-size-sm">{{trans('messages.add_to_my_projects')}}</span>
+                                                    class="font-size-sm">{{$followed ? trans('messages.unfollow_project') : trans('messages.follow_project')}}</span>
                                         </div>
                                     </div>
-                                </a>
+                                </button>
+                                </form>
                                 <a type="button"
                                    class="btn bg-success btn-block btn-float btn-float-lg "
                                    href="{{route('building_new_ticket',['project_id'=>$projects['id']])}}"
@@ -696,13 +712,16 @@
                                         <div class="col-md-8"><span> {{trans('messages.gallery')}}</span></div>
                                     </div>
                                 </a>
-                                <a type="button"
-                                   class="disabled btn bg-pink-600 btn-block btn-float btn-float-lg "
 
-                                   data-original-title="{{trans('messages.set_project_finish')}}">
+                                <a type="button"
+                                   class=" btn bg-pink-600 btn-block btn-float btn-float-lg modal-ajax-load"
+                                   data-ajax-link="{{route('building_project_finish_form',['id'=>$projects['id']])}}"
+                                   data-toggle="modal"
+                                   data-target="#general_modal"
+                                   data-original-title="{{$projects['archived']?trans('messages.closed'):trans('messages.set_project_finish')}}">
                                     <div class="row">
                                         <div class="col-md-4"><i class="icon-finish icon-2x"></i></div>
-                                        <div class="col-md-8"><span> {{trans('messages.set_project_finish')}}</span>
+                                        <div class="col-md-8"><span> {{$projects['archived']?trans('messages.closed'):trans('messages.set_project_finish')}}</span>
                                         </div>
                                     </div>
                                 </a>

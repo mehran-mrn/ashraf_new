@@ -61,7 +61,7 @@
             <div class="form-group row">
 
                 <label for="start_date_{{$rand_id}}"
-                       class="col-md-2 col-form-label text-md-right">{{ __('messages.start_date') }}</label>
+                                             class="col-md-2 col-form-label text-md-right">{{ __('messages.start_date') }}</label>
                 <div class="col-md-4">
                     <input id="start_date_{{$rand_id}}" type="text" class="form-control @error('capacity') is-invalid @enderror"
                            name="start_date"

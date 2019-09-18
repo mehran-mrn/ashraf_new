@@ -633,6 +633,12 @@ class panel_view extends Controller
             ])->get();
         return view('panel.building.gallery.view', compact('medias', 'catInfo'));
     }
+
+    public function building_project_finish_form($id)
+    {
+        $building = building_project::find($id);
+        return view('panel.building.materials.finish_form', compact('building'));
+    }
 //end building module
 
 //charity module

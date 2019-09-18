@@ -191,6 +191,10 @@
             </div>
             <div class="col-sm-3">
                 <div>
+                    <a href="{{route('building_project',['id'=>$ticket['building_id']])}}"
+                       class="btn btn-outline-dark m-2 py-2 px-3">{{__('messages.back')}}</a>
+                </div>
+                <div>
                     <a href="{{route('building_project',['project_id'=>$ticket['building_id']])}}"
                        class="btn bg-blue-300 btn-block "
                        data-popup="tooltip" title="" data-placement="bottom"

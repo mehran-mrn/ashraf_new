@@ -452,6 +452,55 @@ class building extends Controller
         return $doc_id;
     }
 
+    public function follow_project(Request $request)
+    {
+
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+
+        $building_user = building_user::where('user_id',Auth::id())->where('building_id',$request['id'])->first();
+        if (!$building_user){
+            $building_user = new building_user();
+            $building_user->user_id = Auth::id();
+            $building_user->building_id = $request['id'];
+            $building_user->follow = true;
+        }
+        else{
+            $building_user->follow = ($building_user->follow? false:true);
+        }
+        $building_user->save();
+
+        return back();
+    }
+
+    public function submit_project_end(Request $request)
+    {
+        $regex_date = "([1][3,4]\d{2}['\-'|'\/'](0[1-9]|[1-9]|1[0-2])['\-'|'\/'](0[1-9]|[12]\d|3[01]|\d))";
+        $this->validate($request, [
+            'id' => 'required',
+            'actual_end_date' => ['required'],
+        ]);
+
+        $building = building_project::find($request['id']);
+        $building->end_date_actual = shamsi_to_miladi($request['actual_end_date']);
+        $building->archived = true;
+        $building->save();
+        return back();
+    }
+
+    public function submit_project_reopen(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+
+        $building = building_project::find($request['id']);
+        $building->archived = false;
+        $building->save();
+        return back();
+    }
+
     private function set_ticket_note($description,$building_ticket_id){
         $building_ticket_note = new building_ticket_note();
         $building_ticket_note->description = $description;

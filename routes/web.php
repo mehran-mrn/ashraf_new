@@ -193,6 +193,10 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('close_building_ticket/{ticket_id}', 'panel\building@close_building_ticket')->name('close_building_ticket');
         Route::post('/upload_files', 'panel\building@upload_files')->name('upload_ticket_files');
         Route::get('category/{id}', 'panel\panel_view@building_gallery_view')->name('building_gallery_view');
+        Route::post('/follow_project', 'panel\building@follow_project')->name('follow_project');
+        Route::get('finish/{id}', 'panel\panel_view@building_project_finish_form')->name('building_project_finish_form');
+        Route::post('finish/{id}', 'panel\building@submit_project_end')->name('submit_project_end');
+        Route::post('reopen/{id}', 'panel\building@submit_project_reopen')->name('submit_project_reopen');
 
     });
     Route::prefix('charity')->group(function () {

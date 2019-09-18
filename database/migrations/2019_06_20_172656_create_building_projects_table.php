@@ -32,6 +32,7 @@ class CreateBuildingProjectsTable extends Migration
             $table->unsignedInteger('project_type_id')->nullable();//title image
             $table->integer('parent_id')->default(0);
             $table->integer('sort')->default(0);
+            $table->boolean('archived')->default(0);
             $table->timestamps();
         });
     }

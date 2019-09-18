@@ -17,7 +17,8 @@ class CreateBuildingUsersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('building_id');
-            $table->integer('level');
+            $table->boolean('follow')->nullable();
+            $table->integer('level')->nullable();
             // 1=> project manager 2=> project officer 3=>project worker 4=>project watcher
             $table->timestamps();
         });

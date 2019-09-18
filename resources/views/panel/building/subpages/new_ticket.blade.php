@@ -213,6 +213,12 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <div class="row">
+                <div class="col-md-12">
+                    <a href="{{route('building_project',['id'=>$project_id])}}"
+                       class="pull-left btn btn-outline-dark m-2 py-2 px-3">{{__('messages.back')}}</a>
+                </div>
+                </div>
                 <div class="card border-info">
                     <div class="card-header bg-info">
                         {{__('messages.users')}}
