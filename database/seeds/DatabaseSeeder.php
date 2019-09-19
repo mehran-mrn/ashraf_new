@@ -260,127 +260,127 @@ class DatabaseSeeder extends Seeder
         DB::table('cities')->insert([
             ['name' => 'آذربایجان شرقی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'آذربایجان غربی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'اردبیل',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'اصفهان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'البرز',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'ایلام',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'بوشهر',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'تهران',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'چهارمحال و بختیاری',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'خراسان جنوبی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'خراسان رضوی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'خراسان شمالی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'خوزستان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'زنجان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'سمنان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'سیستان و بلوچستان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'فارس',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'قزوین',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'قم',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'کردستان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'کرمان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'کرمانشاه',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'کهگیلویه و بویراحمد',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'گلستان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'گیلان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'لرستان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'مازندران',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'active'],
             ['name' => 'مرکزی',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'هرمزگان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'همدان',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive'],
             ['name' => 'یزد',
                 'parent' => 0,
-                'lvl'=>1,
+                'lvl' => 1,
                 'status' => 'inactive']]);
 
         DB::table('setting_transportations')->insert(
@@ -517,6 +517,59 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'طرح همه',
                 'ch_pay_pattern_id' => '2',
+            ]
+        );
+
+        DB::table('charity_champions')->insert(
+            [
+                'title' => 'کمپین ماه مهر',
+                'slug' => 'کمپین-ماه-مهر',
+                'start_date' => '2019-09-10 16:36:50',
+                'end_date' => '2019-10-22 16:36:56',
+                'target_amount' => '50000000',
+                'meta' => 'بازگشت به مدرسه...',
+                'description_small' => 'کمپین ماه مهر بازگشت به مدرسه',
+                'description' => '<p><span style="font-family:IRANSans">کمپین خرید لوازم تحریر برای دانش آموزان نیازمند</span></p>
+
+<p><span style="font-family:IRANSans">هدف این کمپین برای دانش آموزان سیستان و بلوچستان میباشد.</span></p>',
+                'raised' => 0,
+                'status' => 1
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'اشرف الانبیاء'
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'اشرف_الانبیاء'
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'خیریه'
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'کمپین'
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'ماه_مهر'
+            ]
+        );
+        DB::table('charity_champions_tags')->insert(
+            [
+                'champion_id' => 1,
+                'tag' => 'مدرسه'
             ]
         );
     }

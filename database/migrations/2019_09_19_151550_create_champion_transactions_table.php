@@ -18,7 +18,7 @@ class CreateChampionTransactionsTable extends Migration
             $table->integer('champion_id');
             $table->integer('gateway_id');
             $table->integer('trans_id');
-            $table->float('amount')->default(0);
+            $table->float('amount',8,0)->default(0);
             $table->integer('user_id')->default(0);
             $table->string('name')->nullable();
             $table->string('last_name')->nullable();

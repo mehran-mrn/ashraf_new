@@ -19,11 +19,11 @@ class CreateCharityChampionsTable extends Migration
             $table->string('slug')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->float('target_amount')->default(0);
+            $table->float('target_amount',8,0)->default(0);
             $table->string('meta')->nullable();
             $table->mediumText('description_small')->nullable();
             $table->longText('description')->nullable();
-            $table->float('raised')->default(0);
+            $table->float('raised',8,0)->default(0);
             $table->boolean('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
