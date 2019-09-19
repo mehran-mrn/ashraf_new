@@ -417,6 +417,7 @@ class panel_view extends Controller
         if ($caravan_doc_id) {
             $caravan_doc = caravan_doc::find($caravan_doc_id);
         }
+
         return view('panel.caravan.materials.upload_doc_form', compact('caravan', 'caravan_doc'));
     }
 

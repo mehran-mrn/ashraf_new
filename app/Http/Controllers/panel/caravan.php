@@ -460,6 +460,7 @@ class caravan extends Controller
             'caravan_id' => 'required|exists:caravans,id',
             'description' => 'required',
         ]);
+
         $doc_id = private_file_saver($request->file,'caravan',$request['title'],$request['description']);
         $pivot = new caravan_doc();
         $pivot->caravan_id=$request['caravan_id'];
