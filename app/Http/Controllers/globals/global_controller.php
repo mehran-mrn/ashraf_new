@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\champion_transaction;
+use App\charity_champion;
 use App\users_address;
 use Validator;
 use App\charity_period;
@@ -385,6 +387,36 @@ class global_controller extends Controller
             $maxAddress = users_address::where('user_id', Auth::id())->max('id');
             users_address::where('id', $maxAddress)->update(['default' => 1]);
             return back_normal($request, ['message' => __("messages.address_deleted"), 'status' => 200]);
+        }
+    }
+
+    public function champion_payment(Request $request)
+    {
+        if ($request['amount']) {
+            $request['amount'] = intval(str_replace(',', '', $request['amount']));
+        }
+        $this->validate($request,
+            [
+                'champion_id' => 'required',
+                'amount' => 'required|numeric|between:10000,9000000000|'
+            ]);
+        if (charity_champion::where('status', 1)->findOrFail($request['champion_id'])) {
+            $user_id = 0;
+            if (Auth::id()) {
+                $user_id = Auth::id();
+            }
+            $champion = champion_transaction::create(
+                [
+                    'champion_id' => $request['champion_id'],
+                    'amount' => $request['amount'],
+                    'user_id' => $user_id,
+                    'name' => $request['name'],
+                    'last_name' => $request['last_name'],
+                    'phone' => $request['phone'],
+                    'email' => $request['email'],
+                ]
+            );
+            return back_normal($request, ['message' => __('messages.transaction_created'), 'code' => 200, 'id' => $champion['id']]);
         }
     }
 

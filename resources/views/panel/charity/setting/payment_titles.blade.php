@@ -467,129 +467,13 @@ $active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']
                                         {!! $champion_titles['description'] !!}
                                     </div>
                                     <hr>
-                                    <button class="btn btn-primary m-2 py-2 px-3 "
-                                            data-toggle="modal"
-                                            data-target="#general_modal">{{__('messages.add_champion')}}
-                                    </button>
+                                    <a href="{{route('charity_champion_add')}}"
+                                       class="btn btn-primary m-2 py-2 px-3 ">{{__('messages.add_champion')}}
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="general_modal" class="modal fade" data-backdrop="false">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <spans class="modal-title">{{__('messages.add_image')}}</spans>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" id="frm_add_champion" autocomplete="off">
-                        <div class="row">
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.title")}}</label>
-                                <input type="text" class="form-control" name="title" required="required">
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.start_date")}}</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="readonly" id="start_date"
-                                           name="start_date"
-                                           required="required">
-                                    <button class="btn btn-outline-dark btn-sm" type="button" id="start_date_btn"><i
-                                                class="icon-calendar"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.end_date")}}</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="readonly" id="end_date"
-                                           name="end_date"
-                                           required="required">
-                                    <button class="btn btn-outline-dark btn-sm" type="button" id="end_date_btn"><i
-                                                class="icon-calendar"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.target_amount")}}</label>
-                                <input type="text" class="form-control price" name="target" required="required">
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.payment_code")}}</label>
-                                <input type="text" class="form-control" name="payment_code" required="required">
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.gateway")}}</label>
-                                <select name="gateway" id="gateway" class="form-control">
-                                    @foreach($banks as $bank)
-                                        <option value="{{$bank['id']}}">{{$bank['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.account_number")}}</label>
-                                <input type="text" class="form-control" name="account_number">
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.card_number")}}</label>
-                                <input type="text" class="form-control" name="card_number">
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__("messages.sheba_number")}}</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="sheba_number">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text">ID</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label for="">{{__('messages.status')}}</label>
-                                <div class="d-flex justify-content-around">
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" name="status" id="status"
-                                               value="active"
-                                               checked data-fouc>
-                                        <label class="custom-control-label text-success"
-                                               for="status">{{__('messages.active')}}
-                                        </label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" name="status" id="status2"
-                                               value="inactive">
-                                        <label class="custom-control-label text-danger"
-                                               for="status2">{{__('messages.inactive')}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-8 form-group">
-                                <label for="">{{__('messages.description')}}</label>
-                                <textarea class="form-control" name="description" id="description" cols="30"
-                                          rows="5"></textarea>
-                            </div>
-                            <div class="col-12 col-md-4 form-group">
-                                <label for="">{{__('messages.image')}}</label>
-                                <div class="dropzone" id="dropzone_remove">
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="d-flex justify-content-end">
-                                    <button class="btn btn-default px-3 py-1" type="button"
-                                            data-dismiss="modal">{{__('messages.close')}}</button>
-                                    <button class="btn btn-primary px-3 py-1"
-                                            type="submit">{{__('messages.submit')}}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

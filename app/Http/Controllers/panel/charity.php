@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\charity_champion;
+use App\charity_champions_projects;
+use App\charity_champions_tags;
 use App\charity_payment_field;
 use App\charity_payment_patern;
 use App\charity_payment_title;
@@ -121,5 +124,58 @@ class charity extends Controller
             $message = trans('messages.payment_approved');
             return back_normal($request, $message);
         }
+    }
+
+    public function charity_champion_add_store(Request $request)
+    {
+        $this->validate($request,
+            [
+                'title' => 'required|min:3|max:254|string',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'target' => 'required',
+                'small_description' => 'required|string',
+                'file' => 'required',
+                'status' => 'required'
+            ]);
+        $request['target'] = str_replace(',', '', $request['target']);
+        $startDate = shamsi_to_miladi($request['start_date']);
+        $endDate = shamsi_to_miladi($request['end_date']);
+        $champion = charity_champion::create([
+            'title' => $request['title'],
+            'slug' => str_slug_persian($request['title']),
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'target_amount' => $request['target'],
+            'meta' => $request['meta_description'],
+            'description_small' => $request['small_description'],
+            'description' => $request['description']
+        ]);
+        if ($request['tags']) {
+            $tags = explode(",", $request['tags']);
+            foreach ($tags as $tag) {
+                charity_champions_tags::create(
+                    [
+                        'champion_id' => $champion['id'],
+                        'tag' => $tag
+                    ]
+                );
+            }
+        }
+        if ($request['file']) {
+            uploadGallery($request['file'], 'champion', ['category_id' => $champion['id'], 'title' => $request['title']]);
+        }
+        if ($request['projects']) {
+            foreach ($request['projects'] as $project) {
+                charity_champions_projects::create(
+                    [
+                        'champion_id' => $champion['id'],
+                        'project_id' => $project
+                    ]
+                );
+            }
+        }
+        $return = trans('messages.item_created');
+        return back_normal($request, ['message' => $return, 'status' => 200]);
     }
 }
