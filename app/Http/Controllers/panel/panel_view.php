@@ -233,20 +233,21 @@ class panel_view extends Controller
         return view('panel.blog.category_edit', compact('cat_info'));
     }
 
-    public function display_statistics(Request $request){
-        $statistics = blog_option::where('name','display_statistic')->get();
-        return view('panel.blog_setting.display_statistics',compact('statistics'));
+    public function display_statistics(Request $request)
+    {
+        $statistics = blog_option::where('name', 'display_statistic')->get();
+        return view('panel.blog_setting.display_statistics', compact('statistics'));
 
     }
 
-    public function load_display_statistics_form($option_id=null ,Request $request)
+    public function load_display_statistics_form($option_id = null, Request $request)
     {
         $icons = [];
         $handle = fopen(url("public/assets/global/css/pe-icon-7-stroke.css"), "r");
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
-                if (preg_match('/\.(.*?)(:before)/',$line,$matches)){
-                    $icons[]=$matches[1];
+                if (preg_match('/\.(.*?)(:before)/', $line, $matches)) {
+                    $icons[] = $matches[1];
                 }
             }
             fclose($handle);
@@ -259,15 +260,16 @@ class panel_view extends Controller
         } else {
             $option = null;
         }
-        return view('panel.blog_setting.materials.display_statistic_form', compact('option','icons'));
+        return view('panel.blog_setting.materials.display_statistic_form', compact('option', 'icons'));
     }
 
-    public function adv_links(Request $request){
-        $adv_links = blog_option::where('name','adv_link')->get();
-        return view('panel.blog_setting.adv_links',compact('adv_links'));
+    public function adv_links(Request $request)
+    {
+        $adv_links = blog_option::where('name', 'adv_link')->get();
+        return view('panel.blog_setting.adv_links', compact('adv_links'));
     }
 
-    public function load_adv_card_form($option_id=null ,Request $request)
+    public function load_adv_card_form($option_id = null, Request $request)
     {
 
         if ($option_id) {
@@ -278,7 +280,7 @@ class panel_view extends Controller
         return view('panel.blog_setting.materials.adv_card_form', compact('option'));
     }
 
-    public function load_adv_bar_form($option_id=null ,Request $request)
+    public function load_adv_bar_form($option_id = null, Request $request)
     {
 
         if ($option_id) {
@@ -289,7 +291,8 @@ class panel_view extends Controller
         return view('panel.blog_setting.materials.adv_bar_form', compact('option'));
     }
 
-    public function more_blog_setting(Request $request){
+    public function more_blog_setting(Request $request)
+    {
         return view('panel.blog_setting.more_setting');
 
     }
@@ -399,22 +402,22 @@ class panel_view extends Controller
     {
         //$status "back" "next" "cancel"
         $person_caravan = person_caravan::find($person_caravan_id);
-        $person_history = person_caravan::with('caravan')->where('person_id',$person_caravan['person_id'])
-            ->where('id','!=',$person_caravan_id)
+        $person_history = person_caravan::with('caravan')->where('person_id', $person_caravan['person_id'])
+            ->where('id', '!=', $person_caravan_id)
             ->get();
 
-        return view('panel.caravan.materials.caravan_person_action', compact('person_caravan','person_history'));
+        return view('panel.caravan.materials.caravan_person_action', compact('person_caravan', 'person_history'));
     }
 
-    public function caravan_upload_doc($caravan_id,$caravan_doc_id=null)
+    public function caravan_upload_doc($caravan_id, $caravan_doc_id = null)
     {
 
         $caravan = caravan::find($caravan_id);
-        $caravan_doc=null;
-        if ($caravan_doc_id){
+        $caravan_doc = null;
+        if ($caravan_doc_id) {
             $caravan_doc = caravan_doc::find($caravan_doc_id);
         }
-        return view('panel.caravan.materials.upload_doc_form',compact('caravan','caravan_doc'));
+        return view('panel.caravan.materials.upload_doc_form', compact('caravan', 'caravan_doc'));
     }
 
     public function caravans_echart_data()
@@ -449,25 +452,25 @@ class panel_view extends Controller
     {
 
         $projects_query = building_project::query();
-        $projects_query->with('media','city.all_provinces');
+        $projects_query->with('media', 'city.all_provinces');
         $lvl = "city_id";
         if ($request['city']) {
             $this_city = city::find($request['city']);
-            switch ($this_city['lvl']){
+            switch ($this_city['lvl']) {
                 case 1 :
                     $projects_query->select('city_id_2', DB::raw('count(*) as total'));
-                    $projects_query->where('city_id',$request['city']);
+                    $projects_query->where('city_id', $request['city']);
                     $projects_query->groupBy('city_id_2');
                     $lvl = "city_id_2";
                     break;
                 case 2 :
                     $projects_query->select('city_id_3', DB::raw('count(*) as total'));
-                    $projects_query->where('city_id_2',$request['city']);
+                    $projects_query->where('city_id_2', $request['city']);
                     $projects_query->groupBy('city_id_3');
                     $lvl = "city_id_3";
                     break;
                 case 3 :
-                    $projects_query->where('city_id_3',$request['city']);
+                    $projects_query->where('city_id_3', $request['city']);
                     $lvl = "project";
                     break;
                 default:
@@ -475,24 +478,23 @@ class panel_view extends Controller
                     $projects_query->groupBy('city_id');
                     $lvl = "city_id";
             }
-        }
-        else{
+        } else {
             $projects_query->select('city_id', DB::raw('count(*) as total'));
             $projects_query->groupBy('city_id');
             $lvl = "city_id";
 
         }
-        $selected_city =$request['city'];
+        $selected_city = $request['city'];
         $projects = $projects_query->get();
         $provinces = city::where('parent', '=', 0)->whereHas('province_project')->get();
-        return view('panel.building.dashboard', compact('projects','lvl','provinces','selected_city'));
+        return view('panel.building.dashboard', compact('projects', 'lvl', 'provinces', 'selected_city'));
     }
 
     public function building_tree_view()
     {
         $provinces = city::where('parent', '=', 0)->get();
-        $all_cities = city::pluck('name','id')->all();
-        return view('panel.building.materials.tree_view',compact('provinces','all_cities'));
+        $all_cities = city::pluck('name', 'id')->all();
+        return view('panel.building.materials.tree_view', compact('provinces', 'all_cities'));
     }
 
     public function building_project($project_id, Request $request)
@@ -503,7 +505,7 @@ class panel_view extends Controller
         $ticket_status_filter = $request->input('ticket_status_filter');
 
 
-        $projects = building_project::with('gallery','media', 'building_items', 'building_users')->find($project_id);
+        $projects = building_project::with('gallery', 'media', 'building_items', 'building_users')->find($project_id);
         $progress_tickets = building_ticket::where('ticket_type', '0')
             ->where('building_id', $project_id)->get();
         $building_items_obj = building_item::where('building_id', $project_id)->get();
@@ -649,9 +651,9 @@ class panel_view extends Controller
         $system_title = charity_payment_patern::with('titles')->where('system', 1)->where('periodic', 0)->first();
         $deleted_titles = charity_payment_title::where('ch_pay_pattern_id', $system_title['id'])->onlyTrashed()->get();
         $other_titles = charity_payment_patern::with('titles')->with('fields')->where('system', 0)->where('periodic', 0)->get();
-        $champion_titles = charity_payment_patern::with('titles')->where('type', '=','champion')->first();
+        $champion_titles = charity_payment_patern::with('titles')->where('type', '=', 'champion')->first();
         $banks = bank::groupBy('name')->get();
-        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles','champion_titles','banks'));
+        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles', 'champion_titles', 'banks'));
     }
 
     public function charity_payment_title_add($payment_pattern_id, $payment_title_id = null)
@@ -686,16 +688,23 @@ class panel_view extends Controller
         $periods = charity_period::with('user')->get();
         $payments = charity_periods_transaction::where(
             [
-                ['review','=','waiting']
+                ['review', '=', 'waiting']
             ]
         )->with('period')->get();
         $paymentsApprove = charity_periods_transaction::where(
             [
-                ['review','=','approved']
+                ['review', '=', 'approved']
             ]
         )->with('period')->get();
-        $otherPayments = charity_transaction::with('values','user','patern')->get();
-        return view('panel.charity.list',compact('periods','payments','paymentsApprove','otherPayments'));
+        $otherPayments = charity_transaction::with('values', 'user', 'patern')->get();
+        return view('panel.charity.list', compact('periods', 'payments', 'paymentsApprove', 'otherPayments'));
+    }
+
+
+    public function charity_champion_add()
+    {
+        $projects = building_project::where('archived', false)->get();
+        return view('panel.charity.setting.module.add_champion',compact('projects'));
     }
 //end charity module
 
@@ -712,7 +721,7 @@ class panel_view extends Controller
         $gateways = gateway::get();
         $banks = bank::groupBy('name')->get();
 
-        return view('panel.setting.gateway_setting', compact('gateways','banks'));
+        return view('panel.setting.gateway_setting', compact('gateways', 'banks'));
     }
 
     public function gateway_add()

@@ -213,6 +213,9 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
         Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');
         Route::post('periods/show/approve/{id}', 'panel\charity@charity_payment_approve')->name('charity_payment_approve');
+        Route::get('charity/champion/add', 'panel\panel_view@charity_champion_add')->name('charity_champion_add');
+        Route::post('charity/champion/add/store', 'panel\charity@charity_champion_add_store')->name('charity_champion_add_store');
+
 
     });
     Route::prefix('ajax')->group(function () {
@@ -515,6 +518,9 @@ Route::group(
     Route::get('blog', 'globals\global_view@blog')->name('blog');
 
     Route::post('city/list', 'globals\global_controller@get_city_list')->name('get_city_list');
+    Route::get('champion/{id}', 'globals\global_view@champion_show')->name('champion_show');
+    Route::post('champion/payment', 'globals\global_controller@champion_payment')->name('champion_payment');
+    Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
 
 
 

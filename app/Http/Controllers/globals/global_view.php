@@ -4,6 +4,8 @@ namespace App\Http\Controllers\globals;
 
 use App\blog_slider;
 use App\caravan;
+use App\champion_transaction;
+use App\charity_champion;
 use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
@@ -42,7 +44,9 @@ class global_view extends Controller
     {
         $sliders = blog_slider::get();
         $categories = BlogEtcCategory::orderBy("category_name")->get();
-        return view('global.index', compact('sliders','categories'));
+
+        $champions = charity_champion::with('image')->get();
+        return view('global.index', compact('sliders', 'categories', 'champions'));
     }
 
     public function post_page($blogPostSlug, Request $request)
@@ -275,7 +279,7 @@ class global_view extends Controller
 
         $posts = BlogEtcPost::orderBy("posted_at", "desc")
             ->paginate(10);
-        return view("global.blog", ['posts'=>$posts]);
+        return view("global.blog", ['posts' => $posts]);
 
         return view('global.blog', compact('posts'));
     }
@@ -298,6 +302,8 @@ class global_view extends Controller
                     $con = false;
                 }
             }
+        }elseif ($request['type']=="charity_champion"){
+            $info = champion_transaction::findOrFail($request['id']);
         }
         if (!is_null($info) && $con) {
             $gatewayInfo = gateway::findOrFail($request['gateway_id']);
@@ -326,6 +332,7 @@ class global_view extends Controller
                     $transID = $gateway->transactionId();
 
                     $info->trans_id = $transID;
+                    $info->gateway_id = $gatewayInfo['id'];
                     $info->save();
                     return $gateway->redirect();
 
@@ -367,5 +374,20 @@ class global_view extends Controller
             $messages['result'] = "fail";
             return view('global.callback', compact('messages'));
         }
+    }
+
+    public function champion_show($id)
+    {
+        $champion = charity_champion::with('image')->findOrFail($id);
+        $champions = charity_champion::with('image')->orderBy('created_at', 'desc')->limit(3)->get();
+
+        return view('global.champion.champion', compact('champion', 'champions'));
+    }
+
+    public function champion_cart($id)
+    {
+        $champion = champion_transaction::with('champion')->findOrFail($id);
+        $gateways = gateway::with('bank')->where('online', 1)->get();
+        return view('global.champion.cart', compact('champion', 'gateways'));
     }
 }

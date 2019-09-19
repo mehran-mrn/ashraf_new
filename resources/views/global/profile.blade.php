@@ -72,7 +72,7 @@
                             <ul id="myTab" class="nav nav-tabs boot-tabs">
                                 <li class="active">
                                     <a href="#payment_list" data-toggle="tab">{{__('messages.payment_list')}}</a></li>
-                                <li><a href="#periodic_payemnt"
+                                <li><a href="#periodic_payment"
                                        data-toggle="tab">{{__('messages.periodic_payment')}}</a></li>
 
                                 <li><a href="#paid"
@@ -122,7 +122,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="periodic_payemnt">
+                                <div class="tab-pane fade" id="periodic_payment">
                                     <div class="table-responsive">
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
