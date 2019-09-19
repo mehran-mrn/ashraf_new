@@ -97,40 +97,40 @@
         </div>
         <div class="row mt-10">
             <div class="col-md-5">
-                <div class="widget dark">
-                    <h5 class="widget-title mb-10">Subscribe Us</h5>
-                    <!-- Mailchimp Subscription Form Starts Here -->
-                    <form id="mailchimp-subscription-form-footer" class="newsletter-form">
-                        <div class="input-group">
-                            <input type="email" value="" name="EMAIL" placeholder="Your Email" class="form-control input-lg font-16" data-height="45px" id="mce-EMAIL-footer" style="height: 45px;">
-                            <span class="input-group-btn">
-                  <button data-height="45px" class="btn btn-colored btn-theme-colored btn-xs m-0 font-14" type="submit">Subscribe</button>
-                </span>
-                        </div>
-                    </form>
-                    <!-- Mailchimp Subscription Form Validation-->
-                    <script type="text/javascript">
-                        $('#mailchimp-subscription-form-footer').ajaxChimp({
-                            callback: mailChimpCallBack,
-                            url: '//thememascot.us9.list-manage.com/subscribe/post?u=a01f440178e35febc8cf4e51f&amp;id=49d6d30e1e'
-                        });
+{{--                <div class="widget dark">--}}
+{{--                    <h5 class="widget-title mb-10">Subscribe Us</h5>--}}
+{{--                    <!-- Mailchimp Subscription Form Starts Here -->--}}
+{{--                    <form id="mailchimp-subscription-form-footer" class="newsletter-form">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <input type="email" value="" name="EMAIL" placeholder="Your Email" class="form-control input-lg font-16" data-height="45px" id="mce-EMAIL-footer" style="height: 45px;">--}}
+{{--                            <span class="input-group-btn">--}}
+{{--                  <button data-height="45px" class="btn btn-colored btn-theme-colored btn-xs m-0 font-14" type="submit">Subscribe</button>--}}
+{{--                </span>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+{{--                    <!-- Mailchimp Subscription Form Validation-->--}}
+{{--                    <script type="text/javascript">--}}
+{{--                        $('#mailchimp-subscription-form-footer').ajaxChimp({--}}
+{{--                            callback: mailChimpCallBack,--}}
+{{--                            url: '//thememascot.us9.list-manage.com/subscribe/post?u=a01f440178e35febc8cf4e51f&amp;id=49d6d30e1e'--}}
+{{--                        });--}}
 
-                        function mailChimpCallBack(resp) {
-                            // Hide any previous response text
-                            var $mailchimpform = $('#mailchimp-subscription-form-footer'),
-                                $response = '';
-                            $mailchimpform.children(".alert").remove();
-                            console.log(resp);
-                            if (resp.result === 'success') {
-                                $response = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';
-                            } else if (resp.result === 'error') {
-                                $response = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';
-                            }
-                            $mailchimpform.prepend($response);
-                        }
-                    </script>
-                    <!-- Mailchimp Subscription Form Ends Here -->
-                </div>
+{{--                        function mailChimpCallBack(resp) {--}}
+{{--                            // Hide any previous response text--}}
+{{--                            var $mailchimpform = $('#mailchimp-subscription-form-footer'),--}}
+{{--                                $response = '';--}}
+{{--                            $mailchimpform.children(".alert").remove();--}}
+{{--                            console.log(resp);--}}
+{{--                            if (resp.result === 'success') {--}}
+{{--                                $response = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';--}}
+{{--                            } else if (resp.result === 'error') {--}}
+{{--                                $response = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + resp.msg + '</div>';--}}
+{{--                            }--}}
+{{--                            $mailchimpform.prepend($response);--}}
+{{--                        }--}}
+{{--                    </script>--}}
+{{--                    <!-- Mailchimp Subscription Form Ends Here -->--}}
+{{--                </div>--}}
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <div class="widget dark">

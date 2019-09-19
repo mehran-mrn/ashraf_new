@@ -641,16 +641,18 @@ function get_blog_categories()
     $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
     return $categories;
 }
-function get_option($option_name,$limit = 0)
+function get_option($option_name,$limit = 0,$random=false)
 {
     $option_query = \App\blog_option::query();
     $option_query->where('name', $option_name);
 
+    if ($random){
+        $option_query->inRandomOrder();
+    }
     if ($limit){
         $option_query->limit($limit);
     }
     $options = $option_query->get();
-    $options = $options->shuffle();
     return $options;
 }
 
