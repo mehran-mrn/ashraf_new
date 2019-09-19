@@ -84,7 +84,9 @@
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
-                                                <th class="text-center">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></th>
+                                                <th class="text-center">{{__('messages.amount')}}
+                                                    <small>({{__('messages.rial')}})</small>
+                                                </th>
                                                 <th class="text-center">{{__('messages.start_date')}}</th>
                                                 <th class="text-center">{{__('messages.description')}}</th>
                                                 <th class="text-center">{{__('messages.status')}}</th>

@@ -492,7 +492,7 @@ return array(
     'roles_permission' => 'نقش ها و دسترسی ها',
     'groups' => 'مدیریت گروه ها',
     'final_register' => 'ثبت نهایی',
-    'donate' => 'پول بده',
+    'donate' => 'مشارکت',
     'additional_info' => 'اطلاعات تکمیلی',
     'doc_upload' => 'آپلود مدارک',
     'final_submit' => 'ثبت نهایی',

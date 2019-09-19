@@ -15,12 +15,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/1.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="34" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
@@ -38,12 +38,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/2.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="45" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
@@ -61,12 +61,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/3.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="98" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
@@ -84,12 +84,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/4.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="10" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
@@ -107,12 +107,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/5.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="68" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
@@ -130,7 +130,7 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/6.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
@@ -153,7 +153,7 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/7.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
@@ -176,12 +176,12 @@
                     <div class="thumb">
                         <img src="{{ URL::asset('/public/assets/global/images/project/8.jpg') }}" alt="" class="img-fullwidth">
                         <div class="overlay-donate-now">
-                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">Donate <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
+                            <a href="page-donate.html" class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{trans('messages.donate')}} <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                         </div>
                     </div>
                     <div class="progress-item mt-0">
                         <div class="progress mb-0">
-                            <div data-percent="84" class="progress-bar"><span class="percent">0</span></div>
+                            <div data-percent="14" class="progress-bar"><span class="percent">0</span></div>
                         </div>
                     </div>
                     <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">

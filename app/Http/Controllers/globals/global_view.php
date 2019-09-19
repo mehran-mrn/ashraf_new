@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\globals;
 
 use App\blog_slider;
+use App\caravan;
 use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
@@ -98,6 +99,12 @@ class global_view extends Controller
                 ['user_id', '=', Auth::id()],
             ])->get();
         return view('global.profile', compact('periods', 'unpaidPeriod'));
+    }
+
+    public function caravan_page()
+    {
+        $active_caravans = caravan::where('duty',\auth()->id())->whereIn('status',['1','2','3','4'])->get();
+        return view('global.profile.caravan', compact('active_caravans'));
     }
 
     public function change_password()

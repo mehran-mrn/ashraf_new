@@ -24,4 +24,7 @@ class caravan extends Model
     {
         return $this->hasMany('App\person_caravan','caravan_id');
     }
+    public  function user(){
+        return $this->belongsTo('App\User','user_id');
+    }
 }

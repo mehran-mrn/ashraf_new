@@ -10,5 +10,7 @@ return array (
   'row' => 'ردیف',
   'person' => 'فرد',
   'download' => 'دانلود',
+  'print' => 'پرینت',
+  'executer' => 'مجری',
 
 );

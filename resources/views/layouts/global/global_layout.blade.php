@@ -4,27 +4,27 @@
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="description" content="{{config('site_setting.site_name')}}"/>
-    <meta name="keywords" content="{{config('site_setting.keyword')}}"/>
+    <meta name="description" content="{{trans('site_info.site_name')}}"/>
+    <meta name="keywords" content="{{trans('site_info.keyword')}}"/>
     <meta name="author" content="Mehran Marandi - m.marandi@gmail.com"/>
     <meta name="author" content="Milad Kardgar - mk.kardgar@gmail.com"/>
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ashrafolanbia.ir"/>
-    <meta name="copyright" content="{{config('site_setting.copy_right')}}">
+    <meta name="copyright" content="{{trans('site_info.copy_right')}}">
     <meta name="language" content="fa">
     <meta name="google" content="notranslate">
     <meta name="robots" content="index follow">
     <meta name="googlebot" content="index follow">
     <!--        <meta name="samandehi" content="712692104"/>-->
-    <meta property="og:title" content="{{config('site_setting.site_name')}}"/>
+    <meta property="og:title" content="{{trans('site_info.site_name')}}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="{{config('site_setting.site_url')}}"/>
     <meta property="og:image" content="{{asset(url('/public/assets/global/images/logoImage.png'))}}"/>
     <meta property="og:site_name" content="{{__('site_info.web_title')}}"/>
-    <meta property="og:description" content="{{config('site_setting.site_description')}}"/>
+    <meta property="og:description" content="{{trans('site_info.site_description')}}"/>
 
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:description" content="{{config('site_setting.site_description')}}"/>
+    <meta name="twitter:description" content="{{trans('site_info.site_description')}}"/>
     <meta name="twitter:title"
           content="{{__('site_info.web_title')}}"/>
 

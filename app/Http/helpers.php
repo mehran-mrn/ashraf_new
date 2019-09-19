@@ -789,3 +789,11 @@ function uploadFile($file, $folder = 'files')
     $file->move($destinationPath, $fileName);
     return $destinationPath . '/' . $fileName;
 }
+
+function has_caravan()
+{
+    if (Auth::check() and \App\caravan::where('duty',\auth()->id())->whereIn('status',['1','2','3','4'])->exists()) {
+        return true;
+    }
+    return null;
+}

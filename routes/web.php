@@ -288,6 +288,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     //--------------Global View-------------
     //======================================
     Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+    Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
+    Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
     Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
     Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
     //======================================

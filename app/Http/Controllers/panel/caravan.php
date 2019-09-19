@@ -193,9 +193,11 @@ class caravan extends Controller
             $this->update_person_caravan_data($request,$request['person_id']);
         }
 
+        return back();
 
-        return redirect(route('caravan', ['caravan_id' => $request['caravan_id']]));
+//        return redirect(route('caravan', ['caravan_id' => $request['caravan_id']]));
     }
+
     public function update_person_caravan_data(Request $request,$person_caravan_id)
     {
         if ($this->validate_national_code($request) != 'true') {
@@ -219,6 +221,7 @@ class caravan extends Controller
         $person->save();
         return redirect(route('caravan', ['caravan_id' => $person_caravan['caravan_id']]));
     }
+
     public function add_person_to_caravan_excel(Request $request)
     {
         $this->validate($request, [

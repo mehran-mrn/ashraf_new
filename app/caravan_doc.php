@@ -10,4 +10,6 @@ class caravan_doc extends Model
     {
         return $this->belongsTo('App\uploaded_doc','doc_id');
     }
+
+
 }

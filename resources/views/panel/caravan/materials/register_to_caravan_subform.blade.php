@@ -27,24 +27,20 @@
             <div class="form-group row">
 
                 <label for="form_national_code"
-                       class="col-md-4 col-form-label text-md-right">{{ __('messages.national_code') }}</label>
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.national_code') }}</label>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="form_national_code"  class="form-control @error('capacity') is-invalid @enderror"
                            name="national_code"
                            value="{{isset($person)?$person['person']['national_code']:""}}" autocomplete="national_code" autofocus>
 
                 </div>
 
-            </div>
-
-            <div class="form-group row">
-
-                <label for="sh_code{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{ __('messages.sh_code') }}
+                <label for="sh_code{{$rand_id}}" class="col-md-2 col-form-label text-md-right">{{ __('messages.sh_code') }}
                     <div class="text-small text-muted">{{trans('messages.optional')}}</div>
                 </label>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="sh_code{{$rand_id}}"  class="form-control"
                            name="sh_code" value="{{!empty($person)?$person['person']['sh_code']:""}}"
                            autocomplete="sh_code" autofocus>
@@ -53,26 +49,24 @@
 
             </div>
 
+
+
             <div class="form-group row">
 
-                <label for="sh_code{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{  __('messages.id')." ".__('messages.madadjoo') }}
+                <label for="sh_code{{$rand_id}}" class="col-md-2 col-form-label text-md-right">{{  __('messages.id')." ".__('messages.madadjoo') }}
                     <div class="text-small text-muted">{{trans('messages.optional')}}</div>
                 </label>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="madadjoo_id_{{$rand_id}}"  class="form-control"
                            name="madadjoo_id" value="{{!empty($person)?$person['person']['madadjoo_id']:""}}"
                            autocomplete="madadjoo_id" autofocus>
 
                 </div>
 
-            </div>
+                <label for="capacity" class="col-md-2 col-form-label text-md-right">{{ __('messages.gender') }}</label>
 
-            <div class="form-group row">
-
-                <label for="capacity" class="col-md-4 col-form-label text-md-right">{{ __('messages.gender') }}</label>
-
-                <div class="col-md-6">
+                <div class="col-md-4">
 
                     <div class="custom-control custom-radio custom-control-inline">
                         <input value="0" type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_g1"
@@ -83,64 +77,59 @@
                     <div class="custom-control custom-radio custom-control-inline">
                         <input value="1"  {{(!empty($person) and $person['person']['gender'] == 1 )?"checked":""}}
                         type="radio" class="custom-control-input" name="gender" id="custom_radio_inline_g2"
-                                >
+                        >
                         <label class="custom-control-label" for="custom_radio_inline_g2">{{__('messages.mrs')}}</label>
                     </div>
 
                 </div>
             </div>
 
+
+
             <div class="form-group row">
 
                 <label for="name{{$rand_id}}"
-                       class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>
-                <div class="col-md-6">
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.name') }}</label>
+                <div class="col-md-4">
                     <input id="name{{$rand_id}}"  class="form-control"
                            name="name" value="{{!empty($person)?$person['person']['name']:""}}"
                            autocomplete="name" autofocus>
 
                 </div>
 
-
-            </div>
-
-            <div class="form-group row">
-
                 <label for="family{{$rand_id}}"
-                       class="col-md-4 col-form-label text-md-right">{{  __('messages.family') }}</label>
-                <div class="col-md-6">
+                       class="col-md-2 col-form-label text-md-right">{{  __('messages.family') }}</label>
+                <div class="col-md-4">
                     <input id="family{{$rand_id}}" class="form-control"
                            name="family" value="{{!empty($person)?$person['person']['family']:""}}"
                            autocomplete="family" autofocus>
 
                 </div>
-
             </div>
+
+
 
             <div class="form-group row">
 
-                <label for="father_name{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{ __('messages.father_name') }}</label>
+                <label for="father_name{{$rand_id}}" class="col-md-2 col-form-label text-md-right">{{ __('messages.father_name') }}</label>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="father_name{{$rand_id}}"  class="form-control"
                            name="father_name" value="{{!empty($person)?$person['person']['father_name']:""}}"
                            autocomplete="family" autofocus>
 
                 </div>
 
-            </div>
+                <label for="birth_date_{{$rand_id}}" class="col-md-2 col-form-label text-md-right">{{ __('messages.birth_date') }}</label>
 
-            <div class="form-group row">
-
-                <label for="birth_date_{{$rand_id}}" class="col-md-4 col-form-label text-md-right">{{ __('messages.birth_date') }}</label>
-
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="birth_date_{{$rand_id}}{{!empty($person)?"0":""}}" type="text"
-                    value="{{!empty($person)? miladi_to_shamsi_date($person['person']['birth_date']):""}}"
+                           value="{{!empty($person)? miladi_to_shamsi_date($person['person']['birth_date']):""}}"
                            class="form-control" name="birth_date">
 
                 </div>
             </div>
+
 
             <div class="form-group row">
                 <label for="relation"
@@ -179,9 +168,9 @@
             <div class="form-group row">
 
                 <label for="phone"
-                       class="col-md-4 col-form-label text-md-right">{{ __('messages.phone') }}</label>
+                       class="col-md-2 col-form-label text-md-right">{{ __('messages.phone') }}</label>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input id="phone"  class="form-control @error('phone') is-invalid @enderror"
                            name="phone" value="{{!empty($person)?$person['person']['phone']:""}}"
                            autocomplete="phone" autofocus>

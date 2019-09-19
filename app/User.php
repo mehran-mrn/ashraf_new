@@ -39,6 +39,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function caravan()
+    {
+        return $this->hasMany('App\caravan', 'user_id');
+    }
+
     public function building_users()
     {
         return $this->hasMany('App\building_user', 'user_id');
