@@ -4,6 +4,7 @@ namespace App\Http\Controllers\globals;
 
 use App\blog_slider;
 use App\caravan;
+use App\caravan_doc;
 use App\champion_transaction;
 use App\charity_champion;
 use App\charity_payment_patern;
@@ -108,7 +109,8 @@ class global_view extends Controller
     public function caravan_page()
     {
         $active_caravans = caravan::where('duty',\auth()->id())->whereIn('status',['1','2','3','4'])->get();
-        return view('global.profile.caravan', compact('active_caravans'));
+
+        return view('global.profile.caravan', compact('active_caravans','caravan_doc'));
     }
 
     public function change_password()

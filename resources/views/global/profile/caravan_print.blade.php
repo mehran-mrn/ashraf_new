@@ -55,6 +55,7 @@
 
                     <thead class="text-center">
                     <tr>
+                        <th class="text-center"></th>
                         <th class="text-center">{{trans('words.supervisor')}}</th>
                         <th class="text-center">{{trans('messages.name')}}</th>
                         <th class="text-center">{{trans('messages.national_code')}}</th>
@@ -64,9 +65,12 @@
                     </tr>
                     </thead>
                     <tbody class="text-center">
+                    <?php  $i =1;?>
                     @foreach($caravan['persons'] as $person_caravan)
                         <tr>
-                            <td class="p-2">{{$person_caravan['parent_id']}}</td>
+                            <td class="p-2">{{$i}}</td>
+                            <?php  $i++;?>
+                            <td class="p-2">{{$person_caravan->parent['person']['name'] ." - ".$person_caravan->parent['person']['family']}}</td>
                             <td class="p-2">{{$person_caravan['person']['name'] ." - ". $person_caravan['person']['family']}}</td>
                             <td class="p-2">{{$person_caravan['person']['national_code']}}</td>
                             <td class="p-2">{{miladi_to_shamsi_date($person_caravan['person']['birth_date'])}} </td>

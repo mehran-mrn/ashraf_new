@@ -182,7 +182,6 @@
 <script src="{{ URL::asset('/public/assets/global/js/custom.js') }}"></script>
 @yield('footer_js')
 
-
 <script>
     $(document).ready(function () {
         @if(!$errors->isEmpty())

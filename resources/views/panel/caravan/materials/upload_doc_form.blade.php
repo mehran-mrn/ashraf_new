@@ -3,43 +3,41 @@
       autocomplete="off">
     @csrf
     <input type="hidden" name="caravan_id" value="{{$caravan['id']}}">
-    <div class="row">
+    <div class="form-group row">
 
             <label for="title"
                    class="col-md-3 col-form-label text-md-right">{{ __('messages.title') }}</label>
+        <div class="col-md-9">
 
-            <div class="col-md-9 mb-2">
-                <input id="title" type="text" class="form-control @error('title')  @enderror"
+                <input id="title" type="text" class="form-control   @error('title')  @enderror"
                        name="title"
                        value="{{$caravan_doc['title']}}" autocomplete="title" autofocus>
-
-            </div>
+        </div>
 
     </div>
-    <div class="row">
+    <div class="form-group row">
 
             <label for="description"
                    class="col-md-3 col-form-label text-md-right">{{ __('messages.description') }}</label>
+        <div class="col-md-9">
 
-            <div class="col-md-9 mb-2">
-                <textarea id="description" type="text" class="form-control @error('description')  @enderror"
+                <textarea id="description"   class=" form-control @error('description')  @enderror"
                        name="description"
                           value="" autocomplete="description" autofocus>{{$caravan_doc['description']}}</textarea>
-
-            </div>
+        </div>
         </div>
 
-    <div class="row">
+    <div class="form-group row">
 
             <label for="file"
                    class="col-md-3 col-form-label text-md-right">{{ __('messages.file') }}</label>
+        <div class="col-md-9">
 
-            <div class="col-md-9 mb-2">
-                <input id="file" type="file" class="form-control @error('file')  @enderror"
+                <input id="file" type="file" class="  @error('file')  @enderror"
                        name="file"
                         autofocus>
+        </div>
 
-            </div>
         </div>
 
 

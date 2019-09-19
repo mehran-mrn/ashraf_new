@@ -375,6 +375,11 @@ function get_user($user_id)
     $user = \App\User::find($user_id);
     return $user;
 }
+function get_person($person_id)
+{
+    $person = \App\person::find($person_id);
+    return $person;
+}
 
 function count_caravan_useage_history($person_id, $current_caravan_id = null)
 {

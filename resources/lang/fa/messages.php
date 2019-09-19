@@ -495,6 +495,8 @@ return array(
     'donate' => 'مشارکت',
     'additional_info' => 'اطلاعات تکمیلی',
     'doc_upload' => 'آپلود مدارک',
+    'new_doc_upload' => 'بارگزاری مدرک جدید',
+    'uploaded_docs' => 'مدارک آپلود شده',
     'final_submit' => 'ثبت نهایی',
     'last_login' => 'آخرین لاگین',
     'msd_house' => 'خانه فرهنگی مشهد مقدس',
