@@ -2275,6 +2275,7 @@ form .error {
 .gallery-isotope .gallery-item .thumb {
   position: relative;
   overflow: hidden;
+  height: 108px;
 }
 .gallery-isotope .gallery-item .hover-link {
   position: absolute;

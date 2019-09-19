@@ -681,6 +681,8 @@ footer.bg-deep {
 }
 .img-fullwidth {
   width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
 }
 /* -------- Absolute Image Positioning ---------- */
 .overflow-visible {
