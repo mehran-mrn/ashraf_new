@@ -228,7 +228,7 @@
                                                                 <b>{{trans('messages.uploaded_docs')}}</b></div>
                                                             <br>
                                                             @forelse($caravan['caravan_docs'] as $caravan_doc)
-                                                                <div style="border-radius: 5px" class="panel bordered  border-theme-color-2px">
+                                                                <div style="border-radius: 5px" class="panel bg-white-fe ">
                                                                     <form class="m-0" method="post"
                                                                           action="{{route('download_doc')}}">
                                                                         <div style="padding: 8px 22px"

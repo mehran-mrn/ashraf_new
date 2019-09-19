@@ -3,7 +3,7 @@
     <div class="container pt-30 pb-30">
         <div class="row">
             @forelse(get_option('display_statistic',4,true) as $statistic)
-                <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
+                <div class="col-xs-6 col-sm-3 col-md-3 mb-md-50">
                     <div class="funfact text-center">
                         <i class="{{json_decode($statistic['value'],true)['icon']}} mt-5 text-white"></i>
                         <h2 data-animation-duration="2000" data-value="{{json_decode($statistic['value'],true)['value']}}" class="animate-number text-white font-42 font-weight-500 mt-0 mb-0">0</h2>
