@@ -2,7 +2,7 @@
 <section class="divider parallax layer-overlay overlay-theme-colored-9" data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}" data-parallax-ratio="0.7">
     <div class="container pt-30 pb-30">
         <div class="row">
-            @forelse(get_option('display_statistic') as $statistic)
+            @forelse(get_option('display_statistic',4) as $statistic)
                 <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
                     <div class="funfact text-center">
                         <i class="{{json_decode($statistic['value'],true)['icon']}} mt-5 text-white"></i>

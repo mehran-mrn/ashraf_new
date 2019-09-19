@@ -641,10 +641,16 @@ function get_blog_categories()
     $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
     return $categories;
 }
-
-function get_option($option_name)
+function get_option($option_name,$limit = 0)
 {
-    $options = \App\blog_option::where('name', $option_name)->get();
+    $option_query = \App\blog_option::query();
+    $option_query->where('name', $option_name);
+
+    if ($limit){
+        $option_query->limit($limit);
+    }
+    $options = $option_query->get();
+    $options = $options->shuffle();
     return $options;
 }
 
