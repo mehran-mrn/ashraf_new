@@ -810,3 +810,12 @@ function has_caravan()
     }
     return null;
 }
+function notification_messages($module,$key,$variables=[])
+{
+    $message = \App\notification_template::where('module',$module)->where('key',$key)->first();
+    foreach ($variables as $name=>$variable){
+        $message['text'] = preg_replace("/({( )*".$name."( )*})/", $variable, $message['text']);
+    }
+    return $message;
+}
+
