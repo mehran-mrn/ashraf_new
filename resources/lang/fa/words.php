@@ -12,5 +12,7 @@ return array (
   'download' => 'دانلود',
   'print' => 'پرینت',
   'executer' => 'مجری',
+  'update' => 'بروز رسانی',
+  'variables' => 'متغییر ها',
 
 );

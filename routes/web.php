@@ -17,7 +17,9 @@ Route::get('/clear-cache', function () {
     return "Cache is cleared";
 });
 Route::get('/test', function () {
-    return get_posts(1,['last_post']);
+    $name = 'Krunal';
+    Mail::to('mehranmarandi90@gmail.com')->send(new \App\Mail\payment_confirmation($name));
+    return 'sent';
 });
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
@@ -104,6 +106,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
     Route::prefix('setting')->group(function () {
 //        Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
+        Route::resource('notification_template','panel\notification_template');
         Route::resource('cities','panel\cities_controller');
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
         Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
@@ -295,6 +298,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
     Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
     Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+    Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');
+    Route::get('/involved', 'globals\global_view@involved_projects')->name('involved_projects_all');
     //======================================
     //-----------End Global View------------
     //======================================

@@ -295,6 +295,9 @@ if (!isset($active_sidbare)) {
 
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.setting')}}"
                         style="display:{{in_array("setting", $active_sidbare) ? 'block' : 'none' }}">
+                        <li class="nav-item"><a href="{{route('notification_template.index')}}"
+                                                class="nav-link {{in_array("notification_template", $active_sidbare) ? 'active' : '' }}">{{trans('messages.notification_template')}}</a>
+                        </li>
                         <li class="nav-item"><a href="{{url(config('translation-manager.route.prefix'))}}"
                                                 class="nav-link {{in_array("translations", $active_sidbare) ? 'active' : '' }}">{{trans('messages.translation_maganger')}}</a>
                         </li>

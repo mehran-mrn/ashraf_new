@@ -383,6 +383,22 @@ class DatabaseSeeder extends Seeder
                 'lvl' => 1,
                 'status' => 'inactive']]);
 
+        DB::table('notification_templates')->insert([
+            ['module' => 'email',
+                'key' => 'payment_confirmed',
+                'description' => 'متن ایمیلی که بعد از پرداخت ارسال میشود',
+                'subject' => "پرداخت انجام شد",
+                'text' => "با تشکر از پرداخت شما",
+                'variables' => 'name,date,amount,ref_id'],
+            ['module' => 'sms',
+                'key' => 'payment_confirmed',
+                'description' => 'متن پیامکی که بعد از پرداخت ارسال میشود',
+                'subject' => "",
+                'text' => "با تشکر از پرداخت شما",
+                'variables' => 'name,date,amount,ref_id'],
+
+        ]);
+
         DB::table('setting_transportations')->insert(
             [
                 [

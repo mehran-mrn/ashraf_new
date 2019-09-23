@@ -609,5 +609,6 @@ return array(
     'champion'=>'کمپین',
     'receive'=>'دریافت شده',
     'count_people'=>'تعداد افراد شرکت کننده',
+    'notification_template'=>'الگو پیام ها',
     'donate_pay'=>'مبلغ کمک'
 );
