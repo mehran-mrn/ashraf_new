@@ -16,4 +16,14 @@ class charity_champion extends Model
         return $this->hasOne('App\media', 'category_id')->where('module', '=', 'champion');
     }
 
+    public function projects()
+    {
+        return $this->belongsToMany('App\building_project','charity_champions_projects','champion_id','project_id')->with('media','gallery');
+    }
+
+    public function transaction()
+    {
+        return $this->hasMany('App\champion_transaction','champion_id','id');
+    }
+
 }

@@ -73,22 +73,6 @@
     ?>
     <div class="main-content">
 
-        <!-- Section: inner-header -->
-        <section class="inner-header divider parallax layer-overlay overlay-dark-5" data-stellar-background-ratio="0.5"
-                 data-bg-img="{{asset(url('public/assets/global/images/bg/bg1.jpg'))}}">
-            <div class="container pt-100 pb-50">
-                <!-- Section Content -->
-                <div class="section-content pt-100">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="title text-white">{{$champion['title']}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: Causes -->
         <section>
             <div class="container">
                 <div class="row mtli-row-clearfix">
@@ -126,6 +110,40 @@
                         <div class="event-details">
                             <p class="mb-20 mt-20">{!! $champion['description'] !!}</p>
                         </div>
+                        <hr>
+                        <div class="widget pt-20">
+                            <h6 class="text-uppercase title line-bottom mt-0 mb-30 mt-sm-40">
+                                <i class="fa fa-thumb-tack text-gray-darkgray mr-10"></i> {{__('messages.projects')}}
+                                <span class="text-theme-colored">{{__('messages.champion')}}</span></h6>
+                            <div class="row">
+                                @forelse($champion['projects'] as $ch)
+                                    <div class="col-xs-12 col-sm-6 col-md-4">
+                                        <article class="post clearfix mb-sm-30 bg-silver-light">
+                                            <div class="entry-header">
+                                                <div class="post-thumb thumb">
+                                                    <img src="/{{$ch['media']['url']}}" alt=""
+                                                         class="img-responsive img-fullwidth">
+                                                </div>
+                                            </div>
+                                            <div class="entry-content p-20 pr-10">
+                                                <div class="entry-meta media mt-0 no-bg no-border">
+                                                    <div class="media-body pl-15">
+                                                        <div class="event-content pull-left flip">
+                                                            <h4 class="entry-title text-white text-uppercase m-0 mt-5">
+                                                                <a href="#">{{$ch['title']}}</a></h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="mt-10">{{$ch['description']}}</p>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                @empty
+
+                                @endforelse
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-4">
                         <div class="sidebar sidebar-right mt-sm-30">
@@ -162,46 +180,35 @@
                                 </form>
                                 <div class="clearfix"></div>
                             </div>
+                            @if(sizeof($champion['projects'])>=1)
+                                <div class="widget">
+                                    <h4 class="widget-title line-bottom">{{__('messages.patron_finance_projects')}}</h4>
+                                    <div class="form-group">
+                                        <div class="form-group pull-left">
+                                            <button class="btn btn-success">{{__('messages.patron')}}</button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            @endif
+
                             <div class="widget">
                                 <h4 class="widget-title line-bottom">{{__('messages.count_people')}}</h4>
-                                <h5>170</h5>
+                                <h5>{{count($champion['transaction'])}}</h5>
                             </div>
                             <div class="widget">
-                                <h5 class="widget-title line-bottom">Image gallery with text</h5>
+                                <h5 class="widget-title line-bottom">{{__('messages.projects_gallery')}}</h5>
                                 <div class="owl-carousel-1col">
-                                    <div class="item">
-                                        <img src="https://placehold.it/365x230" alt="">
-                                        <h4 class="title">This is a Demo Title</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae illum
-                                            amet illo.</p>
-                                    </div>
-                                    <div class="item">
-                                        <img src="https://placehold.it/365x230" alt="">
-                                        <h4 class="title">This is a Demo Title</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae illum
-                                            amet illo.</p>
-                                    </div>
-                                    <div class="item">
-                                        <img src="https://placehold.it/365x230" alt="">
-                                        <h4 class="title">This is a Demo Title</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae illum
-                                            amet illo.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget">
-                                <h4 class="widget-title line-bottom">Tags</h4>
-                                <div class="tags">
-                                    <a href="#">travel</a>
-                                    <a href="#">blog</a>
-                                    <a href="#">lifestyle</a>
-                                    <a href="#">feature</a>
-                                    <a href="#">mountain</a>
-                                    <a href="#">design</a>
-                                    <a href="#">restaurant</a>
-                                    <a href="#">journey</a>
-                                    <a href="#">classic</a>
-                                    <a href="#">sunset</a>
+                                    @forelse($champion['projects'] as $cham)
+                                        @foreach($cham['gallery'] as $gallery)
+                                            <div class="item">
+                                                <img src="/{{$gallery['path']}}/300/{{$gallery['name']}}" alt="">
+                                                <h5 class="title">{{$gallery['asd']}}</h5>
+                                            </div>
+                                        @endforeach
+                                    @empty
+
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
@@ -217,10 +224,10 @@
                     <div class="row">
 
                         <div class="col-md-12">
-                            <h3 class="text-uppercase title line-bottom mt-0 mb-30 mt-sm-40"><i
-                                        class="fa fa-thumb-tack text-gray-darkgray mr-10"></i>Latest <span
-                                        class="text-theme-colored">Causes</span></h3>
-                            <div class="owl-carousel-2col">
+                            <h5 class="text-uppercase title line-bottom mt-0 mb-30 mt-sm-40"><i
+                                        class="fa fa-thumb-tack text-gray-darkgray mr-10"></i> {{__('messages.champions')}}
+                            </h5>
+                            <div class="owl-carousel-4col">
                                 @forelse($champions as $champion)
                                     <?php
                                     $avg = 0;
@@ -323,6 +330,7 @@
                 </div>
             </div>
         </section>
+
 
         <!-- Divider: Clients -->
         <section class="clients bg-theme-colored">

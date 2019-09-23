@@ -381,7 +381,34 @@ class DatabaseSeeder extends Seeder
             ['name' => 'یزد',
                 'parent' => 0,
                 'lvl' => 1,
-                'status' => 'inactive']]);
+                'status' => 'inactive'],
+
+
+            ['name' => 'رودان',
+                'parent' => 29,
+                'lvl' => 2,
+                'status' => 'active'],
+            ['name' => 'بندر عباس',
+                'parent' => 29,
+                'lvl' => 2,
+                'status' => 'active'],
+            ['name' => 'میناب',
+                'parent' => 29,
+                'lvl' => 1,
+                'status' => 'active'],
+
+
+            ['name' => 'بخش یک',
+                'parent' => 32,
+                'lvl' => 3,
+                'status' => 'active'],
+            ['name' => 'بخش دو',
+                'parent' => 32,
+                'lvl' => 3,
+                'status' => 'active'],
+        ]);
+
+
 
         DB::table('setting_transportations')->insert(
             [
@@ -572,5 +599,6 @@ class DatabaseSeeder extends Seeder
                 'tag' => 'مدرسه'
             ]
         );
+
     }
 }
