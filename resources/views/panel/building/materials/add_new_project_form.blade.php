@@ -285,9 +285,14 @@
 
         $('#start_date_{{$rand_id}}').MdPersianDateTimePicker({
             targetTextSelector: '#start_date_{{$rand_id}}',
+            fromDate:true,
+            groupId: 'dateRangeSelector1',
+
         });
         $('#end_date_{{$rand_id}}').MdPersianDateTimePicker({
             targetTextSelector: '#end_date_{{$rand_id}}',
+            toDate:true,
+            groupId: 'dateRangeSelector1',
         });
 
 

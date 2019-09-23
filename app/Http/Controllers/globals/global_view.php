@@ -109,9 +109,9 @@ class global_view extends Controller
 
     public function caravan_page()
     {
-        $active_caravans = caravan::where('duty',\auth()->id())->whereIn('status',['1','2','3','4'])->get();
+        $active_caravans = caravan::where('duty', \auth()->id())->whereIn('status', ['1', '2', '3', '4'])->get();
 
-        return view('global.profile.caravan', compact('active_caravans','caravan_doc'));
+        return view('global.profile.caravan', compact('active_caravans', 'caravan_doc'));
     }
 
     public function involved_projects($id)
@@ -312,7 +312,7 @@ class global_view extends Controller
                     $con = false;
                 }
             }
-        }elseif ($request['type']=="charity_champion"){
+        } elseif ($request['type'] == "charity_champion") {
             $info = champion_transaction::findOrFail($request['id']);
         }
         if (!is_null($info) && $con) {
@@ -388,7 +388,7 @@ class global_view extends Controller
 
     public function champion_show($id)
     {
-        $champion = charity_champion::with('image')->findOrFail($id);
+        $champion = charity_champion::with('image', 'projects', 'transaction')->findOrFail($id);
         $champions = charity_champion::with('image')->orderBy('created_at', 'desc')->limit(3)->get();
 
         return view('global.champion.champion', compact('champion', 'champions'));

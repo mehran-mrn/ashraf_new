@@ -11,7 +11,7 @@
                             <div class="gallery-item ">
                                 <div class="thumb random-gallery">
                                     <img alt="{{$photo['title']}} - {{__('messages.ashraf')}}"
-                                         src="{{url($photo['path']."/300/".$photo['name'])}}" class="img-fullwidth">
+                                         src="{{url($photo['path']."/300/".$photo['name'])}}" width="160" height="120" class="img-fullwidth">
                                     <div class="overlay-shade"></div>
                                     <div class="icons-holder">
                                         <div class="icons-holder-inner">

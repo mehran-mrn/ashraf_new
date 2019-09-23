@@ -610,5 +610,10 @@ return array(
     'receive'=>'دریافت شده',
     'count_people'=>'تعداد افراد شرکت کننده',
     'notification_template'=>'الگو پیام ها',
-    'donate_pay'=>'مبلغ کمک'
+    'donate_pay'=>'مبلغ کمک',
+    'projects'=>'پروژه های',
+    'champions'=>'کمپین ها',
+    'projects_gallery'=>'نگارخانه پروژه ها',
+    'patron_finance_projects'=>'حامی مالی پروژه ها شوید',
+    'patron'=>'حامی'
 );
