@@ -1,19 +1,6 @@
 @extends('layouts.global.global_layout')
 @section('content')
     <div class="main-content">
-        <!-- Section: inner-header -->
-        <section class="inner-header divider parallax layer-overlay overlay-dark-6" data-bg-img="{{URL::asset('/public/assets/global/images/bg/bg6.jpg')}}">
-            <div class="container pt-60 pb-60">
-                <!-- Section Content -->
-                <div class="section-content">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h3 class="font-28 text-white">{{__('messages.account')}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section>
             <div class="container">
@@ -22,9 +9,7 @@
                         <form name="register_form" id="register_form" action="{{route('global_register_form_store')}}" class="register-form" method="post">
                             @csrf
                             <div class="icon-box mb-0 p-0">
-                                <a href="#" class="icon icon-bordered icon-rounded icon-sm pull-left mb-0 mr-10">
-                                    <i class="pe-7s-users"></i>
-                                </a>
+
                                 <h4 class="text-gray pt-10 mt-0 mb-30">{{__('messages.register_page_title')}}</h4>
                             </div>
                             <hr>

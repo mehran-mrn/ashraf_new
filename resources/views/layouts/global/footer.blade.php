@@ -63,35 +63,39 @@
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
-                    <h5 class="widget-title line-bottom">Useful Links</h5>
-                    <ul class="list angle-double-right list-border">
-                        <li><a href="#">Body Building</a></li>
-                        <li><a href="#">Fitness Classes</a></li>
-                        <li><a href="#">Weight lifting</a></li>
-                        <li><a href="#">Yoga Courses</a></li>
-                        <li><a href="#">Training</a></li>
-                    </ul>
+                    <h5 class="widget-title mb-10">{{trans('messages.sms_box')}}</h5>
+                    <div class="text-gray">
+                        {{trans('site_info.sms_box')}} <br>
+                    </div>
+{{--                    <h5 class="widget-title line-bottom">Useful Links</h5>--}}
+{{--                    <ul class="list angle-double-right list-border">--}}
+{{--                        <li><a href="#">Body Building</a></li>--}}
+{{--                        <li><a href="#">Fitness Classes</a></li>--}}
+{{--                        <li><a href="#">Weight lifting</a></li>--}}
+{{--                        <li><a href="#">Yoga Courses</a></li>--}}
+{{--                        <li><a href="#">Training</a></li>--}}
+{{--                    </ul>--}}
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
-                    <h5 class="widget-title line-bottom">Opening Hours</h5>
-                    <div class="opening-hours">
-                        <ul class="list-border">
-                            <li class="clearfix"> <span> Mon - Tues :  </span>
-                                <div class="value pull-right"> 6.00 am - 10.00 pm </div>
-                            </li>
-                            <li class="clearfix"> <span> Wednes - Thurs :</span>
-                                <div class="value pull-right"> 8.00 am - 6.00 pm </div>
-                            </li>
-                            <li class="clearfix"> <span> Fri : </span>
-                                <div class="value pull-right"> 3.00 pm - 8.00 pm </div>
-                            </li>
-                            <li class="clearfix"> <span> Sun : </span>
-                                <div class="value pull-right"> Colosed </div>
-                            </li>
-                        </ul>
-                    </div>
+{{--                    <h5 class="widget-title line-bottom">Opening Hours</h5>--}}
+{{--                    <div class="opening-hours">--}}
+{{--                        <ul class="list-border">--}}
+{{--                            <li class="clearfix"> <span> Mon - Tues :  </span>--}}
+{{--                                <div class="value pull-right"> 6.00 am - 10.00 pm </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix"> <span> Wednes - Thurs :</span>--}}
+{{--                                <div class="value pull-right"> 8.00 am - 6.00 pm </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix"> <span> Fri : </span>--}}
+{{--                                <div class="value pull-right"> 3.00 pm - 8.00 pm </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix"> <span> Sun : </span>--}}
+{{--                                <div class="value pull-right"> Colosed </div>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -134,23 +138,23 @@
             </div>
             <div class="col-md-3 col-md-offset-1">
                 <div class="widget dark">
-                    <h5 class="widget-title mb-10">{{trans('messages.sms_box')}}</h5>
-                    <div class="text-gray">
-                        {{trans('site_info.sms_box')}} <br>
-                    </div>
+{{--                    <h5 class="widget-title mb-10">{{trans('messages.sms_box')}}</h5>--}}
+{{--                    <div class="text-gray">--}}
+{{--                        {{trans('site_info.sms_box')}} <br>--}}
+{{--                    </div>--}}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="widget dark">
-                    <h5 class="widget-title mb-10">Connect With Us</h5>
-                    <ul class="styled-icons icon-dark icon-theme-colored icon-circled icon-sm">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-skype"></i></a></li>
-                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                    </ul>
+{{--                    <h5 class="widget-title mb-10">Connect With Us</h5>--}}
+{{--                    <ul class="styled-icons icon-dark icon-theme-colored icon-circled icon-sm">--}}
+{{--                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>--}}
+{{--                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>--}}
+{{--                        <li><a href="#"><i class="fa fa-skype"></i></a></li>--}}
+{{--                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>--}}
+{{--                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>--}}
+{{--                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>--}}
+{{--                    </ul>--}}
                 </div>
             </div>
         </div>

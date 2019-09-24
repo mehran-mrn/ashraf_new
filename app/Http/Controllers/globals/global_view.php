@@ -352,37 +352,18 @@ class global_view extends Controller
 
     public function callback(Request $request)
     {
-        $gateway = config('gateway.table', 'gateway_transactions');
-        $data = \DB::table($gateway)->find($request['transaction_id']);
-        if ($data->module == "charity_donate" || $data->module == "charity_vow") {
-            $charity = charity_transaction::findOrFail($data->module_id);
-            $charity->status = 'success';
-            $charity->payment_date = date("Y-m-d H:i:s", time());
-            $charity->save();
-        }
-        $messages['result'] = "success";
-        $messages['trackingCode'] = "2525252525";
-        $messages['message'] =__('messages.transaction_success');
-        return view('global.callback', compact('messages'));
-
-
         try {
             $gateway = \Larabookir\Gateway\Gateway::verify();
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
+            $module = $gateway->module();
+            $moduleID = $gateway->moduleID();
 
-            $gateway = config('gateway.table', 'gateway_transactions');
-            $data = \DB::table($gateway)->find($request['transaction_id']);
-            if ($data->module == "charity_donate" || $data->module == "charity_vow") {
-                $charity = charity_transaction::findOrFail($data->module_id);
-                $charity->status = 'success';
-                $charity->payment_date = date("Y-m-d H:i:s", time());
-                $charity->save();
-            }
-            $messages['result'] = "success";
-            $messages['trackingCode'] = $trackingCode;
-            $messages['message'] =__('messages.transaction_success');
+            return $moduleID;
+        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
+            $messages['message'] = $e->getMessage();
+            $messages['result'] = "repeat";
             return view('global.callback', compact('messages'));
         } catch (\Exception $e) {
             $gateway = config('gateway.table', 'gateway_transactions');

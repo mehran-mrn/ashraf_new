@@ -1,26 +1,13 @@
 @extends('layouts.global.global_layout')
 @section('content')
     <div class="main-content">
-        <!-- Section: inner-header -->
-        <section class="inner-header divider parallax layer-overlay overlay-dark-6"
-                 data-bg-img="{{URL::asset('/public/assets/global/images/bg/bg6.jpg')}}">
-            <div class="container pt-60 pb-60">
-                <!-- Section Content -->
-                <div class="section-content">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h3 class="font-28 text-white">{{__('messages.account')}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
 
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-md-push-3">
-                        <h4 class="text-gray mt-0 pt-5"> {{__('messages.login')}}</h4>
+                        <h4 class="text-gray mt-0 pt-5"> {{__('messages.login_page_title')}}</h4>
                         <hr>
                         @if(session()->has('message'))
                             <div class="alert alert-success text-center">
@@ -30,7 +17,7 @@
                         @php
                         session()->remove('message')
                         @endphp
-                        <p>{{__('messages.login_page_title')}}
+                        <p>
                             @if (Auth::check())
                                 {{Auth::user()->created_at}}
                                 @php \Illuminate\Support\Facades\Auth::logout() @endphp
@@ -57,7 +44,7 @@
                                             {{__('messages.remember_me')}} </label>
                                     </div>
                                 </div>
-                                <div class="btn-group col-md-6 col-md-offset-3">
+                                <div class=" col-md-6 col-md-offset-3">
                                     <button type="submit"
                                             class="btn btn-colored  btn-theme-colored p-10 mt-15 btn-block">{{__('messages.login')}}</button>
                                     <a href="{{route('global_register_page')}}"

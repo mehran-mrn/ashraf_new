@@ -21,7 +21,24 @@ Route::get('/test', function () {
     Mail::to('mehranmarandi90@gmail.com')->send(new \App\Mail\payment_confirmation($name));
     return 'sent';
 });
-Auth::routes();
+//Auth::routes();
+// Authentication Routes...
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
+
+// Registration Routes...
+Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
+
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+//Route::post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -40,7 +57,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //        'uses' => 'private_doc@show',
 //        'middleware' => 'auth',
 //    ]);
-
 
     Route::prefix('user_manager')->group(function () {
 
@@ -476,10 +492,7 @@ Route::group(
         Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
     });
 
-    Route::prefix('page')->group(function () {
-        Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
-        Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
-    });
+
     Route::get('/', 'globals\global_view@index');
     Route::get('/post/{blogPostSlug}', 'globals\global_view@post_page')->name('post_page');
     Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');

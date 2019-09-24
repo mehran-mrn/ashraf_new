@@ -69,7 +69,8 @@ class BlogEtcReaderController extends Controller
 
         \View::share("title", "Search results for " . e($query));
 
-        return view("blogetc::search", ['query' => $query, 'search_results' => $search_results]);
+//        return view("global.blog", ['query' => $query, 'search_results' => $search_results]);
+        return view("blog.blogetc.search", ['query' => $query, 'search_results' => $search_results]);
 
     }
 
