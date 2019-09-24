@@ -12,8 +12,9 @@
                         <div class="blog-posts single-post">
                             <article class="post clearfix mb-0">
                                 <div class="entry-header">
+
                                     <div class="post-thumb thumb"><img
-                                                src="{{$post->image_url('large')}}"
+                                                src="{{$post['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$post['image_large']:''}} "
                                                 alt="" class="img-responsive img-fullwidth"></div>
                                 </div>
                                 <div class="entry-content">
