@@ -290,7 +290,7 @@ class global_view extends Controller
 
     public function payment(Request $request)
     {
-        return $request->all();
+        return $request['type'];
         $this->validate($request,
             [
                 'type' => 'required',

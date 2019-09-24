@@ -32,7 +32,7 @@
                                 </li>
                                 <li class="hidden-lg hidden-md">
                                     <a class="text-white"
-                                       href="{{route('global_login_form')}}">{{trans('messages.login')}}</a>
+                                       href="{{route('global_login_page')}}">{{trans('messages.login')}}</a>
                                 </li>
                                 <li class="text-white">|</li>
                                 <li class="hidden-sm  hidden-xs">
@@ -41,7 +41,7 @@
                                 </li>
                                 <li class="hidden-lg hidden-md">
                                     <a class="text-white "
-                                       href="{{route('global_register_form')}}">{{trans('messages.register')}}</a>
+                                       href="{{route('global_register_page')}}">{{trans('messages.register')}}</a>
                                 </li>
                             @endif
                             @if(session()->get('cart'))
