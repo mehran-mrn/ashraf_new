@@ -36,12 +36,12 @@
                             setTimeout(function () {
                                 submit.removeAttr("disabled");
                                 submit.html("{{__('messages.pay')}}");
-                                window.location.replace("/gateway/charity_donate/" + response.message.id);
+                                window.location.replace("/payment/charity_donate/" + response.message.id);
                             }, 2000);
 
                         } else {
                             submit.removeAttr("disabled");
-                            submit.html("{{__('messages.pay')}}")
+                            submit.html("{{__('messages.pay')}}");
                             PNotify.success({
                                 text: response.message.message,
                                 delay: 3000,
@@ -143,8 +143,7 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12">
                                         <div class="form-group pt-20">
-                                            <button type="submit"
-                                                    class="btn btn-success pull-left">{{__("messages.pay")}}</button>
+                                            <button type="submit" class="btn btn-success pull-left">{{__("messages.pay")}}</button>
                                         </div>
                                     </div>
                                 </div>

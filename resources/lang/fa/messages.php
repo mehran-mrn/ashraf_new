@@ -615,6 +615,7 @@ return array(
     'champions'=>'کمپین ها',
     'projects_gallery'=>'نگارخانه پروژه ها',
     'patron_finance_projects'=>'حامی مالی پروژه ها شوید',
-    'patron'=>'حامی    \'count_people\'=>\'تعداد افراد شرکت کننده\',
-'
+    'patron'=>'حامی',
+    'transaction_success'=>'پرداخت شما با موفقیت انجام شد.',
+    'tracking_code'=>'شماره پیگیری پرداخت'
 );
