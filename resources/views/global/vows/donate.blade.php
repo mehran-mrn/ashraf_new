@@ -34,17 +34,20 @@
                                 delay: 3000,
                             });
                             setTimeout(function () {
-                                window.location.replace("/payment?id=" + response.message.id+"&type=charity_donate");
+                                submit.removeAttr("disabled");
+                                submit.html("{{__('messages.pay')}}");
+                                window.location.replace("/gateway/charity_donate/" + response.message.id);
                             }, 2000);
 
-                        }else{
+                        } else {
+                            submit.removeAttr("disabled");
+                            submit.html("{{__('messages.pay')}}")
                             PNotify.success({
                                 text: response.message.message,
                                 delay: 3000,
                             });
                         }
-                        submit.removeAttr("disabled");
-                        submit.html("{{__('messages.pay')}}")
+
                     }, error: function (response) {
                         var errors = response.responseJSON.errors;
                         $.each(errors, function (index, value) {
@@ -103,7 +106,9 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12">
                                         <div class="form-group">
-                                            <label for="amount">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></label>
+                                            <label for="amount">{{__('messages.amount')}}
+                                                <small>({{__('messages.rial')}})</small>
+                                            </label>
                                             <input type="text" min="{{$patern['min']}}" max="{{$patern['max']}}"
                                                    class="form-control amount" name="amount"
                                                    placeholder="{{__('messages.amount_rial')}}">

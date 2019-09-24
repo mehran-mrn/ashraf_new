@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\globals;
 
 use App\blog_slider;
-use App\building_project;
 use App\caravan;
-use App\caravan_doc;
 use App\champion_transaction;
 use App\charity_champion;
 use App\charity_payment_patern;
@@ -17,9 +15,7 @@ use App\charity_transactions_value;
 use App\city;
 use App\gallery_category;
 use App\gateway;
-use App\gateway_transaction;
 use App\media;
-use App\Role;
 use App\setting_transportation;
 use App\store_product;
 use App\store_product_inventory;
@@ -30,7 +26,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Larabookir\Gateway\Mellat\Mellat;
 use Larabookir\Gateway\Saman\Saman;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
@@ -117,7 +112,7 @@ class global_view extends Controller
     public function involved_projects($id)
     {
 //        $project = building_project::find($id);
-            $project = null;
+        $project = null;
         return view('global.profile.building_projects', compact('project'));
     }
 
@@ -248,7 +243,6 @@ class global_view extends Controller
         return view('global.vows.donate', compact('title', 'patern', 'gateways'));
     }
 
-
     public function vow_period()
     {
         $patern = charity_payment_patern::find(1);
@@ -296,6 +290,7 @@ class global_view extends Controller
 
     public function payment(Request $request)
     {
+        return $request->all();
         $this->validate($request,
             [
                 'type' => 'required',

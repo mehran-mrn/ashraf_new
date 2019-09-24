@@ -106,8 +106,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     });
     Route::prefix('setting')->group(function () {
 //        Route::get('cities', 'panel\panel_view@cities_list')->name('cities_list');
-        Route::resource('notification_template','panel\notification_template');
-        Route::resource('cities','panel\cities_controller');
+        Route::resource('notification_template', 'panel\notification_template');
+        Route::resource('cities', 'panel\cities_controller');
         Route::get('gateway_setting', 'panel\panel_view@gateway_setting')->name('gateway_setting');
         Route::get('gateway_add', 'panel\panel_view@gateway_add')->name('gateway_add');
         Route::post('gateway_add', 'panel\setting@gateway_add')->name('gateway_add_store');
@@ -174,7 +174,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('building_types', 'panel\panel_view@building_types')->name('building_types');
         Route::get('building_archive', 'panel\panel_view@building_archive')->name('building_archive');
         Route::post('submit_project_data', 'panel\building@submit_project_data')->name('submit_project_data');
-        Route::get('building_tree_view','panel\panel_view@building_tree_view')->name('building_tree_view');
+        Route::get('building_tree_view', 'panel\panel_view@building_tree_view')->name('building_tree_view');
         Route::post('/get_city_select_option', 'panel\building@get_city_select_option')->name('get_city_select_option');
         Route::post('submit_project_type_data', 'panel\building@submit_project_type_data')->name('submit_project_type_data');
         Route::get('building_type_page/{building_type_id}', 'panel\panel_view@building_type_page')->name('building_type_page');
@@ -311,7 +311,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 //=========================================
 
 Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
-
 
 
     /** The main public facing blog routes - show all posts, view a category, rss feed, view a single post, also the add comment route */
@@ -528,8 +527,7 @@ Route::group(
     Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
 
 
-
-    Route::get('payment', 'globals\global_view@payment')->name('payment');
+    Route::get('payment/{type}/{id}', 'globals\global_view@payment')->name('payment');
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');
 
 //    Route::any('/{gateway}/callback/{invoiceId}', ['as' => 'payment::callback', 'uses' => 'GatewayController@callback']);
