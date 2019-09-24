@@ -26,8 +26,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Larabookir\Gateway\Mellat\Mellat;
 use Larabookir\Gateway\Saman\Saman;
+use phpDocumentor\Reflection\Types\Integer;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Middleware\UserCanManageBlogPosts;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
@@ -288,30 +290,27 @@ class global_view extends Controller
         return view('global.blog', compact('posts'));
     }
 
-    public function payment(Request $request)
+    public function payment($type, $id, Request $request)
     {
-        return $request['type'];
-        $this->validate($request,
-            [
-                'type' => 'required',
-                'id' => 'required|int'
-            ]);
+
         $con = true;
         $vow = array('charity_vow', 'charity_donate');
-        if (in_array($request['type'], $vow)) {
-            $info = charity_transaction::findOrFail($request['id']);
+        $info = '';
+        if (in_array($type, $vow)) {
+            $info = charity_transaction::find($id);
         } elseif ($request['type'] == "charity_period") {
-            $info = charity_periods_transaction::findOrFail($request['id']);
+            $info = charity_periods_transaction::findOrFail($id);
             if ($info['user_id']) {
                 if ($info['user_id'] != Auth::id() || $info['status'] != "unpaid") {
                     $con = false;
                 }
             }
-        } elseif ($request['type'] == "charity_champion") {
-            $info = champion_transaction::findOrFail($request['id']);
+        } elseif ($type == "charity_champion") {
+            $info = champion_transaction::findOrFail($id);
         }
+
         if (!is_null($info) && $con) {
-            $gatewayInfo = gateway::findOrFail($request['gateway_id']);
+            $gatewayInfo = gateway::findOrFail($info['gateway_id']);
             if ($gatewayInfo['function_name'] == "SamanGateway") {
                 try {
                     $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
