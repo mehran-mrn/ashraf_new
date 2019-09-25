@@ -83,86 +83,8 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="form-group row">
-                        <label class=" col-md-3"
-                               for="text_1_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.one')}}</label>
-                        <select id="text_1_dir" name="text_1_dir" class="form-control col-md-3">
-                            <?php
-                            $text_1_dir = $slider['text_1_dir'];
-                            ?>
-                            <option value="left" {{$text_1_dir =="left"?"selected":""}}>{{__('messages.left')}}</option>
-                            <option value="right" {{$text_1_dir =="right"?"selected":""}}>{{__('messages.right')}}</option>
-                            <option value="center" {{$text_1_dir =="center"?"selected":""}}>{{__('messages.center')}}</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="text_1">{{__('messages.text')." ".__('messages.one')}}</label>
-                        <textarea name="text_1" id="text_1" cols="30" rows="10">
-                            {{isset($slider['text_1'])?$slider['text_1'] : old('text_1')}}
-                        </textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-group row">
-                        <label class=" col-md-3"
-                               for="text_2_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.two')}}</label>
-                        <?php
-                        $text_2_dir = $slider['text_2_dir'];
-                        ?>
-                        <select id="text_2_dir" name="text_2_dir" class="form-control col-md-3">
-                            <option {{$text_2_dir =="left"?"selected":""}} value="left">{{__('messages.left')}}</option>
-                            <option {{$text_2_dir =="right"?"selected":""}} value="right">{{__('messages.right')}}</option>
-                            <option {{$text_2_dir =="center"?"selected":""}} value="center">{{__('messages.center')}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">{{__('messages.text')." ".__('messages.two')}}</label>
-                        <textarea name="text_2" id="text_2" cols="30" rows="10">
-                            {{isset($slider['text_2'])?$slider['text_2'] : old('text_2')}}
-                        </textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-group row">
-                        <label class="col-md-3"
-                               for="text_3_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.tree')}}</label>
-                        <?php
-                        $text_3_dir = $slider['text_3_dir'];
-                        ?>
-                        <select id="text_3_dir" name="text_3_dir" class="form-control  col-md-3">
-                            <option {{$text_3_dir =="left"?"selected":""}} value="left">{{__('messages.left')}}</option>
-                            <option {{$text_3_dir =="right"?"selected":""}} value="right">{{__('messages.right')}}</option>
-                            <option {{$text_3_dir =="center"?"selected":""}} value="center">{{__('messages.center')}}</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">{{__('messages.text')." ".__('messages.tree')}}</label>
-                        <textarea name="text_3" id="text_3" cols="30" rows="10">
-                            {{isset($slider['text_3'])?$slider['text_3'] : old('text_3')}}
-                        </textarea>
-                    </div>
-                </div>
                 <div class="form-group row">
-                    <label class="col-md-3"
-                           for="text_3_dir">{{__('messages.btn_dir')}}</label>
-                    <?php
-                    $btn_dir = $slider['btn_dir'];
-                    ?>
-                    <select id="btn_dir" name="btn_dir" class="form-control  col-md-3">
-                        <option {{$btn_dir =="left"?"selected":""}} value="left">{{__('messages.left')}}</option>
-                        <option {{$btn_dir =="right"?"selected":""}} value="right">{{__('messages.right')}}</option>
-                        <option {{$btn_dir =="center"?"selected":""}} value="center">{{__('messages.center')}}</option>
-                    </select>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-2">{{__('messages.btn_text')}}</label>
-                    <input class="form-control col-md-10" name="btn_text" value="{{isset($slider['btn_text'])?$slider['btn_text'] : old('btn_text')}}">
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-2">{{__('messages.btn_link')}}</label>
+                    <label class="col-md-2"> <i class="icon-link2"></i> {{trans('messages.link')}} </label>
                     <input class="form-control col-md-10" name="btn_link" value="{{isset($slider['btn_link'])?$slider['btn_link'] : old('btn_link')}}">
 
                 </div>

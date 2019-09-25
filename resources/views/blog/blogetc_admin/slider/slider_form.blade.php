@@ -18,58 +18,58 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="form-group row">
-                <label class=" col-md-3"
-                       for="text_1_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.one')}}</label>
-                <select id="text_1_dir" name="text_1_dir" class="form-control col-md-3">
-                    <option value="left">{{__('messages.left')}}</option>
-                    <option value="right">{{__('messages.right')}}</option>
-                    <option value="center">{{__('messages.center')}}</option>
-                </select>
-            </div>
+{{--        <div class="form-group">--}}
+{{--            <div class="form-group row">--}}
+{{--                <label class=" col-md-3"--}}
+{{--                       for="text_1_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.one')}}</label>--}}
+{{--                <select id="text_1_dir" name="text_1_dir" class="form-control col-md-3">--}}
+{{--                    <option value="left">{{__('messages.left')}}</option>--}}
+{{--                    <option value="right">{{__('messages.right')}}</option>--}}
+{{--                    <option value="center">{{__('messages.center')}}</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
 
-            <div class="form-group">
-                <label for="text_1">{{__('messages.text')." ".__('messages.one')}}</label>
-                <textarea name="text_1" id="text_1" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group row">
-                <label class=" col-md-3"
-                       for="text_2_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.two')}}</label>
-                <select id="text_2_dir" name="text_2_dir" class="form-control col-md-3">
-                    <option value="left">{{__('messages.left')}}</option>
-                    <option value="right">{{__('messages.right')}}</option>
-                    <option value="center">{{__('messages.center')}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="description">{{__('messages.text')." ".__('messages.two')}}</label>
-                <textarea name="text_2" id="text_2" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group row">
-                <label class="col-md-3"
-                       for="text_3_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.tree')}}</label>
-                <select id="text_3_dir" name="text_3_dir" class="form-control  col-md-3">
-                    <option value="left">{{__('messages.left')}}</option>
-                    <option value="right">{{__('messages.right')}}</option>
-                    <option value="center">{{__('messages.center')}}</option>
-                </select>
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <label for="text_1">{{__('messages.text')." ".__('messages.one')}}</label>--}}
+{{--                <textarea name="text_1" id="text_1" cols="30" rows="10"></textarea>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="form-group">--}}
+{{--            <div class="form-group row">--}}
+{{--                <label class=" col-md-3"--}}
+{{--                       for="text_2_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.two')}}</label>--}}
+{{--                <select id="text_2_dir" name="text_2_dir" class="form-control col-md-3">--}}
+{{--                    <option value="left">{{__('messages.left')}}</option>--}}
+{{--                    <option value="right">{{__('messages.right')}}</option>--}}
+{{--                    <option value="center">{{__('messages.center')}}</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
+{{--            <div class="form-group">--}}
+{{--                <label for="description">{{__('messages.text')." ".__('messages.two')}}</label>--}}
+{{--                <textarea name="text_2" id="text_2" cols="30" rows="10"></textarea>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="form-group">--}}
+{{--            <div class="form-group row">--}}
+{{--                <label class="col-md-3"--}}
+{{--                       for="text_3_dir">{{__('messages.hor_position')." ".__('messages.text')." ".__('messages.tree')}}</label>--}}
+{{--                <select id="text_3_dir" name="text_3_dir" class="form-control  col-md-3">--}}
+{{--                    <option value="left">{{__('messages.left')}}</option>--}}
+{{--                    <option value="right">{{__('messages.right')}}</option>--}}
+{{--                    <option value="center">{{__('messages.center')}}</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
 
-            <div class="form-group">
-                <label for="description">{{__('messages.text')." ".__('messages.tree')}}</label>
-                <textarea name="description" id="text_3" cols="30" rows="10"></textarea>
-            </div>
-        </div>
+{{--            <div class="form-group">--}}
+{{--                <label for="description">{{__('messages.text')." ".__('messages.tree')}}</label>--}}
+{{--                <textarea name="description" id="text_3" cols="30" rows="10"></textarea>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-        <div class="form-group row">
-            <label class="col-md-2">{{__('messages.btn_text')}}</label>
-            <input class="form-control col-md-10" name="btn_text">
-        </div>
+{{--        <div class="form-group row">--}}
+{{--            <label class="col-md-2">{{__('messages.btn_text')}}</label>--}}
+{{--            <input class="form-control col-md-10" name="btn_text">--}}
+{{--        </div>--}}
         <div class="form-group row">
             <label class="col-md-2">{{__('messages.btn_link')}}</label>
             <input class="form-control col-md-10" name="btn_link">

@@ -1,5 +1,5 @@
 @extends('layouts.global.global_layout')
-@section('title',$post->gen_seo_title(). " |")
+{{--@section('title',$post->gen_seo_title(). " |")--}}
 
 @section('meta_description',$post['meta_desc'])
 

@@ -63,7 +63,7 @@
           href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=2"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
-    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=3" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=5" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
     <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Custom Margin Padding Collection -->
@@ -142,8 +142,9 @@
     <!-- preloader -->
     <div id="preloader">
         <div id="spinner">
-            <img class="floating" src="{{ URL::asset('/public/assets/global/images/preloaders/13.png') }}" alt="">
-            <h5 class="line-height-50 font-18 ml-15">{{trans('messages.Loading...')}}</h5>
+            <img class="floating align-self-center"  style="float: inherit" src="{{ URL::asset('/public/assets/global/images/preloaders/13.png') }}?i=0" alt="">
+            <br>
+            <h5 class="line-height-50 font-30 ml-15">{{trans('messages.Loading...')}}</h5>
         </div>
         <div id="disable-preloader" class="btn btn-default btn-sm">{{trans('messages.Disable_Preloader')}}</div>
     </div>

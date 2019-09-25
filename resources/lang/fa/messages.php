@@ -151,6 +151,7 @@ return array(
     'search_blog' => 'جستجو مطالب',
     'search_results_for' => 'نتایج جستجو',
     'search_results_null' => 'متاسفانه جستجو ":query" نتیجه ای در بر نداشت.',
+    'nothing_to_display' => 'مطلبی برای نمایش وجود ندارد.',
     'search_results_cant_display' => 'نتایج جستجو قابل نمایش نیست.',
     'latest_post' => 'آخرین مطالب',
     'read_more' => 'ادامه مطلب',

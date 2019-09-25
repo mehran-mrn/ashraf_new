@@ -45,10 +45,12 @@ class BlogEtcReaderController extends Controller
         $posts = $posts->orderBy("posted_at", "desc")
             ->paginate(config("blogetc.per_page", 10));
 
-        return view("blogetc::index", [
-            'posts' => $posts,
-            'title' => $title,
-        ]);
+        return view("blog.blogetc.index", ['title' => $title, 'posts' => $posts]);
+
+//        return view("blogetc::index", [
+//            'posts' => $posts,
+//            'title' => $title,
+//        ]);
     }
 
     /**

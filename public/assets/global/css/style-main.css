@@ -828,7 +828,7 @@ section > .container-fluid {
     -webkit-transform: translate(0, 0px);
   }
   65% {
-    -webkit-transform: translate(0, 15px);
+    -webkit-transform: translate(0, 20px);
   }
   to {
     -webkit-transform: translate(0, 0px);

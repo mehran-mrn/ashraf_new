@@ -24,7 +24,7 @@
                     @foreach(get_posts(4,['last_post']) as $key=> $news)
 
                         @if($key !=0)
-                            <article class="post media-post clearfix pb-0 mb-10">
+                            <article class="post media-post clearfix mt-5 pb-0 mb-10">
                                 <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"
                                    class="post-thumb post-thumb-img mb-0">
                                     <img alt=""

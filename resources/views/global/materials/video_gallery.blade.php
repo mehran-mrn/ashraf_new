@@ -1,4 +1,4 @@
-<section  class="divider parallax layer-overlay overlay-theme-colored-2"  data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg12.jpg') }}"
+<section  class="divider parallax layer-overlay overlay-theme-colored-2"  data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg25.jpg') }}"
          data-parallax-ratio="0.7"
          style="background-image: url({{URL::asset('/public/assets/global/images/bg/bg12.jpg')}}); background-position: 50% 177px;">
     <div class="container pt-110 pb-110" >

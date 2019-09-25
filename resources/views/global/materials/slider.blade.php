@@ -1,457 +1,163 @@
-<!-- Section: home -->
-<section id="home">
-    <div class="container-fluid p-0">
 
-        <!-- Slider Revolution Start -->
-        <div class="rev_slider_wrapper">
-            <div class="rev_slider  rev_slider_fullscreen" data-version="5.0">
-                <ul>
-                    @forelse($sliders as $key=>$slider)
-                        <!-- SLIDE 1 -->
-                            <li data-index="rs-{{$key}}" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ $slider['image_large'] }}" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{{ $slider['image_large'] }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
-                                <!-- LAYERS -->
-                                @if($slider['text_1'])
-                                <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-resizeme   bg-dark-transparent text-white  pl-20 pr-20"
-                                     id="rs-{{$key}}-layer-1"
+<body style="padding:0px; margin:0px; background-color:#fff;font-family:arial,helvetica,sans-serif,verdana,'Open Sans'">
 
-                                     data-x="['@switch($slider['text_1_dir'])
-                                     @case('left'){{'left'}}@break
-                                     @case('right'){{'right'}}@break
-                                     @case('center'){{'middle'}}@break
-                                     @default{{'middle'}}@break
-                                     @endswitch']"
-                                     data-hoffset="['0']"
-                                     data-y="['middle']"
-                                     data-voffset="['-200']"
-                                     data-fontsize="['28']"
-                                     data-lineheight="['54']"
-                                     data-width="none"
-                                     data-height="none"
-                                     data-whitespace="nowrap"
-                                     data-transform_idle="o:1;s:500"
-                                     data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                                     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                                     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                                     data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                                     data-start="1000"
-                                     data-splitin="none"
-                                     data-splitout="none"
-                                     data-responsive_offset="on"
-                                     style="border-radius: 30px;"
-                                     >{!! $slider['text_1'] !!}
-                                </div>
-                                @endif
-                            @if($slider['text_2'])
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: https://www.jssor.com -->
+<script src="{{ URL::asset('/public/js/jssor.slider-27.5.0.min.js') }}"></script>
+<script type="text/javascript">
+    jssor_1_slider_init = function() {
 
-                                <!-- LAYER NR. 2 -->
-                                <div class="tp-caption tp-resizeme text-white text-center"
-                                     id="rs-{{$key}}-layer-2"
+        var jssor_1_SlideoTransitions = [
+            [{b:-1,d:1,o:-0.7}],
+            [{b:900,d:2000,x:-379,e:{x:7}}],
+            [{b:900,d:2000,x:-379,e:{x:7}}],
+            [{b:-1,d:1,o:-1,sX:2,sY:2},{b:0,d:900,x:-171,y:-341,o:1,sX:-2,sY:-2,e:{x:3,y:3,sX:3,sY:3}},{b:900,d:1600,x:-283,o:-1,e:{x:16}}]
+        ];
 
-                                     data-x="['@switch($slider['text_2_dir'])
-                                     @case('left'){{'left'}}@break
-                                     @case('right'){{'right'}}@break
-                                     @case('center'){{'middle'}}@break
-                                     @default{{'middle'}}@break
-                                     @endswitch']"
-                                     data-hoffset="['0']"
-                                     data-y="['middle']"
-                                     data-voffset="['-40']"
-                                     data-fontsize="['48']"
-                                     data-lineheight="['70']"
-                                     data-width="none"
-                                     data-height="none"
-                                     data-whitespace="nowrap"
-                                     data-transform_idle="o:1;s:900"
-                                     data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                                     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                                     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                                     data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                                     data-start="1000"
-                                     data-splitin="none"
-                                     data-splitout="none"
-                                     data-responsive_offset="on"
-                                     style="border-radius: 30px;">{!! $slider['text_2'] !!}
-                                </div>
-                            @endif
-                            @if($slider['text_3'])
-                                <!-- LAYER NR. 3 -->
-                                <div class="tp-caption tp-resizeme text-white text-center"
-                                     id="rs-{{$key}}-layer-3"
+        var jssor_1_options = {
+            $SlideDuration: 800,
+            $FillMode: 5,                                      //[Optional] The way to fill image in slide, 0 stretch, 1 contain (keep aspect ratio and put all inside slide), 2 cover (keep aspect ratio and cover whole slide), 4 actuall size, 5 contain for large image and actual size for small image, default value is 0
+            $AutoPlay: true,                                   //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+            $DragOrientation: 3 ,                               //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
 
-                                     data-x="['@switch($slider['text_3_dir'])
-                                     @case('left'){{'left'}}@break
-                                     @case('right'){{'right'}}@break
-                                     @case('center'){{'middle'}}@break
-                                     @default{{'middle'}}@break
-                                     @endswitch']"
-                                     data-hoffset="['0']"
-                                     data-y="['middle']"
-                                     data-voffset="['60']"
-                                     data-fontsize="['16','18',24']"
-                                     data-lineheight="['28']"
-                                     data-width="none"
-                                     data-height="none"
-                                     data-whitespace="nowrap"
-                                     data-transform_idle="o:1;s:500"
-                                     data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                                     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                                     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                                     data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                                     data-start="1400"
-                                     data-splitin="none"
-                                     data-splitout="none"
-                                     data-responsive_offset="on"
-                                     style="border-radius: 30px;"
-                                     >{!!$slider['text_3']!!}
-                                </div>
-                            @endif
-                            @if($slider['btn_text'])
-                                <!-- LAYER NR. 4 -->
-                                <div class="tp-caption tp-resizeme"
-                                     id="rs-{{$key}}-layer-4"
+            $SlideEasing: $Jease$.$OutQuint,
+            $CaptionSliderOptions: {
+                $Class: $JssorCaptionSlideo$,
+                $Transitions: jssor_1_SlideoTransitions
+            },
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+            },
+            $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$
+            }
+        };
 
-                                     data-x="['@switch($slider['btn_dir'])
-                                     @case('left'){{'left'}}@break
-                                     @case('right'){{'right'}}@break
-                                     @case('center'){{'middle'}}@break
-                                     @default{{'middle'}}@break
-                                     @endswitch']"
-                                     data-hoffset="['0']"
-                                     data-y="['middle']"
-                                     data-voffset="['125']"
-                                     data-width="none"
-                                     data-height="none"
-                                     data-whitespace="nowrap"
-                                     data-transform_idle="o:1;"
-                                     data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-                                     data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                                     data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                                     data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                                     data-start="1400"
-                                     data-splitin="none"
-                                     data-splitout="none"
-                                     data-responsive_offset="on"
-                                     style="z-index: 5; white-space: nowrap; letter-spacing:1px;"><a class="btn btn-default btn-circled btn-transparent pl-20 pr-20" href="{{$slider['btn_link']}}">{{$slider['btn_text']}}</a>
-                                </div>
-                                @endif
+        var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
 
-                            </li>
+        /*#region responsive code begin*/
 
-                    @empty
-                    <!-- SLIDE 1 -->
-                    <li data-index="rs-1" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
-                        <!-- MAIN IMAGE -->
-                        <img src="{{ URL::asset('/public/assets/global/images/bg/bg14.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
-                        <!-- LAYERS -->
+        var MAX_WIDTH = 3000;
 
-                        <!-- LAYER NR. 1 -->
-                        <div class="tp-caption tp-resizeme text-uppercase  bg-dark-transparent text-white font-raleway pl-30 pr-30"
-                             id="rs-1-layer-1"
+        function ScaleSlider() {
+            var containerElement = jssor_1_slider.$Elmt.parentNode;
+            var containerWidth = containerElement.clientWidth;
 
-                             data-x="['center']"
-                             data-hoffset="['0']"
-                             data-y="['middle']"
-                             data-voffset="['-90']"
-                             data-fontsize="['28']"
-                             data-lineheight="['54']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1000"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 7; white-space: nowrap; font-weight:400; border-radius: 30px;">For the poor children
-                        </div>
+            if (containerWidth) {
 
-                        <!-- LAYER NR. 2 -->
-                        <div class="tp-caption tp-resizeme text-uppercase bg-theme-colored-transparent text-white font-raleway pl-30 pr-30"
-                             id="rs-1-layer-2"
+                var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
 
-                             data-x="['left']"
-                             data-hoffset="['0']"
-                             data-y="['middle']"
-                             data-voffset="['-20']"
-                             data-fontsize="['48']"
-                             data-lineheight="['70']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1000"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 7; white-space: nowrap; font-weight:700; border-radius: 30px;">raise your helping hand
-                        </div>
+                jssor_1_slider.$ScaleWidth(expectedWidth);
+            }
+            else {
+                window.setTimeout(ScaleSlider, 30);
+            }
+        }
 
-                        <!-- LAYER NR. 3 -->
-                        <div class="tp-caption tp-resizeme text-white text-center"
-                             id="rs-1-layer-3"
+        ScaleSlider();
 
-                             data-x="['right']"
-                             data-hoffset="['0']"
-                             data-y="['middle']"
-                             data-voffset="['50']"
-                             data-fontsize="['16','18',24']"
-                             data-lineheight="['28']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1400"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 5; white-space: nowrap; letter-spacing:0px; font-weight:400;">Every day we bring hope to millions of children in the world's<br>  hardest places as a sign of God's unconditional love.
-                        </div>
+        $Jssor$.$AddEvent(window, "load", ScaleSlider);
+        $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+        /*#endregion responsive code end*/
+    };
+</script>
+<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,regular,italic,700,700italic&subset=latin-ext,greek-ext,cyrillic-ext,greek,vietnamese,latin,cyrillic" rel="stylesheet" type="text/css" />
+<style>
+    /*jssor slider loading skin spin css*/
+    .jssorl-009-spin img {
+        animation-name: jssorl-009-spin;
+        animation-duration: 1.6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
 
-                        <!-- LAYER NR. 4 -->
-                        <div class="tp-caption tp-resizeme"
-                             id="rs-1-layer-4"
+    @keyframes jssorl-009-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
 
-                             data-x="['center']"
-                             data-hoffset="['0']"
-                             data-y="['middle']"
-                             data-voffset="['115']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;"
-                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                             data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1400"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 5; white-space: nowrap; letter-spacing:1px;"><a class="btn btn-default btn-circled btn-transparent pl-20 pr-20" href="#">Donate Now</a>
-                        </div>
-                    </li>
+    /*jssor slider bullet skin 032 css*/
+    .jssorb032 {position:absolute;}
+    .jssorb032 .i {position:absolute;cursor:pointer;}
+    .jssorb032 .i .b {fill:#fff;fill-opacity:0.7;stroke:#000;stroke-width:1200;stroke-miterlimit:10;stroke-opacity:0.25;}
+    .jssorb032 .i:hover .b {fill:#000;fill-opacity:.6;stroke:#fff;stroke-opacity:.35;}
+    .jssorb032 .iav .b {fill:#000;fill-opacity:1;stroke:#fff;stroke-opacity:.35;}
+    .jssorb032 .i.idn {opacity:.3;}
 
-                    <!-- SLIDE 2 -->
-                    <li data-index="rs-2" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="{{ URL::asset('/public/assets/global/images/bg/bg5.jpg') }}" data-rotate="0" data-saveperformance="off" data-title="Slide 2" data-description="">
-                        <!-- MAIN IMAGE -->
-                        <img src="{{ URL::asset('/public/assets/global/images/bg/bg5.jpg') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
-                        <!-- LAYERS -->
-
-                        <!-- LAYER NR. 1 -->
-                        <div class="tp-caption tp-resizeme text-uppercase text-white font-raleway"
-                             id="rs-2-layer-1"
-
-                             data-x="['left']"
-                             data-hoffset="['30']"
-                             data-y="['middle']"
-                             data-voffset="['-110']"
-                             data-fontsize="['110']"
-                             data-lineheight="['120']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1000"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 7; white-space: nowrap; font-weight:700;">Donate
-                        </div>
-
-                        <!-- LAYER NR. 2 -->
-                        <div class="tp-caption tp-resizeme text-uppercase text-white font-raleway bg-theme-colored-transparent pl-20 pr-20"
-                             id="rs-2-layer-2"
-
-                             data-x="['left']"
-                             data-hoffset="['35']"
-                             data-y="['middle']"
-                             data-voffset="['-25']"
-                             data-fontsize="['35']"
-                             data-lineheight="['54']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1000"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 7; white-space: nowrap; font-weight:600;">For the poor children
-                        </div>
-
-                        <!-- LAYER NR. 3 -->
-                        <div class="tp-caption tp-resizeme text-white"
-                             id="rs-2-layer-3"
-
-                             data-x="['left']"
-                             data-hoffset="['35']"
-                             data-y="['middle']"
-                             data-voffset="['35','35','40']"
-                             data-fontsize="['16','18',24']"
-                             data-lineheight="['28']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;s:500"
-                             data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-                             data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-                             data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1400"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 5; white-space: nowrap; letter-spacing:0px; font-weight:400;">Every day we bring hope to millions of children in the world's<br>  hardest places as a sign of God's unconditional love.
-                        </div>
-
-                        <!-- LAYER NR. 4 -->
-                        <div class="tp-caption tp-resizeme"
-                             id="rs-2-layer-4"
-
-                             data-x="['left']"
-                             data-hoffset="['35']"
-                             data-y="['middle']"
-                             data-voffset="['95','105','110']"
-                             data-width="none"
-                             data-height="none"
-                             data-whitespace="nowrap"
-                             data-transform_idle="o:1;"
-                             data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-                             data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-                             data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;"
-                             data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-                             data-start="1400"
-                             data-splitin="none"
-                             data-splitout="none"
-                             data-responsive_offset="on"
-                             style="z-index: 5; white-space: nowrap; letter-spacing:1px;"><a class="btn btn-colored btn-lg btn-theme-colored pl-20 pr-20" href="#">Donate Now</a>
-                        </div>
-                    </li>
-
-                    @endforelse
-                </ul>
-            </div>
-            <!-- end .rev_slider -->
-        </div>
-        <!--  Revolution slider scriopt -->
-        <script>
-            $(document).ready(function(e) {
-                $(".rev_slider_fullscreen").revolution({
-                    sliderType:"standard",
-                    sliderLayout: "auto",
-                    dottedOverlay: "none",
-                    delay: 5000,
-                    navigation: {
-                        keyboardNavigation: "off",
-                        keyboard_direction: "horizontal",
-                        mouseScrollNavigation: "off",
-                        onHoverStop: "off",
-                        touch: {
-                            touchenabled: "on",
-                            swipe_threshold: 75,
-                            swipe_min_touches: 1,
-                            swipe_direction: "horizontal",
-                            drag_block_vertical: false
-                        },
-                        arrows: {
-                            style:"zeus",
-                            enable:true,
-                            hide_onmobile:true,
-                            hide_under:600,
-                            hide_onleave:true,
-                            hide_delay:200,
-                            hide_delay_mobile:1200,
-                            tmp:'<div class="tp-title-wrap">    <div class="tp-arr-imgholder"></div> </div>',
-                            left: {
-                                h_align:"left",
-                                v_align:"center",
-                                h_offset:30,
-                                v_offset:0
-                            },
-                            right: {
-                                h_align:"right",
-                                v_align:"center",
-                                h_offset:30,
-                                v_offset:0
-                            }
-                        },
-                        bullets: {
-                            enable:true,
-                            hide_onmobile:true,
-                            hide_under:600,
-                            style:"metis",
-                            hide_onleave:true,
-                            hide_delay:200,
-                            hide_delay_mobile:1200,
-                            direction:"horizontal",
-                            h_align:"center",
-                            v_align:"bottom",
-                            h_offset:0,
-                            v_offset:30,
-                            space:5,
-                            tmp:'<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title"></span>'
-                        }
-                    },
-                    responsiveLevels: [1240, 1024, 778],
-                    visibilityLevels: [1240, 1024, 778],
-                    gridwidth: [1170, 1024, 778, 480],
-                    gridheight: [600, 768, 960, 720],
-                    lazyType: "none",
-                    parallax: {
-                        origo: "slidercenter",
-                        speed: 1000,
-                        levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 100, 55],
-                        type: "scroll"
-                    },
-                    shadow: 0,
-                    spinner: "off",
-                    stopLoop: "on",
-                    stopAfterLoops: 0,
-                    stopAtSlide: -1,
-                    shuffle: "off",
-                    autoHeight: "off",
-                    fullScreenAutoWidth: "off",
-                    fullScreenAlignForce: "off",
-                    fullScreenOffsetContainer: "",
-                    fullScreenOffset: "0",
-                    hideThumbsOnMobile: "off",
-                    hideSliderAtLimit: 0,
-                    hideCaptionAtLimit: 0,
-                    hideAllCaptionAtLilmit: 0,
-                    debugMode: false,
-                    fallbacks: {
-                        simplifyAll: "off",
-                        nextSlideOnWindowFocus: "off",
-                        disableFocusListener: false,
-                    }
-                });
-            });
-        </script>
-        <!-- Slider Revolution Ends -->
+    /*jssor slider arrow skin 051 css*/
+    .jssora051 {display:block;position:absolute;cursor:pointer;}
+    .jssora051 .a {fill:none;stroke:#fff;stroke-width:360;stroke-miterlimit:10;}
+    .jssora051:hover {opacity:.8;}
+    .jssora051.jssora051dn {opacity:.5;}
+    .jssora051.jssora051ds {opacity:.3;pointer-events:none;}
+</style>
+<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1920px;height:620px;overflow:hidden;visibility:hidden;">
+    <!-- Loading Screen -->
+    <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="img/spin.svg" />
     </div>
-</section>
+    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1920px;height:620px;overflow:hidden;">
+    @forelse($sliders as $key=>$slider)
+        <!-- SLIDE {{$key}} -->
+            <div data-p="170">
+                @if($slider['btn_link'])
+                    <a href="{{$slider['btn_link']}}">
+                @endif
+                    <img data-u="image" src="{{ $slider['image_large'] }}" />
+                @if($slider['btn_link'])
+                    </a>
+                @endif
 
+            </div>
+        @empty
 
+        <div>
+            <img data-u="image" src="img/001.jpg" />
+            <div data-t="0" data-ts="preserve-3d" style="position:absolute;top:120px;left:75px;width:470px;height:220px;">
+                <img style="position:absolute;top:0px;left:0px;width:470px;height:220px;max-width:470px;" src="img/c-phone-horizontal.png" />
+                <div data-ts="preserve-3d" style="position:absolute;top:4px;left:45px;width:379px;height:213px;overflow:hidden;">
+                    <img data-t="1" style="position:absolute;top:0px;left:0px;width:379px;height:213px;max-width:379px;" src="img/c-slide-1.jpg" />
+                    <img data-t="2" style="position:absolute;top:0px;left:379px;width:379px;height:213px;max-width:379px;" src="img/c-slide-3.jpg" />
+                </div>
+                <img style="position:absolute;top:4px;left:45px;width:379px;height:213px;max-width:379px;" src="img/c-navigator-horizontal.png" />
+                <img data-t="3" style="position:absolute;top:476px;left:454px;width:63px;height:77px;max-width:63px;" src="img/hand.png" />
+            </div>
+        </div>
+        <div>
+            <img data-u="image" src="img/002.jpg" />
+        </div>
+        <div>
+            <img data-u="image" src="img/003.jpg" />
+            <div style="position:absolute;top:30px;left:30px;width:480px;height:130px;font-family:'Roboto Condensed',sans-serif;font-size:40px;color:#000000;line-height:1.5;padding:5px 5px 5px 5px;box-sizing:border-box;background-color:rgba(255,188,5,0.8);background-clip:padding-box;">TOUCH SWIPE
+                <br />
+                RESPONSIVE SLIDER
+            </div>
+            <div style="position:absolute;top:300px;left:30px;width:480px;height:130px;font-family:'Roboto Condensed',sans-serif;font-size:30px;color:#000000;line-height:1.27;padding:5px 5px 5px 5px;box-sizing:border-box;background-color:rgba(255,188,5,0.8);background-clip:padding-box;">Build your slider with anything, includes image, svg, text, html, photo, picture content</div>
+        </div>
+        @endforelse
+    </div>
+    <!-- Bullet Navigator -->
+    <div data-u="navigator" class="jssorb032" style="position:absolute;bottom:12px;right:12px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+        <div data-u="prototype" class="i" style="width:16px;height:16px;">
+            <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+            </svg>
+        </div>
+    </div>
+    <!-- Arrow Navigator -->
+    <div data-u="arrowleft" class="jssora051" style="width:65px;height:65px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+        </svg>
+    </div>
+    <div data-u="arrowright" class="jssora051" style="width:65px;height:65px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+        </svg>
+    </div>
+</div>
+<script type="text/javascript">jssor_1_slider_init();</script>
+<!-- #endregion Jssor Slider End -->
+</body>
