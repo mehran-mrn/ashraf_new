@@ -621,5 +621,7 @@ return array(
     'patron_finance_projects'=>'حامی مالی پروژه ها شوید',
     'patron'=>'حامی',
     'transaction_success'=>'پرداخت شما با موفقیت انجام شد.',
-    'tracking_code'=>'شماره پیگیری پرداخت'
+    'tracking_code'=>'شماره پیگیری پرداخت',
+    'karim'=>'هوالکریم',
+    ''
 );

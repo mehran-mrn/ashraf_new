@@ -68,10 +68,11 @@
 
             <div class="content">
                 {!! notification_messages('email','payment_confirmed',
-                ['name'=>$name,
-                    'date'=>$date,
-                    'amount'=>$amount,
-                    'ref_id'=>$ref_id,
+                [
+                'name'=>$name,
+                'date'=>$date,
+                'amount'=>$amount,
+                'ref_id'=>$ref_id,
                 ])['text'] !!}
 
             </div>
