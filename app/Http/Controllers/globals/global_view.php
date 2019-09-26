@@ -361,8 +361,11 @@ class global_view extends Controller
 //            $charity->save();
 //        }
         $messages['result'] = "success";
+        $messages['name'] = "????? ??????";
         $messages['trackingCode'] = "2525252525";
-        $messages['message'] =__('messages.transaction_success');
+        $messages['des'] = __('messages.transaction_success');
+        $messages['date'] = jdate("Y-m-d");
+        $messages['amount'] = number_format('25800')." ".__('messages.rial');
         return view('mail.payment_confirmation2', compact('messages'));
 
 

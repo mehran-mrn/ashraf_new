@@ -623,5 +623,4 @@ return array(
     'transaction_success'=>'پرداخت شما با موفقیت انجام شد.',
     'tracking_code'=>'شماره پیگیری پرداخت',
     'karim'=>'هوالکریم',
-    ''
 );
