@@ -40,6 +40,12 @@
                                         </div>
                                         <div class="col-md-12 border-1px p-20">
                                             <div class="row">
+
+                                                <div class="col-md-2 col-xs-6 pt-xs-10">
+                                                    <a href="{{route('global_profile_completion')}}"
+                                                       class="btn btn-danger btn-block">{{__('messages.completion_profile')}}</a>
+                                                </div>
+
                                                 <div class="col-md-2 col-xs-6 pt-xs-10">
                                                     <a href="{{route('global_profile_change_password')}}"
                                                        class="btn btn-success btn-block ajaxload-popup">{{__('messages.change_password')}}</a>

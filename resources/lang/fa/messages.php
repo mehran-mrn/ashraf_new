@@ -623,4 +623,10 @@ return array(
     'transaction_success'=>'پرداخت شما با موفقیت انجام شد.',
     'tracking_code'=>'شماره پیگیری پرداخت',
     'karim'=>'هوالکریم',
+    'back_to_main_page'=>'برگشت به صفحه اصلی',
+    'fail'=>'ناموفق',
+    'success'=>'موفق',
+    'completion_profile'=>'تکمیل پروفایل',
+    'please_click_for_change_profile_picture'=>'برای تغییر تصویر پروفایل کلید نمایید.',
+    'information'=>'اطلاعات'
 );

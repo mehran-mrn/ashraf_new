@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\users_address', 'user_id', 'id');
     }
+
+    public function people()
+    {
+        return $this->hasOne('App\person','parent_id','id');
+    }
 }

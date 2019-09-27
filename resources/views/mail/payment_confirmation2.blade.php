@@ -577,6 +577,9 @@
 
 
 
+
+
+
     </script>
 
 
@@ -1237,15 +1240,18 @@
         <div data-silex-type="container" class="editable-style silex-id-1569341462650-1 container-element"
              data-silex-id="silex-id-1569341462650-1">
 
-            {!! notification_messages('email','payment_confirmed',
-            [
-            'name'=>$messages['name'],
-            'date'=>$messages['date'],
-            'amount'=>$messages['amount'],
-            'des'=>$messages['des'],
-            'ref_id'=>$messages['trackingCode']
-            ])['text'] !!}
 
+            @if($messages['result']=="success")
+                {!! notification_messages('email','payment_confirmed',
+                [
+                'name'=>$messages['name'],
+                'date'=>$messages['date'],
+                'amount'=>$messages['amount'],
+                'des'=>$messages['des'],
+                'ref_id'=>$messages['trackingCode']
+                ])['text'] !!}
+
+            @endif
             <div data-silex-type="text" class="editable-style silex-id-1569341477982-2 text-element text-style-5"
                  data-silex-id="silex-id-1569341477982-2">
                 <div class="silex-element-content normal"><p>{{__('callback.name')}}:</p></div>
@@ -1266,6 +1272,7 @@
                  data-silex-id="silex-id-1569343285808-10">
                 <div class="silex-element-content normal"><p>{{__('callback.tracking_id')}}:</p></div>
             </div>
+            <a href="/" class="button">{{__('messages.back_to_main_page')}}</a>
         </div>
     </div>
 </div>

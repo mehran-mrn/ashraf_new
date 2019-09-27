@@ -6,8 +6,8 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script>
-        $(document).ready(function () {
 
+        $(document).ready(function () {
             var DatatableBasic = function () {
                 var _componentDatatableBasic = function () {
                     if (!$().DataTable) {
@@ -36,7 +36,6 @@
                     });
                     $('.datatable-basic').DataTable({
                         rowCallback: function (row, data, index) {
-                            console.log(row)
                             if (data[4] === 'active') {
                                 $(row).find('td:eq(4)').addClass('text-center bg-success')
                             } else if (data[4] === 'inactive') {
@@ -46,11 +45,19 @@
                     });
                     $('.datatable-payments').DataTable({
                         rowCallback: function (row, data, index) {
-                            console.log(row)
                             if (data[4] === 'active') {
                                 $(row).find('td:eq(4)').addClass('text-center bg-success')
                             } else if (data[4] === 'inactive') {
                                 $(row).find('td:eq(4)').addClass('text-center bg-danger')
+                            }
+                        }
+                    });
+                    $('.datatable-payments2').DataTable({
+                        rowCallback: function (row, data, index) {
+                            if (data[5] === 'active') {
+                                $(row).find('td:eq(5)').addClass('text-center bg-success')
+                            } else if (data[5] === 'inactive') {
+                                $(row).find('td:eq(5)').addClass('text-center bg-danger')
                             }
                         }
                     });
@@ -72,10 +79,10 @@
                         }
                     }
                 }();
-                document.addEventListener('DOMContentLoaded', function () {
-                    DatatableBasic.init();
-                });
             }
+            document.addEventListener('DOMContentLoaded', function () {
+                DatatableBasic.init();
+            });
         })
 
     </script>
@@ -235,7 +242,7 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="centered-pill4">
-                                <table class="table datatable-payments table-striped">
+                                <table class="table datatable-payments2 table-striped">
                                     <thead>
                                     <tr>
                                         <th>{{__('messages.name_family')}}</th>
@@ -256,7 +263,13 @@
                                             <td>{{number_format($payment['amount'])}}</td>
                                             <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
                                             <td>{{$payment['patern']['title']}}</td>
-                                            <td>{{__('messages.'.$payment['status'])}}</td>
+                                            <td>
+                                                @if($payment['status']=='success')
+                                                    <span class="badge badge-success">{{__('messages.'.$payment['status'])}}</span>
+                                                @elseif($payment['status']=='fail')
+                                                    <span class="badge badge-danger">{{__('messages.'.$payment['status'])}}</span>
+                                                @endif
+                                            </td>
                                             <td>{{$payment['description']}}</td>
                                             <td>
                                                 <a href="#" class="btn btn-info btn-sm"><i class="icon-eye"></i></a>
