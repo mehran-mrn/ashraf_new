@@ -301,13 +301,16 @@ class global_view extends Controller
 
     public function payment($type, $id, Request $request)
     {
-
         $con = true;
         $vow = array('charity_vow', 'charity_donate');
         $info = '';
         if (in_array($type, $vow)) {
             $info = charity_transaction::find($id);
         } elseif ($request['type'] == "charity_period") {
+
+            $info = charity_periods_transaction::findOrFail($id);
+            $info->gateway_id=$request['gateway_id'];
+            $info->save();
             $info = charity_periods_transaction::findOrFail($id);
             if ($info['user_id']) {
                 if ($info['user_id'] != Auth::id() || $info['status'] != "unpaid") {
@@ -376,6 +379,11 @@ class global_view extends Controller
                 $charity = charity_transaction::findOrFail($data->module_id);
                 $charity->status = 'success';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+            }elseif ($data->module=="charity_period"){
+                $charity = charity_periods_transaction::findOrFail($data->module_id);
+                $charity->status = 'paid';
+                $charity->pay_date = date("Y-m-d H:i:s", time());
                 $charity->save();
             }
 

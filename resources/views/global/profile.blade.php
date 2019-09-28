@@ -244,7 +244,6 @@
                                 'X-CSRF-TOKEN': $('input[name="_token"]').val()
                             },
                             success: function (response) {
-                                console.log(response);
                                 $.each(response, function (index, value) {
                                     PNotify.success({
                                         text: value.message,

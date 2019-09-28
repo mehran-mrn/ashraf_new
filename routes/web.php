@@ -228,7 +228,8 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
         Route::post('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\charity@charity_payment_pattern_add')->name('charity_payment_pattern_add');
         Route::post('charity_payment_pattern_delete/{payment_pattern_id}', 'panel\charity@charity_payment_pattern_delete')->name('charity_payment_pattern_delete');
-        Route::get('charity/payment_list/', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
+        Route::get('payment_list/', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
+        Route::get('payment_list/vow/show/{id}', 'panel\panel_view@charity_payment_list_vow_show')->name('charity_payment_list_vow_show');
         Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
         Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');
         Route::post('periods/show/approve/{id}', 'panel\charity@charity_payment_approve')->name('charity_payment_approve');
@@ -543,7 +544,8 @@ Route::group(
     Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
 
 
-    Route::get('payment/{type}/{id}', 'globals\global_view@payment')->name('payment');
+    Route::get('payment/{type}/{id}/', 'globals\global_view@payment')->name('payment');
+    Route::post('payment/{type2}/{id2}', 'globals\global_view@payment')->name('payment2');
 
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');
 

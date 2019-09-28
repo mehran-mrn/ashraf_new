@@ -109,16 +109,7 @@
                     setTimeout(function () {
                         $(form_result_div).fadeOut('slow')
                     }, 3000);
-                }, error: function (response) {
-                    var errors = response.responseJSON.errors;
-                    $.each(errors, function (index, value) {
-                        PNotify.error({
-                            delay: 3000,
-                            title: index,
-                            text: value,
-                        });
-                    });
-                }
+                ``
             });
             setTimeout(function () {
                 $('[type="submit"]').prop('disabled', false);

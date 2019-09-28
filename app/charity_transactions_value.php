@@ -13,6 +13,6 @@ class charity_transactions_value extends Model
 
     public function charity_field()
     {
-        return $this->hasOne('App\'charity_payment_field', 'id', 'field_id');
+        return $this->hasOne('App\charity_payment_field', 'id', 'field_id');
     }
 }

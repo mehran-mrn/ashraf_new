@@ -4,6 +4,16 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            $(document).on("change keyup", '.amount', function (event) {
+                if (event.which >= 37 && event.which <= 40) return;
+                $(this).val(function (index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        ;
+                });
+            });
+
             $(document).on("submit", '#frm_add_charity', function (e) {
                 e.preventDefault();
                 var submit = $(this).find("button[type=submit]");
@@ -23,7 +33,9 @@
                                 delay: 3000,
                             });
                             setTimeout(function () {
-                                window.location.replace("/payment?id=" + response.message.id+"&type=charity_vow");
+                                window.location.replace("/payment/charity_vow/" + response.message.id);
+
+                                // window.location.replace("/payment?id=" + response.message.id+"&type=charity_vow");
                             }, 2000);
 
                         } else {
@@ -34,7 +46,17 @@
                         }
                         submit.removeAttr("disabled");
                         submit.html("{{__('messages.pay')}}")
-                    }, error: function () {
+                    }, error: function (response) {
+                        var errors = response.responseJSON.errors;
+                        $.each(errors, function (index, value) {
+                            PNotify.error({
+                                delay: 3000,
+                                title: '',
+                                text: value,
+                            });
+                        });
+                        submit.removeAttr("disabled");
+                        submit.html("{{__('messages.pay')}}")
                     }
                 });
             })
@@ -100,8 +122,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="amount">{{__('messages.amount')}}</label>
-                                            <input type="number" min="{{$charity['min']}}" max="{{$charity['max']}}"
-                                                   class="form-control" name="amount">
+                                            <input type="text" min="{{$charity['min']}}" max="{{$charity['max']}}" class="form-control amount" name="amount">
                                         </div>
                                     </div>
                                     <div class="col-md-12">

@@ -72,9 +72,9 @@
 @section('css')
 @stop
 @php
-$active_sidbare = ['charity', 'charity_list'];
-$sumPay=0;
-$unPaid=0;
+    $active_sidbare = ['charity', 'charity_list'];
+    $sumPay=0;
+    $unPaid=0;
 @endphp
 @section('content')
     <section>
@@ -88,49 +88,63 @@ $unPaid=0;
             <section>
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title text-black">{{__('messages.period_payment_list'). " | ".$userInfo['name']}}</h6>
+                        <h6 class="card-title text-black">{{__('messages.period_payment_list')}}
+                            | {{$info['user'] ? $info['user']['name'] : ''}}</h6>
                         <hr>
                     </div>
                     <div class="card-body">
                         <div class="text-center mb-3 py-2">
-                            <h4 class="font-weight-semibold mb-1">{{$periodInfo['description']}}</h4>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.start_date')." ".jdate("d F y",strtotime($periodInfo['start_date']))}}</span>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.next_payment_date')." ".jdate("d F y",strtotime($periodInfo['next_date']))}}</span>
+                            <h4 class="font-weight-semibold mb-1">{{$info['patern']['title']}}</h4>
+                            <span class="text-muted d-block" dir='ltr'>{{__('messages.description')}}:  {{$info['description']}}</span>
+                        </div>
+                        <div class="container">
+                            <hr>
+                            <div class="row">
+                                @foreach($info['values'] as $value)
+                                    <div class="col-6 py-2">
+                                        {{$value['charity_field']['label']}}: {{$value['value']}}
+                                    </div>
+                                @endforeach
+                            </div>
+                            <hr>
                         </div>
                         <table class="table datatable-basic table-striped">
                             <thead>
                             <tr>
-                                <th>{{__("messages.it's_over_date")}}</th>
-                                <th>{{__('messages.amount')}}</th>
                                 <th>{{{__('messages.payment_date')}}}</th>
+                                <th>{{__('messages.amount')}}</th>
                                 <th>{{__('messages.gateway')}}</th>
                                 <th>{{__('messages.status')}}</th>
-                                <th class="text-center">{{__('messages.description')}}</th>
+                                <th>{{__('messages.tracking_code')}}</th>
+                                <th>{{__('messages.card_number')}}</th>
+                                <th>{{__('messages.ref_id')}}</th>
+                                <th>{{__('messages.ip')}}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($paymentList as $payment)
-                                @if($payment['status']=='paid'?$sumPay+=$payment['amount']:'')@endif
-                                @if($payment['status']=='unpaid'?$unPaid+=$payment['amount']:'')@endif
+                            @foreach($info['tranInfo'] as $payment)
+                                @if($payment['status']=='SUCCEED'?$sumPay+=$payment['price']:'')@endif
                                 <tr>
-                                    <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
-                                    <td>{{number_format($payment['amount'])}} {{__('messages.rial')}}</td>
                                     <td>
-                                        <span dir="lrt">
-                                        {{$payment['pay_date']!=null?jdate("Y-m-d H:i:s",strtotime($payment['pay_date'])):''}}
+                                        <span dir="ltr">
+                                        {{$payment['payment_date']?jdate("Y-m-d H:i:s",strtotime($payment['payment_date'])):''}}
                                         </span>
                                     </td>
-                                    <td>{{$payment['gateway']['title']}}</td>
+                                    <td>{{number_format($payment['price'])}} {{__('messages.rial')}}</td>
+                                    <td>{{$payment['port']}}</td>
                                     <td>
-                                        @if($payment['status']=='paid')
+                                        @if($payment['status']=='SUCCEED')
                                             <span class="badge badge-success">{{__('messages.'.$payment['status'])}}</span>
-                                        @elseif($payment['status']=='unpaid')
+                                        @elseif($payment['status']=='FAILED')
                                             <span class="badge badge-danger">{{__('messages.'.$payment['status'])}}</span>
                                         @else
                                             <span class="badge badge-danger">{{__('messages.unknown')}}</span>
                                         @endif
                                     </td>
-                                    <td>{{$payment['description']}}</td>
+                                    <td>{{$payment['tracking_code']}}</td>
+                                    <td>{{$payment['card_number']}}</td>
+                                    <td>{{$payment['ref_id']}}</td>
+                                    <td>{{$payment['ip']}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -155,24 +169,11 @@ $unPaid=0;
                                 <div class="card card-body bg-indigo-400 has-bg-image">
                                     <div class="media">
                                         <div class="media-body text-left">
-                                            <h3 class="mb-0">{{number_format(count($paymentList))}}</h3>
+                                            <h3 class="mb-0">{{number_format(count($info['tranInfo']))}}</h3>
                                             <span class="text-uppercase font-size-xs">{{__('messages.count')}}</span>
                                         </div>
                                         <div class="mr-3 align-self-center">
                                             <i class="icon-pointer icon-3x opacity-75"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xl-4">
-                                <div class="card card-body bg-danger-400 has-bg-image">
-                                    <div class="media">
-                                        <div class="media-body text-left">
-                                            <h3 class="mb-0">{{number_format($unPaid)}}</h3>
-                                            <span class="text-uppercase font-size-xs">{{__("messages.unpaid")}}</span>
-                                        </div>
-                                        <div class="ml-3 align-self-center">
-                                            <i class="icon-bag icon-3x opacity-75"></i>
                                         </div>
                                     </div>
                                 </div>

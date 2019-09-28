@@ -20,4 +20,9 @@ class charity_periods_transaction extends Model
     {
         return $this->hasOne('App\User','id','review_user_id');
     }
+
+    public function gateway()
+    {
+        return $this->hasOne('App\gateway','id','gateway_id');
+    }
 }

@@ -12,8 +12,8 @@
                 submit.attr('disabled', 'disabled');
                 submit.html("{{__('messages.please_waite')}}");
                 $.ajax({
-                    url: "{{route('payment')}}",
-                    type: "GET",
+                    url: "{{route('payment2',['type2'=>"charity_period",'id2'=>$charityIn['id']])}}",
+                    type: "POST",
                     data: $(this).serialize(),
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')

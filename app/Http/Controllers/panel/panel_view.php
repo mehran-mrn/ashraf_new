@@ -707,6 +707,14 @@ class panel_view extends Controller
         $projects = building_project::where('archived', false)->get();
         return view('panel.charity.setting.module.add_champion',compact('projects'));
     }
+
+
+    public function charity_payment_list_vow_show(Request $request)
+    {
+
+        $info = charity_transaction::with('tranInfo','patern','user','values','gateway')->findOrFail($request['id']);
+        return view('panel.charity.pages.vow_show',compact('info'));
+    }
 //end charity module
 
 

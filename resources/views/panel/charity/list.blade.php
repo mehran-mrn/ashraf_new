@@ -170,19 +170,31 @@
                                     @foreach($payments as $payment)
                                         <tr>
                                             <td>{{$payment['period']['user']['name']}}</td>
-                                            <td>{{number_format($payment['amount'])}}</td>
+                                            <td>{{number_format($payment['amount'])}} {{__('messages.rial')}}</td>
                                             <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
                                             <td>
-                                                @if($payment['pay_date']!= null?jdate("Y-m-d",strtotime($period['pay_date'])):'') @endif
+                                                <span dir="ltr">
+                                                @if($payment['pay_date'])
+                                                        {{jdate("Y-m-d H:i:s",strtotime($payment['pay_date']))}}
+                                                    @endif
+                                                </span>
                                             </td>
-                                            <td>{{__('messages.'.$payment['status'])}}</td>
+                                            <td>
+                                                @if($payment['status']=='paid')
+                                                    <span class="badge badge-success">{{__('messages.'.$payment['status'])}}</span>
+                                                @elseif($payment['status']=='unpaid')
+                                                    <span class="badge badge-danger">{{__('messages.'.$payment['status'])}}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{__('messages.unknown')}}</span>
+                                                @endif
+                                            </td>
                                             <td>{{__('messages.'.$payment['review'])}}</td>
                                             <td>{{$payment['description']}}</td>
                                             <td>
                                                 @if($payment['status']=="unpaid")
                                                     <a href="#" class="btn btn-info btn-sm"><i class="icon-mobile"></i></a>
                                                 @endif
-                                                @if($payment['status']=='unpaid')
+                                                @if($payment['status']=='paid')
                                                     <button type="button"
                                                             class="btn btn-success btn-sm swal-alert"
                                                             data-ajax-link="{{route('charity_payment_approve',['id'=>$payment['id']])}}"
@@ -261,18 +273,25 @@
                                             <td>{{$payment['name']}}</td>
                                             <td>{{$payment['phone']}}</td>
                                             <td>{{number_format($payment['amount'])}}</td>
-                                            <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
+                                            <td>
+                                                @if($payment['payment_date'])
+                                                    {{jdate("Y-m-d",strtotime($payment['payment_date']))}}
+                                                @endif
+                                            </td>
                                             <td>{{$payment['patern']['title']}}</td>
                                             <td>
                                                 @if($payment['status']=='success')
                                                     <span class="badge badge-success">{{__('messages.'.$payment['status'])}}</span>
                                                 @elseif($payment['status']=='fail')
                                                     <span class="badge badge-danger">{{__('messages.'.$payment['status'])}}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{__('messages.unknown')}}</span>
                                                 @endif
                                             </td>
                                             <td>{{$payment['description']}}</td>
                                             <td>
-                                                <a href="#" class="btn btn-info btn-sm"><i class="icon-eye"></i></a>
+                                                <a href="{{route('charity_payment_list_vow_show',['id'=>$payment['id']])}}"
+                                                   class="btn btn-info btn-sm"><i class="icon-eye"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
