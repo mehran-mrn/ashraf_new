@@ -642,5 +642,20 @@ return array(
     'SUCCEED'=>'موفق',
     'FAILED'=>'ناموفق',
     'ref_id'=>'شماره مرجع',
-    'ip'=>'ای پی'
+    'ip'=>'ای پی',
+    'contact_to_we'=>'ارتباط با ما',
+    'faq'=>'سوالات متداول',
+    'subject'=>'موضوع',
+    'enter_subject'=>'موضوع را وارد نمایید',
+    'enter_message'=>'متن پیام را وارد نمایید',
+    'send_message'=>'ارسال پیام',
+
+    'message'=>'پیام',
+    'your_message_successfully_send'=>'پیام شما با موفقیت ارسال شد.',
+    'your_message_fail_to_send'=>'ارسال پیام ناموفق بود.',
+    'enter_captcha_code'=>'کد تایید را وارد نمایید',
+    'captcha_code_fail'=>'کد تایید اشتباه میباشد.',
+    'new'=>'جدید',
+    'response'=>'پاسخ',
+    'read'=>'خوانده شده'
 );

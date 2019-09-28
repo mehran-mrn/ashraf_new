@@ -298,6 +298,13 @@ if (!isset($active_sidbare)) {
 
                     <ul class="nav nav-group-sub" data-submenu-title="{{trans('messages.setting')}}"
                         style="display:{{in_array("setting", $active_sidbare) ? 'block' : 'none' }}">
+
+                        <li class="nav-item">
+                            <a href="{{route('contact.index')}}"
+                               class="nav-link {{in_array("contact", $active_sidbare) ? 'active' : '' }}">{{trans('messages.contact_to_we')}}</a>
+                        </li>
+
+
                         <li class="nav-item"><a href="{{route('notification_template.index')}}"
                                                 class="nav-link {{in_array("notification_template", $active_sidbare) ? 'active' : '' }}">{{trans('messages.notification_template')}}</a>
                         </li>

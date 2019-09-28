@@ -66,6 +66,7 @@ class global_view extends Controller
         return view('global.faq',compact('faqs'));
     }
 
+
     public function post_page($blogPostSlug, Request $request)
     {
         $blog_post = BlogEtcPost::where("slug", $blogPostSlug)

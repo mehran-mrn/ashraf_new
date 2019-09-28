@@ -503,8 +503,7 @@ Route::group(
         Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
 
-    Route::get('/', 'globals\global_view@index')->name('main');
-    Route::get('/faq', 'globals\global_view@faq')->name('faq');
+        Route::get('/', 'globals\global_view@index')->name('main');
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
         Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
         Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
@@ -516,6 +515,7 @@ Route::group(
         //-----------End Global View------------
         //======================================
     });
+
 
     Route::get('/post/{blogPostSlug}', 'globals\global_view@post_page')->name('post_page');
     Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
@@ -567,8 +567,31 @@ Route::group(
     Route::post('payment/{type2}/{id2}', 'globals\global_view@payment')->name('payment2');
 
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');
+    Route::get('/faq', 'globals\global_view@faq')->name('faq');
+    Route::resource('contact', 'panel\contactController');
 
 //    Route::any('/{gateway}/callback/{invoiceId}', ['as' => 'payment::callback', 'uses' => 'GatewayController@callback']);
+
+
+    Route::any('captcha-test', function () {
+        if (request()->getMethod() == 'POST') {
+            $rules = ['captcha' => 'required|captcha'];
+            $validator = validator()->make(request()->all(), $rules);
+            if ($validator->fails()) {
+                echo '<p style="color: #ff0000;">Incorrect!</p>';
+            } else {
+                echo '<p style="color: #00ff30;">Matched :)</p>';
+            }
+        }
+
+        $form = '<form method="post" action="captcha-test">';
+        $form .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+        $form .= '<p>' . captcha_img() . '</p>';
+        $form .= '<p><input type="text" name="captcha"></p>';
+        $form .= '<p><button type="submit" name="check">Check</button></p>';
+        $form .= '</form>';
+        return $form;
+    });
 
 });
 //=========================================

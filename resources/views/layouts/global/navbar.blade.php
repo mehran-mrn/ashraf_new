@@ -61,15 +61,18 @@
                         </ul>
                     </div>
                     <div class="widget no-border clearfix m-0 mt-5">
-                        <div  class='search-form-outer'>
+                        <div class='search-form-outer'>
 
-                            <form method='get' action='{{route("blogetc.search")}}' id="mailchimp-subscription-form-footer" class="col-lg-offset-5 newsletter-form">
+                            <form method='get' action='{{route("blogetc.search")}}'
+                                  id="mailchimp-subscription-form-footer" class="col-lg-offset-5 newsletter-form">
                                 <div class="input-group">
-                                    <input type="text" value="{{\Request::get("s")}}" name="s" placeholder="{{__('messages.search')}}"
+                                    <input type="text" value="{{\Request::get("s")}}" name="s"
+                                           placeholder="{{__('messages.search')}}"
                                            class="form-control input-lg font-16" data-height="45px"
                                            id="mce-EMAIL-footer" style="height: 45px;">
                                     <span class="input-group-btn">
-                  <button data-height="45px" class="btn btn-colored bg-theme-colored-darker2 btn-xs m-0 font-14" type="submit">
+                  <button data-height="45px" class="btn btn-colored bg-theme-colored-darker2 btn-xs m-0 font-14"
+                          type="submit">
                       <i class="fa fa-search text-white-f6"></i></button>
                 </span>
                                 </div>
@@ -101,13 +104,15 @@
                                         @endforeach
                                     </ul>
                                 </li>
-                                <li><a  href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
+                                <li><a href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
                                 <li><a href="{{route('vow_periodic')}}">{{__("messages.Periodic_assistance")}}</a></li>
                             </ul>
                         </li>
                         <li><a class="text-white-f6" href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
                         <li><a class="text-white-f6" href="{{route('blog')}}">{{trans('messages.blog')}}</a>
                         <li><a class="text-white-f6" href="{{route('faq')}}">{{trans('messages.faq')}}</a>
+                        <li><a class="text-white-f6"
+                               href="{{route('contact.create')}}">{{trans('messages.contact_to_we')}}</a>
 
 
                         </li>
