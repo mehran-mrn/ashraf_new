@@ -783,7 +783,6 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
     }
 
     $file->move($destinationPath, $image_name);
-
 }
 
 function uploadFile($file, $folder = 'files')

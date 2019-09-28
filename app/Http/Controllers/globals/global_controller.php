@@ -4,6 +4,7 @@ namespace App\Http\Controllers\globals;
 
 use App\champion_transaction;
 use App\charity_champion;
+use App\person;
 use App\users_address;
 use Validator;
 use App\charity_period;
@@ -418,6 +419,38 @@ class global_controller extends Controller
             );
             return back_normal($request, ['message' => __('messages.transaction_created'), 'code' => 200, 'id' => $champion['id']]);
         }
+    }
+
+
+    public function global_profile_completion_upload_image(Request $request)
+    {
+        uploadGallery($request['file'], "profile", ['category_id' => Auth::id(), 'title' => 'تصویر پروفایل']);
+        return redirect()->back();
+    }
+
+    public function global_profile_completion_submit(Request $request)
+    {
+        if ($person = person::where('parent_id', '=', Auth::id())->first()) {
+            $person->parent_id = Auth::id();
+            $person->name = $request['name'];
+            $person->family = $request['family'];
+            $person->national_code = $request['national_code'];
+            $person->phone = $request['phone'];
+            $person->save();
+            $mesage = __('messages.item_updated');
+        } else {
+            $person = person::create(
+                [
+                    'parent_id' => Auth::id(),
+                    'name' => $request['name'],
+                    'family' => $request['family'],
+                    'national_code' => $request['national_code'],
+                    'phone' => $request['phone'],
+                ]
+            );
+            $mesage = __('messages.item_created');
+        }
+        return back_normal($request, ['message' => $mesage, 'status' == 200]);
     }
 
 }

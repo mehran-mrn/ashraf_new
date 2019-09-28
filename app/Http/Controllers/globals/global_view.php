@@ -119,7 +119,16 @@ class global_view extends Controller
                 ['status', '=', 'unpaid'],
                 ['user_id', '=', Auth::id()],
             ])->get();
-        return view('global.profile', compact('periods', 'unpaidPeriod'));
+        $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
+
+        return view('global.profile', compact('periods', 'unpaidPeriod', 'userInfo'));
+    }
+
+
+    public function global_profile_completion()
+    {
+        $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
+        return view('global.profile.completion_profile', compact('userInfo'));
     }
 
     public function caravan_page()
@@ -370,29 +379,34 @@ class global_view extends Controller
 
     public function callback(Request $request)
     {
-//        $gateway = config('gateway.table', 'gateway_transactions');
-//        $data = \DB::table($gateway)->find($request['transaction_id']);
-//        if ($data->module == "charity_donate" || $data->module == "charity_vow") {
-//            $charity = charity_transaction::findOrFail($data->module_id);
-//            $charity->status = 'success';
-//            $charity->payment_date = date("Y-m-d H:i:s", time());
-//            $charity->save();
-//        }
-        $messages['result'] = "success";
-        $messages['trackingCode'] = "2525252525";
-        $messages['message'] =__('messages.transaction_success');
-        return view('mail.payment_confirmation2', compact('messages'));
 
 
         try {
+
             $gateway = \Larabookir\Gateway\Gateway::verify();
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
-            $module = $gateway->module();
-            $moduleID = $gateway->moduleID();
 
-            return $moduleID;
+            $gateway = config('gateway.table', 'gateway_transactions');
+            $data = \DB::table($gateway)->find($request['transaction_id']);
+            if ($data->module == "charity_donate" || $data->module == "charity_vow") {
+                $charity = charity_transaction::findOrFail($data->module_id);
+                $charity->status = 'success';
+                $charity->payment_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+            }
+
+
+            $messages['result'] = "success";
+            $messages['name'] = $charity->name;
+            $messages['trackingCode'] = $request['transaction_id'];
+            $messages['des'] = $charity->description;
+            $messages['date'] = jdate("Y/m/d");
+
+            $messages['amount'] = number_format($charity->amount) . " " . __('messages.rial');
+            return view('mail.payment_confirmation2', compact('messages'));
+
         } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
             $messages['message'] = $e->getMessage();
             $messages['result'] = "repeat";

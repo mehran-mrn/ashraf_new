@@ -40,7 +40,8 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('logout', 'Auth\LoginController@logout');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'globals\global_view@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //=========================================
 // ------------admin panel-----------------
@@ -321,6 +322,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     //-----------End Global View------------
     //======================================
 });
+
 //=========================================
 
 //=========================================
@@ -493,9 +495,27 @@ Route::group(
         Route::post('/product_size_info', 'globals\global_controller@product_size_info')->name('product_size_info');
     });
 
+    Route::prefix('user')->group(function () {
+
+        Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+        Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
+        Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
+        Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
 
     Route::get('/', 'globals\global_view@index')->name('main');
     Route::get('/faq', 'globals\global_view@faq')->name('faq');
+        Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
+        Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
+        Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
+
+        Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+        Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');
+        Route::get('/involved', 'globals\global_view@involved_projects')->name('involved_projects_all');
+        //======================================
+        //-----------End Global View------------
+        //======================================
+    });
+
     Route::get('/post/{blogPostSlug}', 'globals\global_view@post_page')->name('post_page');
     Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
     Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');

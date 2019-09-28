@@ -75,4 +75,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\users_address', 'user_id', 'id');
     }
+
+    public function people()
+    {
+        return $this->hasOne('App\person', 'parent_id', 'id');
+    }
+
+    public function profile_image()
+    {
+        return $this->hasMany('App\media', 'category_id', 'id')->where('module', '=', 'profile');
+    }
 }

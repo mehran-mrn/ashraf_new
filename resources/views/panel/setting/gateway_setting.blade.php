@@ -12,7 +12,6 @@
         $(document).ready(function () {
             $(document).on('change', '#name', function () {
                 var logo = $(this).find(':selected').data('logo');
-                console.log(logo);
                 logo = logo.replace("ibl64", "ibl128");
                 $("#bank_logo_htm").html(logo);
             })

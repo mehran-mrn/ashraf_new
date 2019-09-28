@@ -173,7 +173,6 @@
                         <div class="col-lg-12">
                             <div id="file_names">
                             </div>
-                            {{--                                <input name="file[]" type="file" class="file-input-ajax" multiple="true" data-fouc>--}}
                             <div class="dropzone" id="dropzone_remove">
                                 <div class="fallback">
                                     <input name="file" type="file" multiple/>
