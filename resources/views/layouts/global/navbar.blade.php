@@ -107,6 +107,7 @@
                         </li>
                         <li><a class="text-white-f6" href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
                         <li><a class="text-white-f6" href="{{route('blog')}}">{{trans('messages.blog')}}</a>
+                        <li><a class="text-white-f6" href="{{route('faq')}}">{{trans('messages.faq')}}</a>
 
 
                         </li>
