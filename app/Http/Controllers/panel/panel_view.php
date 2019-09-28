@@ -297,6 +297,7 @@ class panel_view extends Controller
 
     }
 
+
 //end blog module
 
 

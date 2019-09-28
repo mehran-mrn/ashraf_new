@@ -299,6 +299,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/submit_adv_card', 'panel\setting@submit_adv_card')->name('submit_adv_card');
         Route::post('/delete_adv_card/{option_id}', 'panel\setting@delete_adv_card')->name('delete_adv_card');
         Route::get('/more_setting', 'panel\panel_view@more_blog_setting')->name('more_blog_setting');
+        Route::resource('faq', 'panel\faqController');
 
     });
     //======================================
@@ -493,7 +494,8 @@ Route::group(
     });
 
 
-    Route::get('/', 'globals\global_view@index');
+    Route::get('/', 'globals\global_view@index')->name('main');
+    Route::get('/faq', 'globals\global_view@faq')->name('faq');
     Route::get('/post/{blogPostSlug}', 'globals\global_view@post_page')->name('post_page');
     Route::get('/store', 'globals\global_view@shop_page')->name('global_shop');
     Route::get('/store/detail/{pro_id}', 'globals\global_view@detail_product')->name('store_detail');

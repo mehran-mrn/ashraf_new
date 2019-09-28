@@ -4,8 +4,8 @@
     <div class="main-content">
 
         <!-- Section: inner-header -->
-        <section class="inner-header divider parallax layer-overlay overlay-dark-5"
-                 data-bg-img="{{URL::asset('public/assets/global/images/bg/bg1.jpg')}}">
+        <section class="inner-header divider parallax "
+                 data-bg-img="{{URL::asset('public/assets/global/images/bg/bg26.webp')}}">
             <div class="container pt-90 pb-50">
                 <!-- Section Content -->
                 <div class="section-content pt-100">

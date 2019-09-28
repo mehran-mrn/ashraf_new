@@ -7,8 +7,9 @@
                                 class="fa fa-photo text-gray-darkgray mr-10"></i>{!! trans('messages.random_photos') !!}
                     </h3>
                     <div class="gallery-isotope grid-4 gutter-small clearfix" data-lightbox="gallery">
+                        <?php $cc=1;?>
                         @forelse(get_photo_gallery(12) as $photo)
-                            <div class="gallery-item ">
+                            <div class="{{$cc > 8 ?"hidden-sm hidden-xs ":""}} gallery-item ">
                                 <div class="thumb random-gallery">
                                     <img alt="{{$photo['title']}} - {{__('messages.ashraf')}}"
                                          src="{{url($photo['path']."/300/".$photo['name'])}}" width="160" height="120" class="img-fullwidth">
@@ -23,6 +24,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php $cc++ ?>
                         @empty
                             <div class="gallery-item">
                                 <div class="thumb">
@@ -120,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm7.jpg') }}"
@@ -136,7 +138,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm8.jpg') }}"
@@ -152,7 +154,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs ">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm9.jpg') }}"
@@ -168,7 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs ">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm10.jpg') }}"
@@ -184,7 +186,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs ">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm11.jpg') }}"
@@ -200,7 +202,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="gallery-item">
+                            <div class="gallery-item hidden-sm hidden-xs ">
                                 <div class="thumb">
                                     <img alt="project"
                                          src="{{ URL::asset('/public/assets/global/images/gallery/gallery-sm12.jpg') }}"

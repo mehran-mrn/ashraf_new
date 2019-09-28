@@ -2262,7 +2262,7 @@ form .error {
 }
 @media only screen and (max-width: 479px) {
   .gallery-isotope .gallery-item {
-    width: 100% !important;
+    width: 50% !important;
   }
   .gallery-isotope .gallery-item.wide {
     width: 100% !important;

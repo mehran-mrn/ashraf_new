@@ -14,5 +14,7 @@ return array (
   'executer' => 'مجری',
   'update' => 'بروز رسانی',
   'variables' => 'متغییر ها',
+  'question' => 'سوال',
+  'answer' => 'پاسخ',
 
 );

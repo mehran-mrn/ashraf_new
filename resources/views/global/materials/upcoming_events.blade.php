@@ -3,7 +3,7 @@
     <div class="container">
         <div class="section-content">
             <div class="row">
-                <div class="col-md-6 bordered_box_bottom">
+                <div class="col-md-6 pb-3 hidden-sm hidden-xs">
                     @foreach(get_posts(1,['last_post']) as $news)
                         <img class="img-fullwidth"
                              src="{{$news['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
@@ -17,18 +17,17 @@
                     @endforeach
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-5">
                     <h3 class="text-uppercase title line-bottom mt-0 mb-20"><i
                                 class="fa fa-calendar text-gray-darkgray mr-10"></i>{!!  trans('messages.latest_posts')!!}
                     </h3>
                     @foreach(get_posts(4,['last_post']) as $key=> $news)
 
-                        @if($key !=0)
-                            <article class="post media-post clearfix mt-5 pb-0 mb-10">
+                        <article class="{{$key ==0 ? "hidden-lg hidden-md ":""}} post media-post clearfix mt-5 pb-0 mb-10">
                                 <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}"
                                    class="post-thumb post-thumb-img mb-0">
                                     <img alt=""
-                                         src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}">
+                                         src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_thumbnail']}}">
                                     <ul class="list-inline font-12 mt-1 m-0 text-center">
                                         <li class="pr-0"><i
                                                     class="fa fa-calendar m-0"></i> {{jdate('d F',strtotime($news['posted_at']))}}
@@ -45,8 +44,7 @@
                                         ...</a>
                                 </div>
                             </article>
-                            <hr class="bordered_box p-0 m-0">
-                        @endif
+                        <hr class="{{$key ==0 ? "hidden-lg hidden-md ":""}} bordered_box p-0 m-0">
 
                     @endforeach
 
