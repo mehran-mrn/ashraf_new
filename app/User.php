@@ -78,6 +78,11 @@ class User extends Authenticatable
 
     public function people()
     {
-        return $this->hasOne('App\person','parent_id','id');
+        return $this->hasOne('App\person', 'parent_id', 'id');
+    }
+
+    public function profile_image()
+    {
+        return $this->hasMany('App\media', 'category_id', 'id')->where('module', '=', 'profile');
     }
 }

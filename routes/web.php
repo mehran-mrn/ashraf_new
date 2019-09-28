@@ -266,7 +266,6 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/upload_files_category/', 'panel\Media@upload_files_category')->name('upload_files_category');
         Route::post('/upload_files_building_project/', 'panel\Media@upload_files_building_project')->name('upload_files_building_project');
         Route::post('doc_download', 'Controller@download_doc')->name('download_doc');
-
     });
     Route::prefix('gallery')->group(function () {
         Route::get('list_video_galleries', 'panel\panel_view@list_video_galleries')->name('list_video_galleries');
@@ -488,6 +487,8 @@ Route::group(
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
 
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
+        Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
+        Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
 
         Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
         Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');

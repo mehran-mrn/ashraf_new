@@ -101,14 +101,16 @@ class global_view extends Controller
                 ['status', '=', 'unpaid'],
                 ['user_id', '=', Auth::id()],
             ])->get();
-        $userInfo = User::with('addresses', 'people')->find(Auth::id());
+        $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
+
         return view('global.profile', compact('periods', 'unpaidPeriod', 'userInfo'));
     }
 
 
     public function global_profile_completion()
     {
-        return view('global.profile.completion_profile');
+        $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
+        return view('global.profile.completion_profile', compact('userInfo'));
     }
 
     public function caravan_page()

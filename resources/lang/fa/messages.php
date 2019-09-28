@@ -628,5 +628,13 @@ return array(
     'success'=>'موفق',
     'completion_profile'=>'تکمیل پروفایل',
     'please_click_for_change_profile_picture'=>'برای تغییر تصویر پروفایل کلید نمایید.',
-    'information'=>'اطلاعات'
+    'information'=>'اطلاعات',
+    'enter_name'=>'نام را وارد نمایید.',
+    'enter_family'=>'نام خانوادگی را وارد نمایید',
+    'enter_national_code'=>'کد ملی را وارد نمایید',
+    'enter_email'=>'ایمیل را وارد نمایید',
+    'enter_Phone'=>'شماره تلفن را وارد نمایید',
+    'enter_mobile'=>'شماره موبایل را وارد نمایید',
+    'enter_username'=>'نام کاربری را وارد نمایید',
+    'reset'=>'از نو'
 );
