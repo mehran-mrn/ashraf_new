@@ -480,6 +480,7 @@ return array(
     'roles_has_this_permission' => 'نقش هایی که این دسترسی را دارند',
     'team' => 'تیم',
     'role' => 'نقش',
+    'question' => 'سوال',
     'add_new_user' => 'افزودن کاربر جدید',
     'register_date' => 'تاریخ ثبت نام',
     'roles_user_has' => 'نقش هایی که این کاربر دارد',

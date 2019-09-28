@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
@@ -267,6 +268,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/upload_files_category/', 'panel\Media@upload_files_category')->name('upload_files_category');
         Route::post('/upload_files_building_project/', 'panel\Media@upload_files_building_project')->name('upload_files_building_project');
         Route::post('doc_download', 'Controller@download_doc')->name('download_doc');
+
     });
     Route::prefix('gallery')->group(function () {
         Route::get('list_video_galleries', 'panel\panel_view@list_video_galleries')->name('list_video_galleries');
@@ -299,6 +301,7 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::post('/submit_adv_card', 'panel\setting@submit_adv_card')->name('submit_adv_card');
         Route::post('/delete_adv_card/{option_id}', 'panel\setting@delete_adv_card')->name('delete_adv_card');
         Route::get('/more_setting', 'panel\panel_view@more_blog_setting')->name('more_blog_setting');
+        Route::resource('faq', 'panel\faqController');
 
     });
     //======================================
@@ -306,7 +309,19 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     //======================================
 
 
-
+    //======================================
+    //--------------Global View-------------
+    //======================================
+    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+    Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
+    Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
+    Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+    Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+    Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');
+    Route::get('/involved', 'globals\global_view@involved_projects')->name('involved_projects_all');
+    //======================================
+    //-----------End Global View------------
+    //======================================
 });
 
 //=========================================
@@ -454,9 +469,11 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 // ------------End Blog ETC----------------
 //=========================================
 
+
 //=========================================
 // ------------Global View-----------------
 //=========================================
+
 
 Route::group(
     [
@@ -464,7 +481,6 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 
     ], function () {
-
 
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');
@@ -487,6 +503,8 @@ Route::group(
         Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
 
+    Route::get('/', 'globals\global_view@index')->name('main');
+    Route::get('/faq', 'globals\global_view@faq')->name('faq');
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
         Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
         Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
@@ -515,6 +533,7 @@ Route::group(
     Route::get('/order/payment', 'globals\global_view@store_payment')->name('store_payment');
     Route::patch('/cart_update', 'globals\global_controller@cart_update')->name('cart_update');
     Route::delete('/cart_remove', 'globals\global_controller@cart_remove')->name('cart_remove');
+
 
 //charity view
     Route::get('vow/donate', 'globals\global_view@vow_donate')->name('vow_donate');

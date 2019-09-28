@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\blog_option;
 use App\blog_slider;
 use App\caravan;
 use App\champion_transaction;
@@ -46,6 +47,23 @@ class global_view extends Controller
 
         $champions = charity_champion::with('image')->get();
         return view('global.index', compact('sliders', 'categories', 'champions'));
+    }
+
+    public function faq()
+    {
+        $local =  app()->getLocale();
+        $faqs = blog_option::where('key',$local)
+            ->where('name','faq')
+            ->get()
+            ->map(function ($faq) {
+                    return [
+                        'id'=> $faq['id'],
+                        'question'=> json_decode($faq->value)->question,
+                        'answer'=> json_decode($faq->value)->answer,
+                    ];
+            });
+
+        return view('global.faq',compact('faqs'));
     }
 
     public function post_page($blogPostSlug, Request $request)

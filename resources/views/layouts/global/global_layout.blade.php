@@ -63,7 +63,7 @@
           href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=2"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
-    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=5" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=6" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
     <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Custom Margin Padding Collection -->
@@ -78,13 +78,7 @@
           type="text/css">
     <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
     <!-- <link href="css/style.css" rel="stylesheet" type="text/css"> -->
-    <!-- Revolution Slider 5.x CSS settings -->
-    <link href="{{ URL::asset('/public/assets/global/js/revolution-slider/css/settings.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ URL::asset('/public/assets/global/js/revolution-slider/css/layers.css') }}" rel="stylesheet"
-          type="text/css"/>
-    <link href="{{ URL::asset('/public/assets/global/js/revolution-slider/css/navigation.css') }}" rel="stylesheet"
-          type="text/css"/>
+
 
     <!-- CSS | Theme Color -->
     <link href="{{ URL::asset('/public/assets/global/css/colors/theme-skin-blue.css') }}" rel="stylesheet"
@@ -107,11 +101,7 @@
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
 
 
-    <!-- Revolution Slider 5.x SCRIPTS -->
-    <script
-            src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.tools.min.js') }}"></script>
-    <script
-            src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/jquery.themepunch.revolution.min.js') }}"></script>
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -159,24 +149,6 @@
 
 <!-- Footer Scripts -->
 
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.actions.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.carousel.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.migration.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.navigation.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.parallax.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
-<script type="text/javascript"
-        src="{{ URL::asset('/public/assets/global/js/revolution-slider/js/extensions/revolution.extension.video.min.js') }}"></script>
 <script src="{{ URL::asset('node_modules/pnotify/dist/iife/PNotify.js') }}"></script>
 
 <!-- JS | Custom script for all pages -->

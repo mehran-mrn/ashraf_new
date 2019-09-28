@@ -7,7 +7,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
                         <a class="menuzord-brand pull-right sm-text-center xs-text-center xs-pull-center"
-                           href="{{route('home')}}">
+                           href="{{route('main')}}">
                             <img class="img img-responsive sm-text-center xs-text-center"
                                  src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png')}}?i=4" alt=""></a>
 
@@ -107,6 +107,7 @@
                         </li>
                         <li><a class="text-white-f6" href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
                         <li><a class="text-white-f6" href="{{route('blog')}}">{{trans('messages.blog')}}</a>
+                        <li><a class="text-white-f6" href="{{route('faq')}}">{{trans('messages.faq')}}</a>
 
 
                         </li>

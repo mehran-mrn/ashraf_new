@@ -169,7 +169,7 @@
                     <div class="widget no-border m-0">
                         <ul class="list-inline sm-text-center mt-5 font-12">
                             <li>
-                                <a href="#">FAQ</a>
+                                <a href="{{route('faq')}}">FAQ</a>
                             </li>
                             <li>|</li>
                             <li>
