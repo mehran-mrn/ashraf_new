@@ -63,7 +63,7 @@
 
             $(document).on('click', '.cap', function () {
                 $(this).html('0');
-                $(this).html('{!!  captcha_img('flat') !!}');
+                $(this).html('{!! captcha_img('flat') !!}');
             });
         })
 

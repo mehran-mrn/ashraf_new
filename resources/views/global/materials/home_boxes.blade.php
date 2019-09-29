@@ -4,7 +4,7 @@
         <div class="section-content">
             <div class="row equal-height-inner home-boxes">
                 @forelse(get_option('adv_card') as $adv_card)
-                    <div class="col-sm-12 col-md-4 pr-0 pr-sm-15 sm-height-auto mt-sm-0 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.3s">
+                    <div class="col-sm-12 col-md-3 pr-0 pr-sm-15 sm-height-auto mt-sm-0 wow fadeInUp" data-wow-duration="1.2s" data-wow-delay="0.3s">
                         <a href="{{json_decode($adv_card['value'],true)['link']}}" >
                         <div class="sm-height-auto bg-theme-colored bg-img-cover"
                              data-bg-img="{{URL::asset(json_decode($adv_card['value'],true)['image'])}}">

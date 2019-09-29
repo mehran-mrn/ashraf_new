@@ -39,11 +39,8 @@ class BlogEtcReaderController extends Controller
             \View::share('blogetc_category', $category); // so the view can say "You are viewing $CATEGORYNAME category posts"
             $title = 'Viewing posts in ' . $category->category_name . " category"; // hardcode title here...
         } elseif ($category_slug && $type == 'page') {
-
-
             $category = BlogEtcSpecificPages::where("slug", $category_slug)->firstOrFail();
-            $posts = $category->posts()->where("blog_etc_page_specific_pages.blog_etc_specific_page_id", $category->id);
-
+            $posts = $category->posts()->where("blog_etc_page_specific_pages.blog_etc_page_specific_page_id", $category->id);
             // at the moment we handle this special case (viewing a category) by hard coding in the following two lines.
             // You can easily override this in the view files.
             \View::share('blogetc_category', $category); // so the view can say "You are viewing $CATEGORYNAME category posts"
@@ -51,10 +48,8 @@ class BlogEtcReaderController extends Controller
         } else {
             $posts = BlogEtcPost::query();
         }
-
         $posts = $posts->orderBy("posted_at", "desc")
             ->paginate(config("blogetc.per_page", 10));
-
         return view("blog.blogetc.index", ['title' => $title, 'posts' => $posts]);
 
 //        return view("blogetc::index", [
