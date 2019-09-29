@@ -16,7 +16,6 @@ class CreateBlogEtcSpecificPagesTable extends Migration
 
         Schema::create('blog_etc_specific_pages', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string("category_name")->nullable();
             $table->string("slug")->unique();
             $table->mediumText("category_description")->nullable();

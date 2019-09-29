@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\charity_payment_patern;
 use App\charity_payment_title;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
+use WebDevEtc\BlogEtc\Models\BlogEtcSpecificPages;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +36,11 @@ class AppServiceProvider extends ServiceProvider
     {
 
         \View::composer("*", function ($view) {
-            $view->with('menu', charity_payment_patern::all());
+            $view->with([
+                'menu'=> charity_payment_patern::all(),
+                'menu_blog'=> BlogEtcCategory::orderBy("category_name")->all(),
+                'menu_special'=> BlogEtcSpecificPages::orderBy("category_name")->all(),
+            ]);
         });
         Schema::defaultStringLength(191);
     }
