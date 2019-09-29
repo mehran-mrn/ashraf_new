@@ -2,6 +2,7 @@
 @section("js")
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+
     <script>
         $(document).ready(function () {
             CKEDITOR.replace('post_text', {

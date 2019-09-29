@@ -8,6 +8,7 @@ use Swis\LaravelFulltext\Search;
 use WebDevEtc\BlogEtc\Captcha\UsesCaptcha;
 use WebDevEtc\BlogEtc\Models\BlogEtcCategory;
 use WebDevEtc\BlogEtc\Models\BlogEtcPost;
+use WebDevEtc\BlogEtc\Models\BlogEtcSpecificPages;
 
 /**
  * Class BlogEtcReaderController
@@ -25,14 +26,23 @@ class BlogEtcReaderController extends Controller
      * @param null $category_slug
      * @return mixed
      */
-    public function index($category_slug = null)
+    public function index($category_slug = null, $type = 'cat')
     {
         // the published_at + is_published are handled by BlogEtcPublishedScope, and don't take effect if the logged in user can manageb log posts
         $title = 'Viewing blog'; // default title...
-
-        if ($category_slug) {
+        if ($category_slug && $type == 'cat') {
             $category = BlogEtcCategory::where("slug", $category_slug)->firstOrFail();
             $posts = $category->posts()->where("blog_etc_post_categories.blog_etc_category_id", $category->id);
+
+            // at the moment we handle this special case (viewing a category) by hard coding in the following two lines.
+            // You can easily override this in the view files.
+            \View::share('blogetc_category', $category); // so the view can say "You are viewing $CATEGORYNAME category posts"
+            $title = 'Viewing posts in ' . $category->category_name . " category"; // hardcode title here...
+        } elseif ($category_slug && $type == 'page') {
+
+
+            $category = BlogEtcSpecificPages::where("slug", $category_slug)->firstOrFail();
+            $posts = $category->posts()->where("blog_etc_page_specific_pages.blog_etc_specific_page_id", $category->id);
 
             // at the moment we handle this special case (viewing a category) by hard coding in the following two lines.
             // You can easily override this in the view files.
@@ -77,8 +87,6 @@ class BlogEtcReaderController extends Controller
     }
 
 
-
-
     /**
      * View all posts in $category_slug category
      *
@@ -88,7 +96,20 @@ class BlogEtcReaderController extends Controller
      */
     public function view_category($category_slug)
     {
-        return $this->index($category_slug);
+        return $this->index($category_slug,'cat');
+    }
+
+
+    /**
+     * View all posts in $category_slug SpecificPages
+     *
+     * @param Request $request
+     * @param $category_slug
+     * @return mixed
+     */
+    public function view_SpecificPages($category_slug)
+    {
+        return $this->index($category_slug, 'page');
     }
 
     /**
@@ -117,10 +138,6 @@ class BlogEtcReaderController extends Controller
             'captcha' => $captcha,
         ]);
     }
-
-
-
-
 
 
 }

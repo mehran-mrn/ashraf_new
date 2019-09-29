@@ -133,6 +133,7 @@ class BlogEtcAdminController extends Controller
         $new_blog_post->save();
 
         $new_blog_post->categories()->sync($request->categories());
+        $new_blog_post->specificPage()->sync($request->specificPage());
 
         Helpers::flash_message("Added post");
         event(new BlogPostAdded($new_blog_post));

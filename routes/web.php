@@ -330,8 +330,12 @@ Route::middleware('auth')->prefix('panel')->group(function () {
 // ------------Blog ETC -------------------
 //=========================================
 
+
 Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 
+    Route::get('page/{categorySlug}',
+        'BlogEtcReaderController@view_SpecificPages')
+        ->name('blogetc.view_SpecificPages');
 
     /** The main public facing blog routes - show all posts, view a category, rss feed, view a single post, also the add comment route */
     Route::group(['prefix' => config('blogetc.blog_prefix', 'blog')], function () {
@@ -348,6 +352,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
         Route::get('/category/{categorySlug}',
             'BlogEtcReaderController@view_category')
             ->name('blogetc.view_category');
+
 
         Route::get('/{blogPostSlug}',
             'BlogEtcReaderController@viewSinglePost')
@@ -460,6 +465,33 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
                 'BlogEtcCategoryAdminController@destroy_category')
                 ->name('blogetc.admin.categories.destroy_category');
 
+        });
+
+
+        Route::group(['prefix' => 'specific_page'], function () {
+
+            Route::get('/',
+                'BlogEtcSpecificPagesAdminController@index')
+                ->name('blogetc.admin.SpecificPages.index');
+
+            Route::get('/add_category',
+                'BlogEtcSpecificPagesAdminController@create_category')
+                ->name('blogetc.admin.SpecificPages.create_category');
+            Route::post('/add_category',
+                'BlogEtcSpecificPagesAdminController@store_category')
+                ->name('blogetc.admin.SpecificPages.store_category');
+
+            Route::get('/edit_category/{categoryId}',
+                'BlogEtcSpecificPagesAdminController@edit_category')
+                ->name('blogetc.admin.SpecificPages.edit_category');
+
+            Route::patch('/edit_category/{categoryId}',
+                'BlogEtcSpecificPagesAdminController@update_category')
+                ->name('blogetc.admin.SpecificPages.update_category');
+
+            Route::delete('/delete_category/{categoryId}',
+                'BlogEtcSpecificPagesAdminController@destroy_category')
+                ->name('blogetc.admin.SpecificPages.destroy_category');
         });
 
     });

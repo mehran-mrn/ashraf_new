@@ -160,46 +160,75 @@ $post['posted_at']!=""?miladi_to_shamsi_date($post->posted_at,'','',true):''}}"
         <div class='alert alert-warning'>{{__('messages.image_update_disabled')}}</div>
     @endif
     <div class="col-12 col-md-6">
-        <div class='bg-white pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
-            <h4>{{trans('messages.categories')}}</h4>
-            <div class='row'>
-                @forelse(\WebDevEtc\BlogEtc\Models\BlogEtcCategory::orderBy("category_name","asc")->limit(1000)->get() as $category)
-                    <div class="form-check col-sm-6">
-                        <input class="" type="checkbox" value="1"
-                               @if(old("category.".$category->id, $post->categories->contains($category->id))) checked='checked'
-                               @endif name='category[{{$category->id}}]' id="category_check{{$category->id}}">
-                        <label class="form-check-label" for="category_check{{$category->id}}">
-                            {{$category->category_name}}
-                        </label>
-                    </div>
-                @empty
-                    <div class='col-md-12'>
-                        {{trans('messages.no_categories')}}
-                    </div>
-                @endforelse
+        <div class="col-12 ">
+            <div class='border-4px border-primary pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
+                <h4>{{trans('messages.categories')}}</h4>
+                <div class='row'>
+                    @forelse(\WebDevEtc\BlogEtc\Models\BlogEtcCategory::orderBy("category_name","asc")->limit(1000)->get() as $category)
 
-                <div class='col-md-12 my-3 text-center'>
+                        <div class="col-sm-6">
+                            <input class="custom-checkbox custom-control-inline" type="checkbox" value="1"
+                                   @if(old("category.".$category->id, $post->categories->contains($category->id))) checked='checked'
+                                   @endif name='category[{{$category->id}}]' id="category_check{{$category->id}}">
+                            <label class="form-check-label" for="category_check{{$category->id}}">
+                                {{$category->category_name}}
+                            </label>
+                        </div>
+                    @empty
+                        <div class='col-md-12'>
+                            {{trans('messages.no_categories')}}
+                        </div>
+                    @endforelse
+                    <div class='col-md-12 my-3 text-center'>
 
-                    <em><a target='_blank' href='{{route("blogetc.admin.categories.create_category")}}'><i
-                                    class="icon-square-up-right" aria-hidden="true"></i>
-                            {{trans('messages.add_new_category')}}</a></em>
+                        <em><a target='_blank' href='{{route("blogetc.admin.categories.create_category")}}'><i
+                                        class="icon-square-up-right" aria-hidden="true"></i>
+                                {{trans('messages.add_new_category')}}</a></em>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='alert alert-warning'>{{__('messages.page_category_select')}}</div>
+
+        <div class="col-12 py-1">
+            <div class='border-4px border-danger pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
+                <h4>{{trans('messages.page')}}</h4>
+                <div class='row'>
+                    @forelse(\WebDevEtc\BlogEtc\Models\BlogEtcSpecificPages::orderBy("category_name","asc")->limit(1000)->get() as $category)
+                        <div class="col-sm-6">
+                            <input class="custom-checkbox custom-control-inline" type="checkbox" value="1"
+                                   @if(old("page.".$category->id, $post->categories->contains($category->id))) checked='checked'
+                                   @endif name='page[{{$category->id}}]' id="page_check{{$category->id}}">
+                            <label class="form-check-label" for="page_check{{$category->id}}">
+                                {{$category->category_name}}
+                            </label>
+                        </div>
+                    @empty
+
+                    @endforelse
+                    <div class='col-md-12 my-3 text-center'>
+                        <em><a target='_blank' href='{{route("blogetc.admin.SpecificPages.create_category")}}'><i
+                                        class="icon-square-up-right" aria-hidden="true"></i>
+                                {{trans('messages.add_Specific_page')}}</a></em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 py-1">
+            <div class='border-4px border-success pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
+                <div class="form-group">
+                    <label for="lang">{{__('messages.language')}}</label>
+                    <select name="lang" id="lang" class="form-control">
+                        <option value="fa">FA</option>
+                        <option value="en">EN</option>
+                        <option value="ar">AR</option>
+                    </select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6">
-        <div class='bg-white pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
 
-            <div class="form-group">
-                <label for="lang">{{__('messages.language')}}</label>
-                <select name="lang" id="lang" class="form-control">
-                    <option value="fa">FA</option>
-                    <option value="en">EN</option>
-                    <option value="ar">AR</option>
-                </select>
-            </div>
-        </div>
-    </div>
 </div>
 
 

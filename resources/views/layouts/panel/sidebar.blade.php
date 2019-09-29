@@ -121,6 +121,25 @@ if (!isset($active_sidbare)) {
                                 
                             </ul>
                         </li>
+
+
+
+
+                        <li class="nav-item nav-item-submenu {{in_array("blog_Specific_page", $active_sidbare) ? ' nav-item-open' : '' }}">
+                            <a href="#" class="nav-link {{in_array("blog_Specific_page", $active_sidbare) ? 'active' : '' }}">
+                                {{trans('messages.Specific_page')}}</a>
+                            <ul class="nav nav-group-sub"
+                                style="display:{{in_array("blog_Specific_page", $active_sidbare) ? 'block' : 'none' }}">
+                                <li class="nav-item {{in_array("list", $active_sidbare) ? ' nav-item-open' : '' }}">
+                                    <a href="{{ route('blogetc.admin.SpecificPages.index') }}"
+                                       class="nav-link ">{{trans('messages.specific_page_list')}}</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+
                         <li class="nav-item nav-item-submenu {{in_array("blog_images", $active_sidbare) ? ' nav-item-open' : '' }}">
                             <a href="#" class="nav-link {{in_array("blog_images", $active_sidbare) ? 'active' : '' }}">{{trans('messages.blog_images')}}</a>
                             <ul class="nav nav-group-sub"

@@ -380,7 +380,6 @@ class global_view extends Controller
         }
     }
 
-
     public function callback(Request $request)
     {
 

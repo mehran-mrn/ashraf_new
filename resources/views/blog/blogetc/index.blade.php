@@ -3,18 +3,14 @@
 
 @section('content')
     <div class="main-content">
-
-
         <section>
             <div class="container mt-30 mb-30 pt-30 pb-30">
                 <div class="row ">
                     <div class="col-md-9 pull-right  sm-pull-none">
                         <div class="blog-posts">
                             @forelse($posts as $post)
-
                                     <div class="col-md-12">
                                         <article class="post clearfix mb-30 bg-lighter">
-
                                             <div class="col-sm-3 p-0 m-0">
                                                 <div class="entry-content p-0">
                                                     <div class="post-thumb thumb">
