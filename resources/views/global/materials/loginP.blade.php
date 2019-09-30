@@ -12,7 +12,7 @@
                                     <label for="phone_email" class="pull-right">{{trans('messages.email_or_mobile')}}
                                         <small>*</small>
                                     </label>
-                                    <input id="name" name="name" type="text"
+                                    <input id="name" name="name" type="text" dir="ltr"
                                            placeholder="{{__('messages.enter_email_mobile')}}"
                                            class="form-control text-left required">
                                 </div>
@@ -22,7 +22,7 @@
                                     <label for="password" class="pull-right">{{__('messages.password')}}
                                         <small>*</small>
                                     </label>
-                                    <input id="password" name="password" class="form-control required text-left"
+                                    <input id="password" name="password" dir="ltr" class="form-control required text-left"
                                            type="password" placeholder="{{__('messages.enter_password')}}">
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                             <div class="col-sm-6 text-right">
                                 <div class="check">
                                     <input type="checkbox" class="" name="remember" id="remember"> <label
-                                        for="remember">{{__('messages.remember_me')}}</label>
+                                            for="remember">{{__('messages.remember_me')}}</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 text-left">
@@ -64,37 +64,38 @@
                                 var form_btn = $(form).find('button[type="submit"]');
                                 var form_result_div = '#form-result';
                                 $(form_result_div).remove();
-                                form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                                form_btn.before('<div id="form-result" class="alert alert-success text-center" role="alert" style="display: none;"></div>');
                                 var form_btn_old_msg = form_btn.html();
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
                                     dataType: '',
                                     success: function (data) {
+                                        console.log(11);
                                         PNotify.success({
-                                            text: data.message,
+                                            text: "{{__('messages.login_successfully')}}",
                                             delay: 3000,
                                         });
-                                        setTimeout(function(){
+                                        setTimeout(function () {
                                             location.reload();
                                         }, 3000);
                                         $(form).find('.form-control').val('');
                                         $(form_btn).html(form_btn_old_msg);
-                                        $(form_result_div).html(data.message).fadeIn('slow');
-                                        setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 3000);
-                                    }, error:function (response){
+                                        $(form_result_div).html("{{__('messages.login_successfully')}}").fadeIn('slow');
+                                        setTimeout(function () {
+                                            $(form_result_div).fadeOut('slow')
+                                        }, 3000);
+                                    }, error: function (response) {
                                         var errors = response.responseJSON.errors;
-                                        $.each( errors, function( index, value ) {
+                                        $.each(errors, function (index, value) {
                                             PNotify.error({
                                                 delay: 3000,
-                                                title: index,
                                                 text: value,
                                             });
                                         });
-                                        setTimeout(function(){
+                                        setTimeout(function () {
                                             $('[type="submit"]').prop('disabled', false);
                                         }, 2500);
                                         $(form_btn).html(form_btn_old_msg);
-
                                     }
                                 });
                             }

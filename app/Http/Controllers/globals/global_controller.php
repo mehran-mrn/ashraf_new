@@ -28,7 +28,7 @@ class global_controller extends Controller
     {
 //        $currentUser = Auth::user();
         $this->validate($request, [
-            'phone_email' => 'required',
+            'phone_email' => 'required|unique:users,phone|unique:users,email',
             'password' => 'required|confirmed|min:6',
         ]);
         $email = null;

@@ -686,5 +686,6 @@ return array(
     'edit_add_addresses'=>'افزودن و ویرایش آدرس ها',
 
     'addresses'=>'آدرس ها',
+    'login_successfully'=>'ورود موفقیت آمیز بود.'
 
 );

@@ -10,19 +10,19 @@
                             <div class="col-sm-12">
                                 <div class="form-group ">
                                     <label for="phone_email" class="pull-right">{{trans('messages.email_or_mobile')}} <small>*</small></label>
-                                    <input id="phone_email" name="phone_email" type="text" placeholder="{{__('messages.enter_email_mobile')}}" class="form-control text-left required">
+                                    <input id="phone_email" dir="ltr" name="phone_email" type="text" placeholder="{{__('messages.enter_email_mobile')}}" class="form-control text-left required">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="password" class="pull-right">{{__('messages.password')}} <small>*</small></label>
-                                    <input id="password" name="password" class="form-control required text-left" type="password" placeholder="{{__('messages.enter_password')}}">
+                                    <input id="password" dir="ltr" name="password" class="form-control required text-left" type="password" placeholder="{{__('messages.enter_password')}}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="password_confirmation" class="pull-right">{{__('messages.repeat_password')}} <small>*</small></label>
-                                    <input id="password_confirmation" name="password_confirmation" class="form-control required text-left" type="password" placeholder="{{__('messages.repeat_repeat_password')}}">
+                                    <input id="password_confirmation" dir="ltr" name="password_confirmation" class="form-control required text-left" type="password" placeholder="{{__('messages.repeat_repeat_password')}}">
                                 </div>
                             </div>
                         </div>
@@ -68,12 +68,13 @@
                                 var form_btn = $(form).find('button[type="submit"]');
                                 var form_result_div = '#form-result';
                                 $(form_result_div).remove();
-                                form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                                form_btn.before('<div id="form-result" class="alert alert-success text-center" role="alert" style="display: none;"></div>');
                                 var form_btn_old_msg = form_btn.html();
                                 form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                 $(form).ajaxSubmit({
                                     dataType:  'json',
                                     success: function(response) {
+                                        console.log(response)
                                         PNotify.success({
                                             text: response.message,
                                             delay: 5000,
@@ -87,11 +88,11 @@
                                         setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 3000);
                                     },
                                     error:function (response){
+                                        console.log(response)
                                         var errors = response.responseJSON.errors;
                                         $.each( errors, function( index, value ) {
                                             PNotify.error({
                                                 delay: 5000,
-                                                title: index,
                                                 text: value,
                                             });
                                         });
