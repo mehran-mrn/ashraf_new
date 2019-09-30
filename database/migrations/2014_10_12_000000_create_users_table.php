@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->timestamp('phone_verified_at')->nullable();
+            $table->integer('code_phone')->nullable();
+            $table->dateTime('code_phone_send')->nullable();
+            $table->integer('code_email')->nullable();
+            $table->dateTime('code_email_send')->nullable();
             $table->string('avatar')->nullable();
             $table->boolean('disabled')->nullable();
             $table->integer('last_modifier')->nullable()->unsigned();

@@ -78,7 +78,7 @@ class User extends Authenticatable
 
     public function people()
     {
-        return $this->hasOne('App\person', 'parent_id', 'id');
+        return $this->hasOne('App\person', 'user_id', 'id');
     }
 
     public function profile_image()

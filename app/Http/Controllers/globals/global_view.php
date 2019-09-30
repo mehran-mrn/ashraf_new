@@ -121,7 +121,6 @@ class global_view extends Controller
                 ['user_id', '=', Auth::id()],
             ])->get();
         $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
-
         return view('global.profile', compact('periods', 'unpaidPeriod', 'userInfo'));
     }
 
@@ -149,6 +148,12 @@ class global_view extends Controller
     public function change_password()
     {
         return view('global.materials.change_password');
+    }
+
+
+    public function send_sms()
+    {
+        return view('global.materials.sms');
     }
 
     public function edit_information()

@@ -430,27 +430,49 @@ class global_controller extends Controller
 
     public function global_profile_completion_submit(Request $request)
     {
-        if ($person = person::where('parent_id', '=', Auth::id())->first()) {
-            $person->parent_id = Auth::id();
-            $person->name = $request['name'];
-            $person->family = $request['family'];
-            $person->national_code = $request['national_code'];
-            $person->phone = $request['phone'];
-            $person->save();
-            $mesage = __('messages.item_updated');
-        } else {
-            $person = person::create(
-                [
-                    'parent_id' => Auth::id(),
-                    'name' => $request['name'],
-                    'family' => $request['family'],
-                    'national_code' => $request['national_code'],
-                    'phone' => $request['phone'],
-                ]
-            );
-            $mesage = __('messages.item_created');
+
+
+        $con = true;
+        if ($request['birthday']) {
+            $request['birthday'] = shamsi_to_miladi($request['birthday']);
         }
-        return back_normal($request, ['message' => $mesage, 'status' == 200]);
+        if ($request['national_code']) {
+            if (!national_code_validation($request['national_code'])) {
+                $con = false;
+            };
+        }
+        $message = '';
+        if ($con) {
+            if ($person = person::where('user_id', '=', Auth::id())->first()) {
+                $person->name = $request['name'];
+                $person->family = $request['family'];
+                $person->national_code = $request['national_code'];
+                $person->phone = $request['phone'];
+                $person->gender = $request['gender'];
+                $person->birth_date = $request['birthday'];
+                $person->save();
+                $message = __('messages.item_updated', ['item' => trans('messages.information')]);
+            } else {
+                person::create(
+                    [
+                        'parent_id' => Auth::id(),
+                        'user_id' => Auth::id(),
+                        'name' => $request['name'],
+                        'family' => $request['family'],
+                        'national_code' => $request['national_code'],
+                        'phone' => $request['phone'],
+                        'email' => $request['email'],
+                        'gender' => $request['gender'],
+                        'birth_date'=>$request['birthday']
+                    ]
+                );
+                $message = __('messages.item_updated', ['item' => trans('messages.information')]);
+            }
+            return back_normal($request, ['message' => $message, 'status' => 200]);
+        } else {
+            $message = __('messages.national_code_invalid');
+            return back_error($request, ['message' => $message]);
+        }
     }
 
 }

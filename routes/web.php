@@ -41,7 +41,6 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/', 'globals\global_view@index')->name('home');
-//Route::get('/home', 'HomeController@index')->name('home');
 
 //=========================================
 // ------------admin panel-----------------
@@ -521,6 +520,8 @@ Route::group(
         Route::get('/', 'globals\global_view@index')->name('index');
 
         Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
+        Route::get('/home', 'HomeController@index')->name('home');
+
 
         Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
         Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
@@ -535,6 +536,7 @@ Route::group(
         Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
         Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+        Route::get('/sms/verify', 'globals\global_view@send_sms')->name('global_profile_send_sms');
 
         Route::get('/', 'globals\global_view@index')->name('main');
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');

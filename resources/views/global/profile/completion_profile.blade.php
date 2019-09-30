@@ -7,6 +7,8 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+
     <script>
         var DropzoneUploader = function () {
 
@@ -78,7 +80,8 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            console.log(data);
+                            console.log(data)
+
                             if (data.message.status === 200) {
                                 PNotify.success({
                                     text: data.message.message,
@@ -86,7 +89,11 @@
                                 });
                             }
                             form_btn.prop('disabled', false).html(form_btn_old_msg);
+                            setTimeout(function () {
+                                window.location.href = "{{route('global_profile')}}";
+                            }, 1000)
                         }, error: function (error) {
+                            console.log(error)
                             $.each(error.responseJSON.errors, function (i, item) {
                                 PNotify.error({
                                     text: item,
@@ -97,14 +104,21 @@
                         }
                     });
                 }
-                form_btn.prop('disabled', false).html(form_btn_old_msg);
+                // form_btn.prop('disabled', false).html(form_btn_old_msg);
 
             })
+
+            $('#birthday').MdPersianDateTimePicker({
+                targetTextSelector: '#birthday',
+                disableAfterToday: true
+            });
         })
     </script>
 @stop
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('/public/vendor/laravel-filemanager/css/dropzone.min.css') }}">
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet" type="text/css">
+
 @stop
 @section('content')
 
@@ -140,63 +154,88 @@
                         <form id="contact_form" name="contact_form" class="" novalidate
                               method="post">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_name">{{__('messages.name')}}
                                             <small>*</small>
                                         </label>
                                         <input id="form_name" name="name" class="form-control" type="text"
                                                placeholder="{{__('messages.enter_name')}}" required=""
-                                               minlength="2" maxlength="100">
+                                               minlength="2" maxlength="100" value="{{$userInfo['people']['name']}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_family">{{__('messages.family')}}
                                             <small>*</small>
                                         </label>
                                         <input id="form_family" name="family" class="form-control" type="text"
                                                placeholder="{{__('messages.enter_family')}}" required='required'
-                                               minlength="2" maxlength="100">
+                                               minlength="2" maxlength="100" value="{{$userInfo['people']['family']}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_national_code">{{__('messages.national_code')}} </label>
                                         <input id="form_national_code" name="national_code" class="form-control"
                                                type="number" placeholder="{{__('messages.enter_national_code')}}"
-                                               minlength="10" maxlength="10">
+                                               minlength="10" maxlength="10"
+                                               value="{{$userInfo['people']['national_code']}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_email">{{__('messages.email')}}
-                                            <small>*</small>
                                         </label>
-                                        <input id="form_email" name="email" class="form-control required email"
-                                               type="email" placeholder="{{__('messages.enter_email')}}">
+                                        <input id="form_email" name="email" class="form-control email"
+                                               type="email" placeholder="{{__('messages.enter_email')}}"
+                                               value="{{$userInfo['people']['email']}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_phone">{{__('messages.phone')}}</label>
                                         <input id="form_phone" name="phone" class="form-control" type="number"
                                                placeholder="02122113344"
-                                               maxlength="11">
+                                               maxlength="11"
+                                               value="{{$userInfo['people']['phone']}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_mobile">{{__('messages.mobile')}}</label>
                                         <input id="form_mobile" name="mobile" class="form-control" type="number"
-                                               placeholder="09123456789" maxlength="11">
+                                               placeholder="09123456789" maxlength="11"
+                                               value="{{$userInfo['phone']}}" readonly="readonly">
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+
+                                <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
-                                        <label for="form_username">{{__('messages.username')}}</label>
-                                        <input id="form_username" name="username" class="form-control" type="text"
-                                               placeholder="{{__('messages.enter_username')}}">
+                                        <label for="amount">{{__('messages.birth_date')}}</label>
+                                        <input id="birthday" type="text" class="form-control"
+                                               name="birthday" value="{{jdate("Y-m-d",strtotime($userInfo['people']['birth_date']))}}"
+                                               autocomplete="capacity">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="">{{__('messages.gender')}}</label>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input value="1" type="radio" class="custom-control-input" name="gender"
+                                                   id="custom_radio_inline_g1"
+                                                    {{$userInfo['people']['gender']==1?'checked="checked"':''}}>
+                                            <label class="custom-control-label"
+                                                   for="custom_radio_inline_g1">{{__('messages.male')}}</label>
+
+                                            <input value="2" type="radio" class="custom-control-input" name="gender"
+                                                   id="custom_radio_inline_g2"
+                                                    {{$userInfo['people']['gender']==2?'checked="checked"':''}}>
+                                            <label class="custom-control-label"
+                                                   for="custom_radio_inline_g2">{{__('messages.female')}}</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

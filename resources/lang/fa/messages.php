@@ -14,7 +14,7 @@ return array(
     'transaction_created' => 'تراکنش ایجاد شد.',
     'item_created' => ':item با موفقیت ایجاد شد.',
     'post' => 'مطلب',
-    'item_updated' => ':item با موفقیت ویرایش شد.',
+    'item_updated' => ':item با موفقیت بروز رسانی شد.',
     'building_type' => 'تیپ ساختمان',
     'item' => 'ایتم',
     'host' => 'اقامتگاه',
@@ -666,5 +666,9 @@ return array(
     'page_category_select'=>'دقت نمایید یا میتوانید مطلب را به صورت پست وبلاگ در دسته بندی فوق قرار دهید. یا اگر مطلب مربوط به صفحه خاصی از سایت است یکی از صفحهات زیر را انتخاب نمایید.',
     'add_Specific_page'=>'صفحه خاص ایجاد کنید.',
     'Introducing_us'=>'معرفی ما',
-    'count_news'=>'ادامه اخبار'
+    'count_news'=>'ادامه اخبار',
+    'national_code_invalid'=>'کد ملی صحیح نمیباشد.',
+    'completion_edit_information'=>'ویرایش و تکمیل اطلاعات',
+    'not_valid'=>'تایید نشده',
+    'send_verify_sms'=>'ارسال کد فعال سازی'
 );

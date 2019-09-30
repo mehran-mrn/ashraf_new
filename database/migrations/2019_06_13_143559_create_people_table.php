@@ -16,6 +16,7 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('parent_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->unsignedInteger('image_id')->nullable();
             $table->string('name');
             $table->string('father_name')->nullable();
@@ -28,7 +29,7 @@ class CreatePeopleTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->dateTime('birth_date')->nullable();
-            $table->string('national_code')->unique();
+            $table->string('national_code')->nullable();
             $table->string('sh_code')->nullable();
             $table->string('madadjoo_id')->nullable();
             $table->boolean('gender'); // 0=> male 1=>female
