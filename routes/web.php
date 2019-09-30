@@ -41,7 +41,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/', 'globals\global_view@index')->name('home');
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home_page');
 
 //=========================================
 // ------------admin panel-----------------
