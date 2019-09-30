@@ -6,6 +6,7 @@ use App\champion_transaction;
 use App\charity_champion;
 use App\person;
 use App\users_address;
+use Carbon\Carbon;
 use Validator;
 use App\charity_period;
 use App\charity_periods_transaction;
@@ -441,6 +442,13 @@ class global_controller extends Controller
                 $con = false;
             };
         }
+        if ($request['email']) {
+            $user = User::find(Auth::id());
+            if (!$user->email) {
+                $user->email = $request['email'];
+                $user->save();
+            }
+        }
         $message = '';
         if ($con) {
             if ($person = person::where('user_id', '=', Auth::id())->first()) {
@@ -450,6 +458,7 @@ class global_controller extends Controller
                 $person->phone = $request['phone'];
                 $person->gender = $request['gender'];
                 $person->birth_date = $request['birthday'];
+                $person->email = $request['email'];
                 $person->save();
                 $message = __('messages.item_updated', ['item' => trans('messages.information')]);
             } else {
@@ -463,7 +472,7 @@ class global_controller extends Controller
                         'phone' => $request['phone'],
                         'email' => $request['email'],
                         'gender' => $request['gender'],
-                        'birth_date'=>$request['birthday']
+                        'birth_date' => $request['birthday']
                     ]
                 );
                 $message = __('messages.item_updated', ['item' => trans('messages.information')]);
@@ -472,6 +481,50 @@ class global_controller extends Controller
         } else {
             $message = __('messages.national_code_invalid');
             return back_error($request, ['message' => $message]);
+        }
+    }
+
+    public function verify_mobile(Request $request)
+    {
+        if ($user = User::findOrFail(Auth::id())) {
+            $created = new Carbon($user->code_phone_send);
+            $now = Carbon::now();
+            $diff = $created->diff($now)->i;
+            if ($diff < 6) {
+                if ($user->code_phone == $request['code']) {
+                    $user->phone_verified_at = date("Y-m-d H:i:s");
+                    $user->save();
+                    return back_normal($request, ['message' => __('messages.phone_verified')]);
+                } else {
+                    return back_error($request, __('messages.code_invalid'));
+                }
+            } else {
+                return back_error($request, __('messages.timeout'));
+            }
+        } else {
+            return back_error($request, __('messages.user_not_valid'));
+        }
+    }
+
+    public function verify_email(Request $request)
+    {
+        if ($user = User::findOrFail(Auth::id())) {
+            $created = new Carbon($user->code_email_send);
+            $now = Carbon::now();
+            $diff = $created->diff($now)->i;
+            if ($diff < 6) {
+                if ($user->code_email == $request['code']) {
+                    $user->email_verified_at = date("Y-m-d H:i:s");
+                    $user->save();
+                    return back_normal($request, ['message' => __('messages.email_verified')]);
+                } else {
+                    return back_error($request, __('messages.code_invalid'));
+                }
+            } else {
+                return back_error($request, __('messages.timeout'));
+            }
+        } else {
+            return back_error($request, __('messages.user_not_valid'));
         }
     }
 

@@ -25,6 +25,8 @@
                                                 <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
                                                 <a href="{{route('global_profile_send_sms')}}"
                                                    class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_sms')}}</a>
+                                                @else
+                                                <i class="fa fa-check text-success"></i>
                                             @endif
                                         </div>
                                         <div class="col-md-3 border-1px p-20">
@@ -33,8 +35,15 @@
                                         </div>
 
                                         <div class="col-md-3 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.phone')}}: </span>
-                                            <span class="text-black">{{$userInfo['people']['phone']}}</span>
+                                            <span class="text-gray">{{__('messages.email')}}: </span>
+                                            <span class="text-black">{{$userInfo['email']}}</span>
+                                            @if(!$userInfo['email_verified_at'])
+                                                <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
+                                                <a href="{{route('global_profile_send_email')}}"
+                                                   class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_email')}}</a>
+                                            @else
+                                                <i class="fa fa-check text-success"></i>
+                                            @endif
                                         </div>
                                         <div class="col-md-12 border-1px p-20">
                                             <div class="row">
@@ -46,8 +55,10 @@
                                                     <a href="{{route('global_profile_change_password')}}"
                                                        class="btn btn-success btn-block ajaxload-popup">{{__('messages.change_password')}}</a>
                                                 </div>
+
                                                 <div class="col-md-3 col-xs-6 pt-xs-10">
-                                                    <button class="btn btn-default btn-block ">{{__('messages.payment_report')}}</button>
+                                                    <a href="{{route('global_profile_addresses')}}"
+                                                       class="btn btn-info btn-block">{{__('messages.edit_add_addresses')}}</a>
                                                 </div>
                                                 <div class="col-md-3 col-xs-6 pt-xs-10">
                                                     <button class="btn btn-default btn-block">{{__('messages.buy_report')}}</button>

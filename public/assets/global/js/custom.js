@@ -606,6 +606,7 @@ var THEMEMASCOT = {};
               }
             });
 
+
             var $mfpLightboxAjax = $('[data-lightbox="ajax"]');
             if( $mfpLightboxAjax.length > 0 ) {
                 $mfpLightboxAjax.magnificPopup({
@@ -615,8 +616,10 @@ var THEMEMASCOT = {};
                         ajaxContentAdded: function(mfpResponse) {
                         },
                         open: function() {
+
                         },
                         close: function() {
+                            clearInterval();
                         }
                     }
                 });

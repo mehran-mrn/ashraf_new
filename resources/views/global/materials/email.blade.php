@@ -1,6 +1,6 @@
 <section class="">
     <script>
-        $("#verify_mobile").validate({
+        $("#verify_email").validate({
             lang: "fa",
             submitHandler: function (form) {
                 var form_btn = $(form).find('button[type="submit"]');
@@ -47,16 +47,16 @@
         });
     </script>
     <div class="container" style="max-width: 700px">
-        <h3 class="bg-theme-colored text-center p-15 mb-0 text-white">{{trans('messages.verify_phone')}}</h3>
+        <h3 class="bg-theme-colored text-center p-15 mb-0 text-white">{{trans('messages.verify_email')}}</h3>
         <div class="section-content bg-white p-30">
             <div class="row">
                 <div class="col-md-8 col-md-push-2">
-                    <form id="verify_mobile" method="post" action="{{route('global_profile_verify_mobile')}}"
+                    <form id="verify_email" method="post" action="{{route('global_profile_verify_email')}}"
                           class="clearfix">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-12 text-center">
-                                <label for="code">{{__('messages.enter_sms_send_code')}}</label>
+                                <label for="code">{{__('messages.enter_email_send_code')}}</label>
                                 <input id="code" minlength="5" maxlength="5" name="code" class="form-control left"
                                        type="number" required="required">
                             </div>

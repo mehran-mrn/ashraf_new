@@ -536,10 +536,16 @@ Route::group(
         Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
         Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+
         Route::get('/sms/verify', 'globals\global_view@send_sms')->name('global_profile_send_sms');
+        Route::post('/sms/verify', 'globals\global_controller@verify_mobile')->name('global_profile_verify_mobile');
+
+        Route::get('/email/verify', 'globals\global_view@send_email')->name('global_profile_send_email');
+        Route::post('/email/verify', 'globals\global_controller@verify_email')->name('global_profile_verify_email');
 
         Route::get('/', 'globals\global_view@index')->name('main');
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
+        Route::get('/profile/addresses', 'globals\global_view@addresses')->name('global_profile_addresses');
         Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
         Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
 

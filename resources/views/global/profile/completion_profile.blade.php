@@ -189,7 +189,7 @@
                                         </label>
                                         <input id="form_email" name="email" class="form-control email"
                                                type="email" placeholder="{{__('messages.enter_email')}}"
-                                               value="{{$userInfo['people']['email']}}">
+                                               value="{{$userInfo['email']}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-4">

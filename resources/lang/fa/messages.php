@@ -670,5 +670,21 @@ return array(
     'national_code_invalid'=>'کد ملی صحیح نمیباشد.',
     'completion_edit_information'=>'ویرایش و تکمیل اطلاعات',
     'not_valid'=>'تایید نشده',
-    'send_verify_sms'=>'ارسال کد فعال سازی'
+    'send_verify_sms'=>'ارسال کد فعال سازی',
+    'send_verify_email'=>'ارسال کد فعال سازی',
+    'enter_sms_send_code'=>"لطفاً کد ارسال شده را وارد نمایید.",
+    'enter_email_send_code'=>"لطفاً کد ارسال شده را وارد نمایید.",
+    'timeout'=>'اتمام زمان',
+    'try_again'=>'مجدد سعی نمایید.',
+
+    'verify_phone'=>'فعال سازی موبایل',
+    'verify_email'=>'فعال سازی ایمیل',
+    'code_invalid'=>'کد نامعتبر است.',
+    'user_not_valid'=>'کاربر معتبر نمیباشد.',
+    'phone_verified'=>'شماره همراه با موفقیت ثبت شد.',
+    'email_verified'=>'ایمیل با موفقیت ثبت شد.',
+    'edit_add_addresses'=>'افزودن و ویرایش آدرس ها',
+
+    'addresses'=>'آدرس ها',
+
 );
