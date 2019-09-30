@@ -507,6 +507,7 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //=========================================
 
 
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

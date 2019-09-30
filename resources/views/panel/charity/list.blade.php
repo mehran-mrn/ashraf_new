@@ -171,7 +171,11 @@
                                         <tr>
                                             <td>{{$payment['period']['user']['name']}}</td>
                                             <td>{{number_format($payment['amount'])}} {{__('messages.rial')}}</td>
-                                            <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
+                                            <td>
+                                                @if($payment['payment_date'])
+                                                    {{jdate("Y-m-d",strtotime($payment['payment_date']))}}
+                                                @endif
+                                            </td>
                                             <td>
                                                 <span dir="ltr">
                                                 @if($payment['pay_date'])
@@ -236,13 +240,23 @@
                                         <tr>
                                             <td>{{$payment['period']['user']['name']}}</td>
                                             <td>{{number_format($payment['amount'])}}</td>
-                                            <td>{{jdate("Y-m-d",strtotime($payment['payment_date']))}}</td>
                                             <td>
-                                                @if($payment['pay_date']!= null?jdate("Y-m-d",strtotime($period['pay_date'])):'') @endif
+                                                @if($payment['payment_date'])
+                                                    {{jdate("Y-m-d",strtotime($payment['payment_date']))}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($payment['pay_date'])
+                                                    {{jdate("Y-m-d",strtotime($payment['pay_date']))}}
+                                                @endif
                                             </td>
                                             <td>{{__('messages.'.$payment['status'])}}</td>
                                             <td>{{__('messages.'.$payment['review'])}}</td>
-                                            <td>{{jdate("Y/m/d",strtotime($payment['review_datetime']))}}</td>
+                                            <td>
+                                                @if($payment['review_datetime'])
+                                                    {{jdate("Y/m/d",strtotime($payment['review_datetime']))}}
+                                                @endif
+                                            </td>
                                             <td>{{$payment['admin']['name']}}</td>
                                             <td>{{$payment['description']}}</td>
                                             <td>
