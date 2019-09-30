@@ -717,13 +717,17 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
         $response_query->whereIn('id', $video_id);
     }
 
-    $response_query->limit($limit);
     if ($random) {
         $response_query->inRandomOrder();
     }
     if ($limit == 1) {
         $response = $response_query->first();
-    } else {
+    }
+    elseif ($limit == 0){
+        $response = $response_query->paginate(25);
+    }
+    else {
+        $response_query->limit($limit);
         $response = $response_query->get();
     }
 

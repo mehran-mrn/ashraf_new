@@ -42,19 +42,21 @@ class contactController extends Controller
     public function store(Request $request)
     {
         //
-        if(captcha_check($request['captcha'])) {
-            if (contact::create($request->all())) {
-                $messages = __('messages.your_message_successfully_send');
-                $status = 200;
-            } else {
-                $messages = __('messages.your_message_fail_to_send');
-                $status = 401;
-            }
-        }else{
-            $messages = __('messages.captcha_code_fail');
-            $status = 404;
-
+        if (contact::create($request->all())) {
+            $messages = __('messages.your_message_successfully_send');
+            $status = 200;
+        } else {
+            $messages = __('messages.your_message_fail_to_send');
+            $status = 401;
         }
+
+//        if(captcha_check($request['captcha'])) {
+//
+//        }else{
+//            $messages = __('messages.captcha_code_fail');
+//            $status = 404;
+//
+//        }
         return back_normal($request, ['message' => $messages, 'status' => $status]);
     }
 

@@ -9,7 +9,7 @@
 
                 <p class="text-white">{{$video['description']}}</p>
 
-                <a class="btn btn-lg btn-theme-colored mt-30" href="#"><i
+                <a class="btn btn-lg btn-theme-colored mt-30" href="{{route('video_gallery')}}"><i
                             class="fa fa-video-camera text-white mr-10"></i> {{trans('messages.watch_more_videos')}} </a>
             </div>
             <div class="col-md-7">

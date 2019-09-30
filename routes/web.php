@@ -25,7 +25,7 @@ Route::get('/test', function () {
 // Authentication Routes...
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/login', 'globals\global_view@login_page')->name('global_login_page');
+Route::get('login', 'globals\global_view@login_page')->name('global_login_page');
 
 // Registration Routes...
 Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
@@ -584,6 +584,7 @@ Route::group(
 
     //gallery view
     Route::get('gallery', 'globals\global_view@gallery')->name('gallery');
+    Route::get('video_gallery', 'globals\global_view@video_gallery')->name('video_gallery');
     Route::get('gallery/{id}', 'globals\global_view@gallery_view')->name('gallery_view');
 
     //blog view

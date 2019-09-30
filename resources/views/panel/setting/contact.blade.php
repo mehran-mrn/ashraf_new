@@ -58,8 +58,8 @@
                         <span class="card-title text-black">{{__("messages.contact_to_we")}}</span>
                         <hr>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-responsive table-condensed table-striped hidden-xs " id="tablePost">
+                    <div class="card-body table-responsive">
+                        <table class="table  table-condensed table-striped hidden-xs " id="tablePost">
                             <thead>
                             <tr>
                                 <th>{{__('messages.date')}}</th>

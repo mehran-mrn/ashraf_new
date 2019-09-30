@@ -63,7 +63,7 @@
 
             $(document).on('click', '.cap', function () {
                 $(this).html('0');
-                $(this).html('{!!  captcha_img('flat') !!}');
+                {{--$(this).html('{!!  captcha_img('flat') !!}');--}}
             });
         })
 
@@ -114,21 +114,21 @@
                                         <textarea id="message" name="message" class="form-control required" rows="5"
                                                   placeholder="{{__('messages.enter_message')}}"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-5 col-xs-12">
-                                                <div class="input-group">
-                                                    <a href="javascript:;"
-                                                       class="cap">{!! captcha_img('flat') !!}</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7 col-xs-12">
-                                                <input type="text" required="required" class="form-control"
-                                                       name="captcha"
-                                                       placeholder="{{__('messages.enter_captcha_code')}}">
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <div class="row">--}}
+{{--                                            <div class="col-md-5 col-xs-12">--}}
+{{--                                                <div class="input-group">--}}
+{{--                                                    <a href="javascript:;"--}}
+{{--                                                       class="cap">{!! captcha_img('flat') !!}</a>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-7 col-xs-12">--}}
+{{--                                                <input type="text" required="required" class="form-control"--}}
+{{--                                                       name="captcha"--}}
+{{--                                                       placeholder="{{__('messages.enter_captcha_code')}}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="form-group">
                                         <input id="form_botcheck" name="form_botcheck" class="form-control"
                                                type="hidden" value=""/>

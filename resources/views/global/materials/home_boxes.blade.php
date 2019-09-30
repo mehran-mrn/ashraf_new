@@ -9,7 +9,7 @@
                         <div class="sm-height-auto bg-theme-colored bg-img-cover"
                              data-bg-img="{{URL::asset(json_decode($adv_card['value'],true)['image'])}}">
                             <div class="p-30 mb-sm-30">
-                                <p class="text-white">{{json_decode($adv_card['value'],true)['title']}}</p>
+                                <p class="text-white"> - </p>
                             </div>
                         </div>
                         </a>

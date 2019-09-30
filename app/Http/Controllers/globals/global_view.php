@@ -285,6 +285,12 @@ class global_view extends Controller
         return view('global.gallery', compact('medias'));
     }
 
+    public function video_gallery()
+    {
+        $videos = get_video_gallery(0);
+        return view('global.gallery.video_gallery_view', compact('videos'));
+    }
+
     public function gallery_view(Request $request)
     {
         $pics = media::where(

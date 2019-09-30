@@ -38,8 +38,8 @@ class AppServiceProvider extends ServiceProvider
         \View::composer("*", function ($view) {
             $view->with([
                 'menu'=> charity_payment_patern::all(),
-                'menu_blog'=> BlogEtcCategory::orderBy("category_name")->all(),
-                'menu_special'=> BlogEtcSpecificPages::orderBy("category_name")->all(),
+                'menu_blog'=> BlogEtcCategory::orderBy("category_name")->get(),
+                'menu_special'=> BlogEtcSpecificPages::orderBy("category_name")->get(),
             ]);
         });
         Schema::defaultStringLength(191);
