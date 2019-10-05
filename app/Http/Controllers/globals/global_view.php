@@ -14,6 +14,7 @@ use App\charity_periods_transaction;
 use App\charity_transaction;
 use App\charity_transactions_value;
 use App\city;
+use App\Events\userRegisterEvent;
 use App\gallery_category;
 use App\gateway;
 use App\media;
@@ -88,6 +89,7 @@ class global_view extends Controller
 
     public function register_form()
     {
+
         return view('global.materials.register');
     }
 
@@ -483,5 +485,10 @@ class global_view extends Controller
         $champion = champion_transaction::with('champion')->findOrFail($id);
         $gateways = gateway::with('bank')->where('online', 1)->get();
         return view('global.champion.cart', compact('champion', 'gateways'));
+    }
+
+    public function reset_password()
+    {
+        return view('auth.passwords.email');
     }
 }

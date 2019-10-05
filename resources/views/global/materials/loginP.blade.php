@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6 text-left">
-                                <a href="">{{__('messages.forgot_password')}}</a>
+                                <a href="{{route('global_reset_password')}}">{{__('messages.forgot_password')}}</a>
                             </div>
                         </div>
                         <div class="form-group">

@@ -12,6 +12,8 @@
 */
 
 
+
+Route::auth();
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
@@ -26,6 +28,8 @@ Route::get('/test', function () {
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('login', 'globals\global_view@login_page')->name('global_login_page');
+Route::get('auth/reset', 'globals\global_view@reset_password')->name('global_reset_password');
+Route::post('auth/reset', 'globals\global_controller@reset_password')->name('global_password_reset');
 
 // Registration Routes...
 Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');

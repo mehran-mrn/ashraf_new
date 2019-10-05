@@ -61,10 +61,10 @@
             });
 
 
-            $(document).on('click', '.cap', function () {
-                $(this).html('0');
+            // $(document).on('click', '.cap', function () {
+            //     $(this).html('0');
                 {{--$(this).html('{!!  captcha_img('flat') !!}');--}}
-            });
+            // });
         })
 
 

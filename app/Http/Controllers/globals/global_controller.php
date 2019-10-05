@@ -4,6 +4,8 @@ namespace App\Http\Controllers\globals;
 
 use App\champion_transaction;
 use App\charity_champion;
+use App\Events\userRegister;
+use App\Events\userRegisterEvent;
 use App\person;
 use App\users_address;
 use Carbon\Carbon;
@@ -26,7 +28,6 @@ class global_controller extends Controller
 
     public function register_form_store(Request $request)
     {
-//        $currentUser = Auth::user();
         $this->validate($request, [
             'phone_email' => 'required|unique:users,phone|unique:users,email',
             'password' => 'required|confirmed|min:6',
@@ -45,17 +46,20 @@ class global_controller extends Controller
             ]);
             $phone = $request->phone_email;
         }
-
-
         $user = User::create([
             'email' => $email,
             'phone' => $phone,
             'disabled' => 1,
-//            'last_modifier' =>  $currentUser->id,
             'password' => bcrypt($request->password),
         ]);
+        event(new userRegisterEvent($user));
         $message = trans("messages.user_created");
         return back_normal($request, $message);
+    }
+
+    public function reset_password(Request $request)
+    {
+        return $this->check_email_exists($request);
     }
 
     public function check_email(Request $request)
@@ -65,16 +69,35 @@ class global_controller extends Controller
         $is_email = filter_var($request->phone_email, FILTER_VALIDATE_EMAIL);
         if ($is_email) {
             $email = $request->phone_email;
-
         } else {
             $phone = $request->phone_email;
-
         }
         if ((User::where('email', $email)->exists() and $email) || (User::where('phone', $phone)->exists() and $phone)) {
             return 'false';
         }
 
         return 'true';
+
+    }
+
+    public function check_email_exists(Request $request)
+    {
+        $email = null;
+        $phone = null;
+        $is_email = filter_var($request->phone_email, FILTER_VALIDATE_EMAIL);
+        if ($is_email) {
+            $email = $request->phone_email;
+        } else {
+            $phone = $request->phone_email;
+        }
+        if ((User::where('email', $email)->exists() and $email) || (User::where('phone', $phone)->exists() and $phone)) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+        if ($check) {
+            return view('auth.passwords.reset');
+        }
 
     }
 
