@@ -12,6 +12,9 @@
             display: block;
         }
 
+        iframe{
+            height: 300px;
+        }
         .thumb {
             margin-top: 15px;
             margin-bottom: 15px;
@@ -26,7 +29,7 @@
                 <div class="section-content">
                     <div class="row">
                         @foreach($videos as $video)
-                            <div class="col-lg-6 col-md-6 col-xs-12 " >
+                            <div class="col-lg-6 col-md-6 col-xs-12">
                                 {!!$video['iframe']!!}
                             </div>
                         @endforeach

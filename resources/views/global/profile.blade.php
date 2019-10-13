@@ -14,50 +14,53 @@
                             <div class="row">
                                 <div class="col-md-12 mb-sm-40">
                                     <div class="row">
-                                        <div class="col-md-4 border-1px p-20">
+                                        <div class="col-md-3 border-1px p-20">
                                             <span class="text-gray">{{__('messages.name_family')}}:</span>
-                                            <span class="text-black">{{user_information('full')}}</span>
+                                            <span class="text-black">{{$userInfo['people']['name']}} {{$userInfo['people']['family']}}</span>
                                         </div>
-                                        <div class="col-md-4 border-1px p-20">
+                                        <div class="col-md-3 border-1px p-20">
                                             <span class="text-gray">{{__('messages.username')}}: </span>
-                                            <span class="text-black">mk.kardgar@gmail.com</span>
+                                            <span class="text-black">{{$userInfo['phone']}}</span>
+                                            @if(!$userInfo['phone_verified_at'])
+                                                <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
+                                                <a href="{{route('global_profile_send_sms')}}"
+                                                   class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_sms')}}</a>
+                                                @else
+                                                <i class="fa fa-check text-success"></i>
+                                            @endif
                                         </div>
-                                        <div class="col-md-4 border-1px p-20">
+                                        <div class="col-md-3 border-1px p-20">
                                             <span class="text-gray">{{__('messages.national_code')}}: </span>
-                                            <span class="text-black">2050101813</span>
+                                            <span class="text-black">{{$userInfo['people']['national_code']}}</span>
                                         </div>
-                                        <div class="col-md-4 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.sex')}}: </span>
-                                            <span class="text-black">مرد</span>
-                                        </div>
-                                        <div class="col-md-4 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.phone')}}: </span>
-                                            <span class="text-black">82202910</span>
-                                        </div>
-                                        <div class="col-md-4 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.mobile')}}: </span>
-                                            <span class="text-black">09356070351</span>
+
+                                        <div class="col-md-3 border-1px p-20">
+                                            <span class="text-gray">{{__('messages.email')}}: </span>
+                                            <span class="text-black">{{$userInfo['email']}}</span>
+                                            @if(!$userInfo['email_verified_at'])
+                                                <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
+                                                <a href="{{route('global_profile_send_email')}}"
+                                                   class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_email')}}</a>
+                                            @else
+                                                <i class="fa fa-check text-success"></i>
+                                            @endif
                                         </div>
                                         <div class="col-md-12 border-1px p-20">
                                             <div class="row">
-
-                                                <div class="col-md-2 col-xs-6 pt-xs-10">
+                                                <div class="col-md-3 col-xs-6 pt-xs-10">
                                                     <a href="{{route('global_profile_completion')}}"
-                                                       class="btn btn-danger btn-block">{{__('messages.completion_profile')}}</a>
+                                                       class="btn btn-info btn-block">{{__('messages.completion_edit_information')}}</a>
                                                 </div>
-
-                                                <div class="col-md-2 col-xs-6 pt-xs-10">
+                                                <div class="col-md-3 col-xs-6 pt-xs-10">
                                                     <a href="{{route('global_profile_change_password')}}"
                                                        class="btn btn-success btn-block ajaxload-popup">{{__('messages.change_password')}}</a>
                                                 </div>
-                                                <div class="col-md-2 col-xs-6 pt-xs-10">
-                                                    <a href="{{route('global_profile_edit_information')}}"
-                                                       class="btn btn-danger btn-block ajaxload-popup">{{__('messages.edit_information')}}</a>
+
+                                                <div class="col-md-3 col-xs-6 pt-xs-10">
+                                                    <a href="{{route('global_profile_addresses')}}"
+                                                       class="btn btn-info btn-block">{{__('messages.edit_add_addresses')}}</a>
                                                 </div>
-                                                <div class="col-md-2 col-xs-6 pt-xs-10">
-                                                    <button class="btn btn-default btn-block ">{{__('messages.payment_report')}}</button>
-                                                </div>
-                                                <div class="col-md-2 col-xs-6 pt-xs-10">
+                                                <div class="col-md-3 col-xs-6 pt-xs-10">
                                                     <button class="btn btn-default btn-block">{{__('messages.buy_report')}}</button>
                                                 </div>
                                             </div>

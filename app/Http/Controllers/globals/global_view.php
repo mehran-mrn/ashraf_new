@@ -14,6 +14,7 @@ use App\charity_periods_transaction;
 use App\charity_transaction;
 use App\charity_transactions_value;
 use App\city;
+use App\Events\userRegisterEvent;
 use App\gallery_category;
 use App\gateway;
 use App\media;
@@ -51,19 +52,19 @@ class global_view extends Controller
 
     public function faq()
     {
-        $local =  app()->getLocale();
-        $faqs = blog_option::where('key',$local)
-            ->where('name','faq')
+        $local = app()->getLocale();
+        $faqs = blog_option::where('key', $local)
+            ->where('name', 'faq')
             ->get()
             ->map(function ($faq) {
-                    return [
-                        'id'=> $faq['id'],
-                        'question'=> json_decode($faq->value)->question,
-                        'answer'=> json_decode($faq->value)->answer,
-                    ];
+                return [
+                    'id' => $faq['id'],
+                    'question' => json_decode($faq->value)->question,
+                    'answer' => json_decode($faq->value)->answer,
+                ];
             });
 
-        return view('global.faq',compact('faqs'));
+        return view('global.faq', compact('faqs'));
     }
 
 
@@ -88,6 +89,7 @@ class global_view extends Controller
 
     public function register_form()
     {
+
         return view('global.materials.register');
     }
 
@@ -121,7 +123,6 @@ class global_view extends Controller
                 ['user_id', '=', Auth::id()],
             ])->get();
         $userInfo = User::with('addresses', 'people', 'profile_image')->find(Auth::id());
-
         return view('global.profile', compact('periods', 'unpaidPeriod', 'userInfo'));
     }
 
@@ -149,6 +150,37 @@ class global_view extends Controller
     public function change_password()
     {
         return view('global.materials.change_password');
+    }
+
+    public function addresses()
+    {
+        $provinces = city::all();
+        $userInfo = User::with('addresses')->findOrFail(Auth::id());
+        return view('global.profile.addresses',compact('userInfo','provinces'));
+    }
+
+    public function send_sms()
+    {
+        $user = User::findOrFail(Auth::id());
+        $user->code_phone = random_int(12320, 98750);
+        $user->code_phone_send = date("Y-m-d H:i:s");
+        $user->save();
+
+        // SMS EVENT
+
+        return view('global.materials.sms');
+    }
+
+    public function send_email()
+    {
+        $user = User::findOrFail(Auth::id());
+        $user->code_email = random_int(12320, 98750);
+        $user->code_email_send = date("Y-m-d H:i:s");
+        $user->save();
+
+        // Email EVENT
+
+        return view('global.materials.email');
     }
 
     public function edit_information()
@@ -179,7 +211,7 @@ class global_view extends Controller
     public function store_order()
     {
         $tran = setting_transportation::where('status', "active")->get();
-        $userInfo = User::with('addresses')->findOrFail(Auth::id());
+        $userInfo = User::with('addresses','people')->findOrFail(Auth::id());
         $provinces = city::where('parent', 0)->get();
         return view('global.store.order', compact('tran', 'userInfo', 'provinces'));
     }
@@ -334,7 +366,7 @@ class global_view extends Controller
         } elseif ($request['type'] == "charity_period") {
 
             $info = charity_periods_transaction::findOrFail($id);
-            $info->gateway_id=$request['gateway_id'];
+            $info->gateway_id = $request['gateway_id'];
             $info->save();
             $info = charity_periods_transaction::findOrFail($id);
             if ($info['user_id']) {
@@ -404,7 +436,7 @@ class global_view extends Controller
                 $charity->status = 'success';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
                 $charity->save();
-            }elseif ($data->module=="charity_period"){
+            } elseif ($data->module == "charity_period") {
                 $charity = charity_periods_transaction::findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $charity->pay_date = date("Y-m-d H:i:s", time());
@@ -453,5 +485,10 @@ class global_view extends Controller
         $champion = champion_transaction::with('champion')->findOrFail($id);
         $gateways = gateway::with('bank')->where('online', 1)->get();
         return view('global.champion.cart', compact('champion', 'gateways'));
+    }
+
+    public function reset_password()
+    {
+        return view('auth.passwords.email');
     }
 }

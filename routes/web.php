@@ -10,8 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+\Illuminate\Support\Facades\Artisan::call('cache:clear');
+\Illuminate\Support\Facades\Artisan::call('route:clear');
+\Illuminate\Support\Facades\Artisan::call('view:clear');
 
-
+Route::auth();
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
@@ -26,6 +29,8 @@ Route::get('/test', function () {
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('login', 'globals\global_view@login_page')->name('global_login_page');
+Route::get('auth/reset', 'globals\global_view@reset_password')->name('global_reset_password');
+Route::post('auth/reset', 'globals\global_controller@reset_password')->name('global_password_reset');
 
 // Registration Routes...
 Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
@@ -47,7 +52,7 @@ Route::get('/home', 'HomeController@index')->name('home_page');
 // ------------admin panel-----------------
 //=========================================
 
-Route::middleware('auth')->prefix('panel')->group(function () {
+Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(function () {
 
     //======================================
     //--------------Panel View-------------
@@ -62,6 +67,13 @@ Route::middleware('auth')->prefix('panel')->group(function () {
     Route::prefix('user_manager')->group(function () {
 
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
+
+        Route::get('info/edit/{userInfo}', 'panel\panel_view@users_list_info_edit')->name('users_list_info_edit');
+        Route::post('/info/update', 'panel\user_manager@user_info_update')->name('user_info_update');
+        Route::post('/info/update/image', 'panel\user_manager@user_info_update_image')->name('user_info_update_image');
+
+
+
         Route::post('register', 'panel\user_manager@register')->name('panel_register_user');
 
         Route::get('permission/{permission_id}', 'panel\panel_view@permission_assign')->name('permission_assign_page');
@@ -80,7 +92,15 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::get('teams_list', 'panel\panel_view@teams_list')->name('teams_list');
         Route::get('teams_list/{team_id}', 'panel\panel_view@permissions_team_list')->name('permissions_team_list');
 
-        Route::post('update', 'panel\user_manager@teams_list_update')->name('update_nestable_teams');
+        Route::post('update/teams', 'panel\user_manager@teams_list_update')->name('update_nestable_teams');
+        Route::post('update/roles', 'panel\user_manager@roles_list_update')->name('update_nestable_roles');
+
+
+        Route::get('roles/edit/{id}', 'panel\panel_view@role_edit')->name('role_edit');
+        Route::PATCH('roles/{role}', 'panel\panel_view@role_update')->name('role_update');
+
+        Route::get('teams/edit/{id}', 'panel\panel_view@team_edit')->name('team_edit');
+        Route::PATCH('teams/{team}', 'panel\panel_view@team_update')->name('team_update');
 
         Route::post('register_team', 'panel\user_manager@register_team')->name('panel_register_team');
 
@@ -304,31 +324,141 @@ Route::middleware('auth')->prefix('panel')->group(function () {
         Route::resource('faq', 'panel\faqController');
 
     });
+
+
+    Route::group(['middleware' => ['web', 'permission:manage_weblog'], 'namespace' => 'blog'], function () {
+        /* Admin backend routes - CRUD for posts, categories, and approving/deleting submitted comments */
+        Route::group(['prefix' => config('blogetc.admin_prefix', 'blog_admin')], function () {
+
+            Route::get('/', 'BlogEtcAdminController@index')
+                ->name('blogetc.admin.index');
+
+            Route::get('/blog_slider', 'BlogEtcAdminController@slider')
+                ->name('blog_slider');
+            Route::get('/slider_page/{slider_id?}', 'BlogEtcAdminController@slider_page')
+                ->name('slider_page');
+            Route::post('/slider_page/{slider_id?}', 'BlogEtcAdminController@save_slider')
+                ->name('slider_page');
+            Route::post('/delete_slider/{slider_id?}', 'BlogEtcAdminController@delete_slider')
+                ->name('delete_blog_slider');
+
+            Route::get('/blog_gallery', 'BlogEtcAdminController@gallery')
+                ->name('blog_gallery');
+            Route::get('/blog_gallery/{gallery_id?}', 'BlogEtcAdminController@gallery_page')
+                ->name('blog_gallery');
+            Route::post('/gallery_page/{gallery_id?}', 'BlogEtcAdminController@save_gallery')
+                ->name('gallery_page');
+            Route::post('/delete_gallery/{gallery_id?}', 'BlogEtcAdminController@delete_gallery')
+                ->name('delete_blog_gallery');
+
+            Route::get('/add_post',
+                'BlogEtcAdminController@create_post')
+                ->name('blogetc.admin.create_post');
+
+
+            Route::post('/add_post',
+                'BlogEtcAdminController@store_post')
+                ->name('blogetc.admin.store_post');
+
+
+            Route::get('/edit_post/{blogPostId}',
+                'BlogEtcAdminController@edit_post')
+                ->name('blogetc.admin.edit_post');
+
+            Route::patch('/edit_post/{blogPostId}',
+                'BlogEtcAdminController@update_post')
+                ->name('blogetc.admin.update_post');
+
+
+            Route::group(['prefix' => "image_uploads",], function () {
+
+                Route::get("/", "BlogEtcImageUploadController@index")->name("blogetc.admin.images.all");
+
+                Route::get("/upload", "BlogEtcImageUploadController@create")->name("blogetc.admin.images.upload");
+                Route::post("/upload", "BlogEtcImageUploadController@store")->name("blogetc.admin.images.store");
+
+            });
+
+
+            Route::delete('/delete_post/{blogPostId}',
+                'BlogEtcAdminController@destroy_post')
+                ->name('blogetc.admin.destroy_post');
+
+            Route::group(['prefix' => 'comments',], function () {
+
+                Route::get('/',
+                    'BlogEtcCommentsAdminController@index')
+                    ->name('blogetc.admin.comments.index');
+
+                Route::patch('/{commentId}',
+                    'BlogEtcCommentsAdminController@approve')
+                    ->name('blogetc.admin.comments.approve');
+                Route::delete('/{commentId}',
+                    'BlogEtcCommentsAdminController@destroy')
+                    ->name('blogetc.admin.comments.delete');
+            });
+
+            Route::group(['prefix' => 'categories'], function () {
+
+                Route::get('/',
+                    'BlogEtcCategoryAdminController@index')
+                    ->name('blogetc.admin.categories.index');
+
+                Route::get('/add_category',
+                    'BlogEtcCategoryAdminController@create_category')
+                    ->name('blogetc.admin.categories.create_category');
+                Route::post('/add_category',
+                    'BlogEtcCategoryAdminController@store_category')
+                    ->name('blogetc.admin.categories.store_category');
+
+                Route::get('/edit_category/{categoryId}',
+                    'BlogEtcCategoryAdminController@edit_category')
+                    ->name('blogetc.admin.categories.edit_category');
+
+                Route::patch('/edit_category/{categoryId}',
+                    'BlogEtcCategoryAdminController@update_category')
+                    ->name('blogetc.admin.categories.update_category');
+
+                Route::delete('/delete_category/{categoryId}',
+                    'BlogEtcCategoryAdminController@destroy_category')
+                    ->name('blogetc.admin.categories.destroy_category');
+
+            });
+
+
+            Route::group(['prefix' => 'specific_page'], function () {
+
+                Route::get('/',
+                    'BlogEtcSpecificPagesAdminController@index')
+                    ->name('blogetc.admin.SpecificPages.index');
+
+                Route::get('/add_category',
+                    'BlogEtcSpecificPagesAdminController@create_category')
+                    ->name('blogetc.admin.SpecificPages.create_category');
+                Route::post('/add_category',
+                    'BlogEtcSpecificPagesAdminController@store_category')
+                    ->name('blogetc.admin.SpecificPages.store_category');
+
+                Route::get('/edit_category/{categoryId}',
+                    'BlogEtcSpecificPagesAdminController@edit_category')
+                    ->name('blogetc.admin.SpecificPages.edit_category');
+
+                Route::patch('/edit_category/{categoryId}',
+                    'BlogEtcSpecificPagesAdminController@update_category')
+                    ->name('blogetc.admin.SpecificPages.update_category');
+
+                Route::delete('/delete_category/{categoryId}',
+                    'BlogEtcSpecificPagesAdminController@destroy_category')
+                    ->name('blogetc.admin.SpecificPages.destroy_category');
+            });
+
+        });
+    });
+
     //======================================
     //-----------End Panel View------------
     //======================================
-
-
-    //======================================
-    //--------------Global View-------------
-    //======================================
-    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
-    Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
-    Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
-    Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
-    Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
-    Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');
-    Route::get('/involved', 'globals\global_view@involved_projects')->name('involved_projects_all');
-    //======================================
-    //-----------End Global View------------
-    //======================================
 });
-
-//=========================================
-
-//=========================================
-// ------------Blog ETC -------------------
-//=========================================
 
 
 Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
@@ -367,139 +497,21 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
         });
 
     });
-
-
-    /* Admin backend routes - CRUD for posts, categories, and approving/deleting submitted comments */
-    Route::group(['prefix' => config('blogetc.admin_prefix', 'blog_admin')], function () {
-
-        Route::get('/', 'BlogEtcAdminController@index')
-            ->name('blogetc.admin.index');
-
-        Route::get('/blog_slider', 'BlogEtcAdminController@slider')
-            ->name('blog_slider');
-        Route::get('/slider_page/{slider_id?}', 'BlogEtcAdminController@slider_page')
-            ->name('slider_page');
-        Route::post('/slider_page/{slider_id?}', 'BlogEtcAdminController@save_slider')
-            ->name('slider_page');
-        Route::post('/delete_slider/{slider_id?}', 'BlogEtcAdminController@delete_slider')
-            ->name('delete_blog_slider');
-
-        Route::get('/blog_gallery', 'BlogEtcAdminController@gallery')
-            ->name('blog_gallery');
-        Route::get('/blog_gallery/{gallery_id?}', 'BlogEtcAdminController@gallery_page')
-            ->name('blog_gallery');
-        Route::post('/gallery_page/{gallery_id?}', 'BlogEtcAdminController@save_gallery')
-            ->name('gallery_page');
-        Route::post('/delete_gallery/{gallery_id?}', 'BlogEtcAdminController@delete_gallery')
-            ->name('delete_blog_gallery');
-
-        Route::get('/add_post',
-            'BlogEtcAdminController@create_post')
-            ->name('blogetc.admin.create_post');
-
-
-        Route::post('/add_post',
-            'BlogEtcAdminController@store_post')
-            ->name('blogetc.admin.store_post');
-
-
-        Route::get('/edit_post/{blogPostId}',
-            'BlogEtcAdminController@edit_post')
-            ->name('blogetc.admin.edit_post');
-
-        Route::patch('/edit_post/{blogPostId}',
-            'BlogEtcAdminController@update_post')
-            ->name('blogetc.admin.update_post');
-
-
-        Route::group(['prefix' => "image_uploads",], function () {
-
-            Route::get("/", "BlogEtcImageUploadController@index")->name("blogetc.admin.images.all");
-
-            Route::get("/upload", "BlogEtcImageUploadController@create")->name("blogetc.admin.images.upload");
-            Route::post("/upload", "BlogEtcImageUploadController@store")->name("blogetc.admin.images.store");
-
-        });
-
-
-        Route::delete('/delete_post/{blogPostId}',
-            'BlogEtcAdminController@destroy_post')
-            ->name('blogetc.admin.destroy_post');
-
-        Route::group(['prefix' => 'comments',], function () {
-
-            Route::get('/',
-                'BlogEtcCommentsAdminController@index')
-                ->name('blogetc.admin.comments.index');
-
-            Route::patch('/{commentId}',
-                'BlogEtcCommentsAdminController@approve')
-                ->name('blogetc.admin.comments.approve');
-            Route::delete('/{commentId}',
-                'BlogEtcCommentsAdminController@destroy')
-                ->name('blogetc.admin.comments.delete');
-        });
-
-        Route::group(['prefix' => 'categories'], function () {
-
-            Route::get('/',
-                'BlogEtcCategoryAdminController@index')
-                ->name('blogetc.admin.categories.index');
-
-            Route::get('/add_category',
-                'BlogEtcCategoryAdminController@create_category')
-                ->name('blogetc.admin.categories.create_category');
-            Route::post('/add_category',
-                'BlogEtcCategoryAdminController@store_category')
-                ->name('blogetc.admin.categories.store_category');
-
-            Route::get('/edit_category/{categoryId}',
-                'BlogEtcCategoryAdminController@edit_category')
-                ->name('blogetc.admin.categories.edit_category');
-
-            Route::patch('/edit_category/{categoryId}',
-                'BlogEtcCategoryAdminController@update_category')
-                ->name('blogetc.admin.categories.update_category');
-
-            Route::delete('/delete_category/{categoryId}',
-                'BlogEtcCategoryAdminController@destroy_category')
-                ->name('blogetc.admin.categories.destroy_category');
-
-        });
-
-
-        Route::group(['prefix' => 'specific_page'], function () {
-
-            Route::get('/',
-                'BlogEtcSpecificPagesAdminController@index')
-                ->name('blogetc.admin.SpecificPages.index');
-
-            Route::get('/add_category',
-                'BlogEtcSpecificPagesAdminController@create_category')
-                ->name('blogetc.admin.SpecificPages.create_category');
-            Route::post('/add_category',
-                'BlogEtcSpecificPagesAdminController@store_category')
-                ->name('blogetc.admin.SpecificPages.store_category');
-
-            Route::get('/edit_category/{categoryId}',
-                'BlogEtcSpecificPagesAdminController@edit_category')
-                ->name('blogetc.admin.SpecificPages.edit_category');
-
-            Route::patch('/edit_category/{categoryId}',
-                'BlogEtcSpecificPagesAdminController@update_category')
-                ->name('blogetc.admin.SpecificPages.update_category');
-
-            Route::delete('/delete_category/{categoryId}',
-                'BlogEtcSpecificPagesAdminController@destroy_category')
-                ->name('blogetc.admin.SpecificPages.destroy_category');
-        });
-
-    });
 });
 
-//=========================================
-// ------------End Blog ETC----------------
-//=========================================
+//======================================
+//--------------Global View-------------
+//======================================
+Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
+Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
+Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
+Route::get('/edit_information', 'globals\global_view@edit_information')->name('global_profile_edit_information');
+Route::get('/involved/{id}', 'globals\global_view@involved_projects')->name('involved_project');
+Route::get('/involved', 'globals\global_view@involved_projects')->name('involved_projects_all');
+//======================================
+//-----------End Global View------------
+//======================================
 
 
 //=========================================
@@ -521,6 +533,8 @@ Route::group(
         Route::get('/', 'globals\global_view@index')->name('index');
 
         Route::get('/login', 'globals\global_view@login_form')->name('global_login_form');
+        Route::get('/home', 'HomeController@index')->name('home');
+
 
         Route::post('/check_email', 'globals\global_controller@check_email')->name('check_email');
         Route::post('/update_information', 'globals\global_controller@update_information')->name('global_update_information');
@@ -536,8 +550,15 @@ Route::group(
         Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
         Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
 
+        Route::get('/sms/verify', 'globals\global_view@send_sms')->name('global_profile_send_sms');
+        Route::post('/sms/verify', 'globals\global_controller@verify_mobile')->name('global_profile_verify_mobile');
+
+        Route::get('/email/verify', 'globals\global_view@send_email')->name('global_profile_send_email');
+        Route::post('/email/verify', 'globals\global_controller@verify_email')->name('global_profile_verify_email');
+
         Route::get('/', 'globals\global_view@index')->name('main');
         Route::get('/profile/completion', 'globals\global_view@global_profile_completion')->name('global_profile_completion');
+        Route::get('/profile/addresses', 'globals\global_view@addresses')->name('global_profile_addresses');
         Route::post('/profile/completion', 'globals\global_controller@global_profile_completion_upload_image')->name('global_profile_completion_upload_image');
         Route::post('/profile/completion/submit', 'globals\global_controller@global_profile_completion_submit')->name('global_profile_completion_submit');
 

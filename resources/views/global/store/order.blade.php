@@ -167,9 +167,6 @@
                 })
             })
 
-
-
-
             $("#frm_order").validate({
                 lang: "fa",
                 rules: {
@@ -292,15 +289,15 @@
                                             class="fa fa-check-square-o fa-3x text-success mr-20 mt-10"></i></td>
                                 <td colspan="4">
                                     <label class="text-secondary">{{__('messages.name_family')}}: </label>
-                                    <span>{{$userInfo['name']}}</span>
+                                    <span>{{$userInfo['people']['name']}} {{$userInfo['people']['family']}}</span>
                                 </td>
                                 <td colspan="4">
                                     <label class="text-secondary">{{__('messages.phone')}}: </label>
-                                    <span>{{$userInfo['phone']}}</span>
+                                    <span>{{$userInfo['people']['phone']}}</span>
                                 </td>
                                 <td colspan="4">
                                     <label class="text-secondary">{{__('messages.mobile')}}: </label>
-                                    <span></span>
+                                    <span>{{$userInfo['phone']}}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -496,7 +493,7 @@
                                     <td>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="transportation" id="payment_radio_account"
+                                                <input type="radio" name="payment" id="payment_radio_account"
                                                        value="option1" checked>
                                                 {{__('messages.select')}}
                                             </label>

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\globals;
 
 use App\champion_transaction;
 use App\charity_champion;
+use App\Events\userRegister;
+use App\Events\userRegisterEvent;
 use App\person;
 use App\users_address;
+use Carbon\Carbon;
 use Validator;
 use App\charity_period;
 use App\charity_periods_transaction;
@@ -25,9 +28,8 @@ class global_controller extends Controller
 
     public function register_form_store(Request $request)
     {
-//        $currentUser = Auth::user();
         $this->validate($request, [
-            'phone_email' => 'required',
+            'phone_email' => 'required|unique:users,phone|unique:users,email',
             'password' => 'required|confirmed|min:6',
         ]);
         $email = null;
@@ -44,17 +46,20 @@ class global_controller extends Controller
             ]);
             $phone = $request->phone_email;
         }
-
-
         $user = User::create([
             'email' => $email,
             'phone' => $phone,
             'disabled' => 1,
-//            'last_modifier' =>  $currentUser->id,
             'password' => bcrypt($request->password),
         ]);
+        event(new userRegisterEvent($user));
         $message = trans("messages.user_created");
         return back_normal($request, $message);
+    }
+
+    public function reset_password(Request $request)
+    {
+        return $this->check_email_exists($request);
     }
 
     public function check_email(Request $request)
@@ -64,16 +69,35 @@ class global_controller extends Controller
         $is_email = filter_var($request->phone_email, FILTER_VALIDATE_EMAIL);
         if ($is_email) {
             $email = $request->phone_email;
-
         } else {
             $phone = $request->phone_email;
-
         }
         if ((User::where('email', $email)->exists() and $email) || (User::where('phone', $phone)->exists() and $phone)) {
             return 'false';
         }
 
         return 'true';
+
+    }
+
+    public function check_email_exists(Request $request)
+    {
+        $email = null;
+        $phone = null;
+        $is_email = filter_var($request->phone_email, FILTER_VALIDATE_EMAIL);
+        if ($is_email) {
+            $email = $request->phone_email;
+        } else {
+            $phone = $request->phone_email;
+        }
+        if ((User::where('email', $email)->exists() and $email) || (User::where('phone', $phone)->exists() and $phone)) {
+            $check = true;
+        } else {
+            $check = false;
+        }
+        if ($check) {
+            return view('auth.passwords.reset');
+        }
 
     }
 
@@ -430,27 +454,99 @@ class global_controller extends Controller
 
     public function global_profile_completion_submit(Request $request)
     {
-        if ($person = person::where('parent_id', '=', Auth::id())->first()) {
-            $person->parent_id = Auth::id();
-            $person->name = $request['name'];
-            $person->family = $request['family'];
-            $person->national_code = $request['national_code'];
-            $person->phone = $request['phone'];
-            $person->save();
-            $mesage = __('messages.item_updated');
-        } else {
-            $person = person::create(
-                [
-                    'parent_id' => Auth::id(),
-                    'name' => $request['name'],
-                    'family' => $request['family'],
-                    'national_code' => $request['national_code'],
-                    'phone' => $request['phone'],
-                ]
-            );
-            $mesage = __('messages.item_created');
+        $con = true;
+        if ($request['birthday']) {
+            $request['birthday'] = shamsi_to_miladi($request['birthday']);
         }
-        return back_normal($request, ['message' => $mesage, 'status' == 200]);
+        if ($request['national_code']) {
+            if (!national_code_validation($request['national_code'])) {
+                $con = false;
+            };
+        }
+        if ($request['email']) {
+            $user = User::find(Auth::id());
+            if (!$user->email) {
+                $user->email = $request['email'];
+                $user->save();
+            }
+        }
+        $message = '';
+        if ($con) {
+            if ($person = person::where('user_id', '=', Auth::id())->first()) {
+                $person->name = $request['name'];
+                $person->family = $request['family'];
+                $person->national_code = $request['national_code'];
+                $person->phone = $request['phone'];
+                $person->gender = $request['gender'];
+                $person->birth_date = $request['birthday'];
+                $person->email = $request['email'];
+                $person->save();
+                $message = __('messages.item_updated', ['item' => trans('messages.information')]);
+            } else {
+                person::create(
+                    [
+                        'parent_id' => Auth::id(),
+                        'user_id' => Auth::id(),
+                        'name' => $request['name'],
+                        'family' => $request['family'],
+                        'national_code' => $request['national_code'],
+                        'phone' => $request['phone'],
+                        'email' => $request['email'],
+                        'gender' => $request['gender'],
+                        'birth_date' => $request['birthday']
+                    ]
+                );
+                $message = __('messages.item_updated', ['item' => trans('messages.information')]);
+            }
+            return back_normal($request, ['message' => $message, 'status' => 200]);
+        } else {
+            $message = __('messages.national_code_invalid');
+            return back_error($request, ['message' => $message]);
+        }
+    }
+
+    public function verify_mobile(Request $request)
+    {
+        if ($user = User::findOrFail(Auth::id())) {
+            $created = new Carbon($user->code_phone_send);
+            $now = Carbon::now();
+            $diff = $created->diff($now)->i;
+            if ($diff < 6) {
+                if ($user->code_phone == $request['code']) {
+                    $user->phone_verified_at = date("Y-m-d H:i:s");
+                    $user->save();
+                    return back_normal($request, ['message' => __('messages.phone_verified')]);
+                } else {
+                    return back_error($request, __('messages.code_invalid'));
+                }
+            } else {
+                return back_error($request, __('messages.timeout'));
+            }
+        } else {
+            return back_error($request, __('messages.user_not_valid'));
+        }
+    }
+
+    public function verify_email(Request $request)
+    {
+        if ($user = User::findOrFail(Auth::id())) {
+            $created = new Carbon($user->code_email_send);
+            $now = Carbon::now();
+            $diff = $created->diff($now)->i;
+            if ($diff < 6) {
+                if ($user->code_email == $request['code']) {
+                    $user->email_verified_at = date("Y-m-d H:i:s");
+                    $user->save();
+                    return back_normal($request, ['message' => __('messages.email_verified')]);
+                } else {
+                    return back_error($request, __('messages.code_invalid'));
+                }
+            } else {
+                return back_error($request, __('messages.timeout'));
+            }
+        } else {
+            return back_error($request, __('messages.user_not_valid'));
+        }
     }
 
 }

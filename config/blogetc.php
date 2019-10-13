@@ -18,7 +18,7 @@ return [
     'blog_upload_dir' => "blog_images", // this should be in public_path() (i.e. /public/blog_images), and should be writable
 
 
-    'memory_limit' => '2048M', // This is used when uploading images :
+    'memory_limit' => '5120M', // This is used when uploading images :
     //                              @ini_set('memory_limit', config("blogetc.memory_limit"));
     //                            See PHP.net for detailso
     //                            Set to false to not set any value.
@@ -142,6 +142,8 @@ return [
         'save_user_id_if_logged_in' => true, // if user is logged in, should we save that user id? (if false it will always ask for an author name, which the commenter can provide
 
         'user_field_for_author_name' => "name", // what field on your User model should we use when echoing out the author name? By default this should be 'name', but maybe you have it set up to use 'username' etc.
+
+        'user_field_for_author_family' => "family", // what field on your User model should we use when echoing out the author name? By default this should be 'name', but maybe you have it set up to use 'username' etc.
 
         'ask_for_author_email' => true, // show 'author email' on the form ?
         'require_author_email' => false, // require an email (make sure ask_for_author_email is true if you want to use this)

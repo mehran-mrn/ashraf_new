@@ -1,80 +1,155 @@
 @extends('layouts.panel.panel_layout')
+<?php
+$active_sidbare = ['user_manager', 'users_list']
+?>
 @section('js')
-    <!-- Theme JS files -->
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>
-    <!-- /theme JS files -->
+    <script>
+        var DatatableBasic = function () {
+            var _componentDatatableBasic = function () {
+                if (!$().DataTable) {
+                    console.warn('Warning - datatables.min.js is not loaded.');
+                    return;
+                }
+                $.extend($.fn.dataTable.defaults, {
+                    autoWidth: false,
+                    columnDefs: [{
+                        orderable: false,
+                        width: 100,
+                        targets: [1, 2, 3, 4, 5]
+                    }],
+                    dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+                    language: {
+                        search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
+                        searchPlaceholder: '{{__('messages.search')}}...',
+                        lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
+                        paginate: {
+                            'first': '{{__('messages.first')}}',
+                            'last': '{{__('messages.last')}}',
+                            'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
+                        }
+                    }
+                });
+                // Basic datatable
+                $('.datatable-basic').DataTable({
+                    pagingType: "simple",
+                    language: {
+                        paginate: {
+                            'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr; {{__('messages.prev')}}' : '&larr; {{__('messages.prev')}}'
+                        }
+                    },
+                    stateSave: true,
+                    autoWidth: true,
+                    scrollY: 300
+                });
+
+                // Resize scrollable table when sidebar width changes
+                $('.sidebar-control').on('click', function () {
+                    table.columns.adjust().draw();
+                });
+            };
+            var _componentSelect2 = function () {
+                if (!$().select2) {
+                    console.warn('Warning - select2.min.js is not loaded.');
+                    return;
+                }
+                $('.dataTables_length select').select2({
+                    minimumResultsForSearch: Infinity,
+                    dropdownAutoWidth: true,
+                    width: 'auto'
+                });
+            };
+            return {
+                init: function () {
+                    _componentDatatableBasic();
+                    _componentSelect2();
+                }
+            }
+        }();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            DatatableBasic.init();
+        });
+
+    </script>
 @endsection
 @section('content')
-    <?php
-    $active_sidbare = ['user_manager', 'users_list']
-    ?>
-    <div class="page-header page-header-light">
-        <div class="page-header-content header-elements-md-inline">
-            <div class="page-title d-flex">
-                <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"
-                        data-ajax-link="{{route('panel_register_form')}}" data-toggle="modal"
-                        data-modal-title="{{trans('messages.add_new_user')}}" data-target="#general_modal">
-                    <i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}
-                </button>
+    <section>
+        <div class="content">
+            <div class="container-fluid">
+                <section>
+                    <button type="button" class="btn btn-outline-dark m-2 py-2 px-3 modal-ajax-load"
+                            data-ajax-link="{{route('panel_register_form')}}" data-toggle="modal"
+                            data-modal-title="{{trans('messages.add_new_user')}}" data-target="#general_modal">
+                        <i class="icon-user-plus mr-2"></i> {{trans('messages.add_new_user')}}
+                    </button>
+                </section>
+                <section>
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h4 class="card-title">{{__('messages.users_list')}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table  datatable-basic">
+                                <thead>
+                                <tr>
+                                    <th>{{__('messages.id')}}</th>
+                                    <th>{{__('messages.name')}}</th>
+                                    <th>{{__('messages.email')}}</th>
+                                    <th>{{__('messages.mobile')}}</th>
+                                    <th>{{__('messages.register_date')}}</th>
+                                    <th>{{__('messages.status')}}</th>
+                                    <th class="text-center">{{__('messages.action')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $i=1;
+                                ?>
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td><b>{{$i}}</b></td>
+                                        <td><b>{{$user['people']['name']}} {{$user['people']['family']}}</b></td>
+                                        <td><b>{{$user['email']}}</b></td>
+                                        <td><b>{{$user['phone']}}</b></td>
+                                        <td>
+                                            @if($user['created_at'])
+                                                <span dir="ltr">{{jdate("Y-m-d H:i",strtotime($user['created_at']))}}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($user['disabled']==1)
+                                                <span class="badge badge-danger">{{__('messages.inactive')}}</span>
+                                            @else
+                                                <span class="badge badge-success">{{__('messages.active')}}</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-dark btn-sm"
+                                                   title="{{__('messages.show_permissions')}}"
+                                                   href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}">
+                                                    <i class="fa fa-key"></i></a>
+                                                <a class="btn btn-outline-dark btn-sm"
+                                                   title="{{__('messages.edit_item',['item'=>__('messages.user')])}}"
+                                                   href="{{route('users_list_info_edit',['user'=>$user->id])}}">
+                                                    <i class="fa fa-edit"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $i++;
+                                    ?>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
-    </div>
-    <!-- Content area -->
-    <div class="content">
-        <!-- Basic responsive configuration -->
-        <div class="card">
-
-            <div class="card-body">
-
-
-                <table class="table datatable-responsive">
-                    <thead>
-                    <tr>
-                        <th>{{__('messages.username')}}</th>
-                        <th>{{__('messages.email')}}</th>
-                        <th>{{__('messages.phone')}}</th>
-                        <th>{{__('messages.register_date')}}</th>
-                        <th>{{__('messages.status')}}</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td><b>{{$user['name']}}</b></td>
-                            <td><b>{{$user['email']}}</b></td>
-                            <td><b>{{$user['phone']}}</b></td>
-                            <td>{{$user['created_at']}}</td>
-                            <td><a href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}"><span class="badge badge-info">Link</span></a> </td>
-                            <td class="text-center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                            <i class="icon-menu9"></i>
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Export to
-                                                .pdf</a>
-                                            <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Export to
-                                                .csv</a>
-                                            <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to
-                                                .doc</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <!-- /basic responsive configuration -->
-        </div>
-    </div>
-    <!-- /content area -->
-
+    </section>
 @endsection

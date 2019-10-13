@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name', 'email', 'phone', 'password', 'disabled'
     ];
 
+    public $role;
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -38,6 +40,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->hasOne('App\Role','user_id','id')->pluck('role_id');
+    }
 
     public function caravan()
     {
@@ -78,7 +85,7 @@ class User extends Authenticatable
 
     public function people()
     {
-        return $this->hasOne('App\person', 'parent_id', 'id');
+        return $this->hasOne('App\person', 'user_id', 'id');
     }
 
     public function profile_image()

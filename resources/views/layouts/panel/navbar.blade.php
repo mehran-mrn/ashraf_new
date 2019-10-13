@@ -31,23 +31,25 @@
                 </a>
             </li>
         </ul>
-
         <span class="badge bg-success ml-md-3 mr-md-auto">Online</span>
 
+{{--        {{dd(Auth::getUser())}}--}}
         <ul class="navbar-nav">
-
             <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
                     <img src="{{URL::asset(user_information('avatar'))}}" class="rounded-circle mr-2" height="34"
                          alt="">
                     <span>{{user_information('full')}}</span>
                 </a>
-
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="{{route('global_profile')}}" class="dropdown-item"><i class="icon-user-plus"></i> {{trans('messages.account')}}</a>
+                    <a href="{{route('global_profile')}}" class="dropdown-item"><i
+                                class="icon-user-plus"></i> {{trans('messages.account')}}</a>
                     <div class="dropdown-divider"></div>
-
+                    <a href="{{route('logout')}}" class="dropdown-item"><i
+                                class="icon-exit2"></i> {{trans('messages.logout')}}</a>
+                    <div class="dropdown-divider"></div>
                 </div>
+
             </li>
         </ul>
     </div>

@@ -79,6 +79,8 @@ if (!isset($active_sidbare)) {
 
 {{--                    </ul>--}}
 {{--                </li>--}}
+
+                @permission('manage_weblog')
                 <li class="nav-item nav-item-submenu {{in_array("blog", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-blogger"></i>
                         <span>{{trans('messages.blog')}}</span></a>
@@ -174,6 +176,8 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
+                @endpermission
+                @permission('manage_store')
                 <li class="nav-item nav-item-submenu {{in_array("store", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-cart"></i>
                         <span>{{trans('messages.store')}}</span></a>
@@ -212,8 +216,8 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-
-
+                @endpermission
+                @permission('manage_gallery')
                 <li class="nav-item nav-item-submenu {{in_array("gallery", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-gallery"></i>
                         <span>{{trans('messages.gallery')}}</span></a>
@@ -229,9 +233,8 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
-
-
-
+                @endpermission
+                @permission('manage_carevan')
                 <li class="nav-item nav-item-submenu {{in_array("caravans", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-train2"></i>
                         <span>{{trans('messages.caravans')}}</span></a>
@@ -252,6 +255,8 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+                @endpermission
+                @permission('manage_rezvan')
                 <li class="nav-item nav-item-submenu {{in_array("building", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-quill4"></i>
                         <span>{{trans('messages.building_projects')}}</span></a>
@@ -269,6 +274,8 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
+                @endpermission
+                @permission('manage_charity')
                 <li class="nav-item nav-item-submenu {{in_array("charity", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-umbrella"></i>
                         <span>{{trans('messages.Charity')}}</span></a>
@@ -291,6 +298,8 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
+                @endpermission
+                @permission('manage_users')
                 <li class="nav-item nav-item-submenu {{in_array("user_manager", $active_sidbare) ? 'nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-users4"></i>
                         <span>{{trans('messages.users_management')}}</span></a>
@@ -311,6 +320,8 @@ if (!isset($active_sidbare)) {
                         </li>
                     </ul>
                 </li>
+                @endpermission
+                @permission('manage_setting')
                 <li class="nav-item nav-item-submenu {{in_array("setting", $active_sidbare) ? ' nav-item-open' : '' }}">
                     <a href="#" class=" nav-link"><i class="icon-gear"></i>
                         <span>{{trans('messages.setting')}}</span></a>
@@ -343,6 +354,7 @@ if (!isset($active_sidbare)) {
 
                     </ul>
                 </li>
+                @endpermission
                 <!-- /main -->
             </ul>
         </div>

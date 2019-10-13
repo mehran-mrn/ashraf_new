@@ -1,76 +1,59 @@
-
-<form method="POST" id="register_permission_panel" class="form-ajax-submit" action="{{ route('panel_register_permission') }}">
+<form method="POST" id="register_permission_panel" class="form-ajax-submit"
+      action="{{ route('panel_register_permission') }}" autocomplete="off">
     @csrf
-
-
-    <div class="form-group row">
-
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('messages.name') }}</label>
-
-        <div class="col-md-6">
-            <input id="display_name" type="text" class="form-control @error('name') is-invalid @enderror" name="display_name"
-                   value="{{ old('display_name') }}"  autocomplete="display_name" autofocus>
-
+    <div class="row">
+        <div class="col-6 form-group">
+            <label for="name">{{ __('messages.name') }}</label>
+            <input id="display_name" type="text" class="form-control @error('name') is-invalid @enderror"
+                   name="display_name"
+                   value="{{ old('display_name') }}" autocomplete="display_name" autofocus>
             @error('name')
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
+
         </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="key" class="col-md-4 col-form-label text-md-right">{{ __('messages.key') }}</label>
-
-        <div class="col-md-6">
+        <div class="col-6 form-group">
+            <label for="key">{{__('messages.key')}}</label>
             <input id="key" type="text" class="form-control @error('email') is-invalid @enderror" name="key"
-                   value="{{ old('key') }}"  autocomplete="key">
-            <label id="key-error" class="validation-invalid-label" for="key"></label>
+                   value="{{ old('key') }}" autocomplete="key">
             @error('email')
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('messages.category') }}</label>
-
-        <div class="col-md-6">
-            <input id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category"
-                   value="{{ old('category') }}"  autocomplete="category">
-
+        <div class="col-6 form-group">
+            <label for="category">{{ __('messages.category') }}</label>
+            @if(sizeof($categories)>=1)
+                <select name="category" id="category" class="form-control">
+                    @foreach($categories as $cat)
+                        <option value="{{$cat['category']}}">{{$cat['category']}}</option>
+                    @endforeach
+                </select>
+            @else
+                <input id="category" type="text" class="form-control @error('category') is-invalid @enderror"
+                       name="category"
+                       value="{{ old('category') }}" autocomplete="category">
+            @endif
             @error('category')
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('messages.description') }}</label>
-
-        <div class="col-md-6">
-            <input id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description"
-                   value="{{ old('description') }}"  autocomplete="description">
-
+        <div class="col-6 form-group">
+            <label for="description">{{ __('messages.description') }}</label>
+            <input id="description" type="description"
+                   class="form-control @error('description') is-invalid @enderror"
+                   name="description"
+                   value="{{ old('description') }}" autocomplete="description">
             @error('description')
-            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
-    </div>
-
-    <div class="form-group row ">
-        <div class="col-md-6 offset-md-4">
+        <div class="col-6"></div>
+        <div class="col-6 form-group">
             <button type="submit" class="btn btn-block btn-info">
                 {{ __('messages.submit') }}
             </button>
         </div>
     </div>
-
 </form>
 
 <script type="text/javascript">
@@ -79,22 +62,22 @@
         rules: {
             name: {
                 minlength: 3,
-                require:true,
+                require: true,
             },
             key: {
                 minlength: 3,
-                require:true,
+                require: true,
             },
             description: {
                 minlength: 10,
                 maxlength: 250,
-                require:true,
+                require: true,
 
             },
 
         },
         submitHandler: function (form) {
-            var form_btn = $(form).find('button[type="submit"]');
+            var form_btn = $("#register_permission_panel").find('button[type="submit"]');
             var form_result_div = '#form-result';
             $(form_result_div).remove();
             form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
@@ -103,7 +86,6 @@
             $(form).ajaxSubmit({
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
                     if (data.status == 'true') {
                         $(form).find('.form-control').val('');
                     }

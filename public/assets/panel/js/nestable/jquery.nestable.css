@@ -195,7 +195,7 @@
 }
 
 .dd3-handle:before {
-    content: '\f0b2';
+    content: '\f461';
     font-family: "Font Awesome 5 Free", Arial, serif, sans-serif !important;
     display: block;
     position: absolute;

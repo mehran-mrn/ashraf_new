@@ -1,36 +1,75 @@
 @extends("blog.blogetc_admin.layouts.admin_layout")
 @section('js')
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/demo_pages/datatables_responsive.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            $('#tablePost').dataTable({
-                "columnDefs": [
-                    {"orderable": false, "targets": 5}
-                ],
-                "order": [[3, 'desc']],
-                language: {
-                    search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
-                    searchPlaceholder: '{{__('messages.search')}}...',
-                    lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
-                    paginate: {
-                        'first': '{{__('messages.first')}}',
-                        'last': '{{__('messages.last')}}',
-                        'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
-                        'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
-                    }
+        var DatatableBasic = function () {
+            var _componentDatatableBasic = function () {
+                if (!$().DataTable) {
+                    console.warn('Warning - datatables.min.js is not loaded.');
+                    return;
                 }
-            });
-        })
+                $.extend($.fn.dataTable.defaults, {
+                    autoWidth: true,
+                    columnDefs: [{
+                        orderable: false,
+                        targets: [1, 3, 4]
+                    }],
+                    dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+                    language: {
+                        search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
+                        searchPlaceholder: '{{__('messages.search')}}...',
+                        lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
+                        paginate: {
+                            'first': '{{__('messages.first')}}',
+                            'last': '{{__('messages.last')}}',
+                            'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
+                        }
+                    }
+                });
+                $('.datatable-basic').DataTable({
+                    pagingType: "simple",
+                    language: {
+                        paginate: {
+                            'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr; {{__('messages.prev')}}' : '&larr; {{__('messages.prev')}}'
+                        }
+                    },
+                    stateSave: true,
+                    autoWidth: true,
+                });
+                $('.sidebar-control').on('click', function () {
+                    table.columns.adjust().draw();
+                });
+            };
+            var _componentSelect2 = function () {
+                if (!$().select2) {
+                    console.warn('Warning - select2.min.js is not loaded.');
+                    return;
+                }
+                $('.dataTables_length select').select2({
+                    minimumResultsForSearch: Infinity,
+                    dropdownAutoWidth: true,
+                    width: 'auto'
+                });
+            };
+            return {
+                init: function () {
+                    _componentDatatableBasic();
+                    _componentSelect2();
+                }
+            }
+        }();
+        document.addEventListener('DOMContentLoaded', function () {
+            DatatableBasic.init();
+        });
     </script>
 @stop
 <?php
 $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
 ?>
 @section("content")
-
     <section>
         <div class="content">
             @if(sizeof($posts)>=1)
@@ -41,38 +80,41 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                 <span class="card-title">{{__('messages.post_list')}}</span>
                             </div>
                             <div class="card-body ">
-                                <table class="table table-scrollable  table-striped" id="tablePost">
+                                <table class="table datatable-basic">
                                     <thead class="fullwidth">
                                     <tr>
                                         <th>{{__('messages.title')}}</th>
-                                        <th>{{__('messages.subtitle')}}</th>
                                         <th>{{__('messages.author')}}</th>
                                         <th>{{__('messages.posted_at')}}</th>
                                         <th>{{__('messages.Categories')}}</th>
-                                        <th></th>
+                                        <th>{{__('messages.action')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @forelse($posts as $post)
                                         <tr>
-                                            <td><a href='{{$post->url()}}'>{{substr($post->title,0,100)}}</a>
-                                                {!!($post->is_published ? "" : 'Draft')!!}
+                                            <td><a href='{{$post->url()}}'>{!! substr($post->title,'0',100) !!}</a>
+                                                <span class="badge badge-danger">{!!($post->is_published ? "" : "(".__('messages.draft').")")!!}</span>
                                             </td>
-                                            <td>{{substr($post->subtitle,0,100)}}</td>
                                             <td>{{$post->author_string()}}</td>
                                             <td>{{miladi_to_shamsi_date($post->posted_at)}}</td>
                                             <td>
                                                 @if(count($post->categories))
                                                     @foreach($post->categories as $category)
-                                                        <a class='btn btn-outline-secondary btn-sm m-1'
+                                                        <a class='btn badge badge-primary btn-sm m-1'
                                                            href='{{$category->edit_url()}}'>
-                                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-
-                                                            {{$category->category_name}}
+                                                            <small>{{$category->category_name}}</small>
                                                         </a>
                                                     @endforeach
-                                                @else
-                                                    No Categories
+                                                @endif
+
+                                                @if(count($post->specificPage))
+                                                    @foreach($post->specificPage as $specific)
+                                                        <a class='btn badge badge-warning btn-sm m-1'
+                                                           href='{{$specific->edit_url()}}'>
+                                                            <small>{{$specific->category_name}}</small>
+                                                        </a>
+                                                    @endforeach
                                                 @endif
                                             </td>
                                             <td>
@@ -101,7 +143,9 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                                 </div>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                    @empty
+                                        <tr></tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
                                 <div class='text-center'>
