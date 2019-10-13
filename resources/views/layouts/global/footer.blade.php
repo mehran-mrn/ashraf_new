@@ -4,7 +4,7 @@
         <div class="row border-bottom-black">
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
-                    <img class="mt-10 mb-20" alt="" src="{{ URL::asset('/public/assets/global/images/logo-wide-white-footer.png') }}">
+                    <img class="mt-10 mb-20" alt="" src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png')}}?1=4">
                     <p>
                         {{trans('site_info.address')}}
                     </p>

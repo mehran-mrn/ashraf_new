@@ -1669,7 +1669,7 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         480: {
@@ -1717,7 +1717,7 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: true
                         },
                         480: {
@@ -1764,11 +1764,11 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         480: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         600: {
@@ -1792,6 +1792,7 @@ var THEMEMASCOT = {};
                 });
             });
 
+
             $('.owl-carousel-6col').each(function() {
                 var data_dots = ( $(this).data("dots") === undefined ) ? false: $(this).data("dots");
                 var data_nav = ( $(this).data("nav")=== undefined ) ? false: $(this).data("nav");
@@ -1811,11 +1812,11 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         480: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         600: {
@@ -1858,7 +1859,7 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         600: {
@@ -1901,7 +1902,7 @@ var THEMEMASCOT = {};
                     ],
                     responsive: {
                         0: {
-                            items: 1,
+                            items: 2,
                             center: false
                         },
                         600: {

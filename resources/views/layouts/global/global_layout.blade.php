@@ -152,7 +152,7 @@
 <script src="{{ URL::asset('node_modules/pnotify/dist/iife/PNotify.js') }}"></script>
 
 <!-- JS | Custom script for all pages -->
-<script src="{{ URL::asset('/public/assets/global/js/custom.js') }}"></script>
+<script src="{{ URL::asset('/public/assets/global/js/custom.js')}}?1=3"></script>
 @yield('footer_js')
 
 <script>

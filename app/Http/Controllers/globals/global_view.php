@@ -356,6 +356,15 @@ class global_view extends Controller
         return view('global.blog', compact('posts'));
     }
 
+    public function TopPosts($category_slug = null)
+    {
+        $this->middleware(UserCanManageBlogPosts::class);
+
+        $posts =  get_posts(null,['last_post'],[],15);
+
+        return view("global.blog", ['posts' => $posts]);
+    }
+
     public function payment($type, $id, Request $request)
     {
         $con = true;

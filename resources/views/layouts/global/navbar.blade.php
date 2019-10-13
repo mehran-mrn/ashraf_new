@@ -118,7 +118,12 @@
                                 @endforeach
                             </ul>
                         </li>
-                        <li><a class="text-white-f6" href="{{route('gallery')}}">{{__('messages.gallery')}}</a></li>
+                        <li><a class="text-white-f6" href="#">{{__('messages.gallery')}}</a>
+                            <ul class="dropdown">
+                                <li><a  href="{{route('gallery')}}">{{__('messages.photos')}}</a></li>
+                                <li><a  href="{{route('video_gallery')}}">{{__('messages.videos')}}</a></li>
+                            </ul>
+                            </li>
                         <li><a class="text-white-f6" href="{{route('blog')}}">{{trans('messages.blog')}}</a>
                             <ul class="dropdown">
                                 @foreach($menu_blog as $m_b)

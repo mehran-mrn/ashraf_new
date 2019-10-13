@@ -53,7 +53,7 @@
 
                     @endforeach
 
-                    <a href="/blog" class="btn btn-theme-colored pull-left mt-20">{{__('messages.count_news')}}</a>
+                    <a href="{{route('TopPosts')}}" class="btn btn-theme-colored pull-left mt-20">{{__('messages.count_news')}}</a>
 
                 </div>
 

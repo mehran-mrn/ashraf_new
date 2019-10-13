@@ -12,7 +12,7 @@
                 $.extend($.fn.dataTable.defaults, {
                     autoWidth: true,
                     columnDefs: [{
-                        orderable: false,
+                        orderable: true,
                         targets: [1, 3, 4]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
@@ -29,7 +29,8 @@
                     }
                 });
                 $('.datatable-basic').DataTable({
-                    pagingType: "simple",
+                    paging: false,
+                    pagingType: "full",
                     language: {
                         paginate: {
                             'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',

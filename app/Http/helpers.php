@@ -677,7 +677,7 @@ function get_option($option_name, $limit = 0, $random = false)
     return $options;
 }
 
-function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 10)
+function get_posts($limit = null, $main_page = [], $categories = [], $paginate = 0)
 {
     $posts_query = WebDevEtc\BlogEtc\Models\BlogEtcPost::query();
     if ($main_page and in_array('last_post', $main_page)) {
@@ -691,13 +691,19 @@ function get_posts($limit = null, $main_page = [], $categories = [], $paginate =
         });
     }
     $posts_query->orderBy("posted_at", "desc");
+    $posts_query->with('categories');
     if (!empty($categories)) {
         $posts_query->take($categories);
     }
     if (!empty($limit)) {
         $posts_query->take($limit);
     }
-    $posts = $posts_query->take($limit)->with('categories')->get();
+    if ($paginate) {
+        $posts =$posts_query->paginate($paginate);
+    }
+    else {
+        $posts= $posts_query->get();
+    }
     return $posts;
 }
 

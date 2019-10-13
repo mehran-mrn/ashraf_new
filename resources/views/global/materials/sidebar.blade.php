@@ -21,7 +21,7 @@
         <div class="categories">
             <ul class="list list-border angle-double-right">
                 @forelse(get_blog_categories() as $category)
-                    <li><a href="{{$category['slug']}}">{{$category['category_name']}}</a></li>
+                    <li><a href="{{route('blogetc.view_category',['categorySlug'=>$category['slug']])}}">{{$category['category_name']}}</a></li>
                 @empty
                 @endforelse
 
@@ -49,64 +49,18 @@
         </div>
     </div>
     <div class="widget">
-        <h5 class="widget-title line-bottom">{!! trans('messages.random_photos')!!}</h5>
-        <div id="flickr-feed" class="clearfix">
-            <!-- Flickr Link -->
+        <h5 class="widget-title line-bottom">{!! __('messages.photos_gallery') !!}</h5>
+        <div class="owl-carousel-1col">
+            @forelse(get_photo_gallery(5) as $photo)
+                <div class="item">
+                    <img src="{{url($photo['path']."/300/".$photo['name'])}}"
+                         alt="{{$photo['title']}} - {{__('messages.ashraf')}}">
+                    <h4 class="title">{{$photo['title']}}</h4>
 
-            <!-- DEVELOPER WARNING: The Flickr badge code is likely to be deprecated, and we recommend changing to a new method to embed photo as soon as possible.  See https://www.flickr.com/api for information on how to access Flickr data. Thanks. -->
+                </div>
+            @empty
 
-            @forelse(get_photo_gallery(9) as $photo)
-                <div class="flickr_badge_image" id="flickr_badge_image1"><img
-                                src="{{ URL::asset($photo['url']) }}"
-                                alt="" title="" height="75"
-                                width="75"></div>
-                @empty
-
-            <div class="flickr_badge_image" id="flickr_badge_image2"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15485436268/"><img
-                            src="https://live.staticflickr.com/3945/15485436268_846ccca178_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image3"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15668911091/"><img
-                            src="https://live.staticflickr.com/3956/15668911091_4ef20118b5_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image4"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15484954949/"><img
-                            src="https://live.staticflickr.com/5605/15484954949_a4e97a9dc5_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image5"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15647103116/"><img
-                            src="https://live.staticflickr.com/7490/15647103116_1e4b9033f0_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image6"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15668909741/"><img
-                            src="https://live.staticflickr.com/5599/15668909741_eaf3db4054_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image7"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15670834825/"><img
-                            src="https://live.staticflickr.com/7544/15670834825_5f55bb7e4e_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image8"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15485435298/"><img
-                            src="https://live.staticflickr.com/3946/15485435298_7848e85e0a_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <div class="flickr_badge_image" id="flickr_badge_image9"><a
-                        href="https://www.flickr.com/photos/we-are-envato/15647100406/"><img
-                            src="https://live.staticflickr.com/3937/15647100406_34599445cf_s.jpg"
-                            alt="A photo on Flickr" title="Halloween 2014 at Envato in Melbourne" height="75"
-                            width="75"></a></div>
-            <span style="position:absolute;left:-999em;top:-999em;visibility:hidden" class="flickr_badge_beacon"><img
-                        src="https://geo.yahoo.com/p?s=792600102&amp;t=9202b86ee9014b880e5e68aef15b1e03&amp;r=http%3A%2F%2Fhtml.kodesolution.live%2Fj%2Fngopress%2Fv2.0%2Fdemo%2Fblog-single-left-sidebar.html&amp;fl_ev=0&amp;lang=en&amp;intl=de"
-                        width="0" height="0" alt=""></span>
             @endforelse
-
         </div>
     </div>
 </div>

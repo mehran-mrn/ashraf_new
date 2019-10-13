@@ -611,6 +611,7 @@ Route::group(
 
     //blog view
     Route::get('blog', 'globals\global_view@blog')->name('blog');
+    Route::get('TopPosts', 'globals\global_view@TopPosts')->name('TopPosts');
 
     Route::post('city/list', 'globals\global_controller@get_city_list')->name('get_city_list');
     Route::get('champion/{id}', 'globals\global_view@champion_show')->name('champion_show');

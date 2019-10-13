@@ -107,7 +107,7 @@
 
                                     <div class="card-body">
                                         {{json_decode($adv_card['value'],true)['title']}}
-                                        {{url(json_decode($adv_card['value'],true)['link'])}}
+                                        <b>{{json_decode($adv_card['value'],true)['link']}}</b>
                                         <br>
                                         <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
                                              modal-ajax-load"

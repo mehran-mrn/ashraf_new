@@ -61,7 +61,6 @@ class global_controller extends Controller
     {
         return $this->check_email_exists($request);
     }
-
     public function check_email(Request $request)
     {
         $email = null;

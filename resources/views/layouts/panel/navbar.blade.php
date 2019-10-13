@@ -2,7 +2,7 @@
 <div class="navbar navbar-expand-md navbar-dark">
     <div class="navbar-brand p-1">
         <a href="{{route('dashboard')}}" class="d-inline-block">
-            <img style="height: 2rem;" src="{{ URL::asset('/public/assets/global/images/logo-wide-white.png') }}"
+            <img style="height: 2rem;" src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png')}}"
                  alt="">
         </a>
     </div>
