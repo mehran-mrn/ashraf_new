@@ -57,7 +57,7 @@ class panel_view extends Controller
 
     public function users_list()
     {
-        $users = User::get();
+        $users = User::with('people')->get();
         return view('panel.user_manager.users_list', compact('users'));
     }
 
@@ -140,7 +140,7 @@ class panel_view extends Controller
         $categories = Permission::groupBy('category')->get(['category']);
         $categories_permissions = [];
         foreach ($categories as $category) {
-            $category_permissions = Permission::where('category', $category['category'])->get();
+            $category_permissions = Permission::where('category', $category['category'])->orderBy("id","ASC")->get();
             $categories_permissions[$category['category']] = $category_permissions;
         }
         return view('panel.user_manager.permissions_list', compact('categories_permissions'));
@@ -148,7 +148,8 @@ class panel_view extends Controller
 
     public function register_permission_form()
     {
-        return view('panel.user_manager.permission_register_form');
+        $categories = Permission::groupBy('category')->get(['category']);
+        return view('panel.user_manager.permission_register_form',compact('categories'));
     }
 
     public function roles_list()
@@ -181,6 +182,7 @@ class panel_view extends Controller
 
     public function permissions_team_list(Request $request)
     {
+        $teamInfo = Team::find($request['team_id']);
         $permissionRoles = Permission::with('roles')->find(1);
         $teams_roles = [];
         $teamForeignKey = Config::get('laratrust.foreign_keys.team');
@@ -190,7 +192,49 @@ class panel_view extends Controller
             }
 
         }
-        return view('panel.user_manager.teams_list_permissions', compact('teams_roles'));
+        return view('panel.user_manager.teams_list_permissions', compact('teams_roles', 'permissionRoles', 'teamInfo'));
+    }
+
+
+    public function role_edit(Role $id)
+    {
+        return view('panel.user_manager.role_edit', compact('id'));
+    }
+
+    public function team_edit(Team $id)
+    {
+        return view('panel.user_manager.team_edit', compact('id'));
+    }
+
+    public function role_update(Role $role)
+    {
+        $data = \request()->validate(
+            [
+                'name' => 'required|min:3',
+                'display_name' => 'required|min:3',
+                'description' => ''
+            ]
+        );
+        $role->update($data);
+        return back_normal(\request(), __('messages.item_updated'));
+    }
+
+    public function team_update(Team $team)
+    {
+        $data = \request()->validate(
+            [
+                'name' => 'required|min:3',
+                'display_name' => 'required|min:3',
+                'description' => ''
+            ]
+        );
+        $team->update($data);
+        return back_normal(\request(), __('messages.item_updated'));
+    }
+
+    public function users_list_info_edit(User $userInfo)
+    {
+        return view('panel.user_manager.index', compact('userInfo'));
     }
 //end users module
 
@@ -706,15 +750,15 @@ class panel_view extends Controller
     public function charity_champion_add()
     {
         $projects = building_project::where('archived', false)->get();
-        return view('panel.charity.setting.module.add_champion',compact('projects'));
+        return view('panel.charity.setting.module.add_champion', compact('projects'));
     }
 
 
     public function charity_payment_list_vow_show(Request $request)
     {
 
-        $info = charity_transaction::with('tranInfo','patern','user','values','gateway')->findOrFail($request['id']);
-        return view('panel.charity.pages.vow_show',compact('info'));
+        $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway')->findOrFail($request['id']);
+        return view('panel.charity.pages.vow_show', compact('info'));
     }
 //end charity module
 

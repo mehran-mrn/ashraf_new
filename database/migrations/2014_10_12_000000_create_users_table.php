@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('code_email')->nullable();
             $table->dateTime('code_email_send')->nullable();
             $table->string('avatar')->nullable();
-            $table->boolean('disabled')->nullable();
+            $table->boolean('disabled')->default(0);
             $table->integer('last_modifier')->nullable()->unsigned();
             $table->string('password');
             $table->rememberToken();

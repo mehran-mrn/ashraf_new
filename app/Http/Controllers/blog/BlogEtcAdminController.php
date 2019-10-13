@@ -171,6 +171,8 @@ class BlogEtcAdminController extends Controller
 
         $post->save();
         $post->categories()->sync($request->categories());
+        $post->specificPage()->sync($request->specificPage());
+
 
         Helpers::flash_message("Updated post");
         event(new BlogPostEdited($post));
@@ -197,6 +199,7 @@ class BlogEtcAdminController extends Controller
         // todo - delete the featured images?
         // At the moment it just issues a warning saying the images are still on the server.
 
+        return back_normal($post,['message'=>'ok']);
         return view("blog.blogetc_admin.posts.deleted_post")
             ->withDeletedPost($post);
 

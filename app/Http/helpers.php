@@ -37,7 +37,7 @@ function back_normal($request, $message = null)
     return back()->with('message', $message);
 }
 
-function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "", $table, $addOne = false)
+function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "", $table, $addOne = false, $description = false, $edit = false, $delete = false)
 {
     $html = '';
 //    $selects = Team::where('parent_id', $parent)->get();
@@ -60,10 +60,23 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "",
             }
             if ($addOne == true) {
                 $html .= '
-                    <a class="btn btn-sm" href="' . route('permissions_team_list', $select->id) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
+                    <a class="btn btn-sm" href="' . route('permissions_team_list', ['team_id' => $select->id]) . '" onclick="nestableRemove_' . $id . '(' . $select->id . ')">' . __('messages.show_permissions') . '</a>';
             }
+            if ($description == true) {
+                $html .= $select->description;
+            }
+            if ($edit == true) {
+                $html .= '
+                <button type="button" 
+                class="btn btn-sm btn-outline-dark modal-ajax-load"
+                data-ajax-link="' . $table . '/edit/' . $select->id . '" data-toggle="modal"
+                data-modal-title="' . trans('messages.edit', ['item' => trans('messages.role')]) . '"
+                data-target="#general_modal">' . trans('messages.edit') . '</button>';
+            }
+
+
             $html .= '</span></div>';
-            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table, $addOne);
+            $html .= NestableTableGetData($id, $select->id, $extra_float, $module, $table, $addOne, $description);
             $html .= '</li>';
         }
         $html .= '</ol>';
@@ -191,7 +204,7 @@ function file_saver($image_input, $folder = 'photos', $module = 'none', $custom_
     return $media_id;
 }
 
-function private_file_saver($file_input, $module="other",$title,$description="-")
+function private_file_saver($file_input, $module = "other", $title, $description = "-")
 {
 
     $year = jdate("Y", time(), '', '', 'en');
@@ -209,19 +222,19 @@ function private_file_saver($file_input, $module="other",$title,$description="-"
     if (!file_exists('storage/docs/' . $module . "/" . $year . "/" . $month)) {
         mkdir('storage/docs/' . $module . "/" . $year . "/" . $month, 0644, true);
     }
-    $destinationPath = 'storage/docs/' . $module . "/" . $year . "/" . $month. "/";
+    $destinationPath = 'storage/docs/' . $module . "/" . $year . "/" . $month . "/";
     $time = time();
-    $file_name = $time.rand(100000, 999999).$file_input->getClientOriginalName();
+    $file_name = $time . rand(100000, 999999) . $file_input->getClientOriginalName();
     $file_input->move($destinationPath, $file_name);
 
 
     $store_data = new  \App\uploaded_doc();
     $store_data->file_name = $file_name;
     $store_data->mime = $file_input->getClientOriginalExtension();
-    $store_data->path =$destinationPath;
-    $store_data->url =$destinationPath.$file_name;
-    $store_data->title =$title;
-    $store_data->description =$description;
+    $store_data->path = $destinationPath;
+    $store_data->url = $destinationPath . $file_name;
+    $store_data->title = $title;
+    $store_data->description = $description;
     $store_data->save();
 
     return $store_data->id;
@@ -375,6 +388,7 @@ function get_user($user_id)
     $user = \App\User::find($user_id);
     return $user;
 }
+
 function get_person($person_id)
 {
     $person = \App\person::find($person_id);
@@ -441,9 +455,10 @@ function get_caravans_status_text($status)
     }
     return $response;
 }
+
 function get_caravan_supervisor($caravan_id)
 {
-    $supervisors = \App\person_caravan::with('person')->where('caravan_id',$caravan_id)->where('parent_id',null)->get();
+    $supervisors = \App\person_caravan::with('person')->where('caravan_id', $caravan_id)->where('parent_id', null)->get();
     return $supervisors;
 
 }
@@ -646,15 +661,16 @@ function get_blog_categories()
     $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
     return $categories;
 }
-function get_option($option_name,$limit = 0,$random=false)
+
+function get_option($option_name, $limit = 0, $random = false)
 {
     $option_query = \App\blog_option::query();
     $option_query->where('name', $option_name);
 
-    if ($random){
+    if ($random) {
         $option_query->inRandomOrder();
     }
-    if ($limit){
+    if ($limit) {
         $option_query->limit($limit);
     }
     $options = $option_query->get();
@@ -722,11 +738,9 @@ function get_video_gallery($limit = 1, $random = false, $video_id = [])
     }
     if ($limit == 1) {
         $response = $response_query->first();
-    }
-    elseif ($limit == 0){
+    } elseif ($limit == 0) {
         $response = $response_query->paginate(25);
-    }
-    else {
+    } else {
         $response_query->limit($limit);
         $response = $response_query->get();
     }
@@ -744,7 +758,7 @@ function uploadGallery($file, $folder = 'photos', $additional = ['category_id' =
     if (!file_exists('public/images')) {
         mkdir('public/images', 0775, true);
     }
-    if (!file_exists('public/images/'. $folder)) {
+    if (!file_exists('public/images/' . $folder)) {
         mkdir('public/images/' . $folder, 0775, true);
     }
     if (!file_exists('public/images/' . $folder . "/" . $year)) {
@@ -808,16 +822,17 @@ function uploadFile($file, $folder = 'files')
 
 function has_caravan()
 {
-    if (Auth::check() and \App\caravan::where('duty',\auth()->id())->whereIn('status',['1','2','3','4'])->exists()) {
+    if (Auth::check() and \App\caravan::where('duty', \auth()->id())->whereIn('status', ['1', '2', '3', '4'])->exists()) {
         return true;
     }
     return null;
 }
-function notification_messages($module,$key,$variables=[])
+
+function notification_messages($module, $key, $variables = [])
 {
-    $message = \App\notification_template::where('module',$module)->where('key',$key)->first();
-    foreach ($variables as $name=>$variable){
-        $message['text'] = preg_replace("/({( )*".$name."( )*})/", $variable, $message['text']);
+    $message = \App\notification_template::where('module', $module)->where('key', $key)->first();
+    foreach ($variables as $name => $variable) {
+        $message['text'] = preg_replace("/({( )*" . $name . "( )*})/", $variable, $message['text']);
     }
     return $message;
 }

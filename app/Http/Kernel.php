@@ -65,8 +65,13 @@ class Kernel extends HttpKernel
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
-        'global_auth'=>\App\Http\Middleware\global_auth::class
+        'global_auth'=>\App\Http\Middleware\global_auth::class,
         // REDIRECTION MIDDLEWARE
+        //LaraTrust
+        'role' => \Laratrust\Middleware\LaratrustRole::class,
+        'permission' => \Laratrust\Middleware\LaratrustPermission::class,
+        'ability' => \Laratrust\Middleware\LaratrustAbility::class,
+        //LaraTrust
         ];
 
     /**

@@ -197,8 +197,10 @@ $post['posted_at']!=""?miladi_to_shamsi_date($post->posted_at,'','',true):''}}"
                     @forelse(\WebDevEtc\BlogEtc\Models\BlogEtcSpecificPages::orderBy("category_name","asc")->limit(1000)->get() as $category)
                         <div class="col-sm-6">
                             <input class="custom-checkbox custom-control-inline" type="checkbox" value="1"
-                                   @if(old("page.".$category->id, $post->categories->contains($category->id))) checked='checked'
-                                   @endif name='page[{{$category->id}}]' id="page_check{{$category->id}}">
+                                   @if(old("page.".$category->id, $post->specificPage->contains($category->id)))
+                                   checked='checked'
+                                   @endif
+                                   name='page[{{$category->id}}]' id="page_check{{$category->id}}">
                             <label class="form-check-label" for="page_check{{$category->id}}">
                                 {{$category->category_name}}
                             </label>

@@ -214,7 +214,8 @@
                                     <div class="form-group">
                                         <label for="amount">{{__('messages.birth_date')}}</label>
                                         <input id="birthday" type="text" class="form-control"
-                                               name="birthday" value="{{jdate("Y-m-d",strtotime($userInfo['people']['birth_date']))}}"
+                                               name="birthday"
+                                               value="@if($userInfo['people']['birth_date']){{jdate("Y-m-d",strtotime($userInfo['people']['birth_date']))}}@endif"
                                                autocomplete="capacity">
                                     </div>
                                 </div>

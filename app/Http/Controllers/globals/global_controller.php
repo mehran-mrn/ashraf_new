@@ -454,8 +454,6 @@ class global_controller extends Controller
 
     public function global_profile_completion_submit(Request $request)
     {
-
-
         $con = true;
         if ($request['birthday']) {
             $request['birthday'] = shamsi_to_miladi($request['birthday']);
