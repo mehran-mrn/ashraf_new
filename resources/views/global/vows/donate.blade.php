@@ -152,32 +152,15 @@
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4">
                         <h3 class="mt-0 line-bottom">{{__('messages.cooperation')}}</h3>
-                        <div class="m-30 text-justify">{!! $patern['description']!!}</div>
                         <div class="testimonial style1 owl-carousel-1col owl-nav-top">
                             <div class="item">
                                 <div class="comment bg-theme-colored">
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است.</p>
+                                    {!! $patern['description']!!}
                                 </div>
                                 <div class="content mt-20">
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="comment bg-theme-colored">
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است.</p>
-                                </div>
-                                <div class="content mt-20">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="comment bg-theme-colored">
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است.</p>
-                                </div>
-                                <div class="content mt-20">
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 <!-- Divider: Funfact -->
 <section class="divider parallax layer-overlay overlay-theme-colored-9" data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg24.jpg') }}" data-parallax-ratio="0.7">
-    <div class="container pt-30 pb-30">
+    <div class="container pt-15 pb-15">
         <div class="row">
             @forelse(get_option('display_statistic',4,true) as $statistic)
                 <div class="col-xs-6 col-sm-3 col-md-3 mb-md-20">
