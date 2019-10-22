@@ -45,10 +45,10 @@ class faqController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'question' => 'required',
-            'answer' => 'required',
-            'local' => 'required',
-        ]);
+        'question' => 'required',
+        'answer' => 'required',
+        'local' => 'required',
+    ]);
 
         $value =[
             'question'=>$request['question'],

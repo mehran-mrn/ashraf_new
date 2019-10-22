@@ -124,7 +124,7 @@
                                 <li><a  href="{{route('video_gallery')}}">{{__('messages.videos')}}</a></li>
                             </ul>
                             </li>
-                        <li><a class="text-white-f6" href="{{route('blog')}}">{{trans('messages.blog')}}</a>
+                        <li><a class="text-white-f6" href="#">{{trans('messages.blog')}}</a>
                             <ul class="dropdown">
                                 @foreach($menu_blog as $m_b)
                                     <li><a href="{{route('blogetc.view_category',['categorySlug'=>$m_b['slug']])}}">{{$m_b['category_name']}}</a>

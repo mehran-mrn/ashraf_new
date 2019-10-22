@@ -20,9 +20,8 @@ Route::get('/clear-cache', function () {
     return "Cache is cleared";
 });
 Route::get('/test', function () {
-    $name = 'Krunal';
-    Mail::to('mehranmarandi90@gmail.com')->send(new \App\Mail\payment_confirmation($name));
-    return 'sent';
+
+
 });
 //Auth::routes();
 // Authentication Routes...

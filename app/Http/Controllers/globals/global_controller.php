@@ -469,6 +469,17 @@ class global_controller extends Controller
                 $user->save();
             }
         }
+        if ($request['username']) {
+            $user = User::find(Auth::id());
+            if (!$user->name) {
+                $this->validate($request, [
+                    'username' => 'required|string|alpha_dash|max:255|unique:users,name|regex:/(^([a-zA-Z0-9]+)?$)/u',
+                ]);
+                $user->name = $request['username'];
+                $user->save();
+            }
+
+        }
         $message = '';
         if ($con) {
             if ($person = person::where('user_id', '=', Auth::id())->first()) {

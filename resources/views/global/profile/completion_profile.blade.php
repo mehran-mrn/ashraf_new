@@ -80,7 +80,6 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            console.log(data)
 
                             if (data.message.status === 200) {
                                 PNotify.success({
@@ -185,9 +184,18 @@
                                 </div>
                                 <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
+                                        <label for="form_username">{{__('messages.username')}}
+                                        </label>
+                                        <input id="form_username" name="username" class="form-control " {{$userInfo['name'] ? "readonly" :""}}
+                                               type="text" placeholder="{{__('messages.username')}}"
+                                               value="{{$userInfo['name']}}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="form-group">
                                         <label for="form_email">{{__('messages.email')}}
                                         </label>
-                                        <input id="form_email" name="email" class="form-control email"
+                                        <input id="form_email" name="email" class="form-control email" {{$userInfo['email'] ? "readonly" :""}}
                                                type="email" placeholder="{{__('messages.enter_email')}}"
                                                value="{{$userInfo['email']}}">
                                     </div>
@@ -195,7 +203,7 @@
                                 <div class="col-xs-12 col-md-4">
                                     <div class="form-group">
                                         <label for="form_phone">{{__('messages.phone')}}</label>
-                                        <input id="form_phone" name="phone" class="form-control" type="number"
+                                        <input id="form_phone" name="phone" class="form-control" type="number" {{$userInfo['number'] ? "readonly" :""}}
                                                placeholder="02122113344"
                                                maxlength="11"
                                                value="{{$userInfo['people']['phone']}}">
