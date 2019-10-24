@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\globals;
 
+use App\blog;
 use App\blog_option;
 use App\blog_slider;
 use App\caravan;
@@ -156,7 +157,7 @@ class global_view extends Controller
     {
         $provinces = city::all();
         $userInfo = User::with('addresses')->findOrFail(Auth::id());
-        return view('global.profile.addresses',compact('userInfo','provinces'));
+        return view('global.profile.addresses', compact('userInfo', 'provinces'));
     }
 
     public function send_sms()
@@ -211,7 +212,7 @@ class global_view extends Controller
     public function store_order()
     {
         $tran = setting_transportation::where('status', "active")->get();
-        $userInfo = User::with('addresses','people')->findOrFail(Auth::id());
+        $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
         $provinces = city::where('parent', 0)->get();
         return view('global.store.order', compact('tran', 'userInfo', 'provinces'));
     }
@@ -360,7 +361,7 @@ class global_view extends Controller
     {
         $this->middleware(UserCanManageBlogPosts::class);
 
-        $posts =  get_posts(null,['last_post'],[],15);
+        $posts = get_posts(null, ['last_post'], [], 15);
 
         return view("global.blog", ['posts' => $posts]);
     }
@@ -499,5 +500,11 @@ class global_view extends Controller
     public function reset_password()
     {
         return view('auth.passwords.email');
+    }
+
+    public function weblist()
+    {
+        $list = BlogEtcPost::all();
+        return response()->json($list);
     }
 }

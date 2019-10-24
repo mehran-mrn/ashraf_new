@@ -53,6 +53,14 @@ class charity extends Controller
             'payment_pattern_id' => 'nullable|exists:charity_payment_paterns,id',
             'title' => 'required|max:150',
         ]);
+        $min = 0;
+        $max = 0;
+        if ($request['min']) {
+            $min = str_replace(',', '', $request['min']);
+        }
+        if ($request['max']) {
+            $max = str_replace(',', '', $request['max']);
+        }
         if ($request['payment_pattern_id']) {
             $payment_pattern = charity_payment_patern::find($request['payment_pattern_id']);
         } else {
@@ -60,8 +68,8 @@ class charity extends Controller
         }
         $payment_pattern->title = $request['title'];
         $payment_pattern->description = $request['description'];
-        $payment_pattern->min = $request['min'] or null;
-        $payment_pattern->max = $request['max'] or null;
+        $payment_pattern->min = $min;
+        $payment_pattern->max = $max;
         $payment_pattern->type = "vow";
         $payment_pattern->save();
 

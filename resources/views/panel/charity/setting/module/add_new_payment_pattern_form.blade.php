@@ -1,18 +1,4 @@
 <?php $rand_id = rand(1, 8000); ?>
-<script>
-    $(document).ready(function () {
-
-        CKEDITOR.replace('description', {
-            language: 'fa',
-            uiColor: '#9AB8F3',
-            extraPlugins: 'filebrowser',
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
-        });
-    });
-</script>
 <form method="POST" id="" class="form-ajax-submit" action="{{route('charity_payment_pattern_add')}}"
       autocomplete="off">
     @csrf
@@ -28,13 +14,18 @@
                            value="{{$payment_pattern['title'] }}" autocomplete="title" autofocus>
                 </div>
                 <div class="col-md-6">
-                    <label class="col-form-label text-md-right" for="min">{{trans('messages.min')}}</label>
-                    <input class="form-control price" type="number" min="100" max="900000000" name="min"
-                           value="{{$payment_pattern['min'] }}">
+                    <label class="col-form-label text-md-right" for="min">{{trans('messages.min')}}
+                        <small class="text-danger">({{__('messages.rial')}})</small>
+                    </label>
+                    <input class="form-control price" type="text" min="10000" max="900000000" name="min"
+                           value="{{number_format($payment_pattern['min']) }}">
                 </div>
                 <div class="col-md-6">
-                    <label class="col-form-label text-md-right" for="max">{{trans('messages.max')}}</label>
-                    <input class="form-control" type="number" name="max" value="{{$payment_pattern['max'] }}">
+                    <label class="col-form-label text-md-right" for="max">{{trans('messages.max')}}
+                        <small class="text-danger">({{__('messages.rial')}})</small>
+                    </label>
+                    <input class="form-control price" type="text" name="max"
+                           value="{{number_format($payment_pattern['max']) }}">
                 </div>
                 <div class="col-md-12">
                     <div class="card bordered border-slate-800 mt-4">
@@ -113,9 +104,18 @@
 </form>
 <script>
     $(document).ready(function () {
+
+        CKEDITOR.replace('description', {
+            language: 'fa',
+            uiColor: '#9AB8F3',
+            extraPlugins: 'filebrowser',
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+        });
         $(".add-field").on('click', function () {
             var x = +$("#randomNumber").val() + 1;
-
 
             $(".field-box").append(
                 '<div class="row pb-1 pt-1 counter-row-' + x + '">' +
@@ -148,8 +148,9 @@
         })
     });
 
+
     function removeRow(x) {
         var rowID = x;
         $(".counter-row-" + rowID).remove();
-    };
+    }
 </script>
