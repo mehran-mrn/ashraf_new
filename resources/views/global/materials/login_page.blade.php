@@ -29,13 +29,13 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="name">{{__('messages.email_or_mobile')}}</label>
-                                    <input id="name" name="name" class="form-control" type="text">
+                                    <input id="name" name="name" dir="ltr" class="form-control" type="text">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="password">{{__('messages.password')}}</label>
-                                    <input id="password" name="password" class="form-control" type="text">
+                                    <input id="password" name="password" dir="ltr" class="form-control" type="password">
                                 </div>
                                 <div class="form-group col-md-12 col-xs-12">
                                     <div class="checkbox pull-right mt-15">
