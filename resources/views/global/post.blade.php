@@ -36,7 +36,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <b class="mb-20 mt-15">{{$post['subtitle']}}</b>
                                     <hr>
                                     <div class="text-justify m-10">
                                         {!! $post->post_body_output() !!}

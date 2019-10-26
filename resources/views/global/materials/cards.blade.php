@@ -18,7 +18,7 @@
                 ?>
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="causes bg-white maxwidth500 mb-30">
-                        <div class="thumb">
+                        <div class="thumb thumb-campaign">
                             <img src="{{$champion->image['path']}}/300/{{$champion->image['name']}}" alt=""
                                  class="img-fullwidth">
                             <div class="overlay-donate-now">

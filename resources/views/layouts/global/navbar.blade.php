@@ -94,17 +94,12 @@
                         <li><a class="text-white-f6" href="#home">{{trans('messages.cooperation')}}</a>
                             <ul class="dropdown">
                                 <li><a href="{{route('global_shop')}}">{{__("messages.tableau_and_wreath")}}</a></li>
-                                <li><a href="#">{{__("messages.vows")}}</a>
-                                    <ul class="dropdown">
-
-                                        @foreach($menu as $m)
-                                            @if($m['type']=="vow")
-                                                <li><a href="{{route('vows',['id'=>$m['id']])}}">{{$m['title']}}</a>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                @foreach($menu as $m)
+                                    @if($m['type']=="vow")
+                                        <li><a href="{{route('vows',['id'=>$m['id']])}}">{{$m['title']}} </a>
+                                        </li>
+                                    @endif
+                                @endforeach
                                 <li><a href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
                                 <li><a href="{{route('vow_periodic')}}">{{__("messages.Periodic_assistance")}}</a></li>
                             </ul>

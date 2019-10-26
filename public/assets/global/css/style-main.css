@@ -2854,6 +2854,9 @@ form .error {
   position: relative;
   overflow: hidden;
 }
+.causes .thumb-campaign {
+  height: 300px;
+}
 .causes .thumb img {
   transition: all 500ms ease 0s;
 }

@@ -1,6 +1,6 @@
 <section  class="divider parallax layer-overlay overlay-theme-colored-2"  data-bg-img="{{ URL::asset('/public/assets/global/images/bg/bg25.jpg') }}"
          data-parallax-ratio="0.7"
-         style="background-image: url({{URL::asset('/public/assets/global/images/bg/bg12.jpg')}}); background-position: 50% 177px;">
+         style="background-image: url({{URL::asset('/public/assets/global/images/bg/bg12.jpg')}}); background-position: 50% 177px;" >
     <div class="container pt-15 pb-15" >
         <div class="row">
             <div class="col-md-5">
@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-7">
                 <div class="fluid-video-wrapper mt-sm-60">
-                    <div class="fluid-width-video-wrapper" style="padding-top: 55.8824%;">
+                    <div class="fluid-width-video-wrapper" style="padding-top: 55.8824%;" >
                         {!!$video['iframe']!!}
                     </div>
                 </div>

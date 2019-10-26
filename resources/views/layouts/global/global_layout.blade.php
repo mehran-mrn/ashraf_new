@@ -63,7 +63,7 @@
           href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=2"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
-    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=6" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=8" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
     <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Custom Margin Padding Collection -->
