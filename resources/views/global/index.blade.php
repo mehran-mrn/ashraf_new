@@ -6,20 +6,8 @@
     <!-- Start main-content -->
     <div class="main-content">
 
-        @include('global.materials.slider')
-        @include('global.materials.home_boxes')
-
-        @include('global.materials.upcoming_events')
-        @include('global.materials.counter')
-
-        {{--    @include('global.materials.our_mission')--}}
-        {{--    @include('global.materials.wide_banner')--}}
-        @include('global.materials.cards',['champions'=>$champions])
-        @include('global.materials.gallery')
-        @include('global.materials.video_gallery')
-
-        @include('global.materials.blog_cards')
-        @include('global.materials.clients')
+        <?php $page =  App\page::index_page(app()->getLocale()) ?>
+        {!! DbView::make($page)->render() !!}
 
     </div>
     <!-- end main-content -->

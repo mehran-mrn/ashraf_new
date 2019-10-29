@@ -1,5 +1,5 @@
+<?php $sliders = App\blog_slider::get(); ?>
 
-<body style="padding:0px; margin:0px; background-color:#fff;font-family:arial,helvetica,sans-serif,verdana,'Open Sans'">
 
 <!-- #region Jssor Slider Begin -->
 <!-- Generator: Jssor Slider Maker -->
@@ -160,4 +160,3 @@
 </div>
 <script type="text/javascript">jssor_1_slider_init();</script>
 <!-- #endregion Jssor Slider End -->
-</body>

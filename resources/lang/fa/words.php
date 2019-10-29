@@ -16,5 +16,9 @@ return array (
   'variables' => 'متغییر ها',
   'question' => 'سوال',
   'answer' => 'پاسخ',
+  'page' => 'صفحه',
+  'pages' => 'صفحات',
+  'code' => 'کد',
+  'accessible' => 'قابلیت دسترسی',
 
 );

@@ -424,7 +424,6 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
 
             });
 
-
             Route::group(['prefix' => 'specific_page'], function () {
 
                 Route::get('/',
@@ -453,6 +452,7 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
 
         });
     });
+    Route::resource('pages', 'panel\pagesController');
 
     //======================================
     //-----------End Panel View------------

@@ -44,11 +44,7 @@ class global_view extends Controller
 
     public function index()
     {
-        $sliders = blog_slider::get();
-        $categories = BlogEtcCategory::orderBy("category_name")->get();
-
-        $champions = charity_champion::with('image')->get();
-        return view('global.index', compact('sliders', 'categories', 'champions'));
+        return view('global.index');
     }
 
     public function faq()

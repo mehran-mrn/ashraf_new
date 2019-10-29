@@ -120,7 +120,7 @@ if (!isset($active_sidbare)) {
                                 <li class="nav-item {{in_array("all_blog_categories", $active_sidbare) ? ' nav-item-open' : '' }}"><a href="{{ route('blogetc.admin.categories.index') }}"
                                                         class="nav-link ">{{trans('messages.all_blog_categories')}}</a>
                                 </li>
-                                
+
                             </ul>
                         </li>
 
@@ -134,9 +134,12 @@ if (!isset($active_sidbare)) {
                                 style="display:{{in_array("blog_Specific_page", $active_sidbare) ? 'block' : 'none' }}">
                                 <li class="nav-item {{in_array("list", $active_sidbare) ? ' nav-item-open' : '' }}">
                                     <a href="{{ route('blogetc.admin.SpecificPages.index') }}"
-                                       class="nav-link ">{{trans('messages.specific_page_list')}}</a>
+                                       class="nav-link ">{{trans('messages.specific_categories_list')}}</a>
                                 </li>
-
+                                <li class="nav-item {{in_array("pages", $active_sidbare) ? ' nav-item-open' : '' }}">
+                                    <a href="{{ route('pages.index') }}"
+                                       class="nav-link ">{{trans('messages.pages_list')}}</a>
+                                </li>
                             </ul>
                         </li>
 

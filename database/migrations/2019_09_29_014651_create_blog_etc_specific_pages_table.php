@@ -36,8 +36,8 @@ class CreateBlogEtcSpecificPagesTable extends Migration
             $table->unsignedInteger("blog_etc_post_id")->index();
             $table->foreign('blog_etc_post_id')->references('id')->on('blog_etc_posts')->onDelete("cascade");
 
-            $table->unsignedInteger("blog_etc_page_specific_page_id")->index();
-            $table->foreign('blog_etc_page_specific_page_id')->references('id')->on('blog_etc_specific_pages')->onDelete("cascade");
+            $table->unsignedInteger("blog_etc_specific_page_id")->index();
+            $table->foreign('blog_etc_specific_page_id')->references('id')->on('blog_etc_specific_pages')->onDelete("cascade");
         });
 
     }

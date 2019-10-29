@@ -100,7 +100,7 @@
                                 }
                                 myDropzone.processQueue();
                             }
-                        })
+                        });
                         this.on('sending', function (file, xhr, formData) {
 
                             var data = $('#frm_add_champion').serializeArray();

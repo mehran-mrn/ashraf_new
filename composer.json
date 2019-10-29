@@ -21,6 +21,7 @@
         "barryvdh/laravel-translation-manager": "^0.5.3",
         "econea/nusoap": "^0.9.6",
         "fideloper/proxy": "^4.0",
+        "flynsarmy/db-blade-compiler": "^5.5",
         "intervention/image": "^2.4",
         "kim/activity": "^1.1",
         "larabook/gateway": "^3.3",
@@ -33,11 +34,11 @@
         "pishran/laravel-persian-slug": "^1.0",
         "santigarcor/laratrust": "5.0.*",
         "unisharp/laravel-filemanager": "v2.0.0-alpha8",
-        "webdevetc/blogetc": "dev-patch-1"
+        "webdevetc/blogetc": "dev-patch-1",
+        "wpb/string-blade-compiler": "3.8"
     },
 
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
         "doctrine/dbal": "^2.9",
         "filp/whoops": "^2.0",
@@ -88,9 +89,7 @@
             "php artisan key:generate"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
         "meta": [
             "php artisan optimize"

@@ -843,3 +843,11 @@ function notification_messages($module, $key, $variables = [])
     return $message;
 }
 
+function get_all_locals(){
+    $locales = array_merge([config('app.locale')],
+        \Barryvdh\TranslationManager\Models\Translation::groupBy('locale')->pluck('locale')->toArray());
+
+    $locales = array_unique($locales);
+    return $locales;
+}
+
