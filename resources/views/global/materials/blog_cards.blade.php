@@ -17,7 +17,7 @@
                             <div class="entry-header">
                                 @if($news['image_large'])
                                     <div class="post-thumb thumb">
-                                        <img src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']}}"
+                                        <img src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}"
                                              alt="" class="img-responsive img-fullwidth">
                                     </div>
                                 @endif

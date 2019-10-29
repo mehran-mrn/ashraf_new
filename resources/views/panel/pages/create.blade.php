@@ -1,16 +1,5 @@
 @extends('layouts.panel.panel_layout')
-@section('js')
-    <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-            CKEDITOR.replace('content', {
-                language: 'fa',
-                uiColor: '#9AB8F3',
-            });
-        });
 
-    </script>
-@stop
 @section('content')
     <?php
     $active_sidbare = ['blog', 'blog_Specific_page', 'pages']
@@ -92,7 +81,7 @@
                             <label for="locals" class="font-size-lg text-info-800 label ">
                                 {{trans('words.code')}}
                             </label>
-                            <textarea class="form-control border-info-800" name="content" id="content" cols="40"
+                            <textarea class="form-control border-info-800" dir="ltr" name="content" id="content" cols="40"
                                       rows="10"></textarea>
                         </div>
 

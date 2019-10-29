@@ -81,7 +81,7 @@
                             <label for="content2" class="font-size-lg text-info-800 label ">
                                 {{trans('words.code')}}
                             </label>
-                            <textarea class="form-control border-info-800" name="content" id="content2" cols="40"
+                            <textarea class="form-control border-info-800" dir="ltr" name="content" id="content2" cols="40"
                                       rows="10">
                                 {!! $page['content']  !!}
                             </textarea>

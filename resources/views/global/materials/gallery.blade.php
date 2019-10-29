@@ -232,9 +232,10 @@
                             <div class="testimonial media sm-maxwidth400 p-15 mt-0 mb-15">
                                 <div class="pt-10">
                                     <div class="thumb pull-left mb-0 mr-0 pr-20">
+                                        <?php $g_image =get_photo_gallery(1,false,true,[$gallery['id']]);?>
                                         <img width="75" class="img-rounded"
                                              alt="{{$gallery['title']}} - {{__('messages.ashraf')}}"
-                                             src="{{ URL::asset(get_photo_gallery(1,false,true,[$gallery['id']])['url']) }}">
+                                             src="{{ URL::asset($g_image['path'])."/300/".$g_image['name'] }}">
                                     </div>
                                     <div class="ml-100 ">
                                         <h5 class="font-weight-600 font-16 text-green-400">

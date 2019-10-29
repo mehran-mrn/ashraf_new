@@ -1,8 +1,13 @@
 <!-- Header -->
+<style >
+    .menuzord-menu > li{
+        padding: 14px 0 !important;
+    }
+</style>
 <header id="header" class="header">
     <div class="header-top p-0 text-black bg-silver-light xs-text-center"
          data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
-        <div class="container pt-20 pb-20">
+        <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border m-0">
