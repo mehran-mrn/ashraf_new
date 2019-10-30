@@ -249,14 +249,16 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
         Route::post('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\charity@charity_payment_pattern_add')->name('charity_payment_pattern_add');
         Route::post('charity_payment_pattern_delete/{payment_pattern_id}', 'panel\charity@charity_payment_pattern_delete')->name('charity_payment_pattern_delete');
         Route::get('payment_list/', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
+        Route::get('period/list', 'panel\panel_view@charity_period_list')->name('charity_period_list');
         Route::get('payment_list/vow/show/{id}', 'panel\panel_view@charity_payment_list_vow_show')->name('charity_payment_list_vow_show');
         Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
         Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');
         Route::post('periods/show/approve/{id}', 'panel\charity@charity_payment_approve')->name('charity_payment_approve');
         Route::get('charity/champion/add', 'panel\panel_view@charity_champion_add')->name('charity_champion_add');
         Route::post('charity/champion/add/store', 'panel\charity@charity_champion_add_store')->name('charity_champion_add_store');
-
-
+        Route::post('charity/champion/delete/{id}', 'panel\charity@charity_champion_delete')->name('charity_champion_delete');
+        Route::get('charity/champion/edit/{id}', 'panel\panel_view@charity_champion_edit')->name('charity_champion_edit');
+        Route::post('charity/champion/update', 'panel\charity@charity_champion_update')->name('charity_champion_update');
     });
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'panel\panel_view@register_form')->name('panel_register_form');
@@ -616,6 +618,8 @@ Route::group(
     Route::get('champion/{id}', 'globals\global_view@champion_show')->name('champion_show');
     Route::post('champion/payment', 'globals\global_controller@champion_payment')->name('champion_payment');
     Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
+
+
 
 
     Route::get('payment/{type}/{id}/', 'globals\global_view@payment')->name('payment');

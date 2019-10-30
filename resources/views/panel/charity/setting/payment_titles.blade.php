@@ -467,8 +467,64 @@ $active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']
                                     </div>
                                     <hr>
                                     <a href="{{route('charity_champion_add')}}"
-                                       class="btn btn-primary m-2 py-2 px-3 ">{{__('messages.add_champion')}}
+                                       class="btn btn-primary m-2 py-2 px-3 col-2 ">{{__('messages.add_champion')}}
                                     </a>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            @foreach($champions as $champion)
+                                                <div class="col-4">
+                                                    <div class="card">
+                                                        <img class="card-img-top" src="@if($champion['image']['url']) /{{$champion['image']['url']}} @else{{url(asset('public/assets/panel/images/b-pattern.png'))}}@endif"
+                                                             alt="" height="300">
+                                                        <div class="card-header bg-light">
+                                                            <span class="card-title">{{$champion['title']}}</span>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <h6 class="text-center">{{$champion['description_small']}}</h6>
+                                                                </div>
+                                                                <div class="col-12 text-center">
+                                                                    <span>{{__('messages.target_amount')}}</span>
+                                                                    <strong>{{number_format($champion['target_amount'])}} {{__('messages.rial')}}</strong>
+                                                                    <hr>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <span>{{__('messages.start_date')}}</span>
+                                                                    <strong dir="ltr">{{jdate("Y-m-d",strtotime($champion['start_date']))}}</strong>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <span>{{__('messages.end_date')}}</span>
+                                                                    <strong dir="ltr">{{jdate("Y-m-d",strtotime($champion['end_date']))}}</strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <div class="btn-group float-right">
+
+                                                                <button type="button"
+                                                                        class="btn btn-sm btn-danger swal-alert"
+                                                                        data-ajax-link="{{route('charity_champion_delete',['id'=>$champion['id']])}}"
+                                                                        data-method="POST"
+                                                                        data-csrf="{{csrf_token()}}"
+                                                                        data-title="{{trans('messages.delete_item',['item'=>trans('messages.champion')])}}"
+                                                                        data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.champion')])}}"
+                                                                        data-type="warning"
+                                                                        data-cancel="true"
+                                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                                    {{__('messages.delete')}}
+                                                                </button>
+
+                                                                <a href="{{route('charity_champion_edit',['id'=>$champion['id']])}}"
+                                                                   class="btn btn-sm btn-info">{{__("messages.edit")}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

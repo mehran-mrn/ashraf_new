@@ -15,6 +15,7 @@ use App\building_user;
 use App\caravan_doc;
 use App\caravan_host;
 use App\category;
+use App\charity_champion;
 use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
@@ -38,6 +39,7 @@ use App\store_product;
 use App\Team;
 use App\User;
 use App\caravan;
+use App\users_address;
 use App\video_gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -45,6 +47,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Laratrust\Models\LaratrustPermission;
 use Laratrust\Models\LaratrustRole;
+use phpDocumentor\Reflection\Types\Array_;
 
 class panel_view extends Controller
 {
@@ -140,7 +143,7 @@ class panel_view extends Controller
         $categories = Permission::groupBy('category')->get(['category']);
         $categories_permissions = [];
         foreach ($categories as $category) {
-            $category_permissions = Permission::where('category', $category['category'])->orderBy("id","ASC")->get();
+            $category_permissions = Permission::where('category', $category['category'])->orderBy("id", "ASC")->get();
             $categories_permissions[$category['category']] = $category_permissions;
         }
         return view('panel.user_manager.permissions_list', compact('categories_permissions'));
@@ -149,7 +152,7 @@ class panel_view extends Controller
     public function register_permission_form()
     {
         $categories = Permission::groupBy('category')->get(['category']);
-        return view('panel.user_manager.permission_register_form',compact('categories'));
+        return view('panel.user_manager.permission_register_form', compact('categories'));
     }
 
     public function roles_list()
@@ -698,8 +701,15 @@ class panel_view extends Controller
         $deleted_titles = charity_payment_title::where('ch_pay_pattern_id', $system_title['id'])->onlyTrashed()->get();
         $other_titles = charity_payment_patern::with('titles')->with('fields')->where('system', 0)->where('periodic', 0)->get();
         $champion_titles = charity_payment_patern::with('titles')->where('type', '=', 'champion')->first();
+        $champions = charity_champion::with('image')->where('status', '=', 1)->get();
         $banks = bank::groupBy('name')->get();
-        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles', 'champion_titles', 'banks'));
+        return view('panel.charity.setting.payment_titles', compact('periodic_title', 'system_title', 'other_titles', 'deleted_titles', 'champion_titles', 'banks', 'champions'));
+    }
+
+
+    public function charity_period_list()
+    {
+        return view('panel.charity.period.list');
     }
 
     public function charity_payment_title_add($payment_pattern_id, $payment_title_id = null)
@@ -759,6 +769,16 @@ class panel_view extends Controller
 
         $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway')->findOrFail($request['id']);
         return view('panel.charity.pages.vow_show', compact('info'));
+    }
+
+
+    public function charity_champion_edit($id)
+    {
+
+        if ($champion = charity_champion::with('tag', 'image', 'projects')->find($id)) {
+            $projects = building_project::where('archived', false)->get();
+            return view('panel.charity.setting.module.edit_champion', compact('champion', 'projects'));
+        };
     }
 //end charity module
 
@@ -943,6 +963,6 @@ class panel_view extends Controller
             ])->get();
         return view('panel.gallery.view', compact('medias', 'catInfo'));
     }
-//end store module
 
+//end store module
 }

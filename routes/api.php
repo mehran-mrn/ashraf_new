@@ -16,5 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/blog', 'globals\global_view@weblist')->name('blog');
+Route::get('/blog/slider', 'app\api@blogSlider')->name('blogSlider');
+Route::get('/blog/list', 'app\api@blogList')->name('blogList');
 

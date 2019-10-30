@@ -288,6 +288,13 @@ if (!isset($active_sidbare)) {
                         <li class="nav-item"><a href="{{route('charity_payment_list')}}"
                                                 class="nav-link {{in_array("charity_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_list')}}</a>
                         </li>
+
+
+                        <li class="nav-item"><a href="{{route('charity_period_list')}}"
+                                                class="nav-link {{in_array("charity_period", $active_sidbare) ? 'active' : '' }}">{{trans('messages.period_payment_list')}}</a>
+                        </li>
+
+
                         <li class="nav-item"><a href="{{route('building_types')}}"
                                                 class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.request_hook')}}</a>
                         </li>

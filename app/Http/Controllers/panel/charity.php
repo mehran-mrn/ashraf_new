@@ -186,4 +186,83 @@ class charity extends Controller
         $return = trans('messages.item_created');
         return back_normal($request, ['message' => $return, 'status' => 200]);
     }
+
+    public function charity_champion_delete(Request $request)
+    {
+        if (isset($request['id']) && $champion = charity_champion::find($request['id'])) {
+            $champion->status = 0;
+            $champion->save();
+            $return = trans('messages.item_deleted', ['item' => trans('messages.champion')]);
+        } else {
+            $return = __("messages.not_found_any_data");
+        }
+        return back_normal($request, $return);
+    }
+
+    public function charity_champion_update(Request $request)
+    {
+        $this->validate($request,
+            [
+                'title' => 'required|min:3|max:254|string',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'target' => 'required',
+                'small_description' => 'required|string',
+                'file' => 'required',
+                'status' => 'required'
+            ]);
+        $request['target'] = str_replace(',', '', $request['target']);
+        $startDate = shamsi_to_miladi($request['start_date']);
+        $endDate = shamsi_to_miladi($request['end_date']);
+        $champion = charity_champion::find($request['id']);
+        if ($champion['id']) {
+            $champion->title = $request['title'];
+            $champion->slug = str_slug_persian($request['title']);
+            $champion->start_date = $startDate;
+            $champion->end_date = $endDate;
+            $champion->target_amount = $request['target'];
+            $champion->meta = $request['meta_description'];
+            $champion->description_small = $request['small_description'];
+            $champion->description = $request['description'];
+            $champion->save();
+        }
+
+        if ($request['tags']) {
+            $tags = explode(",", $request['tags']);
+            charity_champions_tags::where(
+                [
+                    ['champion_id', '=', $champion['id']],
+                ]
+            )->delete();
+            foreach ($tags as $tag) {
+                charity_champions_tags::create(
+                    [
+                        'champion_id' => $champion['id'],
+                        'tag' => $tag
+                    ]
+                );
+            }
+        }
+        if ($request['file']) {
+            \App\media::where(
+                [
+                    ['category_id', '=', $champion['id']],
+                    ['module','=','champion']
+                ]
+            )->delete();
+            uploadGallery($request['file'], 'champion', ['category_id' => $champion['id'], 'title' => $request['title']]);
+        }
+        if ($request['projects']) {
+            foreach ($request['projects'] as $project) {
+                charity_champions_projects::create(
+                    [
+                        'champion_id' => $champion['id'],
+                        'project_id' => $project
+                    ]
+                );
+            }
+        }
+        $return = trans('messages.item_created');
+        return back_normal($request, ['message' => $return, 'status' => 200]);
+    }
 }

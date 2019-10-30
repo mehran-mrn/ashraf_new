@@ -26,4 +26,9 @@ class charity_champion extends Model
         return $this->hasMany('App\champion_transaction','champion_id','id');
     }
 
+    public function tag()
+    {
+        return $this->hasMany('App\charity_champions_tags','champion_id','id');
+    }
+
 }

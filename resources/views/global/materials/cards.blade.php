@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <h2 class="text-uppercase line-bottom-center mt-0">{{__('messages.champion')}}</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem<br> voluptatem obcaecati!</p>
+{{--                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem<br> voluptatem obcaecati!</p>--}}
                 </div>
             </div>
         </div>
