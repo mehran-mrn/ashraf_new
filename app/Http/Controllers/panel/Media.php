@@ -66,6 +66,23 @@ class Media extends Controller
         $messages = trans('messages.item_created', ['item' => trans('messages.category')]);
         return back_normal($request, $messages);
     }
+    public function gallery_category_update(Request $request)
+    {
+        $this->validate($request,
+            [
+                'title' => 'required|min:3|string'
+            ]);
+        $media = gallery_category::find($request['id']);
+        if(isset($media['id'])){
+            $media->title=$request['title'];
+            $media->description=$request['description'];
+            $media->more_description=$request['more_description'];
+            $media->save();
+        }
+
+        $messages = trans('messages.item_updated', ['item' => trans('messages.category')]);
+        return back_normal($request, $messages);
+    }
 
     public function add_video(Request $request)
     {

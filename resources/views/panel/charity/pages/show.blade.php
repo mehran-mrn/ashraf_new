@@ -88,14 +88,14 @@ $unPaid=0;
             <section>
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title text-black">{{__('messages.period_payment_list'). " | ".$userInfo['name']}}</h6>
+                        <h6 class="card-title text-black">{{__('messages.period_payment_list'). " | ".$periodInfo['user']['people']['name']." ".$periodInfo['user']['people']['family']}}</h6>
                         <hr>
                     </div>
                     <div class="card-body">
                         <div class="text-center mb-3 py-2">
                             <h4 class="font-weight-semibold mb-1">{{$periodInfo['description']}}</h4>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.start_date')." ".jdate("d F y",strtotime($periodInfo['start_date']))}}</span>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.next_payment_date')." ".jdate("d F y",strtotime($periodInfo['next_date']))}}</span>
+                            <span class="text-muted d-block" dir='ltr'>{{__('messages.start_date') }}: @if($periodInfo['start_date']){{jdate("d F y",strtotime($periodInfo['start_date']))}}@endif</span>
+                            <span class="text-muted d-block" dir='ltr'>{{__('messages.next_payment_date') }}: @if($periodInfo['next_date']){{jdate("d F y",strtotime($periodInfo['next_date']))}}@endif</span>
                         </div>
                         <table class="table datatable-basic table-striped">
                             <thead>

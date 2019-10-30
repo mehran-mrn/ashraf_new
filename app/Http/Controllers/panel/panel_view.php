@@ -709,7 +709,9 @@ class panel_view extends Controller
 
     public function charity_period_list()
     {
-        return view('panel.charity.period.list');
+
+        $periods = charity_period::with('user')->where('status', 'active')->get();
+        return view('panel.charity.period.list', compact('periods'));
     }
 
     public function charity_payment_title_add($payment_pattern_id, $payment_title_id = null)
@@ -953,6 +955,12 @@ class panel_view extends Controller
         return view('panel.gallery.ajax.add_category');
     }
 
+    public function gallery_edit_modal($id)
+    {
+        $info = gallery_category::find($id);
+        return view('panel.gallery.ajax.edit_category', compact('info'));
+    }
+
     public function gallery_category_view(Request $request)
     {
         $catInfo = gallery_category::find($request['id']);
@@ -965,4 +973,14 @@ class panel_view extends Controller
     }
 
 //end store module
+
+
+    public function blog_setting_more_setting(Request $request)
+    {
+        foreach ($request->all() as $item => $val) {
+            if ($item != "_token") {
+                Config::set('blog_setting.social_media.' . $item . '.link', $val['link']);
+            }
+        }
+    }
 }

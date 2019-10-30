@@ -6,88 +6,73 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script>
-
-        $(document).ready(function () {
-            var DatatableBasic = function () {
-                var _componentDatatableBasic = function () {
-                    if (!$().DataTable) {
-                        console.warn('Warning - datatables.min.js is not loaded.');
-                        return;
-                    }
-                    $.extend($.fn.dataTable.defaults, {
-                        autoWidth: false,
-                        columnDefs: [{
-                            orderable: false,
-                            width: 100,
-                            targets: [5]
-                        }],
-                        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-                        language: {
-                            search: '<span>Filter:</span> _INPUT_',
-                            searchPlaceholder: 'Type to filter...',
-                            lengthMenu: '<span>Show:</span> _MENU_',
-                            paginate: {
-                                'first': 'First',
-                                'last': 'Last',
-                                'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
-                                'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
-                            }
-                        }
-                    });
-                    $('.datatable-basic').DataTable({
-                        rowCallback: function (row, data, index) {
-                            if (data[4] === 'active') {
-                                $(row).find('td:eq(4)').addClass('text-center bg-success')
-                            } else if (data[4] === 'inactive') {
-                                $(row).find('td:eq(4)').addClass('text-center bg-danger')
-                            }
-                        }
-                    });
-                    $('.datatable-payments').DataTable({
-                        rowCallback: function (row, data, index) {
-                            if (data[4] === 'active') {
-                                $(row).find('td:eq(4)').addClass('text-center bg-success')
-                            } else if (data[4] === 'inactive') {
-                                $(row).find('td:eq(4)').addClass('text-center bg-danger')
-                            }
-                        }
-                    });
-                    $('.datatable-payments2').DataTable({
-                        rowCallback: function (row, data, index) {
-                            if (data[5] === 'active') {
-                                $(row).find('td:eq(5)').addClass('text-center bg-success')
-                            } else if (data[5] === 'inactive') {
-                                $(row).find('td:eq(5)').addClass('text-center bg-danger')
-                            }
-                        }
-                    });
-                    var _componentSelect2 = function () {
-                        if (!$().select2) {
-                            console.warn('Warning - select2.min.js is not loaded.');
-                            return;
-                        }
-                        $('.dataTables_length select').select2({
-                            minimumResultsForSearch: Infinity,
-                            dropdownAutoWidth: true,
-                            width: 'auto'
-                        });
-                    };
-                    return {
-                        init: function () {
-                            _componentDatatableBasic();
-                            _componentSelect2();
+        var DatatableBasic = function () {
+            var _componentDatatableBasic = function () {
+                if (!$().DataTable) {
+                    console.warn('Warning - datatables.min.js is not loaded.');
+                    return;
+                }
+                $.extend($.fn.dataTable.defaults, {
+                    autoWidth: false,
+                    columnDefs: [{
+                        orderable: false,
+                        width: 100,
+                        targets: []
+                    }],
+                    dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+                    language: {
+                        search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
+                        searchPlaceholder: '{{__('messages.search')}}...',
+                        lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
+                        paginate: {
+                            'first': '{{__('messages.first')}}',
+                            'last': '{{__('messages.last')}}',
+                            'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
                         }
                     }
-                }();
+                });
+                $('.datatable-basic').DataTable({
+                    pagingType: "simple",
+                    language: {
+                        paginate: {
+                            'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',
+                            'previous': $('html').attr('dir') == 'rtl' ? '&rarr; {{__('messages.prev')}}' : '&larr; {{__('messages.prev')}}'
+                        }
+                    },
+                    stateSave: true,
+                    autoWidth: true,
+                });
+                $('.sidebar-control').on('click', function () {
+                    table.columns.adjust().draw();
+                });
+            };
+            var _componentSelect2 = function () {
+                if (!$().select2) {
+                    console.warn('Warning - select2.min.js is not loaded.');
+                    return;
+                }
+                $('.dataTables_length select').select2({
+                    minimumResultsForSearch: Infinity,
+                    dropdownAutoWidth: true,
+                    width: 'auto'
+                });
+            };
+            return {
+                init: function () {
+                    _componentDatatableBasic();
+                    _componentSelect2();
+                }
             }
-            document.addEventListener('DOMContentLoaded', function () {
-                DatatableBasic.init();
-            });
-        })
+        }();
 
+        document.addEventListener('DOMContentLoaded', function () {
+            DatatableBasic.init();
+        });
     </script>
 @endsection
 @section('css')
+
 @stop
 @php
     $active_sidbare = ['charity', 'charity_period']
@@ -104,6 +89,42 @@
 
                     <div class="card-body">
 
+                        <table class="table datatable-basic">
+                            <thead>
+                            <tr>
+                                <th>{{__('messages.id')}}</th>
+                                <th>{{__('messages.name')}}</th>
+                                <th>{{__('messages.amount')}}</th>
+                                <th>{{__('messages.start_date')}}</th>
+                                <th>{{__('messages.next_payment_date')}}</th>
+                                <th>{{__('messages.description')}}</th>
+                                <th>{{__('messages.status')}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php $i=1; @endphp
+                            @foreach($periods as $period)
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$period['user']['people']['name']}} {{$period['user']['people']['family']}}</td>
+                                    <td>{{number_format($period['amount'])}}</td>
+                                    <td>
+                                        @if(isset($period['start_date']))
+                                            {{jdate("Y-m-d",strtotime($period['start_date']))}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(isset($period['next_date']))
+                                            {{jdate("Y-m-d",strtotime($period['next_date']))}}
+                                        @endif
+                                    </td>
+                                    <td>{{$period['description']}}</td>
+                                    <td>{{__('messages.'.$period['status'])}}</td>
+                                </tr>
+                                @php $i++; @endphp
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>

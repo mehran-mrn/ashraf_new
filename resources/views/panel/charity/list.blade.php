@@ -6,8 +6,6 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script>
-
-        $(document).ready(function () {
             var DatatableBasic = function () {
                 var _componentDatatableBasic = function () {
                     if (!$().DataTable) {
@@ -61,29 +59,31 @@
                             }
                         }
                     });
-                    var _componentSelect2 = function () {
-                        if (!$().select2) {
-                            console.warn('Warning - select2.min.js is not loaded.');
-                            return;
-                        }
-                        $('.dataTables_length select').select2({
-                            minimumResultsForSearch: Infinity,
-                            dropdownAutoWidth: true,
-                            width: 'auto'
-                        });
-                    };
-                    return {
-                        init: function () {
-                            _componentDatatableBasic();
-                            _componentSelect2();
-                        }
+                    $('.sidebar-control').on('click', function () {
+                        table.columns.adjust().draw();
+                    });
+                }
+                var _componentSelect2 = function () {
+                    if (!$().select2) {
+                        console.warn('Warning - select2.min.js is not loaded.');
+                        return;
                     }
-                }();
-            }
+                    $('.dataTables_length select').select2({
+                        minimumResultsForSearch: Infinity,
+                        dropdownAutoWidth: true,
+                        width: 'auto'
+                    });
+                };
+                return {
+                    init: function () {
+                        _componentDatatableBasic();
+                        _componentSelect2();
+                    }
+                }
+            }();
             document.addEventListener('DOMContentLoaded', function () {
                 DatatableBasic.init();
             });
-        })
 
     </script>
 @endsection
@@ -126,6 +126,7 @@
                                 <table class="table datatable-basic table-striped">
                                     <thead>
                                     <tr>
+                                        <th>{{__('messages.id')}}</th>
                                         <th>{{__('messages.name_family')}}</th>
                                         <th>{{__('messages.amount')}}</th>
                                         <th>{{{__('messages.start_date')}}}</th>
@@ -136,18 +137,28 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @php $i=1; @endphp
                                     @foreach($periods as $period)
                                         <tr>
-                                            <td>{{$period['user']['name']}}</td>
+                                            <td>{{$i}}</td>
+                                            <td>{{$period['user']['people']['name']}} {{$period['user']['people']['family']}}</td>
                                             <td>{{number_format($period['amount'])}}</td>
-                                            <td>{{jdate("Y-m-d",strtotime($period['start_date']))}}</td>
-                                            <td>{{jdate("Y-m-d",strtotime($period['next_date']))}}</td>
+                                            <td>
+                                                @if($period['start_date'])
+                                                    {{jdate("Y-m-d",strtotime($period['start_date']))}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($period['next_date'])
+                                                    {{jdate("Y-m-d",strtotime($period['next_date']))}}
+                                                @endif</td>
                                             <td>{{__('messages.'.$period['status'])}}</td>
                                             <td>{{$period['description']}}</td>
                                             <td>
                                                 <a href="{{route('charity_periods_show',['user_id'=>$period['user_id'],'id'=>$period['id']])}}"
                                                    class="btn btn-info btn-sm"><i class="icon-eye"></i></a></td>
                                         </tr>
+                                        @php $i++; @endphp
                                     @endforeach
                                     </tbody>
                                 </table>

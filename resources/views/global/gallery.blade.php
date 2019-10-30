@@ -84,8 +84,8 @@
                                                 <div class="flip-box-inner">
                                                     <div class="flip-box-front">
                                                         @if($media['media_two']['path'])
-                                                        <img src="{{$media['media_two']['path']."/300/".$media['media_two']['name']}}"
-                                                             alt="{{$media['media_two']['title']}} - {{__('messages.ashraf')}}" style="width:300px;height:200px">
+                                                        <img src="{{$media['media_one']['path']."/300/".$media['media_one']['name']}}"
+                                                             alt="{{$media['media_one']['title']}} - {{__('messages.ashraf')}}" style="width:300px;height:200px">
                                                             @else
                                                             <img src="{{asset(url("/public/assets/global/images/logoImage.png"))}}"
                                                                  alt="{{__('messages.ashraf')}}" style="width:300px;height:200px">

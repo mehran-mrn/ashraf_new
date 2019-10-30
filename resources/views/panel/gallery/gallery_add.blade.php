@@ -35,31 +35,41 @@
                                                 {{$cat['title']}}
                                             </div>
                                         </div>
-
-                                        <div class="card-body">
+                                        <div class="card-body h-50">
                                             <div class="d-flex align-items-start flex-nowrap">
                                                 <div>
                                                     <div class="font-weight-semibold mr-2">{{$cat['title']}} </div>
                                                     <span class="font-size-sm text-muted">{{count($cat['media'])}} {{__('messages.file')}}</span>
                                                 </div>
-                                                <div class="list-icons list-icons-extended ml-auto">
-                                                    <a class="list-icons-item"
-                                                       href="{{route('gallery_category_view',['id'=>$cat['id']])}}">
-                                                        <i class="icon-image2 top-0"></i>
-                                                    </a>
-                                                    <a href="javascript:;"
-                                                       class="list-icons-item swal-alert "
-                                                       data-ajax-link="{{route('gallery_category_remove',['id'=>$cat['id']])}}"
-                                                       data-method="DELETE"
-                                                       data-csrf="{{csrf_token()}}"
-                                                       data-title="{{trans('messages.delete_item',['item'=>trans('messages.category')])}}"
-                                                       data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.category')])}}"
-                                                       data-type="warning"
-                                                       data-cancel="true"
-                                                       data-confirm-text="{{trans('messages.delete')}}"
-                                                       data-cancel-text="{{trans('messages.cancel')}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="list-icons list-icons-extended ml-auto">
+                                                <a class="list-icons-item"
+                                                   href="{{route('gallery_category_view',['id'=>$cat['id']])}}">
+                                                    <i class="icon-image2 top-0"></i>
+                                                </a>
+                                                <a
+                                                        href="javascript:;"
+                                                        class="list-icons-item modal-ajax-load"
+                                                        data-ajax-link="{{route('gallery_edit_modal',['id'=>$cat['id']])}}" data-toggle="modal"
+                                                        data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.category')])}}"
+                                                        data-target="#general_modal">
+                                                    <i class="icon-pen"></i>
+                                                </a>
+                                                <a href="javascript:;"
+                                                   class="list-icons-item swal-alert "
+                                                   data-ajax-link="{{route('gallery_category_remove',['id'=>$cat['id']])}}"
+                                                   data-method="DELETE"
+                                                   data-csrf="{{csrf_token()}}"
+                                                   data-title="{{trans('messages.delete_item',['item'=>trans('messages.category')])}}"
+                                                   data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.category')])}}"
+                                                   data-type="warning"
+                                                   data-cancel="true"
+                                                   data-confirm-text="{{trans('messages.delete')}}"
+                                                   data-cancel-text="{{trans('messages.cancel')}}">
                                                     <i class="icon-bin top-0"></i></a>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -10,10 +10,11 @@
                     return;
                 }
                 $.extend($.fn.dataTable.defaults, {
-                    autoWidth: true,
+                    autoWidth: false,
                     columnDefs: [{
-                        orderable: true,
-                        targets: [1, 3, 4]
+                        orderable: false,
+                        width: 100,
+                        targets: [5]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
@@ -29,8 +30,7 @@
                     }
                 });
                 $('.datatable-basic').DataTable({
-                    paging: false,
-                    pagingType: "full",
+                    pagingType: "simple",
                     language: {
                         paginate: {
                             'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',
@@ -43,7 +43,7 @@
                 $('.sidebar-control').on('click', function () {
                     table.columns.adjust().draw();
                 });
-            };
+            }
             var _componentSelect2 = function () {
                 if (!$().select2) {
                     console.warn('Warning - select2.min.js is not loaded.');
@@ -65,6 +65,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             DatatableBasic.init();
         });
+
     </script>
 @stop
 <?php
@@ -84,6 +85,7 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                 <table class="table datatable-basic">
                                     <thead class="fullwidth">
                                     <tr>
+                                        <th>{{__('messages.id')}}</th>
                                         <th>{{__('messages.title')}}</th>
                                         <th>{{__('messages.author')}}</th>
                                         <th>{{__('messages.posted_at')}}</th>
@@ -92,8 +94,10 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @php $i=1; @endphp
                                     @forelse($posts as $post)
                                         <tr>
+                                            <td>{{$i}}</td>
                                             <td><a href='{{$post->url()}}'>{!! substr($post->title,'0',100) !!}</a>
                                                 <span class="badge badge-danger">{!!($post->is_published ? "" : "(".__('messages.draft').")")!!}</span>
                                             </td>
@@ -144,6 +148,7 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                                 </div>
                                             </td>
                                         </tr>
+                                        @php $i++; @endphp
                                     @empty
                                         <tr></tr>
                                     @endforelse

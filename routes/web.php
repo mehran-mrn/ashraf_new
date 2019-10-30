@@ -299,7 +299,9 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
 
         Route::get('list', 'panel\panel_view@gallery_add')->name('gallery_add');
         Route::get('category/add', 'panel\panel_view@gallery_add_modal')->name('gallery_add_modal');
+        Route::get('category/edit/{id}', 'panel\panel_view@gallery_edit_modal')->name('gallery_edit_modal');
         Route::post('category/add', 'panel\Media@gallery_category_add')->name('gallery_category_add');
+        Route::post('category/update', 'panel\Media@gallery_category_update')->name('gallery_category_update');
         Route::get('category/{id}', 'panel\panel_view@gallery_category_view')->name('gallery_category_view');
         Route::delete('category/{id}', 'panel\Media@gallery_category_remove')->name('gallery_category_remove');
         Route::delete('category/image/{id}', 'panel\Media@gallery_category_image_remove')->name('gallery_category_image_remove');
@@ -308,6 +310,8 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
         Route::get('media/default/{cat_id}/{media_id}', 'panel\Media@gallery_category_image_default')->name('gallery_category_image_default');
     });
     Route::group(['prefix' => 'blog_setting'], function () {
+
+        Route::post('setting/more_setting/store','panel\panel_view@blog_setting_more_setting')->name('blog_setting_more_setting_store');
         Route::get('/display_statistics',
             'panel\panel_view@display_statistics')
             ->name('display_statistics');
@@ -619,6 +623,10 @@ Route::group(
     Route::post('champion/payment', 'globals\global_controller@champion_payment')->name('champion_payment');
     Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
 
+
+
+
+    Route::get('user/add/test', 'panel\panel_view@updateDate')->name('oldUser');
 
 
 

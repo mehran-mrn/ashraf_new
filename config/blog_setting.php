@@ -9,20 +9,31 @@
  */
 
 return [
-
-
-    'social_media'        => [
-        'facebook'  => [
-            'name'  => 'Facebook',
-            'icon'  => 'fa fa-facebook',
+    'social_media' => [
+        'facebook' => [
+            'name' => 'Facebook',
+            'icon' => 'fa fa-facebook',
+            'link'=>''
         ],
-        'Instagram'  => [
-            'name'  => 'Instagram',
-            'icon'  => 'fa fa-instagram',
+        'Instagram' => [
+            'name' => 'Instagram',
+            'icon' => 'fa fa-instagram',
+            'link'=>''
         ],
-        'twitter'  => [
-            'name'  => 'twitter',
-            'icon'  => 'fa fa-twitter',
+        'twitter' => [
+            'name' => 'twitter',
+            'icon' => 'fa fa-twitter',
+            'link'=>''
+        ],
+        'aparat' => [
+            'name' => 'aparat',
+            'icon' => 'fa fa-aparat',
+            'link'=>''
+        ],
+        'telegram' => [
+            'name' => 'telegram',
+            'icon' => 'fa fa-twitter',
+            'link'=>''
         ],
     ],
 
