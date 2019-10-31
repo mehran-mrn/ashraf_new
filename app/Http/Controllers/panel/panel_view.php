@@ -989,7 +989,5 @@ class panel_view extends Controller
     }
 
 
-    public function updateDate()
-    {
-    }
+
 }
