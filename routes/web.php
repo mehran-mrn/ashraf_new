@@ -68,9 +68,10 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
         Route::get('users_list', 'panel\panel_view@users_list')->name('users_list');
 
         Route::get('info/edit/{userInfo}', 'panel\panel_view@users_list_info_edit')->name('users_list_info_edit');
+        Route::post('info/edit/delete/{id}', 'panel\user_manager@users_list_delete')->name('users_list_delete');
+
         Route::post('/info/update', 'panel\user_manager@user_info_update')->name('user_info_update');
         Route::post('/info/update/image', 'panel\user_manager@user_info_update_image')->name('user_info_update_image');
-
 
 
         Route::post('register', 'panel\user_manager@register')->name('panel_register_user');
@@ -311,7 +312,7 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
     });
     Route::group(['prefix' => 'blog_setting'], function () {
 
-        Route::post('setting/more_setting/store','panel\panel_view@blog_setting_more_setting')->name('blog_setting_more_setting_store');
+        Route::post('setting/more_setting/store', 'panel\panel_view@blog_setting_more_setting')->name('blog_setting_more_setting_store');
         Route::get('/display_statistics',
             'panel\panel_view@display_statistics')
             ->name('display_statistics');
@@ -524,7 +525,6 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
 //=========================================
 
 
-
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -624,10 +624,7 @@ Route::group(
     Route::get('champion/cart/{id}', 'globals\global_view@champion_cart')->name('champion_card');
 
 
-
-
     Route::get('user/add/test', 'panel\panel_view@updateDate')->name('oldUser');
-
 
 
     Route::get('payment/{type}/{id}/', 'globals\global_view@payment')->name('payment');

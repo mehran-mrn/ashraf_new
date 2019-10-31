@@ -13,11 +13,10 @@ $active_sidbare = ['user_manager', 'users_list']
                     return;
                 }
                 $.extend($.fn.dataTable.defaults, {
-                    autoWidth: false,
+                    autoWidth: true,
                     columnDefs: [{
                         orderable: false,
-                        width: 100,
-                        targets: [1, 2, 3, 4, 5]
+                        targets: [6]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
@@ -43,7 +42,6 @@ $active_sidbare = ['user_manager', 'users_list']
                     },
                     stateSave: true,
                     autoWidth: true,
-                    scrollY: 300
                 });
 
                 // Resize scrollable table when sidebar width changes
@@ -73,6 +71,7 @@ $active_sidbare = ['user_manager', 'users_list']
         document.addEventListener('DOMContentLoaded', function () {
             DatatableBasic.init();
         });
+
 
     </script>
 @endsection
@@ -130,13 +129,46 @@ $active_sidbare = ['user_manager', 'users_list']
                                         <td class="text-center">
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-dark btn-sm"
-                                                   title="{{__('messages.show_permissions')}}"
-                                                   href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}">
+                                                   href="{{route('user_permission_assign_page',['user_id'=>$user->id])}}"
+                                                   data-toggle="tooltip" data-placement="top" title="{{__('messages.permissions')}}"
+                                                >
                                                     <i class="fa fa-key"></i></a>
                                                 <a class="btn btn-outline-dark btn-sm"
-                                                   title="{{__('messages.edit_item',['item'=>__('messages.user')])}}"
-                                                   href="{{route('users_list_info_edit',['user'=>$user->id])}}">
+                                                   href="{{route('users_list_info_edit',['user'=>$user->id])}}"
+                                                   data-toggle="tooltip" data-placement="top" title="{{__('messages.edit')}}"
+                                                >
                                                     <i class="fa fa-edit"></i></a>
+                                                @if($user['disabled']==0)
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm swal-alert"
+                                                        data-ajax-link="{{route('users_list_delete',['id'=>$user->id])}}"
+                                                        data-method="POST"
+                                                        data-csrf="{{csrf_token()}}"
+                                                        data-title="{{trans('messages.delete_item',['item'=>__('messages.user')])}}"
+                                                        data-text="{{trans('messages.approve',['item'=>trans('messages.user')])}}"
+                                                        data-type="warning"
+                                                        data-cancel="true"
+                                                        data-toggle="tooltip" data-placement="top" title="{{__('messages.inactivate')}}"
+                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                    @else
+                                                    <button type="button"
+                                                            class="btn btn-outline-success btn-sm swal-alert"
+                                                            data-ajax-link="{{route('users_list_delete',['id'=>$user->id])}}"
+                                                            data-method="POST"
+                                                            data-csrf="{{csrf_token()}}"
+                                                            data-title="{{trans('messages.active',['item'=>__('messages.user')])}}"
+                                                            data-text="{{trans('messages.approve',['item'=>trans('messages.user')])}}"
+                                                            data-type="warning"
+                                                            data-cancel="true"
+                                                            data-toggle="tooltip" data-placement="top" title="{{__('messages.activate')}}"
+                                                            data-confirm-text="{{trans('messages.active')}}"
+                                                            data-cancel-text="{{trans('messages.cancel')}}">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

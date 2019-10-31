@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ trim(str_replace('_', '-', app()->getLocale())) }}" dir="{{trim(str_replace('_', '-', app()->getLocale())) == 'fa'? 'rtl':'ltr'}}">
+<html lang="{{ trim(str_replace('_', '-', app()->getLocale())) }}"
+      dir="{{trim(str_replace('_', '-', app()->getLocale())) == 'fa'? 'rtl':'ltr'}}">
 
 <head>
     <meta charset="utf-8">
@@ -12,11 +13,14 @@
     <link href="{{ URL::asset('/public/assets/global/images/favicon.png') }}" rel="shortcut icon" type="image/png">
 
     <!-- Global stylesheets -->
-{{--    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">--}}
-    <link href="{{ url('/public/assets/panel/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ URL::asset('/public/assets/panel/global_assets/css/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
+    {{--    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">--}}
+    <link href="{{ url('/public/assets/panel/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet"
+          type="text/css">
+    <link href="{{ URL::asset('/public/assets/panel/global_assets/css/icons/fontawesome/styles.min.css') }}"
+          rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ URL::asset('/public/assets/panel/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/panel/css/bootstrap_limitless.min.css') }}" rel="stylesheet"
+          type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/layout.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/components.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/panel/css/colors.min.css') }}" rel="stylesheet" type="text/css">
@@ -25,11 +29,11 @@
     <!-- /global stylesheets -->
     @yield('css')
 
-    <!-- Core JS files -->
+<!-- Core JS files -->
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
-{{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/ui/ripple.min.js') }}"></script>--}}
+    {{--    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/ui/ripple.min.js') }}"></script>--}}
     <script src="{{ URL::asset('/public/assets/panel/js/selectize/selectize.js')}}"></script>
     <script src="{{ URL::asset('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/js/custom.js') }}"></script>
@@ -43,27 +47,30 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
 
     <script>
-    $( document ).ready(function() {
-        @if(!$errors->isEmpty())
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        $(document).ready(function () {
+            @if(!$errors->isEmpty())
             @foreach ($errors->all() as $key => $error)
-                new PNotify({
-                    title: '{{$key}}',
-                    text: '{{ $error }}',
-                    type: 'error'
-                });
+            new PNotify({
+                title: '{{$key}}',
+                text: '{{ $error }}',
+                type: 'error'
+            });
 
             @endforeach
-        @endif
-        @if ($message = Session::get('message'))
+            @endif
+            @if ($message = Session::get('message'))
             new PNotify({
                 title: '',
                 text: '{{$message}}',
                 type: 'success'
             });
-        @endif
+            @endif
 
-    });
-</script>
+        });
+    </script>
     <!-- /theme JS files -->
 </head>
 <noscript>
@@ -78,27 +85,28 @@
         }</style>
 </noscript>
 <?php
-if(!isset($active_sidbare)){
-    $active_sidbare=[];
+if (!isset($active_sidbare)) {
+    $active_sidbare = [];
 }
-    ?>
+?>
 <body class="{{in_array("collapse", $active_sidbare) ? 'sidebar-xs' : '' }}">
 @include('layouts.panel.navbar')
 
 @include('panel.materials.form_notification')
 
-    <!-- Page content -->
-    <div class="page-content">
-        @include('layouts.panel.sidebar')
-        <!-- Main content -->
-            <div class="content-wrapper" style="background-image: url({{URL::asset('/public/assets/panel/images/b-pattern.png')}});">
-                @yield('content')
-            </div>
+<!-- Page content -->
+<div class="page-content">
+@include('layouts.panel.sidebar')
+<!-- Main content -->
+    <div class="content-wrapper"
+         style="background-image: url({{URL::asset('/public/assets/panel/images/b-pattern.png')}});">
+        @yield('content')
     </div>
-    <!-- /page content -->
+</div>
+<!-- /page content -->
 
 <!-- Info modal -->
-<div id="general_modal" class="modal fade " >
+<div id="general_modal" class="modal fade ">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-info">
