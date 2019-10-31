@@ -19,7 +19,7 @@ class charity_transaction extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'id', 'user_id');
+        return $this->hasOne('App\User', 'id', 'user_id')->with('people');
     }
 
     public function patern()

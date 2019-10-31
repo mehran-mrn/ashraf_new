@@ -25,4 +25,14 @@ class charity_periods_transaction extends Model
     {
         return $this->hasOne('App\gateway','id','gateway_id');
     }
+    public function user()
+    {
+        return $this->hasOne('App\User','id','user_id')->with('people');
+    }
+
+    public function tranInfo()
+    {
+        return $this->hasMany('App\gateway_transaction', 'module_id', 'id')->
+        where('module', '=', 'charity_period');
+    }
 }

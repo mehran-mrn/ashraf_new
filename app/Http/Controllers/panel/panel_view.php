@@ -24,6 +24,7 @@ use App\charity_transaction;
 use App\city;
 use App\gallery_category;
 use App\gateway;
+use App\gateway_transaction;
 use App\period;
 use App\Permission;
 use App\person;
@@ -714,6 +715,20 @@ class panel_view extends Controller
         return view('panel.charity.period.list', compact('periods'));
     }
 
+    public function charity_period_status()
+    {
+
+        $payments = charity_periods_transaction::with('period','gateway')->get();
+        return view('panel.charity.period.status', compact('payments'));
+    }
+
+    public function charity_period_status_show(Request $request)
+    {
+        $periodInfo = charity_periods_transaction::with('tranInfo','user')->find($request['id']);
+
+        return view('panel.charity.period.status_show',compact('periodInfo'));
+    }
+
     public function charity_payment_title_add($payment_pattern_id, $payment_title_id = null)
     {
         $payment_title = null;
@@ -743,19 +758,8 @@ class panel_view extends Controller
 
     public function charity_payment_list()
     {
-        $periods = charity_period::with('user')->get();
-        $payments = charity_periods_transaction::where(
-            [
-                ['review', '=', 'waiting']
-            ]
-        )->with('period')->get();
-        $paymentsApprove = charity_periods_transaction::where(
-            [
-                ['review', '=', 'approved']
-            ]
-        )->with('period')->get();
         $otherPayments = charity_transaction::with('values', 'user', 'patern')->get();
-        return view('panel.charity.list', compact('periods', 'payments', 'paymentsApprove', 'otherPayments'));
+        return view('panel.charity.other_payment.list', compact('periods', 'payments', 'paymentsApprove', 'otherPayments'));
     }
 
 
@@ -770,7 +774,7 @@ class panel_view extends Controller
     {
 
         $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway')->findOrFail($request['id']);
-        return view('panel.charity.pages.vow_show', compact('info'));
+        return view('panel.charity.other_payment.show', compact('info'));
     }
 
 

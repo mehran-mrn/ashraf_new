@@ -249,8 +249,10 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
         Route::get('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\panel_view@charity_payment_pattern_add')->name('charity_payment_pattern_add');
         Route::post('charity_payment_pattern_add/{payment_pattern_id?}', 'panel\charity@charity_payment_pattern_add')->name('charity_payment_pattern_add');
         Route::post('charity_payment_pattern_delete/{payment_pattern_id}', 'panel\charity@charity_payment_pattern_delete')->name('charity_payment_pattern_delete');
-        Route::get('payment_list/', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
+        Route::get('other_payment/list', 'panel\panel_view@charity_payment_list')->name('charity_payment_list');
         Route::get('period/list', 'panel\panel_view@charity_period_list')->name('charity_period_list');
+        Route::get('period/status', 'panel\panel_view@charity_period_status')->name('charity_period_status');
+        Route::get('period/status/show/{id}', 'panel\panel_view@charity_period_status_show')->name('charity_period_status_show');
         Route::get('payment_list/vow/show/{id}', 'panel\panel_view@charity_payment_list_vow_show')->name('charity_payment_list_vow_show');
         Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
         Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');

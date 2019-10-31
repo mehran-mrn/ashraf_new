@@ -114,36 +114,20 @@
     </script>
 @endsection
 <?php
-$active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']
+$active_sidbare = ['charity', 'charity_setting', 'charity_payment_titles']
 ?>
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @stop
 @section('content')
-    <div class="content">
-        {{--    <div class="row">--}}
-        {{--        <div class="col-md-12">--}}
-        {{--            <div class="card">--}}
-        {{--                <div class="card-header bg-light">--}}
-        {{--                    <button type="button" class="btn btn-outline-info btn-lg modal-ajax-load"--}}
-        {{--                            data-ajax-link="{{route('charity_payment_title_add')}}" data-toggle="modal"--}}
-        {{--                            data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.payment_title')])}}"--}}
-        {{--                            data-modal-size="modal-full"--}}
-        {{--                            data-target="#general_modal"><i--}}
-        {{--                                class="icon-user-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.payment_title')])}}--}}
-        {{--                    </button>--}}
-        {{--                </div>--}}
-        {{--                <div class="card-body">--}}
-        {{--                    <div class="row">--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
-        {{--    </div>--}}
-
-        <div class="row">
-            <div class="col-md-12">
+    <section>
+        <div class="content">
+            <section>
                 <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title text-black">{{__('messages.Charity')}} | {{__('messages.setting')}}</h6>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                             <li class="nav-item"><a href="#custom_payment_types" class="nav-link active"
@@ -530,7 +514,7 @@ $active_sidbare = ['charity', 'charity_payment_titles', 'charity_setting']
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
+    </section>
 @endsection

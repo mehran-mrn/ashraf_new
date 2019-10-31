@@ -118,7 +118,7 @@ class charity extends Controller
             ->with('gateway')->get();
         $periodInfo = charity_period::find($request['id']);
         $userInfo = User::find($request['user_id']);
-        return view('panel.charity.pages.show', compact('paymentList', 'userInfo', 'periodInfo'));
+        return view('panel.charity.period.show', compact('paymentList', 'userInfo', 'periodInfo'));
     }
 
     public function charity_payment_approve(Request $request)

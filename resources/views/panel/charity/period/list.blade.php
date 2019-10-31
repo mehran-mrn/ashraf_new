@@ -13,11 +13,11 @@
                     return;
                 }
                 $.extend($.fn.dataTable.defaults, {
-                    autoWidth: false,
+                    autoWidth: true,
                     columnDefs: [{
                         orderable: false,
                         width: 100,
-                        targets: []
+                        targets: [7]
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
@@ -75,7 +75,7 @@
 
 @stop
 @php
-    $active_sidbare = ['charity', 'charity_period']
+    $active_sidbare = ['charity', 'charity_period','charity_period_list']
 @endphp
 @section('content')
     <section>
@@ -83,10 +83,9 @@
             <section>
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title text-black">{{__('messages.period_payment_list')}}</h6>
+                        <h6 class="card-title text-black">{{__('messages.Charity')}} | {{__('messages.periodic_payment')}}</h6>
                         <hr>
                     </div>
-
                     <div class="card-body">
 
                         <table class="table datatable-basic">
@@ -98,6 +97,7 @@
                                 <th>{{__('messages.start_date')}}</th>
                                 <th>{{__('messages.next_payment_date')}}</th>
                                 <th>{{__('messages.description')}}</th>
+                                <th>{{__('messages.status')}}</th>
                                 <th>{{__('messages.status')}}</th>
                             </tr>
                             </thead>
@@ -120,6 +120,10 @@
                                     </td>
                                     <td>{{$period['description']}}</td>
                                     <td>{{__('messages.'.$period['status'])}}</td>
+                                    <td>
+                                        <a data-toggle="tooltip" data-placement="top" title="{{__('messages.view')}}"
+                                           href="{{route('charity_periods_show',['user_id'=>$period['user_id'],'id'=>$period['id']])}}"
+                                           class="btn btn-outline-dark btn-sm"><i class="icon-eye"></i></a></td>
                                 </tr>
                                 @php $i++; @endphp
                             @endforeach

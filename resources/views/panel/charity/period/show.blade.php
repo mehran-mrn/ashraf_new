@@ -35,7 +35,6 @@
                     });
                     $('.datatable-basic').DataTable({
                         rowCallback: function (row, data, index) {
-                            console.log(row)
                             if (data[4] === 'active') {
                                 $(row).find('td:eq(4)').addClass('text-center bg-success')
                             } else if (data[4] === 'inactive') {
@@ -72,9 +71,9 @@
 @section('css')
 @stop
 @php
-$active_sidbare = ['charity', 'charity_list'];
-$sumPay=0;
-$unPaid=0;
+    $active_sidbare = ['charity', 'charity_period','charity_period_list'];
+    $sumPay=0;
+    $unPaid=0;
 @endphp
 @section('content')
     <section>
@@ -88,14 +87,16 @@ $unPaid=0;
             <section>
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title text-black">{{__('messages.period_payment_list'). " | ".$periodInfo['user']['people']['name']." ".$periodInfo['user']['people']['family']}}</h6>
+                        <h6 class="card-title text-black">{{__('messages.transaction_info'). " | ".$periodInfo['user']['people']['name']." ".$periodInfo['user']['people']['family']}}</h6>
                         <hr>
                     </div>
                     <div class="card-body">
                         <div class="text-center mb-3 py-2">
                             <h4 class="font-weight-semibold mb-1">{{$periodInfo['description']}}</h4>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.start_date') }}: @if($periodInfo['start_date']){{jdate("d F y",strtotime($periodInfo['start_date']))}}@endif</span>
-                            <span class="text-muted d-block" dir='ltr'>{{__('messages.next_payment_date') }}: @if($periodInfo['next_date']){{jdate("d F y",strtotime($periodInfo['next_date']))}}@endif</span>
+                            <span class="text-muted d-block"
+                                  dir='ltr'>{{__('messages.start_date') }}: @if($periodInfo['start_date']){{jdate("d F y",strtotime($periodInfo['start_date']))}}@endif</span>
+                            <span class="text-muted d-block"
+                                  dir='ltr'>{{__('messages.next_payment_date') }}: @if($periodInfo['next_date']){{jdate("d F y",strtotime($periodInfo['next_date']))}}@endif</span>
                         </div>
                         <table class="table datatable-basic table-striped">
                             <thead>
@@ -105,7 +106,8 @@ $unPaid=0;
                                 <th>{{{__('messages.payment_date')}}}</th>
                                 <th>{{__('messages.gateway')}}</th>
                                 <th>{{__('messages.status')}}</th>
-                                <th class="text-center">{{__('messages.description')}}</th>
+                                <th>{{__('messages.description')}}</th>
+                                <th>{{__('messages.view')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -131,6 +133,13 @@ $unPaid=0;
                                         @endif
                                     </td>
                                     <td>{{$payment['description']}}</td>
+                                    <td>
+                                        <a data-toggle="tooltip" data-placement="top" title="{{__('messages.view')}}"
+                                           class="btn btn-sm btn-outline-dark"
+                                           href="{{route('charity_period_status_show',['id'=>$payment['id']])}}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
