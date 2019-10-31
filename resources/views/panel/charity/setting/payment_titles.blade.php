@@ -456,10 +456,10 @@ $active_sidbare = ['charity', 'charity_setting', 'charity_payment_titles']
                                     <div class="container-fluid">
                                         <div class="row">
                                             @foreach($champions as $champion)
-                                                <div class="col-4">
-                                                    <div class="card">
+                                                <div class="col-3">
+                                                    <div class="card border-{{strtotime($champion['end_date'])<time()?'danger':'success'}} border-2">
                                                         <img class="card-img-top" src="@if($champion['image']['url']) /{{$champion['image']['url']}} @else{{url(asset('public/assets/panel/images/b-pattern.png'))}}@endif"
-                                                             alt="" height="300">
+                                                             alt="" height="200">
                                                         <div class="card-header bg-light">
                                                             <span class="card-title">{{$champion['title']}}</span>
                                                         </div>
@@ -474,12 +474,12 @@ $active_sidbare = ['charity', 'charity_setting', 'charity_payment_titles']
                                                                     <hr>
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    <span>{{__('messages.start_date')}}</span>
-                                                                    <strong dir="ltr">{{jdate("Y-m-d",strtotime($champion['start_date']))}}</strong>
+                                                                    <h6 class="text-center">{{__('messages.start_date')}}</h6>
+                                                                    <h6 dir="ltr" class="text-center badge badge-{{strtotime($champion['end_date'])<time()?'danger':'success'}}">{{jdate("Y-m-d",strtotime($champion['start_date']))}}</h6>
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    <span>{{__('messages.end_date')}}</span>
-                                                                    <strong dir="ltr">{{jdate("Y-m-d",strtotime($champion['end_date']))}}</strong>
+                                                                    <h6 class="text-center">{{__('messages.end_date')}}</h6>
+                                                                    <h6 dir="ltr" class="text-center badge badge-{{strtotime($champion['end_date'])<time()?'danger':'success'}}">{{jdate("Y-m-d",strtotime($champion['end_date']))}}</h6>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -495,13 +495,15 @@ $active_sidbare = ['charity', 'charity_setting', 'charity_payment_titles']
                                                                         data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.champion')])}}"
                                                                         data-type="warning"
                                                                         data-cancel="true"
+                                                                        data-toggle="tooltip" data-placement="top" title="{{__('messages.delete')}}"
                                                                         data-confirm-text="{{trans('messages.delete')}}"
                                                                         data-cancel-text="{{trans('messages.cancel')}}">
-                                                                    {{__('messages.delete')}}
+                                                                    <i class="fa fa-trash"></i>
                                                                 </button>
 
-                                                                <a href="{{route('charity_champion_edit',['id'=>$champion['id']])}}"
-                                                                   class="btn btn-sm btn-info">{{__("messages.edit")}}</a>
+                                                                <a data-toggle="tooltip" data-placement="top" title="{{__('messages.edit')}}"
+                                                                   href="{{route('charity_champion_edit',['id'=>$champion['id']])}}"
+                                                                   class="btn btn-sm btn-info"><i class="fa fa-pencil"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>

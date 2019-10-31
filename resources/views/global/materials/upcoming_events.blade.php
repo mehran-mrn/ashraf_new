@@ -9,12 +9,13 @@
                              src="{{$news['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_large']:''}}"
                              alt="">
 
-                            <h5 class="line-bottom">
-
-                                    <strong>
-                                        <a
-                                           href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">{{$news['title']}}</a></strong></h5>
+                        <h5 class="line-bottom">
+                            <strong>
+                                <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">{{$news['title']}}</a>
+                            </strong>
+                        </h5>
                         <p>{{$news['short_description'] }}</p>
+                    <small>{{jdate('Y/m/d',strtotime($news['posted_at']))}}</small>
                         <a class="text-theme-colored font-13 pull-left"
                            href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">{{trans('messages.read_more')}}
                             ...</a>
@@ -35,7 +36,7 @@
                                      src="{{ URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$news['image_thumbnail']}}">
                                 <ul class="list-inline font-12 mt-1 m-0 text-center">
                                     <li class="pr-0"><i
-                                                class="fa fa-calendar m-0"></i> {{jdate('d F',strtotime($news['posted_at']))}}
+                                                class="fa fa-calendar m-0"></i> {{jdate('Y/m/d',strtotime($news['posted_at']))}}
                                     </li>
                                 </ul>
                             </a>
@@ -53,7 +54,8 @@
 
                     @endforeach
 
-                    <a href="{{route('TopPosts')}}" class="btn btn-theme-colored pull-left mt-20">{{__('messages.count_news')}}</a>
+                    <a href="{{route('TopPosts')}}"
+                       class="btn btn-theme-colored pull-left mt-20">{{__('messages.count_news')}}</a>
 
                 </div>
 
