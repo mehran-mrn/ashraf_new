@@ -46,6 +46,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Laratrust\Models\LaratrustPermission;
 use Laratrust\Models\LaratrustRole;
 use phpDocumentor\Reflection\Types\Array_;
@@ -989,5 +990,54 @@ class panel_view extends Controller
     }
 
 
+    public function updateDate()
+    {
+        $d = array(
 
+        );
+        $i = 1;
+        foreach ($d as $item) {
+            if ($item[11] == 1) {
+                $date = date("Y-m-d H:i:s", $item[12]);
+                $lang = "fa";
+                if ($item[9] == 2)
+                    $lang = "en";
+
+                try {
+                    $info = DB::table('blog_etc_posts')->insertGetId([
+                        'user_id' => '1',
+                        'slug' => str_slug_persian($item[0]),
+                        'title' => $item[0],
+                        'subtitle' => $item[1],
+                        'post_body' => $item[2],
+                        'lang' => $lang,
+                        'posted_at' => $date,
+                        'image_thumbnail' => $item[3],
+                        'created_at' => $date,
+                    ]);
+                } catch (\Exception $e) {
+                    $info = DB::table('blog_etc_posts')->insertGetId([
+                        'user_id' => '1',
+                        'slug' => str_slug_persian($item[0]) . "-" . Str::random('12'),
+                        'title' => $item[0],
+                        'subtitle' => $item[1],
+                        'post_body' => $item[2],
+                        'lang' => $lang,
+                        'posted_at' => $date,
+                        'image_thumbnail' => $item[3],
+                        'created_at' => $date,
+                    ]);
+                }
+                $cat = DB::table('blog_etc_post_categories')->insert([
+                    'blog_etc_post_id' => $info,
+                    'blog_etc_category_id' => $item[7]
+                ]);
+                echo $i . "<br>";
+
+                $i++;
+
+            }
+
+        }
+    }
 }

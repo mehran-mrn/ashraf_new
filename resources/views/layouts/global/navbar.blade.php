@@ -5,6 +5,7 @@
     }
 </style>
 <header id="header" class="header">
+
     <div class="header-top p-0 text-black bg-silver-light xs-text-center"
          data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
         <div class="container">
@@ -127,7 +128,8 @@
                         <li><a class="text-white-f6" href="#">{{trans('messages.blog')}}</a>
                             <ul class="dropdown">
                                 @foreach($menu_blog as $m_b)
-                                    <li><a href="{{route('blogetc.view_category',['categorySlug'=>$m_b['slug']])}}">{{$m_b['category_name']}}</a>
+                                    <li>
+                                        <a href="{{route('blogetc.view_category',['categorySlug'=>$m_b['slug']])}}">{{$m_b['category_name']}}</a>
                                     </li>
                                 @endforeach
                             </ul>

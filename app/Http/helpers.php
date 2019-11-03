@@ -658,7 +658,7 @@ function get_inventory_size_max_time($pro_id)
 
 function get_blog_categories()
 {
-    $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::get();
+    $categories = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::where('lang',app()->getLocale())->get();
     return $categories;
 }
 

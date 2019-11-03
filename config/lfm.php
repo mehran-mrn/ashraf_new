@@ -58,6 +58,11 @@ return [
                 'image/png',
                 'image/gif',
                 'image/svg+xml',
+                'application/pdf',
+                'application/doc',
+                'application/docx',
+                'application/xls',
+                'application/xlsx',
             ],
         ],
         'image' => [
@@ -173,6 +178,7 @@ return [
         'ppt'  => 'fa-file-powerpoint-o',
         'pptx' => 'fa-file-powerpoint-o',
     ],
+
 
     /*
     |--------------------------------------------------------------------------

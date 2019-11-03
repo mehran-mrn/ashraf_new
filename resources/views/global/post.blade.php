@@ -13,8 +13,8 @@
                             <article class="post clearfix mb-0">
                                 <div class="entry-header">
 
-                                    <div class="post-thumb thumb"><img
-                                                src="{{$post['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$post['image_large']:''}} "
+                                    <div class="post-thumb thumb">
+                                        <img src="{{$post['image_large'] ? URL::asset('public/images/'.config('blogetc.blog_upload_dir'))."/".$post['image_large']:''}} "
                                                 alt="" class="img-responsive img-fullwidth"></div>
                                 </div>
                                 <div class="entry-content">
@@ -22,7 +22,7 @@
                                         <div class="entry-date media-left text-center flip bg-theme-colored pt-5 pr-15 pb-5 pl-15">
                                             <ul>
                                                 <li class="font-16 text-white font-weight-600">{{miladi_to_shamsi_date($post['posted_at'],true)[2]}}</li>
-                                                <li class="font-12 text-white text-uppercase">{{jdate('F',strtotime($post['posted_at']))}}</li>
+                                                <li class="font-12 text-white text-uppercase">{{jdate('F y',strtotime($post['posted_at']))}}</li>
                                             </ul>
                                         </div>
                                         <div class="media-body pl-15">
