@@ -60,7 +60,7 @@
     <link href="{{ URL::asset('/public/assets/global/css/css-plugin-collections.css') }}" rel="stylesheet"/>
     <!-- CSS | menuzord megamenu skins -->
     <link id="menuzord-menu-skins"
-          href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=2"
+          href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=3"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
     <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=8" rel="stylesheet" type="text/css">

@@ -14,7 +14,15 @@
 \Illuminate\Support\Facades\Artisan::call('route:clear');
 \Illuminate\Support\Facades\Artisan::call('view:clear');
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+
+    ], function () {
+
 Route::auth();
+
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
@@ -23,29 +31,7 @@ Route::get('/test', function () {
 
 
 });
-//Auth::routes();
-// Authentication Routes...
-Route::post('login', 'Auth\LoginController@login')->name('login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('login', 'globals\global_view@login_page')->name('global_login_page');
-Route::get('auth/reset', 'globals\global_view@reset_password')->name('global_reset_password');
-Route::post('auth/reset', 'globals\global_controller@reset_password')->name('global_password_reset');
 
-// Registration Routes...
-Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
-
-//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-//Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-Route::get('logout', 'Auth\LoginController@logout');
-Route::get('/', 'globals\global_view@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home_page');
 
 //=========================================
 // ------------admin panel-----------------
@@ -330,6 +316,7 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
         Route::post('/delete_adv_card/{option_id}', 'panel\setting@delete_adv_card')->name('delete_adv_card');
         Route::get('/more_setting', 'panel\panel_view@more_blog_setting')->name('more_blog_setting');
         Route::resource('faq', 'panel\faqController');
+        Route::resource('menu', 'menuController');
 
     });
 
@@ -527,12 +514,30 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
 //=========================================
 
 
-Route::group(
-    [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+//Auth::routes();
+// Authentication Routes...
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('login', 'globals\global_view@login_page')->name('global_login_page');
+    Route::get('auth/reset', 'globals\global_view@reset_password')->name('global_reset_password');
+    Route::post('auth/reset', 'globals\global_controller@reset_password')->name('global_password_reset');
 
-    ], function () {
+// Registration Routes...
+    Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
+
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+//Route::post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+    Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+    Route::get('logout', 'Auth\LoginController@logout');
+    Route::get('/', 'globals\global_view@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home_page');
+
 
     Route::prefix('ajax')->group(function () {
         Route::get('/register', 'globals\global_view@register_form')->name('global_register_form');

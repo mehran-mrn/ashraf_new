@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'menu'=> charity_payment_patern::get(),
                 'menu_blog'=> BlogEtcCategory::where("lang",app()->getLocale())->orderBy("category_name")->get(),
-                'menu_special'=> BlogEtcSpecificPages::orderBy("category_name")->get(),
+                'menu_special'=> BlogEtcSpecificPages::where("lang",app()->getLocale())->orderBy("category_name")->get(),
             ]);
         });
         Schema::defaultStringLength(191);

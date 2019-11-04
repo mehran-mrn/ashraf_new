@@ -181,6 +181,10 @@ if (!isset($active_sidbare)) {
                                             href="{{ route('faq.index') }}"
                                             class="nav-link ">{{trans('messages.FAQ')}}</a>
                                 </li>
+                                <li class="nav-item {{in_array("menu", $active_sidbare) ? ' nav-item-open' : '' }}"><a
+                                            href="{{ route('menu.index') }}"
+                                            class="nav-link ">{{trans('messages.menu')}}</a>
+                                </li>
                                 <li class="nav-item {{in_array("more_blog_setting", $active_sidbare) ? ' nav-item-open' : '' }}">
                                     <a href="{{ route('more_blog_setting') }}"
                                        class="nav-link ">{{trans('messages.more_setting')}}</a>
