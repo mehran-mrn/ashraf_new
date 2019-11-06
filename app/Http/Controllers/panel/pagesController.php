@@ -96,6 +96,16 @@ class pagesController extends Controller
 
 
     }
+    public function view($slug)
+    {
+        $page = page::where('slug',$slug)->where('link',1)->first();
+        if ($page){
+            return view('global.DBview', compact('page'));
+        }
+        else{
+            abort(404);
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.

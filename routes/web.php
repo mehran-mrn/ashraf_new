@@ -497,7 +497,8 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //======================================
 //--------------Global View-------------
 //======================================
-Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
+    Route::get('/p/{slug}', 'panel\pagesController@view')->name('pages.view');
+    Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
 Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
 Route::post('/caravan_print', 'globals\global_view@caravan_print')->name('global_caravan_print');
 Route::get('/change_password', 'globals\global_view@change_password')->name('global_profile_change_password');
