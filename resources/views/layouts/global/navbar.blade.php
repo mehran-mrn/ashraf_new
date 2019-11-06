@@ -22,6 +22,16 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
+                            <?php $locals = get_all_locals(); ?>
+                            @foreach($locals as $local)
+                                @if($local != App()->getLocale())
+                                    <li>
+                                        <a class="text-black "
+                                           href="/{{$local}}">{{trans("words.$local")}}</a>
+                                    </li>
+                                    <li class="text-black">|</li>
+                                @endif
+                            @endforeach
                             @if (Auth::check())
                                 <li>
                                     <a class="text-black "
@@ -96,50 +106,15 @@
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
                     <ul class="menuzord-menu pull-right">
-                        <li><a class="text-white-f6" href="{{route('index')}}"> {{trans('messages.home')}}</a></li>
-                        <li><a class="text-white-f6" href="#home">{{trans('messages.cooperation')}}</a>
-                            <ul class="dropdown">
-                                <li><a href="{{route('global_shop')}}">{{__("messages.tableau_and_wreath")}}</a></li>
-                                @foreach($menu as $m)
-                                    @if($m['type']=="vow")
-                                        <li><a href="{{route('vows',['id'=>$m['id']])}}">{{$m['title']}} </a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                                <li><a href="{{route('vow_donate')}}">{{__("messages.financial_aids")}}</a></li>
-                                <li><a href="{{route('vow_periodic')}}">{{__("messages.Periodic_assistance")}}</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a class="text-white-f6" href="#home">{{trans('messages.Introducing_us')}}</a>
-                            <ul class="dropdown">
-                                @foreach($menu_special as $m_s)
-                                    <li><a href="{{route('blogetc.view_SpecificPages',['categorySlug'=>$m_s['slug']])}}">{{$m_s['category_name']}}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li><a class="text-white-f6" href="#">{{__('messages.gallery')}}</a>
-                            <ul class="dropdown">
-                                <li><a  href="{{route('gallery')}}">{{__('messages.photos')}}</a></li>
-                                <li><a  href="{{route('video_gallery')}}">{{__('messages.videos')}}</a></li>
-                            </ul>
+                        @foreach($menu as $item)
+                            <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
+                                @if($item->subMenu()->exists())
+                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu])
+                                @endif
                             </li>
-                        <li><a class="text-white-f6" href="#">{{trans('messages.blog')}}</a>
-                            <ul class="dropdown">
-                                @foreach($menu_blog as $m_b)
-                                    <li>
-                                        <a href="{{route('blogetc.view_category',['categorySlug'=>$m_b['slug']])}}">{{$m_b['category_name']}}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li><a class="text-white-f6" href="{{route('faq')}}">{{trans('messages.faq')}}</a></li>
-                        <li><a class="text-white-f6"
-                               href="{{route('contact.create')}}">{{trans('messages.contact_to_we')}}</a>
+                        @endforeach
 
 
-                        </li>
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
