@@ -48,11 +48,7 @@
                                                     <div class="media-title font-weight-semibold">Available Options
                                                     </div>
                                                     <div class="font-size-xs opacity-50"></div>
-                                                    <div class="float-right">
-                                                        <button type="submit"
-                                                                class="btn btn-info">{{trans('messages.add')}} <i
-                                                                    class="icon-add"></i></button>
-                                                    </div>
+
                                                 </div>
 
                                                 <div class="ml-3 align-self-center">
@@ -130,7 +126,7 @@
                                                                     <li class="nav-item"><label class="nav-link"><input
                                                                                     name="system[]"
                                                                                     type="checkbox"
-                                                                                    value="{{route('blogetc.view_category',['categorySlug'=>$m_s['slug']],false)}}||{{$m_b['category_name']}}"/> {{$m_b['category_name']}}
+                                                                                    value="{{route('blogetc.view_category',['categorySlug'=>$m_b['slug']],false)}}||{{$m_b['category_name']}}"/> {{$m_b['category_name']}}
                                                                         </label></li>
                                                                 @endforeach
                                                             </ul>
@@ -188,6 +184,13 @@
                                                     </ul>
                                                 </li>
                                         </ul>
+                                        <div class="card-footer">
+                                            <div class="float-right">
+                                                <button type="submit"
+                                                        class="btn btn-info">{{trans('messages.add')}} <i
+                                                            class="icon-add"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /navigation -->
                                 </form>
@@ -254,7 +257,7 @@
                                                                 class="icon-cross font-size-xs"></i></button>
                                                 </div>
                                                 @if($menu_item->subMenu()->exists())
-                                                    @include('panel.blog_setting.menu.nested_items',['items'=>$menu_item->subMenu])
+                                                    @include('panel.blog_setting.menu.nested_items',['items'=>$menu_item->subMenu->sortBy('order')])
                                                 @endif
                                             </li>
                                         @endforeach

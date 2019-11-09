@@ -1,6 +1,6 @@
 <!-- Header -->
-<style>
-    .menuzord-menu > li {
+<style >
+    .menuzord-menu > li{
         padding: 14px 0 !important;
     }
 </style>
@@ -15,8 +15,8 @@
                         <a class="menuzord-brand pull-right sm-text-center xs-text-center xs-pull-center"
                            href="{{route('main')}}">
                             <img class="img img-responsive sm-text-center xs-text-center"
-                                 src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png')}}?i=4" alt="">
-                        </a>
+                                 src="{{ URL::asset('/public/assets/global/images/logo-wide@2x.png')}}?i=4" alt=""></a>
+
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -42,11 +42,19 @@
                                     <a class="text-black" href="{{route('logout')}}">{{trans('messages.logout')}}</a>
                                 </li>
                             @else
+                                <li class="hidden-sm hidden-xs">
+                                    <a class="text-black ajaxload-popup"
+                                       href="{{route('global_login_form')}}">{{trans('messages.login')}}</a>
+                                </li>
                                 <li class="hidden-lg hidden-md">
                                     <a class="text-black"
                                        href="{{route('global_login_page')}}">{{trans('messages.login')}}</a>
                                 </li>
                                 <li class="text-black">|</li>
+                                <li class="hidden-sm  hidden-xs">
+                                    <a class="text-black ajaxload-popup"
+                                       href="{{route('global_register_form')}}">{{trans('messages.register')}}</a>
+                                </li>
                                 <li class="hidden-lg hidden-md">
                                     <a class="text-black "
                                        href="{{route('global_register_page')}}">{{trans('messages.register')}}</a>
@@ -94,34 +102,30 @@
         </div>
     </div>
     <div class="header-nav ">
-
         <div class="header-nav-wrapper navbar-scrolltofixed bg-theme-colored-darker4">
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
-                    <a class="btn pt-10 text-white ajaxload-popup hidden-md hidden-lg"
-                       href="{{route('global_login_form')}}">{{trans('messages.login')}}</a>
-                    <a class="btn pt-10 text-white ajaxload-popup hidden-md hidden-lg"
-                       href="{{route('global_register_form')}}">{{trans('messages.register')}}</a>
                     <ul class="menuzord-menu pull-right">
                         @foreach($menu as $item)
                             <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
                                 @if($item->subMenu()->exists())
-                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu])
+                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu->sortBy('order')])
                                 @endif
                             </li>
                         @endforeach
+
+
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
                         @if(has_caravan())
                             <li><a href="{{route('global_caravan')}}">{{__('messages.caravan')}}</a></li>
                         @endif
-
                     </ul>
                 </nav>
             </div>
         </div>
-
+    </div>
 </header>
 
 
