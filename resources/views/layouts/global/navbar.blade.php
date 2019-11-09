@@ -106,7 +106,6 @@
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
                     <ul class="menuzord-menu pull-right">
-                        <li><a class="text-white-f6" href="{{route('index')}}"> {{trans('messages.home')}}</a></li>
                         @foreach($menu as $item)
                             <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
                                 @if($item->subMenu()->exists())
