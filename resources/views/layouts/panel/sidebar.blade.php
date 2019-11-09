@@ -329,7 +329,7 @@ if (!isset($active_sidbare)) {
                         </li>
                         <li class="nav-item">
                             <a href="{{route('charity_reports')}}"
-                               class="nav-link {{in_array("charity_report", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>
+                               class="nav-link {{in_array("charity_reports", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>
                         </li>
 
                         {{--                        <li class="nav-item"><a href="{{route('building_types')}}"--}}

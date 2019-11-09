@@ -13,7 +13,9 @@
             <div class="card bg-{{$color[$i]}}-400 has-bg-image">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h3 class="font-weight-semibold mb-0">{{number_format($sum)}} <small>{{__('messages.rial')}}</small></h3>
+                        <h3 class="font-weight-semibold mb-0">{{number_format($sum)}}
+                            <small>{{__('messages.rial')}}</small>
+                        </h3>
                         <div class="list-icons ml-auto">
                             <a class="list-icons-item" data-action="reload"></a>
                         </div>
@@ -32,8 +34,126 @@
         <?php $i++; ?>
     @endforeach
 </div>
+<div class="row">
+    @foreach($reportPort as $port)
+        <div class="col-sm-6 col-xl-3">
+            <div class="card card-body">
+                <div class="media">
+                    <div class="mr-3 align-self-center">
+                        <i class="icon-enter6 icon-3x text-indigo-400"></i>
+                    </div>
+                    <div class="media-body text-right">
+                        <h3 class="font-weight-semibold mb-0">{{number_format($port['price'])}}</h3>
+                        <span class="text-uppercase font-size-sm text-muted">{{$port['port']}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
 
+<div class="container-fluid">
+    <table class="table datatable-basic">
+        <thead>
+        <tr>
+            <th>{{__('messages.id')}}</th>
+            <th>{{__('messages.gateway')}}</th>
+            <th>{{__('messages.amount')}}</th>
+            <th>{{__('messages.ref_id')}}</th>
+            <th>{{__('messages.tracking_code')}}</th>
+            <th>{{__('messages.card_number')}}</th>
+            <th>{{__('messages.status')}}</th>
+            <th>{{__('messages.ip')}}</th>
+            <th>{{__('messages.date')}}</th>
+            <th>{{__('messages.type')}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        @php $i=1; @endphp
+        @foreach($reportRow as $row)
+            <tr>
+                <td>{{$i}}</td>
+                <td>{{$row['port']}}</td>
+                <td>{{number_format($row['price'])}}</td>
+                <td><span dir="ltr">{{$row['ref_id']}}</span></td>
+                <td><span dir="ltr">{{$row['tracking_code']}}</span></td>
+                <td><span dir="ltr">{{$row['card_number']}}</span></td>
+                <td>{{__('messages.'.$row['status'])}}</td>
+                <td><span dir="ltr">{{$row['ip']}}</span></td>
+                <td><span dir="ltr">{{jdate("Y-m-d H:i:s",strtotime($row['payment_date']),'','','en')}}</span></td>
+                <td>{{__('messages.'.$row['module'])}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
 
+<script>
+    var DatatableBasic = function () {
+        var _componentDatatableBasic = function () {
+            if (!$().DataTable) {
+                console.warn('Warning - datatables.min.js is not loaded.');
+                return;
+            }
+            $.extend($.fn.dataTable.defaults, {
+                autoWidth: true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: [6]
+                }],
+                dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+                language: {
+                    search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
+                    searchPlaceholder: '{{__('messages.search')}}...',
+                    lengthMenu: '<span>{{__('messages.show')}}:</span> _MENU_',
+                    paginate: {
+                        'first': '{{__('messages.first')}}',
+                        'last': '{{__('messages.last')}}',
+                        'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
+                        'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
+                    }
+                }
+            });
+            // Basic datatable
+            $('.datatable-basic').DataTable({
+                pagingType: "simple",
+                language: {
+                    paginate: {
+                        'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',
+                        'previous': $('html').attr('dir') == 'rtl' ? '&rarr; {{__('messages.prev')}}' : '&larr; {{__('messages.prev')}}'
+                    }
+                },
+                stateSave: true,
+                autoWidth: true,
+            });
+
+            // Resize scrollable table when sidebar width changes
+            $('.sidebar-control').on('click', function () {
+                table.columns.adjust().draw();
+            });
+        };
+        var _componentSelect2 = function () {
+            if (!$().select2) {
+                console.warn('Warning - select2.min.js is not loaded.');
+                return;
+            }
+            $('.dataTables_length select').select2({
+                minimumResultsForSearch: Infinity,
+                dropdownAutoWidth: true,
+                width: 'auto'
+            });
+        };
+        return {
+            init: function () {
+                _componentDatatableBasic();
+                _componentSelect2();
+            }
+        }
+    }();
+
+    DatatableBasic.init();
+
+</script>
 <script>
     var StatisticWidgets = function () {
                 @foreach($reports as $report=>$val)
@@ -46,35 +166,33 @@
                 if (element) {
                     var dataset = [];
                     @foreach($val as $v=>$ff)
-                    @php
-                        $sum=0;
-                        $i=0;
-                    @endphp
+                        @php
+                            $sum=0;
+                            $i=0;
+                        @endphp
                         @foreach($ff as $f)
                         @php
                             $sum +=$f['price'];
                             $i++;
                         @endphp
                         @endforeach
-                    dataset.push({date: '{{$v}}', price: '{{$sum}}', count: '{{$i}}'});
+                        dataset.push({date: '{!! jdate("Y-m-d",strtotime($v),'','','en') !!}', price: '{{$sum}}', count: '{{$i}}'});
                     @endforeach
                     var d3Container = d3.select(element),
                         margin = {top: 0, right: 0, bottom: 0, left: 0},
                         width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
                         height = chartHeight - margin.top - margin.bottom,
                         padding = 20;
-                    var parseDate = d3.time.format("%Y-%m-%d").parse,
-                        formatDate = d3.time.format("%a, %B %e");
+                    var parseDate = d3.time.format("%Y-%m-%d").parse, formatDate = d3.time.format("%Y/%m/%d");
                     var tooltip = d3.tip()
                         .attr('class', 'd3-tip')
                         .html(function (d) {
                             return "<ul class='list-unstyled mb-1'>" +
                                 "<li>" + "<div class='font-size-base my-1'><i class='icon-check2 mr-2'></i>" + formatDate(d.date) + "</div>" + "</li>" +
                                 "<li>" + "{{__('messages.transaction_count')}}: &nbsp;" + "<span class='font-weight-semibold float-right'>" + d.count + "</span>" + "</li>" +
-                                "<li>" + "{{__('messages.sum_price')}}: &nbsp; " + "<span class='font-weight-semibold float-right'>" +  d.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <small>{{__('messages.rial')}}</small></span>" + "</li>" +
+                                "<li>" + "{{__('messages.sum_price')}}: &nbsp; " + "<span class='font-weight-semibold float-right'>" + d.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " <small>{{__('messages.rial')}}</small></span>" + "</li>" +
                                 "</ul>";
                         });
-
                     var container = d3Container.append('svg');
                     var svg = container
                         .attr('width', width + margin.left + margin.right)
@@ -82,14 +200,11 @@
                         .append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
                         .call(tooltip);
-
                     dataset.forEach(function (d) {
                         d.date = parseDate(d.date);
                     });
-                    // Horizontal
                     var x = d3.time.scale()
                         .range([padding, width - padding]);
-                    // Vertical
                     var y = d3.scale.linear()
                         .range([height, 5]);
 

@@ -7,6 +7,10 @@
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
+
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
     <script>
         $(document).ready(function () {
             $('#start_date_btn').MdPersianDateTimePicker({
@@ -92,13 +96,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="m-2">
+                                    <label for="">{{__('messages.gateway')}}</label>
+                                    <div class="form-group mb-3 mb-md-2">
+                                        @foreach($gateway as $g)
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input-styled" name="gateway[]" value="{{$g['port']}}" checked
+                                                           data-fouc>
+                                                    {{$g['port']}}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="m-2">
+                                    <label for="">{{__('messages.payment_type')}}</label>
+
                                     <div class="form-group mb-3 mb-md-2">
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_vow" checked
                                                        data-fouc>
                                                 {{__('messages.charity_vow')}}
                                             </label>
@@ -106,20 +126,21 @@
 
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_donate" checked
                                                        data-fouc>
                                                 {{__('messages.charity_donate')}}
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_period" checked
                                                        data-fouc>
                                                 {{__('messages.charity_period')}}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="m-2">

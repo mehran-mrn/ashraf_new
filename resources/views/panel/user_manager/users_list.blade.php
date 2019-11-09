@@ -71,8 +71,6 @@ $active_sidbare = ['user_manager', 'users_list']
         document.addEventListener('DOMContentLoaded', function () {
             DatatableBasic.init();
         });
-
-
     </script>
 @endsection
 @section('content')
