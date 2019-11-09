@@ -1,4 +1,5 @@
 <ul class="dropdown">
+
     @foreach($sub_menu as $sub_menu_item)
     <li><a href="{{$sub_menu_item['url']}}">{{$sub_menu_item['name']}}</a>
         @if($sub_menu_item->subMenu()->exists())
