@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\charity_payment_patern;
 use App\charity_payment_title;
+use App\menu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -34,9 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         \View::composer("*", function ($view) {
             $view->with([
-                'menu'=> charity_payment_patern::get(),
-                'menu_blog'=> BlogEtcCategory::where("lang",app()->getLocale())->orderBy("category_name")->get(),
-                'menu_special'=> BlogEtcSpecificPages::where("lang",app()->getLocale())->orderBy("category_name")->get(),
+                'menu'=> menu::where('local',App()->getLocale())->where('parent_id',0)->orderBy('order')->get(),
+//                'menu'=> charity_payment_patern::get(),
+//                'menu_blog'=> BlogEtcCategory::where("lang",app()->getLocale())->orderBy("category_name")->get(),
+//                'menu_special'=> BlogEtcSpecificPages::where("lang",app()->getLocale())->orderBy("category_name")->get(),
             ]);
         });
         Schema::defaultStringLength(191);

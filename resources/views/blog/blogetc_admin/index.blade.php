@@ -82,7 +82,7 @@ $active_sidbare = ['blog', 'blog_posts', 'blog_posts_list']
                                 <span class="card-title">{{__('messages.post_list')}}</span>
                             </div>
                             <div class="card-body ">
-                                <table class="table datatable-basic">
+                                <table class="table ddatatable-basic">
                                     <thead class="fullwidth">
                                     <tr>
                                         <th>{{__('messages.id')}}</th>

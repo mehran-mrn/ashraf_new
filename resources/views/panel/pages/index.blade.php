@@ -47,9 +47,9 @@
                         <td>
                             <div class="input-group">
 											<span class="input-group-prepend">
-												<button class="btn btn-light" type="button"><i class="icon-copy4"></i> </button>
+												<button class="btn btn-light" onclick="copyFunction('pageURL{{$page['id']}}')" type="button"><i class="icon-copy4"></i> </button>
 											</span>
-                                <input type="text" class="form-control" value="{{url("p/".$page['slug'])}}" readonly="">
+                                <input type="text" class="form-control" id="pageURL{{$page['id']}}" value="{{url("p/".$page['slug'])}}" readonly="">
                             </div>
                         </td>
                         <td>
@@ -79,6 +79,14 @@
 
 @endsection
 @section('footer_js')
+    <script>
+        function copyFunction(id) {
+            var copyText = document.getElementById(id);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+        }
+    </script>
 <script>
     var TaskManagerList = function () {
 

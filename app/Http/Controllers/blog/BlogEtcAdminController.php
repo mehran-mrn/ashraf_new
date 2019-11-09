@@ -48,7 +48,7 @@ class BlogEtcAdminController extends Controller
     public function index()
     {
         $posts = BlogEtcPost::orderBy("posted_at", "desc")
-            ->paginate(500);
+            ->paginate(100);
         return view("blog.blogetc_admin.index", ['posts' => $posts]);
     }
 
