@@ -690,6 +690,7 @@ function get_posts($limit = null, $main_page = [], $categories = [], $paginate =
             $q->where('articles', true);
         });
     }
+    $posts_query->where("lang", app()->getLocale());
     $posts_query->orderBy("posted_at", "desc");
     $posts_query->with('categories');
     if (!empty($categories)) {

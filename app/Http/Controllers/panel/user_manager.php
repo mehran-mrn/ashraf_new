@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Config;
 class user_manager extends Controller
 {
     //
+
     public function register(Request $request)
     {
 //        $currentUser = Auth::user();
@@ -300,19 +301,19 @@ class user_manager extends Controller
     public function users_list_delete(Request $request)
     {
         if ($user = User::find($request['id'])) {
-            if($user->disabled==0) {
+            if ($user->disabled == 0) {
                 $user->disabled = 1;
                 $user->save();
                 $return = __('messages.item_deleted', ['item' => __('messages.user')]);
-            }else{
+            } else {
                 $user->disabled = 0;
                 $user->save();
                 $return = __('messages.active', ['item' => __('messages.user')]);
             }
-        }else {
+        } else {
             $return = __('messages.not_found_any_data');
         }
-        return back_normal($request,  $return);
+        return back_normal($request, $return);
     }
 }
 

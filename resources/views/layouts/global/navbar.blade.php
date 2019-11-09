@@ -1,6 +1,6 @@
 <!-- Header -->
-<style >
-    .menuzord-menu > li{
+<style>
+    .menuzord-menu > li {
         padding: 14px 0 !important;
     }
 </style>
@@ -22,6 +22,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
+
                             @if (Auth::check())
                                 <li>
                                     <a class="text-black "
@@ -50,6 +51,7 @@
                                        href="{{route('global_register_page')}}">{{trans('messages.register')}}</a>
                                 </li>
                             @endif
+
                             @if(session()->get('cart'))
                                 <li class="text-black">|</li>
                                 <li>
@@ -83,8 +85,6 @@
                 </span>
                                 </div>
                             </form>
-
-
                         </div>
                     </div>
                 </div>
@@ -114,17 +114,18 @@
                         <li><a class="text-white-f6" href="#home">{{trans('messages.Introducing_us')}}</a>
                             <ul class="dropdown">
                                 @foreach($menu_special as $m_s)
-                                    <li><a href="{{route('blogetc.view_SpecificPages',['categorySlug'=>$m_s['slug']])}}">{{$m_s['category_name']}}</a>
+                                    <li>
+                                        <a href="{{route('blogetc.view_SpecificPages',['categorySlug'=>$m_s['slug']])}}">{{$m_s['category_name']}}</a>
                                     </li>
                                 @endforeach
                             </ul>
                         </li>
                         <li><a class="text-white-f6" href="#">{{__('messages.gallery')}}</a>
                             <ul class="dropdown">
-                                <li><a  href="{{route('gallery')}}">{{__('messages.photos')}}</a></li>
-                                <li><a  href="{{route('video_gallery')}}">{{__('messages.videos')}}</a></li>
+                                <li><a href="{{route('gallery')}}">{{__('messages.photos')}}</a></li>
+                                <li><a href="{{route('video_gallery')}}">{{__('messages.videos')}}</a></li>
                             </ul>
-                            </li>
+                        </li>
                         <li><a class="text-white-f6" href="#">{{trans('messages.blog')}}</a>
                             <ul class="dropdown">
                                 @foreach($menu_blog as $m_b)
@@ -137,8 +138,6 @@
                         <li><a class="text-white-f6" href="{{route('faq')}}">{{trans('messages.faq')}}</a></li>
                         <li><a class="text-white-f6"
                                href="{{route('contact.create')}}">{{trans('messages.contact_to_we')}}</a>
-
-
                         </li>
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>

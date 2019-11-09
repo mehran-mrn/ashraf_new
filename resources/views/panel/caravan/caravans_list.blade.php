@@ -46,7 +46,10 @@
                 @foreach($caravans as $caravan)
                     <tr>
                         <td>#25</td>
-                        <td>{{$caravan['caravan_host_id']['status']}}</td>
+                        <td>
+                            @if(isset($caravan['caravan_host_id']['status']))
+                            {{$caravan['caravan_host_id']['status']}}
+                        @endif</td>
                         <td>
                             <div class="font-weight-semibold"><a
                                         href="{{route('caravan',['caravan_id'=>$caravan->id])}}">{{get_cites($caravan['dep_city'])['name']}}
