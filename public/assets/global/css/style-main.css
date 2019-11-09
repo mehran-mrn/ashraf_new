@@ -1152,7 +1152,7 @@ section > .container-fluid {
 }
 @media only screen and (max-width: 900px) {
   .menuzord-menu {
-    background: #fff;
+    /*background: #fff;*/
   }
 }
 /* -------- Scrolltofixed ---------- */

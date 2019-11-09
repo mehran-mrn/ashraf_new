@@ -1,6 +1,6 @@
 <!-- Header -->
-<style >
-    .menuzord-menu > li{
+<style>
+    .menuzord-menu > li {
         padding: 14px 0 !important;
     }
 </style>
@@ -21,11 +21,11 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border clearfix m-0 mt-5">
-                        <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
+                        <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5 hidden-xs">
                             <?php $locals = get_all_locals(); ?>
                             @foreach($locals as $local)
                                 @if($local != App()->getLocale())
-                                    <li>
+                                    <li class="">
                                         <a class="text-black "
                                            href="/{{$local}}">{{trans("words.$local")}}</a>
                                     </li>
@@ -34,30 +34,23 @@
                             @endforeach
                             @if (Auth::check())
                                 <li>
-                                    <a class="text-black "
+                                    <a class="text-black"
                                        href="{{route('global_profile')}}">{{trans('messages.account')}}</a>
                                 </li>
                                 <li class="text-black">|</li>
                                 <li>
-                                    <a class="text-black" href="{{route('logout')}}">{{trans('messages.logout')}}</a>
+                                    <a class="text-black"
+                                       href="{{route('logout')}}">{{trans('messages.logout')}}</a>
                                 </li>
                             @else
-                                <li class="hidden-sm hidden-xs">
+                                <li class="">
                                     <a class="text-black ajaxload-popup"
                                        href="{{route('global_login_form')}}">{{trans('messages.login')}}</a>
                                 </li>
-                                <li class="hidden-lg hidden-md">
-                                    <a class="text-black"
-                                       href="{{route('global_login_page')}}">{{trans('messages.login')}}</a>
-                                </li>
                                 <li class="text-black">|</li>
-                                <li class="hidden-sm  hidden-xs">
+                                <li class="">
                                     <a class="text-black ajaxload-popup"
                                        href="{{route('global_register_form')}}">{{trans('messages.register')}}</a>
-                                </li>
-                                <li class="hidden-lg hidden-md">
-                                    <a class="text-black "
-                                       href="{{route('global_register_page')}}">{{trans('messages.register')}}</a>
                                 </li>
                             @endif
                             @if(session()->get('cart'))
@@ -84,7 +77,7 @@
                                 <div class="input-group">
                                     <input type="text" value="{{\Request::get("s")}}" name="s"
                                            placeholder="{{__('messages.search')}}"
-                                           class="form-control input-lg font-16" data-height="45px"
+                                           class="form-control input-sm font-16" data-height="45px"
                                            id="mce-EMAIL-footer" style="height: 45px;">
                                     <span class="input-group-btn">
                   <button data-height="45px" class="btn btn-colored bg-theme-colored-darker2 btn-xs m-0 font-14"
@@ -105,11 +98,33 @@
         <div class="header-nav-wrapper navbar-scrolltofixed bg-theme-colored-darker4">
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
+                    <div class="pt-10 hidden-sm hidden-md hidden-lg small">
+                        @if(Auth::check())
+                            <a class="text-white"
+                               href="{{route('global_profile')}}">{{trans('messages.account')}}</a>
+                            <span class="text-white">|</span>
+                            <a class="text-white"
+                               href="{{route('logout')}}">{{trans('messages.logout')}}</a>
+                        @else
+                            <a class="text-white"
+                               href="{{route('global_login_page')}}">{{trans('messages.login')}}</a>
+                            <span class="text-white">|</span>
+                            <a class="text-white"
+                               href="{{route('global_register_page')}}">{{trans('messages.register')}}</a>
+                        @endif
+                        @foreach($locals as $local)
+                            @if($local != App()->getLocale())
+                                <span class="text-white">|</span>
+                                <a class="text-white"
+                                   href="/{{$local}}">{{trans("words.$local")}}</a>
+                            @endif
+                        @endforeach
+                    </div>
                     <ul class="menuzord-menu pull-right">
                         @foreach($menu as $item)
                             <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
                                 @if($item->subMenu()->exists())
-                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu->sortBy('order')])
+                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu])
                                 @endif
                             </li>
                         @endforeach
