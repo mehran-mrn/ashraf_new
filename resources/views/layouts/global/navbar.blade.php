@@ -22,6 +22,16 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
+                            <?php $locals = get_all_locals(); ?>
+                            @foreach($locals as $local)
+                                @if($local != App()->getLocale())
+                                    <li>
+                                        <a class="text-black "
+                                           href="/{{$local}}">{{trans("words.$local")}}</a>
+                                    </li>
+                                    <li class="text-black">|</li>
+                                @endif
+                            @endforeach
                             @if (Auth::check())
                                 <li>
                                     <a class="text-black "
@@ -96,6 +106,7 @@
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
                     <ul class="menuzord-menu pull-right">
+                        <li><a class="text-white-f6" href="{{route('index')}}"> {{trans('messages.home')}}</a></li>
                         @foreach($menu as $item)
                             <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
                                 @if($item->subMenu()->exists())
