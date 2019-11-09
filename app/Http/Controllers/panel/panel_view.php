@@ -863,7 +863,10 @@ class panel_view extends Controller
 
     public function charity_reports()
     {
-        return view('panel.charity.reports.report');
+
+        $gateway = DB::table('gateway_transactions')->select(DB::raw('port'))->groupBy('port')->get();
+        $gateway = json_decode($gateway,true);
+        return view('panel.charity.reports.report',compact('gateway'));
     }
 //end charity module
 

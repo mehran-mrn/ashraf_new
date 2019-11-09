@@ -270,6 +270,7 @@ class charity extends Controller
 
     public function reports(Request $request)
     {
+
         $explodeStart = str_replace("   ", " ", $request['start_date']);
         $explodeStart = explode(" ", $explodeStart);
         $date = explode("/", $explodeStart[0]);
@@ -283,14 +284,35 @@ class charity extends Controller
         $endDate = $endDate . " " . $explodeEnd[1];
 
 
+
+        $reportPort = DB::table('gateway_transactions')
+            ->select( DB::raw('sum(price) as price'),DB::raw('port'))
+            ->whereIn('module', $request['type'])
+            ->whereIn('port', $request['gateway'])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status', '=', 'SUCCEED')
+            ->groupBy('port')
+            ->get();
         $report = DB::table('gateway_transactions')
-            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'),DB::raw('price'))
-            ->whereIn('module', ['charity_donate', 'charity_vow', 'charity_period'])
+            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'),DB::raw('price'),DB::raw('port'))
+            ->whereIn('module', $request['type'])
+            ->whereIn('port', $request['gateway'])
             ->whereBetween('created_at', [$startDate, $endDate])
             ->where('status', '=', 'SUCCEED')
             ->get();
+
+
+        $reportRow = gateway_transaction::whereIn('module', $request['type'])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereIn('port', $request['gateway'])
+            ->whereIn('module', $request['type'])
+            ->where('status', '=', 'SUCCEED')
+            ->get();
+
         $reports = $report->groupBy(['mo','date']);
+        $reportPort = json_decode($reportPort,true);
         $reports = json_decode($reports, true);
-        return view('panel.charity.reports.ajax', compact('reports'));
+        $reportRow = json_decode($reportRow, true);
+        return view('panel.charity.reports.ajax', compact('reports','reportPort','reportRow'));
     }
 }
