@@ -695,5 +695,15 @@ return array(
     'pages_list' => 'لیست صفحات',
 
     'waiting_paid' => 'منتظر پرداخت',
-    'transaction_info'=>'اطلاعات تراکنش'
+    'transaction_info'=>'اطلاعات تراکنش',
+    'active_users'=>'کاربران فعال',
+    'payment_chart'=>'نمودار پرداخت ها',
+    'charity_donate'=>'خیریه',
+    'charity_vow'=>'نذورات',
+    'charity_period'=>'کمک ماهانه',
+    'reports'=>'گزارشات',
+    'from'=>'از',
+    'to'=>'تا',
+    'transaction_count'=>'نعداد تراکنش',
+    'sum_price'=>'جمع مبلغ'
 );

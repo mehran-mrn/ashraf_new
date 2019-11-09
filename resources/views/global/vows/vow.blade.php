@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="amount">{{__('messages.amount')}}</label>
+                                            <label for="amount">{{__('messages.amount')}} <small>({{__('messages.rial')}})</small></label>
                                             <input type="text" min="{{$charity['min']}}" max="{{$charity['max']}}" class="form-control amount" name="amount">
                                         </div>
                                     </div>

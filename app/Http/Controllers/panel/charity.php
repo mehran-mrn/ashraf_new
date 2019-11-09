@@ -10,9 +10,11 @@ use App\charity_payment_patern;
 use App\charity_payment_title;
 use App\charity_period;
 use App\charity_periods_transaction;
+use App\gateway_transaction;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class charity extends Controller
 {
@@ -247,7 +249,7 @@ class charity extends Controller
             \App\media::where(
                 [
                     ['category_id', '=', $champion['id']],
-                    ['module','=','champion']
+                    ['module', '=', 'champion']
                 ]
             )->delete();
             uploadGallery($request['file'], 'champion', ['category_id' => $champion['id'], 'title' => $request['title']]);
@@ -264,5 +266,31 @@ class charity extends Controller
         }
         $return = trans('messages.item_created');
         return back_normal($request, ['message' => $return, 'status' => 200]);
+    }
+
+    public function reports(Request $request)
+    {
+        $explodeStart = str_replace("   ", " ", $request['start_date']);
+        $explodeStart = explode(" ", $explodeStart);
+        $date = explode("/", $explodeStart[0]);
+        $startDate = jalali_to_gregorian($date[0], $date[1], $date[2], '-');
+        $startDate = $startDate . " " . $explodeStart[1];
+
+        $explodeEnd = str_replace("   ", " ", $request['end_date']);
+        $explodeEnd = explode(" ", $explodeEnd);
+        $endDate = explode("/", $explodeEnd[0]);
+        $endDate = jalali_to_gregorian($endDate[0], $endDate[1], $endDate[2], '-');
+        $endDate = $endDate . " " . $explodeEnd[1];
+
+
+        $report = DB::table('gateway_transactions')
+            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'),DB::raw('price'))
+            ->whereIn('module', ['charity_donate', 'charity_vow', 'charity_period'])
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status', '=', 'SUCCEED')
+            ->get();
+        $reports = $report->groupBy(['mo','date']);
+        $reports = json_decode($reports, true);
+        return view('panel.charity.reports.ajax', compact('reports'));
     }
 }

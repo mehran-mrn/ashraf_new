@@ -523,7 +523,6 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
     Route::get('auth/reset', 'globals\global_view@reset_password')->name('global_reset_password');
     Route::post('auth/reset', 'globals\global_controller@reset_password')->name('global_password_reset');
 
-// Registration Routes...
     Route::get('/register', 'globals\global_view@register_page')->name('global_register_page');
 
 //Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

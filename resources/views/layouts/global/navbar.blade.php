@@ -22,16 +22,6 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="widget no-border clearfix m-0 mt-5">
                         <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
-                            <?php $locals = get_all_locals(); ?>
-                            @foreach($locals as $local)
-                                @if($local != App()->getLocale())
-                                    <li>
-                                        <a class="text-black "
-                                           href="/{{$local}}">{{trans("words.$local")}}</a>
-                                    </li>
-                                    <li class="text-black">|</li>
-                                @endif
-                            @endforeach
                             @if (Auth::check())
                                 <li>
                                     <a class="text-black "
