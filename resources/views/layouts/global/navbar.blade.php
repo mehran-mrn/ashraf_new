@@ -109,11 +109,10 @@
                         @foreach($menu as $item)
                             <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
                                 @if($item->subMenu()->exists())
-                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu])
+                                    @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu->sortBy('order')])
                                 @endif
                             </li>
                         @endforeach
-
 
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>

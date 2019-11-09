@@ -26,7 +26,7 @@
                         data-cancel-text="{{trans('messages.cancel')}}"><i class="icon-cross font-size-xs"></i> </button>
             </div>
             @if($item->subMenu()->exists())
-                @include('panel.blog_setting.menu.nested_items',['items'=>$item->subMenu])
+                @include('panel.blog_setting.menu.nested_items',['items'=>$item->subMenu->sortBy('order')])
             @endif
         </li>
     @endforeach
