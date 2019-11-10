@@ -136,14 +136,56 @@
                         @if(has_caravan())
                             <li><a href="{{route('global_caravan')}}">{{__('messages.caravan')}}</a></li>
                         @endif
+                            <li><a href="#menu"><span></span></a></li>
+
                     </ul>
                 </nav>
+
+
+
             </div>
         </div>
     </div>
+    <nav id="menu">
+        <ul>
+            @foreach($menu as $item)
+                <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
+                    @if($item->subMenu()->exists())
+                        @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu->sortBy('order')])
+                    @endif
+                </li>
+            @endforeach
+        </ul>
+    </nav>
+
 </header>
 
 
+<script>
+    var menu = new MmenuLight( document.querySelector( '#menu' ), {
+         title: '{{trans('site_info.site_name')}}',
+         theme: 'dark',// 'dark'
+        // slidingSubmenus: true,// false
+        // selected: 'Selected'
+    });
+    menu.enable( 'all' ); // '(max-width: 900px)'
+    menu.offcanvas({
+         position: 'right',// 'right'
+        // move: true,// false
+        // blockPage: true,// false / 'modal'
+    });
+
+    //	Open the menu.
+    document.querySelector( 'a[href="#menu"]' )
+        .addEventListener( 'click', ( evnt ) => {
+            menu.open();
+
+            //	Don't forget to "preventDefault" and to "stopPropagation".
+            evnt.preventDefault();
+            evnt.stopPropagation();
+        });
+
+</script>
 
 
 

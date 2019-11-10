@@ -57,13 +57,13 @@
     <link href="{{ URL::asset('/public/assets/global/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/jquery-ui.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/animate.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ URL::asset('/public/assets/global/css/css-plugin-collections.css') }}" rel="stylesheet"/>
+    <link href="{{ URL::asset('/public/assets/global/css/css-plugin-collections.css') }}?v=1" rel="stylesheet"/>
     <!-- CSS | menuzord megamenu skins -->
     <link id="menuzord-menu-skins"
           href="{{ URL::asset('/public/assets/global/css/menuzord-skins/menuzord-rounded-boxed.css') }}?v=3"
           rel="stylesheet"/>
     <!-- CSS | Main style file -->
-    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=8" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=10" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
     <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
     <!-- CSS | Custom Margin Padding Collection -->
@@ -74,6 +74,8 @@
     <!-- CSS | RTL Layout -->
     <link href="{{ URL::asset('/public/assets/global/css/bootstrap-rtl.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/style-main-rtl.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/assets/global/css/style-main-rtl.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/public/css/mmenu-light.css') }}?i=1" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/public/assets/global/css/style-main-rtl-extra.css') }}" rel="stylesheet"
           type="text/css">
     <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
@@ -96,6 +98,7 @@
     <script src="{{ URL::asset('/public/assets/global/js/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/jquery-ui.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('/public/js/mmenu-light.js') }}"></script>
     <!-- JS | jquery plugin collection for this theme -->
     <script src="{{ URL::asset('/public/assets/global/js/jquery-plugin-collection.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
