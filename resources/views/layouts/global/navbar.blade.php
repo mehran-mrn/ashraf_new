@@ -98,8 +98,13 @@
         <div class="header-nav-wrapper navbar-scrolltofixed bg-theme-colored-darker4">
             <div class="container">
                 <nav id="menuzord" class="menuzord default bg-theme-colored-darker4">
+
+                    <a href="#menu" class="hidden-sm hidden-md hidden-lg mmenu-btn" style="display: inline;"><em></em><em></em><em></em></a>
+
                     <div class="pt-10 hidden-sm hidden-md hidden-lg small">
-                        @if(Auth::check())
+
+
+                    @if(Auth::check())
                             <a class="text-white"
                                href="{{route('global_profile')}}">{{trans('messages.account')}}</a>
                             <span class="text-white">|</span>
@@ -129,27 +134,22 @@
                             </li>
                         @endforeach
 
-
                         @if(session()->get('cart'))
                             <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
                         @if(has_caravan())
                             <li><a href="{{route('global_caravan')}}">{{__('messages.caravan')}}</a></li>
                         @endif
-                            <li><a href="#menu"><span></span></a></li>
 
                     </ul>
                 </nav>
-
-
-
             </div>
         </div>
     </div>
     <nav id="menu">
         <ul>
             @foreach($menu as $item)
-                <li><a class="text-white-f6" href="{{$item['url']}}">{{$item['name']}}</a>
+                <li><a class="" href="{{$item['url']}}">{{$item['name']}}</a>
                     @if($item->subMenu()->exists())
                         @include('layouts.global.nested_menu',['sub_menu'=>$item->subMenu->sortBy('order')])
                     @endif
@@ -164,7 +164,7 @@
 <script>
     var menu = new MmenuLight( document.querySelector( '#menu' ), {
          title: '{{trans('site_info.site_name')}}',
-         theme: 'dark',// 'dark'
+         theme: 'light',// 'dark'
         // slidingSubmenus: true,// false
         // selected: 'Selected'
     });

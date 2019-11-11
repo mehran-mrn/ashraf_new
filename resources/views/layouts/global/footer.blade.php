@@ -30,10 +30,6 @@
                     <div class="latest-posts">
                         @forelse(get_posts(4) as $key=> $news)
                             <article class="post media-post clearfix pb-0 mb-10">
-                                <a class="post-thumb" href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">
-                                    <img class="post-side-thumb-img"
-                                         src="{{ URL::asset('public/'.config('blogetc.blog_upload_dir'))."/".$news['image_medium']}}"
-                                         alt=""></a>
                                 <div class="post-right">
                                     <h5 class="post-title mt-0">
                                         <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">
