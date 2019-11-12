@@ -147,7 +147,9 @@
         </div>
     </div>
     <nav id="menu">
+
         <ul>
+
             @foreach($menu as $item)
                 <li><a class="" href="{{$item['url']}}">{{$item['name']}}</a>
                     @if($item->subMenu()->exists())

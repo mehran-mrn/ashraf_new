@@ -132,14 +132,14 @@
 <body class="rtl dark">
 <div id="wrapper" class="clearfix">
     <!-- preloader -->
-    <div id="preloader">
-        <div id="spinner">
-            <img class="floating align-self-center"  style="float: inherit" src="{{ URL::asset('/public/assets/global/images/preloaders/13.png') }}?i=0" alt="">
-            <br>
-            <h5 class="line-height-50 font-30 ml-15">{{trans('messages.Loading...')}}</h5>
-        </div>
-        <div id="disable-preloader" class="btn btn-default btn-sm">{{trans('messages.Disable_Preloader')}}</div>
-    </div>
+{{--    <div id="preloader">--}}
+{{--        <div id="spinner">--}}
+{{--            <img class="floating align-self-center"  style="float: inherit" src="{{ URL::asset('/public/assets/global/images/preloaders/13.png') }}?i=0" alt="">--}}
+{{--            <br>--}}
+{{--            <h5 class="line-height-50 font-30 ml-15">{{trans('messages.Loading...')}}</h5>--}}
+{{--        </div>--}}
+{{--        <div id="disable-preloader" class="btn btn-default btn-sm">{{trans('messages.Disable_Preloader')}}</div>--}}
+{{--    </div>--}}
     <!-- header -->
     @include('layouts.global.navbar')
     @yield('content')
