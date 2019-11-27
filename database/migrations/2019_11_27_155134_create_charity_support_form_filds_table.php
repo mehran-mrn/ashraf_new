@@ -15,6 +15,10 @@ class CreateCharitySupportFormFildsTable extends Migration
     {
         Schema::create('charity_support_form_filds', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('ch_s_form_id');
+            $table->integer('order')->default(0);
+            $table->string('title');
+            $table->string('type');
             $table->timestamps();
         });
     }

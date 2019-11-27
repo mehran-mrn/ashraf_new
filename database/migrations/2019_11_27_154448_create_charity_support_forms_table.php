@@ -15,6 +15,11 @@ class CreateCharitySupportFormsTable extends Migration
     {
         Schema::create('charity_support_forms', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->text('img')->nullable();
+            $table->text('comment')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
