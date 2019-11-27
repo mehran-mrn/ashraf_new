@@ -86,16 +86,18 @@ class Media extends Controller
 
     public function add_video(Request $request)
     {
+        $regex_pattern ="/<iframe.*.<\/iframe>/";
         $this->validate($request,
             [
                 'title' => 'required|min:3|string',
-                'iframe' => 'required|min:13|string'
+                'iframe' => "required|regex:".$regex_pattern."|min:13|string"
             ]);
+        preg_match($regex_pattern,$request['iframe'],$match);
         video_gallery::create(
             [
                 'title' => $request['title'],
                 'description' => $request['description'],
-                'iframe' => $request['iframe']
+                'iframe' => $match[0]
             ]
         );
 

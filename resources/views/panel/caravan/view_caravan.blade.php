@@ -234,12 +234,13 @@
                                                     data-cancel-text="{{trans('messages.cancel')}}">
                                                 <i class="icon-trash"></i>
                                             </button>
-                                            <button type="button" class="float-right btn alpha-orange border-orange-400 text-orange-800 btn-icon rounded-round ml-2
-                                             modal-ajax-load"
+                                            <button type="button"
+                                                    class="float-right btn alpha-orange border-orange-400 text-orange-800 btn-icon rounded-round ml-2 modal-ajax-load"
                                                     data-ajax-link="{{route('register_to_caravan',['caravan_id'=>$caravan['id'],'person_caravan_id'=>$person_caravan['id']])}}"
                                                     data-toggle="modal"
                                                     data-modal-title="{{trans('messages.view')}}"
-                                                    data-target="#general_modal">
+                                                    data-target="#general_modal"
+                                            >
                                                 <i class="icon-pencil"></i>
                                             </button>
                                     </td>
