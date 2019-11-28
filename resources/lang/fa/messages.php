@@ -705,5 +705,7 @@ return array(
     'from'=>'از',
     'to'=>'تا',
     'transaction_count'=>'نعداد تراکنش',
-    'sum_price'=>'جمع مبلغ'
+    'sum_price'=>'جمع مبلغ',
+    'product'=>'محصول',
+
 );

@@ -15,7 +15,6 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/pickers/color/spectrum.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/switchery.min.js')}}"></script>
     <script>
-
         $(document).on("keyup", '.price', function (event) {
             // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
@@ -28,7 +27,17 @@
                     ;
             });
         });
-
+        function convertToSlug(titleStr) {
+            titleStr = titleStr.replace(/^\s+|\s+$/g, '');
+            titleStr = titleStr.toLowerCase();
+            titleStr = titleStr.replace(/[^a-z0-9_\s-ءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            return titleStr;
+        }
+        $(document).on("change", "#title", function () {
+            $("#slug").val(convertToSlug($(this).val()))
+        })
         $(document).ready(function () {
 
             $('input:radio[name="inv_type"]').change(
@@ -156,11 +165,10 @@
 
 
         });
-
         function addSize(x) {
             var y = +$("#randomNumberSize").val() + 1;
             $(".size_counter_" + x).append(
-                '<div class="d-flex size-row-'+y+'"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="d-flex size-row-' + y + '"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.size')}}"></div>' +
                 '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.count')}}"></div>' +
                 '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.price')}}"></div>' +
                 '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.off')}}"></div>' +
@@ -168,41 +176,34 @@
             );
             $("#randomNumberSize").val(y);
         }
-
         function addSize2() {
             var x = +$("#randomNumberSize").val() + 1;
             $(".size_counter").append(
-                '<div class="d-flex size-row-'+x+'"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="d-flex size-row-' + x + '"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.size')}}"></div>' +
                 '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.count')}}"></div>' +
                 '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][]" placeholder="{{__('messages.price')}}"></div>' +
-                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.off')}}"></div>'+
+                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.off')}}"></div>' +
                 '<div class="m-1"><button class="btn btn-danger" type="button" onclick="removeSize(' + x + ')"><i class="icon-x"></i></button></div>'
             );
             $("#randomNumberSize").val(x);
         }
-
         function removeRow(x) {
             var rowID = x;
             $(".counter-row-" + rowID).remove();
         };
-
         function removeSize(x) {
             var rowID = x;
             $(".size-row-" + rowID).remove();
         };
-
         function deleteGatewayOnline(id) {
             $("#g_row_online_" + id).html("");
         }
-
         function deleteGatewayCart(id) {
             $("#g_row_cart_" + id).html("");
         }
-
         function deleteGatewayAccount(id) {
             $("#g_row_account_" + id).html("");
         }
-
         var FileUpload = function () {
             var _componentFileUpload = function () {
                 if (!$().fileinput) {
@@ -343,17 +344,13 @@
                 }
             }
         }();
-
         document.addEventListener('DOMContentLoaded', function () {
             ColorPicker.init();
             FileUpload.init();
         });
-
-
     </script>
 @endsection
 @section('css')
-
     <link rel="stylesheet" href="{{URL::asset('/public/assets/panel/css/iranBanks/ibl.css')}}">
 @endsection
 @section('content')
@@ -371,13 +368,23 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="title">{{__('messages.product_title')}}</label>
                                         <input type="text" name="title" id="title" class="form-control"
-                                               value="{{old('title')}}">
+                                               value="{{old('title')}}" >
                                     </div>
                                 </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="slug">{{__('messages.slug')}}</label>
+                                        <input type="text" readonly="readonly" name="slug" id="slug" class="form-control"
+                                               value="{{old('slug')}}">
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="description">{{__('messages.description')}}</label>
@@ -629,8 +636,7 @@
                                             <label for="ready">{{__('messages.ready_for_send')}}</label>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <input type="number" class="form-control" id="ready" name="ready" min="0"
-                                                   max="60">
+                                            <input type="number" class="form-control" id="ready" name="ready" min="0" max="60">
                                         </div>
                                     </div>
                                 </div>

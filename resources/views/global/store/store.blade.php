@@ -44,7 +44,7 @@
                                                         </div>
                                                         <div class="btn-product-view-details">
                                                             <a class="b{{route('store_detail',['pro_id'=>$pro['product_id']])}}tn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                               href="{{route('store_detail',['pro_id'=>$pro['product_id']])}}">{{__('messages.view_detail')}}</a>
+                                                               href="{{route('store_detail',['pro_id'=>$pro->store_product['slug']])}}">{{__('messages.view_detail')}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,7 +92,7 @@
                                                             </div>
                                                             <div class="btn-product-view-details">
                                                                 <a class="btn btn-default btn-theme-colored btn-sm btn-flat pl-20 pr-20 btn-add-to-cart text-uppercase font-weight-700"
-                                                                   href="{{route('store_detail',['pro_id'=>$pro2['product_id']])}}">{{__('messages.view_detail')}}</a>
+                                                                   href="{{route('store_detail',['pro_id'=>$pro2->store_product['slug']])}}">{{__('messages.view_detail')}}</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -104,7 +104,6 @@
                                                         </a>
                                                         {{--                                                    <div class="star-rating" title="Rated 3.50 out of 5"><span style="width: 60%;">3.50</span></div>--}}
                                                         <div class="price">
-
                                                             @if($pro2['off']>=1)
                                                                 <del>
                                                                     <span class="amount">{{number_format($pro2['price'])}}</span>
@@ -126,23 +125,6 @@
                                         @endif
                                     @endforeach
                                 @endif
-                                {{--                                {{dd($products)}}--}}
-                                <div class="col-md-12">
-                                    <nav>
-                                        <ul class="pagination theme-colored mt-0">
-                                            <li><a href="#" aria-label="Previous"> <span
-                                                            aria-hidden="true">&laquo;</span> </a></li>
-                                            <li class="active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">...</a></li>
-                                            <li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-                                                </a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
                             </div>
                         </div>
                     </div>

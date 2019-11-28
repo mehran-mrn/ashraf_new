@@ -6,25 +6,26 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <h2 class="text-uppercase line-bottom-center mt-0">{{__('messages.champion')}}</h2>
-{{--                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem<br> voluptatem obcaecati!</p>--}}
+                    {{--                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem autem<br> voluptatem obcaecati!</p>--}}
                 </div>
             </div>
         </div>
         <div class="row multi-row-clearfix">
             @forelse($champions as $champion)
                 <?php
-                $avg=0;
-                if($champion['raised']!=0){
+                $avg = 0;
+                if ($champion['raised'] != 0) {
                     $avg = $champion['raised'] / $champion['target_amount'] * 100;
                 }
                 ?>
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="causes bg-white maxwidth500 mb-30">
                         <div class="thumb thumb-campaign">
-                            <img src="{{$champion->image['path']}}/300/{{$champion->image['name']}}" alt=""
+                            <img src="{{$champion->image['path']?"/".$champion->image['path']."/300/".$champion->image['name']:'/public/assets/global/images/placeholder.jpg'}}"
+                                 alt="{{__('messages.ashraf').' - '.$champion['title']}}"
                                  class="img-fullwidth">
                             <div class="overlay-donate-now">
-                                <a href="page-donate.html"
+                                <a href="{{route('champion_show',['id'=>$champion['slug']])}}"
                                    class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">
                                     {{__('messages.donate')}}
                                     <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
@@ -37,7 +38,9 @@
                             </div>
                         </div>
                         <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
-                            <h5 class="font-weight-600 font-14"><a href="{{route('champion_show',['id'=>$champion['id']])}}">{{substr($champion['title'],0,30)}}...</a></h5>
+                            <h5 class="font-weight-600 font-14"><a
+                                        href="{{route('champion_show',['id'=>$champion['slug']])}}">{{substr($champion['title'],0,30)}}
+                                    ...</a></h5>
                             <p>{{$champion['description_small']}}</p>
                             <ul class="list-inline font-weight-600 border-top clearfix mt-20 pt-10">
                                 <li class="pull-left pr-0">{{__('messages.receive')}}: {{$champion['raised']}}</li>

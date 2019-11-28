@@ -196,8 +196,13 @@ class global_view extends Controller
 
     public function detail_product(Request $request)
     {
-        $proInfo = store_product::find($request['pro_id']);
-        return view('global.store.details', compact('proInfo'));
+
+        $proInfo = store_product::where('slug',$request['pro_id'])->first();
+        if($proInfo) {
+            return view('global.store.details', compact('proInfo'));
+        }else{
+            return abort(404);
+        }
     }
 
     public function store_cart()
@@ -480,7 +485,7 @@ class global_view extends Controller
 
     public function champion_show($id)
     {
-        $champion = charity_champion::with('image', 'projects', 'transaction')->findOrFail($id);
+        $champion = charity_champion::with('image', 'projects', 'transaction')->where('slug',$id)->first();
         $champions = charity_champion::with('image')->orderBy('created_at', 'desc')->limit(3)->get();
 
         return view('global.champion.champion', compact('champion', 'champions'));

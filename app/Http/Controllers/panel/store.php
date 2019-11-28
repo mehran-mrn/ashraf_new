@@ -12,6 +12,7 @@ use App\store_item_category;
 use App\store_product;
 use App\store_product_category;
 use App\store_product_gateway;
+use App\store_product_image;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
 use App\store_product_item;
@@ -155,23 +156,24 @@ class store extends Controller
 
     public function store_product_add(Request $request)
     {
-
         $this->validate($request,
             [
                 'title' => 'required|min:1',
+                'slug' => 'required|min:1',
                 'description' => 'required|min:1',
                 'filepath' => 'required',
             ]);
         $mainFileID = get_file_id($request['filepath']);
         $product_info = store_product::create([
             'title' => $request['title'],
+            'slug' => $request['slug'],
             'description' => $request['description'],
             'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
             'price' => 0,
             'off' => 0,
-            'ready' => $request['ready']
+            'ready' => $request['ready'] OR 1
         ]);
         $product_id = $product_info->id;
 
@@ -192,14 +194,14 @@ class store extends Controller
                     $colorID = $colorInfo->id;
                     if (isset($request['size'][$item]) && sizeof($request['size'][$item]) >= 1) {
                         foreach ($request['size'][$item] as $valSize) {
-                            $off=0;
-                            if(isset($valSize[3])){
-                                $off =$valSize[3];
+                            $off = 0;
+                            if (isset($valSize[3])) {
+                                $off = $valSize[3];
                             }
                             store_product_inventory_size::create([
                                 'size' => trim($valSize[0]),
                                 'count' => trim($valSize[2]),
-                                'price' => str_replace(",","",$valSize[3]),
+                                'price' => str_replace(",", "", $valSize[3]),
                                 'off' => trim($off),
                                 'inventory_id' => $colorID,
                                 'product_id' => $product_id,
@@ -209,7 +211,7 @@ class store extends Controller
                 }
             }
         } elseif ($request['inv_type'] == "withoutcolor") {
-            $colorInfo=store_product_inventory::create(
+            $colorInfo = store_product_inventory::create(
                 [
                     'product_id' => $product_id,
                     'count' => $request['inventories'],
@@ -222,14 +224,14 @@ class store extends Controller
             $colorID = $colorInfo->id;
             if (isset($request['size']) && sizeof($request['size']) >= 1) {
                 foreach ($request['size'] as $valSize) {
-                    $off=0;
-                    if(isset($valSize[3])){
-                        $off =$valSize[3];
+                    $off = 0;
+                    if (isset($valSize[3])) {
+                        $off = $valSize[3];
                     }
                     store_product_inventory_size::create([
                         'size' => trim($valSize[0]),
                         'count' => trim($valSize[1]),
-                        'price' => str_replace(",","",$valSize[2]),
+                        'price' => str_replace(",", "", $valSize[2]),
                         'off' => trim($off),
                         'inventory_id' => $colorID,
                         'product_id' => $product_id
@@ -271,7 +273,7 @@ class store extends Controller
         }
 
         if (isset($request['pay_online'])) {
-            if (sizeof($request['online_gateway_online']) >= 1) {
+            if (is_array($request['online_gateway_online']) AND sizeof($request['online_gateway_online']) >= 1) {
                 foreach ($request['online_gateway_online'] as $item) {
                     store_product_gateway::create(
                         [
@@ -283,8 +285,9 @@ class store extends Controller
                 }
             }
         }
+
         if (isset($request['pay_cart'])) {
-            if (sizeof($request['online_gateway_cart']) >= 1) {
+            if (is_array($request['online_gateway_cart']) AND sizeof($request['online_gateway_cart']) >= 1) {
                 foreach ($request['online_gateway_cart'] as $item) {
                     store_product_gateway::create(
                         [
@@ -297,7 +300,7 @@ class store extends Controller
             }
         }
         if (isset($request['pay_account'])) {
-            if (sizeof($request['online_gateway_account']) >= 1) {
+            if (is_array($request['online_gateway_account']) AND sizeof($request['online_gateway_account']) >= 1) {
                 foreach ($request['online_gateway_account'] as $item) {
                     store_product_gateway::create(
                         [
@@ -331,14 +334,44 @@ class store extends Controller
 //            }
 //        }
 
-        $message = trans("messages.added", ['item' => trans('messages.product')]);
+        $message = trans("messages.add", ['item' => trans('messages.product')]);
         return back_normal($request, $message);
     }
 
     public function store_product_delete(Request $request)
     {
         $product = store_product::find($request['pro_id']);
-        $product->deleteAll();
+        $product_categories = store_product_category::where('product_id', $request['pro_id']);
+        $product_gateway = store_product_gateway::where('product_id', $request['pro_id']);
+        $product_image = store_product_image::where('product_id', $request['pro_id']);
+        $product_in = store_product_inventory::where('product_id', $request['pro_id']);
+        $product_in_size = store_product_inventory_size::where('product_id', $request['pro_id']);
+        $product_item = store_product_item::where('product_id', $request['pro_id']);
+        $product_tag = store_product_tag::where('product_id', $request['pro_id']);
+        if (isset($product)) {
+            $product->delete();
+        }
+        if (isset($product_categories)) {
+            $product_categories->delete();
+        }
+        if (isset($product_gateway)) {
+            $product_gateway->delete();
+        }
+        if (isset($product_image)) {
+            $product_image->delete();
+        }
+        if (isset($product_in)) {
+            $product_in->delete();
+        }
+        if (isset($product_in_size)) {
+            $product_in_size->delete();
+        }
+        if (isset($product_item)) {
+            $product_item->delete();
+        }
+        if (isset($product_tag)) {
+            $product_tag->delete();
+        }
         $message = trans("messages.item_deleted", ['item' => trans('messages.product')]);
         return back_normal($request, $message);
     }

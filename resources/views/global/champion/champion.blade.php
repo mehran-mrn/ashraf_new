@@ -72,20 +72,15 @@
     }
     ?>
     <div class="main-content">
-
         <section>
             <div class="container">
                 <div class="row mtli-row-clearfix">
                     <div class="col-sm-6 col-md-8 col-lg-8">
                         <div class="causes bg-white maxwidth500 mb-30">
                             <div class="thumb">
-                                <img src="/{{$champion['image']['path']}}/600/{{$champion['image']['name']}}" alt=""
+                                <img src="{{$champion['image']['path']?"/".$champion['image']['path']."/600/".$champion['image']['name']:'/public/assets/global/images/placeholder.jpg'}}"
+                                     alt="{{__('messages.ashraf')." - ".$champion['title']}}"
                                      class="img-fullwidth">
-                                <div class="overlay-donate-now">
-                                    <a href="page-donate.html"
-                                       class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{__('messages.donate')}}
-                                        <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
-                                </div>
                             </div>
                             <div class="progress-item mt-0">
                                 <div class="progress mb-0">
@@ -94,8 +89,7 @@
                                 </div>
                             </div>
                             <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
-                                <h3 class="font-weight-600"><a href="page-single-cause.html">{{$champion['title']}}</a>
-                                </h3>
+                                <h3 class="font-weight-600">{{$champion['title']}}</h3>
                                 <p>{{$champion['description_small']}}</p>
                                 <ul class="list-inline font-weight-600 border-top clearfix mt-20 pt-10">
                                     <li class="pull-left pr-0">{{__('messages.receive')}}
@@ -121,7 +115,8 @@
                                         <article class="post clearfix mb-sm-30 bg-silver-light">
                                             <div class="entry-header">
                                                 <div class="post-thumb thumb">
-                                                    <img src="/{{$ch['media']['url']}}" alt=""
+                                                    <img src="{{$ch['media']['url'] ? "/".$ch['media']['url']:'/public/assets/global/images/placeholder.jpg'}}"
+                                                         alt="{{$ch['title']}}"
                                                          class="img-responsive img-fullwidth">
                                                 </div>
                                             </div>
@@ -202,7 +197,8 @@
                                     @forelse($champion['projects'] as $cham)
                                         @foreach($cham['gallery'] as $gallery)
                                             <div class="item">
-                                                <img src="/{{$gallery['path']}}/300/{{$gallery['name']}}" alt="">
+                                                <img src="{{$gallery['path']?"/".$gallery['path']."/300/".$gallery['name']:'/public/assets/global/images/placeholder.jpg'}}"
+                                                     alt="{{__('messages.ashraf')}}">
                                                 <h5 class="title">{{$gallery['asd']}}</h5>
                                             </div>
                                         @endforeach
@@ -238,10 +234,11 @@
                                     <div class="item">
                                         <div class="causes bg-white maxwidth400 mb-sm-30">
                                             <div class="thumb">
-                                                <img src="/{{$champion['image']['path']}}/300/{{$champion['image']['name']}}"
-                                                     alt="{{$champion['title']}}" class="img-fullwidth">
+                                                <img src="{{$champion['image']['path']?"/".$champion['image']['path']."/300/".$champion['image']['name']:'/public/assets/global/images/placeholder.jpg'}}"
+                                                     alt="{{__('messages.ashraf')." - ".$champion['title']}}"
+                                                     class="img-fullwidth">
                                                 <div class="overlay-donate-now">
-                                                    <a href="page-donate.html"
+                                                    <a href="{{route('champion_show',['id'=>$champion['slug']])}}"
                                                        class="btn btn-dark btn-theme-colored btn-flat btn-sm pull-left mt-10">{{__('messages.donate')}}
                                                         <i class="flaticon-charity-make-a-donation font-16 ml-5"></i></a>
                                                 </div>
@@ -254,7 +251,7 @@
                                             </div>
                                             <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
                                                 <h5 class="font-weight-600 font-14"><a
-                                                            href="page-single-cause.html">{{substr($champion['title'],0,30)}}</a>
+                                                            href="{{route('champion_show',['id'=>$champion['slug']])}}">{{substr($champion['title'],0,30)}}</a>
                                                 </h5>
                                                 <p>{{$champion['description_small']}}</p>
                                                 <ul class="list-inline font-weight-600 border-top clearfix mt-20 pt-10">

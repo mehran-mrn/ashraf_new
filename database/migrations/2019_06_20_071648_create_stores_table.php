@@ -16,6 +16,7 @@ class CreateStoresTable extends Migration
         Schema::create('store_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->unique();
+            $table->string('slug')->unique();
             $table->string('description')->nullable();
             $table->integer('icon_id')->nullable();
             $table->string('icon')->nullable();
@@ -54,6 +55,7 @@ class CreateStoresTable extends Migration
         Schema::create('store_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->text('properties')->nullable();
             $table->string('main_image')->nullable();
@@ -70,14 +72,14 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('category_id');
             $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('store_product_images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('media_id')->nullable();
             $table->string('url')->nullable();
             $table->softDeletes();
@@ -85,14 +87,14 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('tag');
             $table->softDeletes();
             $table->timestamps();
         });
         Schema::create('store_product_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('item_id');
             $table->string('value');
             $table->softDeletes();
@@ -100,7 +102,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_gateways', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('gateway_id');
             $table->string('type');
             $table->softDeletes();
@@ -108,7 +110,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('product_id');
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('color_code')->nullable();
             $table->integer('count')->default(0);
             $table->string('price')->default(0);
@@ -126,7 +128,7 @@ class CreateStoresTable extends Migration
             $table->integer('count')->default(0);
             $table->integer('off')->default(0);
             $table->integer('inventory_id')->default(0);
-            $table->integer('product_id')->default(0);
+            $table->foreign('product_id')->references('id')->on('store_products');
             $table->softDeletes();
             $table->timestamps();
         });
