@@ -123,7 +123,22 @@
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('messages.view')}}"
                                            href="{{route('charity_periods_show',['user_id'=>$period['user_id'],'id'=>$period['id']])}}"
-                                           class="btn btn-outline-dark btn-sm"><i class="icon-eye"></i></a></td>
+                                           class="btn btn-outline-dark btn-sm"><i class="icon-eye"></i></a>
+
+
+                                        <a href="javascript:;"
+                                           class="btn btn-outline-danger btn-sm swal-alert "
+                                           data-ajax-link="{{route('charity_periods_delete',['id'=>$period['id']])}}"
+                                           data-method="post"
+                                           data-csrf="{{csrf_token()}}"
+                                           data-title="{{trans('messages.delete_item',['item'=>trans('messages.period')])}}"
+                                           data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.period')])}}"
+                                           data-type="warning"
+                                           data-cancel="true"
+                                           data-toggle="tooltip" data-placement="top" title="{{__('messages.delete')}}"
+                                           data-confirm-text="{{trans('messages.delete')}}"
+                                           data-cancel-text="{{trans('messages.cancel')}}">
+                                            <i class="icon-bin top-0"></i></a>
                                 </tr>
                                 @php $i++; @endphp
                             @endforeach

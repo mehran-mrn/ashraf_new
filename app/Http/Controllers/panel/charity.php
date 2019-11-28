@@ -201,6 +201,14 @@ class charity extends Controller
         return back_normal($request, $return);
     }
 
+
+    public function charity_periods_delete(Request $request)
+    {
+        $charity = charity_period::find($request->id);
+        $charity->forceDelete();
+        return back_normal($request, ['message' => __('messages.item_deleted')]);
+    }
+
     public function charity_champion_update(Request $request)
     {
         $this->validate($request,
@@ -284,9 +292,8 @@ class charity extends Controller
         $endDate = $endDate . " " . $explodeEnd[1];
 
 
-
         $reportPort = DB::table('gateway_transactions')
-            ->select( DB::raw('sum(price) as price'),DB::raw('port'))
+            ->select(DB::raw('sum(price) as price'), DB::raw('port'))
             ->whereIn('module', $request['type'])
             ->whereIn('port', $request['gateway'])
             ->whereBetween('created_at', [$startDate, $endDate])
@@ -294,7 +301,7 @@ class charity extends Controller
             ->groupBy('port')
             ->get();
         $report = DB::table('gateway_transactions')
-            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'),DB::raw('price'),DB::raw('port'))
+            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'), DB::raw('price'), DB::raw('port'))
             ->whereIn('module', $request['type'])
             ->whereIn('port', $request['gateway'])
             ->whereBetween('created_at', [$startDate, $endDate])
@@ -309,10 +316,10 @@ class charity extends Controller
             ->where('status', '=', 'SUCCEED')
             ->get();
 
-        $reports = $report->groupBy(['mo','date']);
-        $reportPort = json_decode($reportPort,true);
+        $reports = $report->groupBy(['mo', 'date']);
+        $reportPort = json_decode($reportPort, true);
         $reports = json_decode($reports, true);
         $reportRow = json_decode($reportRow, true);
-        return view('panel.charity.reports.ajax', compact('reports','reportPort','reportRow'));
+        return view('panel.charity.reports.ajax', compact('reports', 'reportPort', 'reportRow'));
     }
 }
