@@ -785,7 +785,7 @@ class panel_view extends Controller
     public function charity_period_list()
     {
 
-        $periods = charity_period::with('user')->where('status', 'active')->get();
+        $periods = charity_period::with('user')->get();
         return view('panel.charity.period.list', compact('periods'));
     }
 

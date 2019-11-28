@@ -327,10 +327,10 @@ if (!isset($active_sidbare)) {
                             <a href="{{route('charity_payment_list')}}"
                                class="nav-link {{in_array("charity_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.other_payments')}}</a>
                         </li>
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{route('charity_reports')}}"--}}
-{{--                               class="nav-link {{in_array("charity_reports", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>--}}
-{{--                        </li>--}}
+                        <li class="nav-item">
+                            <a href="{{route('charity_reports')}}"
+                               class="nav-link {{in_array("charity_report", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>
+                        </li>
 
                         {{--                        <li class="nav-item"><a href="{{route('building_types')}}"--}}
                         {{--                                                class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.request_hook')}}</a>--}}

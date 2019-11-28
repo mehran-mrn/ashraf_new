@@ -16,8 +16,9 @@
                     autoWidth: true,
                     columnDefs: [{
                         orderable: false,
-                        width: 100,
-                        targets: [7]
+                        autoWidth: false,
+                        width: 150,
+                        targets: 7
                     }],
                     dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                     language: {
@@ -41,7 +42,13 @@
                         }
                     },
                     stateSave: true,
-                    autoWidth: true,
+                    autoWidth: false,
+                    columnDefs: [{
+                        orderable: false,
+                        autoWidth: false,
+                        width: 200,
+                        targets: 7
+                    }],
                 });
                 $('.sidebar-control').on('click', function () {
                     table.columns.adjust().draw();
@@ -83,7 +90,8 @@
             <section>
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title text-black">{{__('messages.Charity')}} | {{__('messages.periodic_payment')}}</h6>
+                        <h6 class="card-title text-black">{{__('messages.Charity')}}
+                            | {{__('messages.periodic_payment')}}</h6>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -119,7 +127,13 @@
                                         @endif
                                     </td>
                                     <td>{{$period['description']}}</td>
-                                    <td>{{__('messages.'.$period['status'])}}</td>
+                                    <td>
+                                        @if($period['status']=='active')
+                                            <span class="badge badge-success">{{__('messages.'.$period['status'])}}</span>
+                                        @else
+                                            <span class="badge badge-danger">{{__('messages.'.$period['status'])}}</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('messages.view')}}"
                                            href="{{route('charity_periods_show',['user_id'=>$period['user_id'],'id'=>$period['id']])}}"
@@ -139,6 +153,38 @@
                                            data-confirm-text="{{trans('messages.delete')}}"
                                            data-cancel-text="{{trans('messages.cancel')}}">
                                             <i class="icon-bin top-0"></i></a>
+
+                                        @if($period['status']=='active')
+                                            <a href="javascript:;"
+                                               class="btn btn-outline-warning btn-sm swal-alert "
+                                               data-ajax-link="{{route('charity_periods_inactive',['id'=>$period['id']])}}"
+                                               data-method="post"
+                                               data-csrf="{{csrf_token()}}"
+                                               data-title="{{trans('messages.delete_item',['item'=>trans('messages.period')])}}"
+                                               data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.period')])}}"
+                                               data-type="warning"
+                                               data-cancel="true"
+                                               data-toggle="tooltip" data-placement="top"
+                                               title="{{__('messages.inactivate')}}"
+                                               data-confirm-text="{{trans('messages.inactivate')}}"
+                                               data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-x top-0"></i></a>
+                                        @else
+                                            <a href="javascript:;"
+                                               class="btn btn-outline-success btn-sm swal-alert "
+                                               data-ajax-link="{{route('charity_periods_inactive',['id'=>$period['id']])}}"
+                                               data-method="post"
+                                               data-csrf="{{csrf_token()}}"
+                                               data-title="{{trans('messages.delete_item',['item'=>trans('messages.period')])}}"
+                                               data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.period')])}}"
+                                               data-type="warning"
+                                               data-cancel="true"
+                                               data-toggle="tooltip" data-placement="top"
+                                               title="{{__('messages.activate')}}"
+                                               data-confirm-text="{{trans('messages.activate')}}"
+                                               data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-check top-0"></i></a>
+                                    @endif
                                 </tr>
                                 @php $i++; @endphp
                             @endforeach

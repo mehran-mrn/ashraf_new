@@ -102,6 +102,7 @@
                     targets: [6]
                 }],
                 dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+
                 language: {
                     search: '<span>{{__('messages.filter')}}:</span> _INPUT_',
                     searchPlaceholder: '{{__('messages.search')}}...',
@@ -117,6 +118,14 @@
             // Basic datatable
             $('.datatable-basic').DataTable({
                 pagingType: "simple",
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        charset: 'UTF-8',
+                        bom: true,
+                    }
+                ],
                 language: {
                     paginate: {
                         'next': $('html').attr('dir') == 'rtl' ? '{{__('messages.next')}} &larr;' : '{{__('messages.next')}} &rarr;',

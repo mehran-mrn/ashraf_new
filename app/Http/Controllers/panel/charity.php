@@ -206,7 +206,20 @@ class charity extends Controller
     {
         $charity = charity_period::find($request->id);
         $charity->forceDelete();
-        return back_normal($request, ['message' => __('messages.item_deleted')]);
+        return back_normal($request, __('messages.item_deleted'));
+    }
+
+    public function charity_periods_inactive(Request $request)
+    {
+
+        $charity = charity_period::find($request->id);
+        if ($charity['status'] == "active") {
+            $charity->status = 'inactive';
+        } else {
+            $charity->status = 'active';
+        }
+        $charity->save();
+        return back_normal($request, __('messages.item_updated'));
     }
 
     public function charity_champion_update(Request $request)
