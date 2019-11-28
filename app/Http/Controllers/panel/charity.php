@@ -201,7 +201,6 @@ class charity extends Controller
         return back_normal($request, $return);
     }
 
-
     public function charity_periods_delete(Request $request)
     {
         $charity = charity_period::find($request->id);

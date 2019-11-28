@@ -243,7 +243,7 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
             Route::get('periods/list', 'panel\charity@charity_periods_list')->name('charity_periods_list');
             Route::get('periods/show/{id}/{user_id}', 'panel\charity@charity_periods_show')->name('charity_periods_show');
             Route::post('periods/show/{id}', 'panel\charity@charity_periods_delete')->name('charity_periods_delete');
-            Route::get('periods/show/inactive/{id}', 'panel\charity@charity_periods_inactive')->name('charity_periods_inactive');
+            Route::post('periods/show/inactive/{id}', 'panel\charity@charity_periods_inactive')->name('charity_periods_inactive');
             Route::post('periods/show/approve/{id}', 'panel\charity@charity_payment_approve')->name('charity_payment_approve');
             Route::get('charity/champion/add', 'panel\panel_view@charity_champion_add')->name('charity_champion_add');
             Route::post('charity/champion/add/store', 'panel\charity@charity_champion_add_store')->name('charity_champion_add_store');

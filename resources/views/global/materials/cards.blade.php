@@ -1,5 +1,4 @@
-<?php   $champions = App\charity_champion::with('image')->get();?>
-
+<?php   $champions = App\charity_champion::with('image')->where('status',1)->get();?>
 <section class="bg-silver-light">
     <div class="container">
         <div class="section-title text-center">
