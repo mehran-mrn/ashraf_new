@@ -65,7 +65,7 @@
     <!-- CSS | Main style file -->
     <link href="{{ URL::asset('/public/assets/global/css/style-main.css') }}?v=11" rel="stylesheet" type="text/css">
     <!-- CSS | Preloader Styles -->
-    <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">
+{{--    <link href="{{ URL::asset('/public/assets/global/css/preloader.css') }}" rel="stylesheet" type="text/css">--}}
     <!-- CSS | Custom Margin Padding Collection -->
     <link href="{{ URL::asset('/public/assets/global/css/custom-bootstrap-margin-padding.css') }}" rel="stylesheet"
           type="text/css">

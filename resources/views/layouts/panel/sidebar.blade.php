@@ -327,10 +327,10 @@ if (!isset($active_sidbare)) {
                             <a href="{{route('charity_payment_list')}}"
                                class="nav-link {{in_array("charity_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.other_payments')}}</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{route('charity_reports')}}"
-                               class="nav-link {{in_array("charity_reports", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="{{route('charity_reports')}}"--}}
+{{--                               class="nav-link {{in_array("charity_reports", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>--}}
+{{--                        </li>--}}
 
                         {{--                        <li class="nav-item"><a href="{{route('building_types')}}"--}}
                         {{--                                                class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.request_hook')}}</a>--}}
@@ -341,7 +341,10 @@ if (!isset($active_sidbare)) {
                             <ul class="nav nav-group-sub"
                                 style="display:{{in_array("charity_setting", $active_sidbare) ? 'block' : 'none' }}">
                                 <li class="nav-item"><a href="{{route('charity_payment_title')}}"
-                                       class="nav-link {{in_array("charity_payment_titles", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_titles')}}</a>
+                                                        class="nav-link {{in_array("charity_payment_titles", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_titles')}}</a>
+                                </li>
+                                <li class="nav-item"><a href="{{route('charity_payment_title')}}"
+                                                        class="nav-link {{in_array("charity_support_title", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_support_title')}}</a>
                                 </li>
                                 {{--                                <li><a href="starters/3_col_double.html" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.hooks_types')}}</a></li>--}}
                             </ul>

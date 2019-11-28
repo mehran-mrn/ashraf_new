@@ -321,7 +321,7 @@ class global_view extends Controller
 
     public function video_gallery()
     {
-        $videos = get_video_gallery(0);
+        $videos = get_video_gallery(10000);
         return view('global.gallery.video_gallery_view', compact('videos'));
     }
 
