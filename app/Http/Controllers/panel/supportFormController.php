@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\charity_supportForm;
+use App\charity_supportForm_filds;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,11 +41,32 @@ class supportFormController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request, [
             'title' => 'required',
         ]);
-        return $request;
+        $image = null;
+        if ($request->img){
+            $image_id = image_saver($request->img,'photos','sform');
+            $image = \App\media::find($image_id);
+        }
+        $form = new charity_supportForm();
+        $form->title = $request->title;
+        $form->description = $request->description;
+        $form->img = $image['url'];
+        $form->save();
+        $order = 1;
+        foreach ($request['new_field_title'] as $key => $new_field_title){
+            $form_fild = new charity_supportForm_filds();
+            $form_fild->ch_s_form_id =$form->id;
+            $form_fild->order =$order;
+            $form_fild->title =$new_field_title;
+            $form_fild->type =$request['field_type'][$key];
+            $form_fild->required =$request['field_requirement'][$key];
+            $form_fild->save();
+            $order++;
+        }
+        return back_normal($request);
+
     }
 
     /**

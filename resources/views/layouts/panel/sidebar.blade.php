@@ -348,6 +348,7 @@ if (!isset($active_sidbare)) {
                                 <li class="nav-item"><a href="{{route('sForm.index')}}"
                                                         class="nav-link {{in_array("charity_support_title", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_support_title')}}</a>
                                 </li>
+
                                 {{--                                <li><a href="starters/3_col_double.html" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.hooks_types')}}</a></li>--}}
                             </ul>
                         </li>

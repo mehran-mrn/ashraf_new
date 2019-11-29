@@ -252,6 +252,9 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
             Route::post('charity/champion/update', 'panel\charity@charity_champion_update')->name('charity_champion_update');
             Route::get('charity/report', 'panel\panel_view@charity_reports')->name('charity_reports');
             Route::post('charity/report', 'panel\charity@reports')->name('charity_reports_ajax');
+
+            Route::resource('sForm', 'panel\supportFormController');
+
         });
 
 

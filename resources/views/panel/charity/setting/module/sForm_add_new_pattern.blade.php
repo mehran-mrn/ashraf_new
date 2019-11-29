@@ -154,7 +154,7 @@
             filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
         });
         $(".add-field").on('click', function () {
-            var x = +$("#randomNumber").val() + 1;
+            var x = Math.floor((Math.random() * 10000) + 1);
 
             $(".field-box").append(
                 '<div class="row pb-1 pt-1 counter-row-' + x + '">' +
