@@ -337,13 +337,14 @@ if (!isset($active_sidbare)) {
                         {{--                        </li>--}}
                         <li class="nav-item nav-item-submenu {{in_array("charity_setting", $active_sidbare) ? ' nav-item-open' : '' }}">
                             <a href="#"
-                               class="nav-link {{in_array("charity_setting", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_setting')}}</a>
+                               class="nav-link {{in_array("charity_setting", $active_sidbare) ? 'active' : '' }}">
+                                {{trans('messages.charity_setting')}}</a>
                             <ul class="nav nav-group-sub"
                                 style="display:{{in_array("charity_setting", $active_sidbare) ? 'block' : 'none' }}">
                                 <li class="nav-item"><a href="{{route('charity_payment_title')}}"
                                                         class="nav-link {{in_array("charity_payment_titles", $active_sidbare) ? 'active' : '' }}">{{trans('messages.payment_titles')}}</a>
                                 </li>
-                                <li class="nav-item"><a href="{{route('charity_payment_title')}}"
+                                <li class="nav-item"><a href="{{route('sForm.index')}}"
                                                         class="nav-link {{in_array("charity_support_title", $active_sidbare) ? 'active' : '' }}">{{trans('messages.charity_support_title')}}</a>
                                 </li>
                                 {{--                                <li><a href="starters/3_col_double.html" class="nav-link {{in_array("building_types", $active_sidbare) ? 'active' : '' }}">{{trans('messages.hooks_types')}}</a></li>--}}

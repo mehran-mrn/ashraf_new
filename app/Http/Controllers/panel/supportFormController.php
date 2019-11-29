@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\charity_supportForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,6 +16,8 @@ class supportFormController extends Controller
     public function index()
     {
         //
+        $sforms = charity_supportForm::get();
+        return view('panel.charity.setting.sform_titles',compact('sforms'));
     }
 
     /**
@@ -25,6 +28,8 @@ class supportFormController extends Controller
     public function create()
     {
         //
+        $sForm_pattern = null;
+        return view('panel.charity.setting.module.sForm_add_new_pattern',compact('sForm_pattern'));
     }
 
     /**
@@ -36,6 +41,10 @@ class supportFormController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'title' => 'required',
+        ]);
+        return $request;
     }
 
     /**
