@@ -31,6 +31,7 @@ if (!isset($active_sidbare)) {
                                          class="rounded-circle" alt=""></a>
                     </div>
 
+
                     <div class="media-body">
                         <div class="media-title font-weight-semibold">{{user_information('full')}}</div>
                         <div class="font-size-xs opacity-50">
