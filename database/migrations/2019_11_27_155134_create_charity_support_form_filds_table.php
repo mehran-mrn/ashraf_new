@@ -19,6 +19,8 @@ class CreateCharitySupportFormFildsTable extends Migration
             $table->integer('order')->default(0);
             $table->string('title');
             $table->string('type');
+            $table->string('items')->nullable();
+            $table->boolean('required')->default(0);
             $table->timestamps();
         });
     }
