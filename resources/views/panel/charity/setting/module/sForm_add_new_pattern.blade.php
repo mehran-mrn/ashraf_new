@@ -79,8 +79,8 @@
                             </div>
                             <div class="old-field-box">
                                 <?php $randomNumber = 1; ?>
-                                @if($sForm_pattern['fields'])
-                                    @foreach($sForm_pattern['fields'] as $field)
+                                @if($sForm_pattern->fields)
+                                    @foreach($sForm_pattern->fields->sortBy('order') as $field)
                                         <div class="row pb-1 pt-1 counter-row-{{$randomNumber}}">
                                             <div class="d-inline-block">
                                                 <div class="col-md-2">
@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <input type="text" placeholder="{{__('messages.title')}}"
-                                                       value="{{$field['label']}}"
+                                                       value="{{$field['title']}}"
                                                        class="form-control" required="required"
                                                        name="new_field_title[{{$randomNumber}}]">
                                             </div>
@@ -110,8 +110,8 @@
                                                        value="{{$field['id']}}">
                                                 <select name="field_requirement[{{$randomNumber}}]"
                                                         class="form-control ">
-                                                    <option value="0" {{$field['require'] == 0 ?"selected":""}} >{{trans('messages.optional')}}</option>
-                                                    <option value="1" {{$field['require'] == 1 ?"selected":""}} >{{trans('messages.required')}}</option>
+                                                    <option value="0" {{$field['required'] == 0 ?"selected":""}} >{{trans('messages.optional')}}</option>
+                                                    <option value="1" {{$field['required'] == 1 ?"selected":""}} >{{trans('messages.required')}}</option>
                                                 </select>
                                             </div>
                                         </div>

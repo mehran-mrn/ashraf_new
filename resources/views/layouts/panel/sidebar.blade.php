@@ -329,6 +329,10 @@ if (!isset($active_sidbare)) {
                                class="nav-link {{in_array("charity_list", $active_sidbare) ? 'active' : '' }}">{{trans('messages.other_payments')}}</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('sform_reports')}}"
+                               class="nav-link {{in_array("support_form", $active_sidbare) ? 'active' : '' }}">{{trans('messages.support_forms_list')}}</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('charity_reports')}}"
                                class="nav-link {{in_array("charity_report", $active_sidbare) ? 'active' : '' }}">{{trans('messages.reports')}}</a>
                         </li>

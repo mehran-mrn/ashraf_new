@@ -254,6 +254,9 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
             Route::post('charity/report', 'panel\charity@reports')->name('charity_reports_ajax');
 
             Route::resource('sForm', 'panel\supportFormController');
+            Route::get('charity/sForms/list', 'panel\supportFormController@sform_list')->name('sform_reports');
+            Route::get('charity/sForm/{id}', 'panel\supportFormController@sform_file_view')->name('sform_file_view');
+            Route::post('charity/sForm/update', 'panel\supportFormController@sform_file_update')->name('sform_file_update');
 
         });
 
@@ -620,6 +623,8 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
 
     Route::post('vow/periodic/add', 'globals\global_controller@add_charity_period')->name('add_charity_period');
     Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
+    Route::get('sform/{id}', 'panel\supportFormController@show')->name('sform_view');
+    Route::POST('sform', 'panel\supportFormController@store_raw')->name('sform_store');
     Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
     Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
 

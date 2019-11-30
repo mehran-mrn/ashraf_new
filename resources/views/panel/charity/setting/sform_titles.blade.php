@@ -1,12 +1,14 @@
 @extends('layouts.panel.panel_layout')
 @section('css')
-    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
-          rel="stylesheet" type="text/css">
+    <link
+        href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+        rel="stylesheet" type="text/css">
 @stop
 @section('js')
     <script src="{{URL::asset('/public/assets/panel/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/dropzone.min.js')}}"></script>
-    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <script
+        src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -136,17 +138,78 @@ $active_sidbare = ['charity', 'charity_setting', 'charity_support_title']
                                     data-modal-title="{{trans('messages.add_new',['item'=>trans('messages.form')])}}"
                                     data-modal-size="modal-full"
                                     data-target="#general_modal"><i
-                                        class="icon-folder-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.form')])}}
+                                    class="icon-folder-plus mr-2"></i> {{trans('messages.add_new',['item'=>trans('messages.form')])}}
                             </button>
                         </div>
                         <div class="row mb-2">
                         </div>
-                    @foreach($sforms as $sform)
+                        <hr>
+                        <div class="row">
+                            @foreach($sforms->chunk(3) as $chunk)
 
-                        @endforeach
+                                @foreach( $chunk as $sform)
+
+                                <div class="col-md-4">
+                                    <div class="card bordered border-1 alpha-indigo">
+                                        <div class="card-header bg-indigo-300 p-1">
+                                            <div class="clearfix">
+
+                                            <span>{{$sform['title']}}</span>
+                                            <div class="header-elements-inline pull-left">
+                                                <button type="button" class="float-right btn alpha-info border-info-400 text-info-800 btn-icon rounded-round ml-2
+                                             modal-ajax-load"
+                                                        data-ajax-link="{{route('sForm.edit',[$sform['id']])}}"
+                                                        data-toggle="modal"
+                                                        data-modal-size="modal-full"
+                                                        data-modal-title="{{trans('messages.edit_item',['item'=>trans('messages.form')])}}"
+                                                        data-target="#general_modal">
+                                                    <i class="icon-pencil"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="legitRipple swal-alert float-right btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round ml-2"
+                                                        data-ajax-link="{{route('sForm.destroy',[$sform['id']])}}"
+                                                        data-method="DELETE"
+                                                        data-csrf="{{csrf_token()}}"
+                                                        data-title="{{trans('messages.delete_item',['item'=>trans('messages.form')])}}"
+                                                        data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.form')])}}"
+                                                        data-type="warning"
+                                                        data-cancel="true"
+                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                    <i class="icon-trash"></i>
+                                                </button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <span>{!! $sform['description'] !!}</span>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="input-group">
+											<span class="input-group-prepend">
+												<button class="btn btn-light" onclick="copyFunction('pageURL{{$sform['id']}}')" type="button"><i class="icon-copy4"></i> </button>
+											</span>
+                                                <input type="text" class="form-control" id="pageURL{{$sform['id']}}" value="{{route('sform_view',[$sform['id']])}}" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </section>
 @endsection
+@section('footer_js')
+    <script>
+        function copyFunction(id) {
+            var copyText = document.getElementById(id);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+        }
+    </script>
+@stop
