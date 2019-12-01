@@ -159,7 +159,7 @@ class store extends Controller
         $this->validate($request,
             [
                 'title' => 'required|min:1',
-                'slug' => 'required|min:1',
+                'slug' => 'required|min:1|unique:store_products,slug',
                 'description' => 'required|min:1',
                 'filepath' => 'required',
             ]);
