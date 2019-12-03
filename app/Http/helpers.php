@@ -693,6 +693,7 @@ function get_posts($limit = null, $main_page = [], $categories = [], $paginate =
     $posts_query->where("lang", app()->getLocale());
     $posts_query->orderBy("posted_at", "desc");
     $posts_query->with('categories');
+    $posts_query->where('lang',App()->getLocale());
     if (!empty($categories)) {
         $posts_query->take($categories);
     }

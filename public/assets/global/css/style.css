@@ -52,14 +52,11 @@ input:-moz-placeholder {
     object-fit:cover;
 }
 
-.bordered_box_bottom{
-    border-bottom: 2px solid;
-    border-color: #c6edf0;
-}
+
 .bordered_box{
     border-bottom: 2px solid;
     border-top: 1px solid;
-    border-color: #25454b;
+    border-color: #26b1d9;
 }
 /* width */
 ::-webkit-scrollbar {

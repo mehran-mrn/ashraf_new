@@ -10,18 +10,59 @@
         <div class="content">
 
             <div class="container-fluid">
+
                 <div class="row">
-                    @foreach($locals as $local)
-                        <div class="col-md-3">
-                            <div class="card bordered border-3 bordered_box border-violet-800 bg-violet-300">
-                                <div class="card-body text-center font-size-lg">
-                                    <a class="text-white" href="{{route('menu.show',['id'=>$local])}}"><b>( {{$local}} )</b> Menu</a>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-indigo-400 text-center">
+                                {{trans('words.top_menu')}}
+                            </div>
+                            <div class="card-body row">
+                                @foreach($locals as $local)
+                                    <div class="col-md-6">
+                                        <div
+                                            class="card bordered  bordered_box border-violet-800 bg-violet-300">
+                                            <a class="text-white"
+                                               href="{{route('menu.show',['id'=>$local,'type'=>'top'])}}">
+                                            <div class="card-body text-center font-size-lg">
+                                               <b>( {{$local}} )</b>
+                                                    Menu
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-indigo-400 text-center">
+                                {{trans('words.side_menu')}}
+                            </div>
+
+                            <div class="card-body row">
+                                @foreach($locals as $local)
+                                    <div class="col-md-6">
+                                        <div
+                                            class="card bordered  bordered_box border-violet-800 bg-violet-300">
+                                            <a class="text-white"
+                                               href="{{route('menu.show',['id'=>$local,'type'=>'side' ])}}">
+                                                <div class="card-body text-center font-size-lg">
+                                                    <b>( {{$local}} )</b>
+                                                    Menu
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
+        </div>
         </div>
     </section>
 

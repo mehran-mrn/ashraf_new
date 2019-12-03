@@ -216,15 +216,14 @@ $post['posted_at']!=""?miladi_to_shamsi_date($post->posted_at,'','',true):''}}"
                 </div>
             </div>
         </div>
-
         <div class="col-12 py-1">
             <div class='border-4px border-success pt-4 px-4 pb-0 my-2 mb-4 rounded border'>
                 <div class="form-group">
                     <label for="lang">{{__('messages.language')}}</label>
                     <select name="lang" id="lang" class="form-control">
-                        <option value="fa">FA</option>
-                        <option value="en">EN</option>
-                        <option value="ar">AR</option>
+                        @foreach(get_all_locals() as $local)
+                            <option {{$post['lang'] ==$local ? "selected":"" }} value="{{$local}}">{{$local}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

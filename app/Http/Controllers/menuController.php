@@ -63,12 +63,15 @@ class menuController extends Controller
             $validatedData = $request->validate([
                 'system' => 'required|max:190',
                 'local' => 'required',
+                'type' => 'required',
             ]);
+
             foreach ($request['system'] as $key => $system_page){
                 $objexts = explode('||',$system_page);
                 if (count($objexts) ==2){
                 $menu = new menu();
                 $menu->system_name = $objexts[1];
+                $menu->type = $request['type'];
                 $menu->name = $objexts[1];
                 $menu->url = $objexts[0];
                 $menu->local = $validatedData['local'];
@@ -83,6 +86,7 @@ class menuController extends Controller
                 'local' => 'required',
             ]);
             $menu = new menu();
+            $menu->type = $request['type'];
             $menu->name = $validatedData['name'];
             $menu->url = $validatedData['url'];
             $menu->local = $validatedData['local'];
@@ -97,9 +101,10 @@ class menuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id ,Request $request)
     {
-        return view('panel.blog_setting.menu.menu',compact('id'));
+        $type =$request->input('type','top');
+        return view('panel.blog_setting.menu.menu',compact('id','type'));
 
     }
 

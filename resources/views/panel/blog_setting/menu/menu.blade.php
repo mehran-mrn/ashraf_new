@@ -17,7 +17,7 @@
     <?php
     $active_sidbare = ['blog', 'blog_setting', 'menu'];
 
-    $menu_items = \App\menu::where('parent_id', '0')->orderBy('order')->get();
+    $menu_items = \App\menu::where("local", $id)->where("type", $type)->where('parent_id', '0')->orderBy('order')->get();
     $menu_charities = \App\charity_payment_patern::get();
     $menu_blog = \WebDevEtc\BlogEtc\Models\BlogEtcCategory::where("lang", $id)->orderBy("category_name")->get();
     $menu_special = \WebDevEtc\BlogEtc\Models\BlogEtcSpecificPages::orderBy("category_name")->get();
@@ -34,6 +34,7 @@
                                     @csrf
                                     <input type="hidden" name="preDefined" value="1">
                                     <input type="hidden" name="local" value="{{$id}}">
+                                    <input type="hidden" name="type" value="{{$type}}">
 
                                     <!-- User menu -->
                                     <div class="card sidebar-user">
@@ -206,6 +207,8 @@
                                     @csrf
                                     <input type="hidden" name="preDefined" value="0">
                                     <input type="hidden" name="local" value="{{$id}}">
+                                    <input type="hidden" name="type" value="{{$type}}">
+
                                     <div class="form-group">
                                         <label for="menu_name">{{trans('messages.name')}}</label>
                                         <input class="form-control" type="text" id="menu_name" name="name">

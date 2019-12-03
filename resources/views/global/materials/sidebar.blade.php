@@ -20,8 +20,8 @@
         <h5 class="widget-title line-bottom">{{trans('messages.categories')}}</h5>
         <div class="categories">
             <ul class="list list-border angle-double-right">
-                @forelse(get_blog_categories() as $category)
-                    <li><a href="{{route('blogetc.view_category',['categorySlug'=>$category['slug']])}}">{{$category['category_name']}}</a></li>
+                @forelse($side_menu as $side_m)
+                    <li><a href="{{$side_m->url}}">{{$side_m['name']}}</a></li>
                 @empty
                 @endforelse
 

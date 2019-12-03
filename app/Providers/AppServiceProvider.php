@@ -35,7 +35,8 @@ class AppServiceProvider extends ServiceProvider
 
         \View::composer("*", function ($view) {
             $view->with([
-                'menu'=> menu::where('local',App()->getLocale())->where('parent_id',0)->orderBy('order')->get(),
+                'menu'=> menu::where('local',App()->getLocale())->where('parent_id',0)->where('type','top')->orderBy('order')->get(),
+                'side_menu'=> menu::where('local',App()->getLocale())->where('type','side')->orderBy('order')->get(),
 //                'menu'=> charity_payment_patern::get(),
 //                'menu_blog'=> BlogEtcCategory::where("lang",app()->getLocale())->orderBy("category_name")->get(),
 //                'menu_special'=> BlogEtcSpecificPages::where("lang",app()->getLocale())->orderBy("category_name")->get(),
