@@ -37,4 +37,10 @@ class charity_transaction extends Model
     {
         return $this->hasOne('App\gateway', 'id', 'gateway_id');
     }
+
+
+    public function title()
+    {
+        return $this->hasOne('App\charity_payment_title', 'id', 'title_id');
+    }
 }

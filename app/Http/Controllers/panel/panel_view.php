@@ -832,7 +832,7 @@ class panel_view extends Controller
 
     public function charity_payment_list()
     {
-        $otherPayments = charity_transaction::with('values', 'user', 'patern')->get();
+        $otherPayments = charity_transaction::with('values', 'user', 'patern','title')->get();
         return view('panel.charity.other_payment.list', compact('periods', 'payments', 'paymentsApprove', 'otherPayments'));
     }
 
@@ -847,7 +847,7 @@ class panel_view extends Controller
     public function charity_payment_list_vow_show(Request $request)
     {
 
-        $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway')->findOrFail($request['id']);
+        $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway','title')->findOrFail($request['id']);
         return view('panel.charity.other_payment.show', compact('info'));
     }
 

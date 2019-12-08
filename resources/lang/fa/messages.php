@@ -708,4 +708,11 @@ return array(
     'sum_price'=>'جمع مبلغ',
     'product'=>'محصول',
 
+    'on_behalf_of'=>'از طرف',
+    'meeting_date'=>'تاریخ مجلس',
+    'late_name'=>'نام مرحوم',
+    'condolences_to'=>'تسلیت به',
+    'meeting_time'=>'ساعت مجلس',
+    'meeting_address'=>'آدرس مجلس',
+    'descriptions'=>'توضیحات'
 );

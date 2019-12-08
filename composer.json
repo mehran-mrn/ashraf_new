@@ -70,8 +70,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "Barryvdh\\LaravelIdeHelper\\": "vendor/barryvdh/laravel-ide-helper/src/"
+            "Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",

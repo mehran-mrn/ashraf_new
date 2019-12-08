@@ -341,10 +341,34 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-md-12 col-xs-12 form-group">
-                                        <label for="address">{{__('messages.address')}}</label>
-                                        <textarea name="address" id="address" class="form-control" required="required"
-                                                  cols="30" rows="4"></textarea>
+
+                                    <div class="col-md-12 col-xs-12">
+                                        <label for="receiver">{{__('messages.condolences_to')}}</label>
+                                        <input type="text" class="form-control" required="required" name="condolences_to">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="receiver">{{__('messages.on_behalf_of')}}</label>
+                                        <input type="text" class="form-control" required="required" name="from_as">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="receiver">{{__('messages.late_name')}}</label>
+                                        <input type="text" class="form-control" required="required" name="late_name">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="receiver">{{__('messages.meeting_date')}}</label>
+                                        <input type="text" class="form-control" required="required" name="meeting_date">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="receiver">{{__('messages.meeting_time')}}</label>
+                                        <input type="text" class="form-control" required="required" name="meeting_time">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="meeting_address">{{__('messages.meeting_address')}}</label>
+                                        <textarea cols="30" rows="4" class="form-control" required="required" name="meeting_address" id="meeting_address"></textarea>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 form-group">
+                                        <label for="description">{{__('messages.descriptions')}}</label>
+                                        <textarea name="description" id="description" class="form-control" cols="30" rows="4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12 form-group">

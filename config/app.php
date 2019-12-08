@@ -188,9 +188,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        \Larabookir\Gateway\GatewayServiceProvider::class,
         Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
-
+        \Larabookir\Gateway\GatewayServiceProvider::class
     ],
 
     /*
@@ -245,7 +244,7 @@ return [
         'Activity' => Kim\Activity\ActivityFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
         'Nestable' => Nestable\Facades\NestableService::class,
-        'Gateway' => \Larabookir\Gateway\Gateway::class,
+        'Gateway' => Larabookir\Gateway\Gateway::class,
         'DbView' => Flynsarmy\DbBladeCompiler\Facades\DbView::class,
 
     ],

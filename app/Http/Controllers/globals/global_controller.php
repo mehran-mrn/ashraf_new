@@ -8,6 +8,7 @@ use App\Events\userRegister;
 use App\Events\userRegisterEvent;
 use App\person;
 use App\users_address;
+use App\users_address_extra_info;
 use Carbon\Carbon;
 use Validator;
 use App\charity_period;
@@ -373,14 +374,19 @@ class global_controller extends Controller
             [
                 'province' => 'required',
                 'cities' => 'required',
-                'address' => 'required',
+                'meeting_address' => 'required',
                 'receiver' => 'required',
+                'condolences_to'=>'required',
+                'from_as'=>'required',
+                'late_name'=>'required',
+                'meeting_date'=>'required',
+                'meeting_time'=>'required',
             ]
         );
         $address = users_address::create(
             [
                 'user_id' => Auth::id(),
-                'address' => $request['address'],
+                'address' => $request['meeting_address'],
                 'province_id' => $request['province'],
                 'city_id' => $request['cities'],
                 'receiver' => $request['receiver'],
@@ -398,6 +404,17 @@ class global_controller extends Controller
             ])->update(
             [
                 'default' => 0
+            ]
+        );
+        users_address_extra_info::create(
+            [
+                'condolences'=>$request['condolences_to'],
+                'on_behalf_of'=>$request['from_as'],
+                'late_name'=>$request['late_name'],
+                'meeting_date'=>$request['meeting_date'],
+                'meeting_time'=>$request['meeting_time'],
+                'descriptions'=>$request['description'],
+                'address_id'=>$address->id,
             ]
         );
         return back_normal($request, ['message' => __("messages.address_added"), 'status' => 200]);

@@ -17,7 +17,7 @@
                         columnDefs: [{
                             orderable: false,
                             width: 100,
-                            targets: [7]
+                            targets: [8]
                         }],
                         dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
                         language: {
@@ -85,6 +85,7 @@
                                 <th>{{__('messages.amount')}}</th>
                                 <th>{{{__('messages.payment_date')}}}</th>
                                 <th>{{__('messages.patern')}}</th>
+                                <th>{{__('messages.title')}}</th>
                                 <th>{{__('messages.status')}}</th>
                                 <th></th>
                             </tr>
@@ -104,6 +105,9 @@
                                     </td>
                                     <td>{{$payment['patern']['title']}}</td>
                                     <td>
+                                        {{$payment['title']['title']}}
+                                    </td>
+                                    <td>
                                         @if($payment['status']=='success')
                                             <span class="badge badge-success">{{__('messages.'.$payment['status'])}}</span>
                                         @elseif($payment['status']=='fail')
@@ -112,6 +116,7 @@
                                             <span class="badge badge-danger">{{__('messages.unknown')}}</span>
                                         @endif
                                     </td>
+
                                     <td>
                                         <a href="{{route('charity_payment_list_vow_show',['id'=>$payment['id']])}}"
                                            data-toggle="tooltip" data-placement="top" title="{{__('messages.view')}}"

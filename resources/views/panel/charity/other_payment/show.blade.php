@@ -94,7 +94,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center mb-3 py-2">
-                            <h4 class="font-weight-semibold mb-1">{{$info['patern']['title']}}</h4>
+                            <h4 class="font-weight-semibold mb-1">{{$info['patern']['title']}} <strong class='text-danger'>{{$info['title']['title']!=""? "[ ".$info['title']['title']." ]":''}}</strong></h4>
                             <span class="text-muted d-block"
                                   dir='ltr'>{{__('messages.description')}}:  {{$info['description']}}</span>
                         </div>
@@ -103,9 +103,30 @@
                             <div class="row">
                                 @foreach($info['values'] as $value)
                                     <div class="col-6 py-2">
-                                        {{$value['charity_field']['label']}}: {{$value['value']}}
+                                        <strong>{{$value['charity_field']['label']}}:</strong> {{$value['value']}}
                                     </div>
                                 @endforeach
+                                <hr>
+                                @if($info['name']!="")
+                                    <div class="col-6 py-2">
+                                        <strong>{{__('messages.name')}}:</strong> {{$info['name']}}
+                                    </div>
+                                @endif
+                                @if($info['phone']!="")
+                                    <div class="col-6 py-2">
+                                        <strong>{{__('messages.phone')}}:</strong> {{$info['phone']}}
+                                    </div>
+                                @endif
+                                @if($info['email']!="")
+                                    <div class="col-6 py-2">
+                                        <strong>{{__('messages.email')}}:</strong> {{$info['email']}}
+                                    </div>
+                                @endif
+                                @if($info['title']['title']!="")
+                                    <div class="col-6 py-2">
+                                        <strong>{{__('messages.title')}}:</strong> {{$info['title']['title']}}
+                                    </div>
+                                @endif
                             </div>
                             <hr>
                         </div>

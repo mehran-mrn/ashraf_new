@@ -62,7 +62,6 @@ class global_view extends Controller
                 ];
             });
 
-
         return view('global.faq', compact('faqs'));
     }
 
@@ -85,7 +84,6 @@ class global_view extends Controller
             'captcha' => $captcha,
         ]);
     }
-
 
     public function register_form()
     {
@@ -378,7 +376,6 @@ class global_view extends Controller
         if (in_array($type, $vow)) {
             $info = charity_transaction::find($id);
         } elseif ($request['type'] == "charity_period") {
-
             $info = charity_periods_transaction::findOrFail($id);
             $info->gateway_id = $request['gateway_id'];
             $info->save();
@@ -391,14 +388,14 @@ class global_view extends Controller
         } elseif ($type == "charity_champion") {
             $info = champion_transaction::findOrFail($id);
         }
-
         if (!is_null($info) && $con) {
             $gatewayInfo = gateway::findOrFail($info['gateway_id']);
             if ($gatewayInfo['function_name'] == "SamanGateway") {
                 try {
-                    $gateway = \Larabookir\Gateway\Gateway::make(new Saman());
+                    $gateway = \Gateway::make(new Saman());
                     $gateway->setCallback(route('callback', ['gateway' => 'saman']));
-                    $gateway->price($info['amount'])->moduleSet($request['type'])->moduleIDSet($info['id'])->ready();
+                    $gateway->moduleSet($request['type'])->moduleIDSet($info['id']);
+                    $gateway->price($info['amount'])->ready();
                     $refId = $gateway->refId();
                     $transID = $gateway->transactionId();
 
@@ -434,11 +431,8 @@ class global_view extends Controller
 
     public function callback(Request $request)
     {
-
-
         try {
-
-            $gateway = \Larabookir\Gateway\Gateway::verify();
+            $gateway = \Gateway::verify();
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
