@@ -250,6 +250,8 @@ Route::middleware(['auth', 'permission:admin_panel'])->prefix('panel')->group(fu
             Route::post('charity/champion/delete/{id}', 'panel\charity@charity_champion_delete')->name('charity_champion_delete');
             Route::get('charity/champion/edit/{id}', 'panel\panel_view@charity_champion_edit')->name('charity_champion_edit');
             Route::post('charity/champion/update', 'panel\charity@charity_champion_update')->name('charity_champion_update');
+            Route::get('charity/champion/payments/list', 'panel\panel_view@charity_champion_payments_list')->name('charity_champion_payments');
+            Route::get('charity/champion/payments/list/show/{id}', 'panel\panel_view@charity_champion_payments_show')->name('charity_champion_payments_show');
             Route::get('charity/report', 'panel\panel_view@charity_reports')->name('charity_reports');
             Route::post('charity/report', 'panel\charity@reports')->name('charity_reports_ajax');
 
@@ -649,7 +651,7 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
     Route::get('user/add/test', 'panel\panel_view@updateDate')->name('oldUser');
 
 
-    Route::get('payment/{type}/{id}/', 'globals\global_view@payment')->name('payment');
+    Route::post('champion/payment/{type}/{id}', 'globals\global_view@payment')->name('payment_champion');
     Route::post('payment/{type2}/{id2}', 'globals\global_view@payment')->name('payment2');
 
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');

@@ -32,18 +32,19 @@
                         </div>
                         <div class="progress-item mt-0">
                             <div class="progress mb-0">
-                                <div data-percent="{{$avg}}" class="progress-bar"><span class="percent">{{$avg}}</span>
+                                <div data-percent="{{floor($avg)}}" class="progress-bar">
+                                    <span class="percent">{{floor($avg)}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="causes-details clearfix border-bottom p-15 pt-10 pb-10">
-                            <h5 class="font-weight-600 font-14"><a
-                                        href="{{route('champion_show',['id'=>$champion['slug']])}}">{{substr($champion['title'],0,30)}}
-                                    ...</a></h5>
+                            <h5 class="font-weight-600 font-14">
+                                <a href="{{route('champion_show',['id'=>$champion['slug']])}}">{{$champion['title']!=""?substr($champion['title'],0,30)."...":''}}</a></h5>
                             <p>{{$champion['description_small']}}</p>
                             <ul class="list-inline font-weight-600 border-top clearfix mt-20 pt-10">
-                                <li class="pull-left pr-0">{{__('messages.receive')}}: {{$champion['raised']}}</li>
-                                <li class="text-theme-colored pull-right pr-0">{{__('messages.target_amount')}} {{number_format($champion['target_amount'])}}
+                                <li class="pull-left pr-0">{{__('messages.receive')}}: {{number_format($champion['raised'])}}</li>
+                                <li class="text-theme-colored pull-right pr-0">
+                                    {{__('messages.target_amount')}} {{number_format($champion['target_amount'])}}
                                     <small>{{__('messages.rial')}}</small>
                                 </li>
                             </ul>

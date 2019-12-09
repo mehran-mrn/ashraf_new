@@ -387,6 +387,9 @@ class global_view extends Controller
             }
         } elseif ($type == "charity_champion") {
             $info = champion_transaction::findOrFail($id);
+            $info->gateway_id = $request['gateway_id'];
+            $info->save();
+            $info = champion_transaction::findOrFail($id);
         }
         if (!is_null($info) && $con) {
             $gatewayInfo = gateway::findOrFail($info['gateway_id']);
@@ -444,18 +447,35 @@ class global_view extends Controller
                 $charity->status = 'success';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
                 $charity->save();
+                $messages['des'] = __('messages.charity_donate');
             } elseif ($data->module == "charity_period") {
                 $charity = charity_periods_transaction::findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $charity->pay_date = date("Y-m-d H:i:s", time());
                 $charity->save();
+                $messages['des'] = __('messages.charity_period');
+            }elseif ($data->module=="charity_champion"){
+                $charity = champion_transaction::with('champion')->findOrFail($data->module_id);
+                $charity->status = 'paid';
+                $messages['des'] = $charity['champion']['title'];
+                $charity->save();
+                $sum = champion_transaction::where(
+                    [
+                        'champion_id'=>$charity['champion_id'],
+                        'status'=>'paid'
+                    ]
+                )->sum('amount');
+                charity_champion::where('id',$charity['champion_id'])->update(
+                    [
+                        'raised'=>$sum
+                    ]
+                );
             }
 
 
             $messages['result'] = "success";
             $messages['name'] = $charity->name;
             $messages['trackingCode'] = $request['transaction_id'];
-            $messages['des'] = $charity->description;
             $messages['date'] = jdate("Y/m/d");
 
             $messages['amount'] = number_format($charity->amount) . " " . __('messages.rial');

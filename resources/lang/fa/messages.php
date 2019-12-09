@@ -714,5 +714,6 @@ return array(
     'condolences_to'=>'تسلیت به',
     'meeting_time'=>'ساعت مجلس',
     'meeting_address'=>'آدرس مجلس',
-    'descriptions'=>'توضیحات'
+    'descriptions'=>'توضیحات',
+    'champions_payments'=>'پرداخت های کمپین ها'
 );

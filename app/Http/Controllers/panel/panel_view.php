@@ -15,6 +15,7 @@ use App\building_user;
 use App\caravan_doc;
 use App\caravan_host;
 use App\category;
+use App\champion_transaction;
 use App\charity_champion;
 use App\charity_payment_patern;
 use App\charity_payment_title;
@@ -859,6 +860,19 @@ class panel_view extends Controller
             $projects = building_project::where('archived', false)->get();
             return view('panel.charity.setting.module.edit_champion', compact('champion', 'projects'));
         };
+    }
+    public function charity_champion_payments_list()
+    {
+
+        if ($champion = champion_transaction::with('champion','user','gateway')->get()) {
+            return view('panel.charity.champion.list', compact('champion'));
+        };
+    }
+
+    public function charity_champion_payments_show(Request $request)
+    {
+        $info = champion_transaction::with('tranInfo', 'user', 'gateway')->findOrFail($request['id']);
+        return view('panel.charity.champion.show', compact('info'));
     }
 
     public function charity_reports()
