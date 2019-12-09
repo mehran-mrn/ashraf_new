@@ -652,6 +652,7 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
 
 
     Route::post('champion/payment/{type}/{id}', 'globals\global_view@payment')->name('payment_champion');
+    Route::get('payment/{type}/{id}', 'globals\global_view@payment')->name('payment');
     Route::post('payment/{type2}/{id2}', 'globals\global_view@payment')->name('payment2');
 
     Route::any('/callback/{gateway}', 'globals\global_view@callback')->name('callback');
