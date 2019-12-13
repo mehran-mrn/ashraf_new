@@ -514,6 +514,8 @@ Route::group(['middleware' => ['web'], 'namespace' => 'blog'], function () {
 //======================================
 //--------------Global View-------------
 //======================================
+    Route::POST('sform', 'panel\supportFormController@store_raw')->name('sform_store');
+
     Route::get('/p/{slug}', 'panel\pagesController@view')->name('pages.view');
     Route::get('/profile', 'globals\global_view@profile_page')->name('global_profile');
 Route::get('/caravan', 'globals\global_view@caravan_page')->name('global_caravan');
@@ -628,7 +630,6 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
     Route::post('vow/periodic/add', 'globals\global_controller@add_charity_period')->name('add_charity_period');
     Route::get('vow/{id}', 'globals\global_view@vow_view')->name('vows');
     Route::get('sform/{id}', 'panel\supportFormController@show')->name('sform_view');
-    Route::POST('sform', 'panel\supportFormController@store_raw')->name('sform_store');
     Route::POST('vow/payment', 'globals\global_view@vow_payment')->name('add_charity_transaction');
     Route::get('vow/cart/{id}', 'globals\global_view@vow_cart')->name('vow_cart');
 

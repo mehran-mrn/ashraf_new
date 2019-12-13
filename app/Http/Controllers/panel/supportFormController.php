@@ -8,6 +8,7 @@ use App\charity_supportForm_filds;
 use App\charity_supportForm_file;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class supportFormController extends Controller
 {
@@ -80,22 +81,23 @@ class supportFormController extends Controller
         ]);
         $pattern = charity_supportForm::find($request['sform_id']);
         if ($pattern->fields){
+
             $form = new charity_supportForm_file();
             $form->ch_s_form_id = $request['sform_id'];
             $form->title = $request['title'];
             $form->save();
             foreach ($pattern->fields as $field){
-                if ($request[$field['title']]){
+                if ($request[$field['id']]){
                 $file_field = new charity_sForm_file_fild();
                 $file_field->ch_s_form_file_id =$form['id'];
                 $file_field->key =$field['title'];
-                $file_field->value =$request[$field['title']];
+                $file_field->value =$request[$field['id']];
                 $file_field->save();
                 }
             }
         }
         $message = __('long_msg.sform_submit');
-        return redirect('home')->with('message', $message);
+        return back_normal($request,$message);
 
     }
 
