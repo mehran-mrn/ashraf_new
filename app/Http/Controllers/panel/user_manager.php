@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\Events\userRegisterEvent;
 use App\Permission;
 use App\person;
 use App\Role;
@@ -32,6 +33,7 @@ class user_manager extends Controller
 //            'last_modifier' =>  $currentUser->id,
             'password' => bcrypt($request->password),
         ]);
+        event(new userRegisterEvent($user));
         $message = trans("messages.user_created");
         return back_normal($request, $message);
 

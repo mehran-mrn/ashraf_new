@@ -29,6 +29,8 @@ Route::get('/clear-cache', function () {
 });
 Route::get('/test', function () {
 
+    $result = sendSms('09365944410','سلام چطوری');
+    return $result;
 
 });
 

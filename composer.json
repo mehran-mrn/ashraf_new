@@ -19,7 +19,7 @@
         "askedio/laravel-soft-cascade": "^5.8",
         "atayahmet/laravel-nestable": "^0.8.9",
         "barryvdh/laravel-translation-manager": "^0.5.3",
-        "econea/nusoap": "^0.9.6",
+        "econea/nusoap": "^0.9.7",
         "fideloper/proxy": "^4.0",
         "flynsarmy/db-blade-compiler": "^5.5",
         "intervention/image": "^2.4",

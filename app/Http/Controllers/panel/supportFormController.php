@@ -194,3 +194,23 @@ class supportFormController extends Controller
         return back_normal($request);
     }
 }
+function sendsms ($mobile,$body,$farsi=true) {
+    include_once('../../include/libs/nusoap.php');
+    $wsdl="http://sms1000.ir/webservice/sms.asmx?wsdl";
+    $client=new nusoap_client($wsdl, 'wsdl');
+    $client->soap_defencoding = 'UTF-8';
+    $client->decode_utf8 = true;
+    $param=array(
+        'uUsername' => 'anbiya',
+        'uPassword' => '131571',
+        'uNumber' => 1000454646, //شماره اختصاصی
+        'uCellphones' => $mobile,
+        'uMessage' => $body,
+        'uFarsi' => $farsi
+    );
+    $results = $client->call('doSendSMS', $param);
+
+    /*include ('/home/ashraf/public_html/include/libs/class.sms.php');
+    $sms = new sms();
+    $sms->SendSMS($mobile, $body);*/
+}

@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Mail\userRegisterMail;
 use Illuminate\Support\Facades\Mail;
 
-class userRegisterListener
+class mailListener
 {
     /**
      * Handle the event.
