@@ -715,5 +715,6 @@ return array(
     'meeting_time'=>'ساعت مجلس',
     'meeting_address'=>'آدرس مجلس',
     'descriptions'=>'توضیحات',
-    'champions_payments'=>'پرداخت های کمپین ها'
+    'champions_payments'=>'پرداخت های کمپین ها',
+    'unavailable'=>'ناموجود'
 );

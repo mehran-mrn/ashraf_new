@@ -4,12 +4,22 @@
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
     <script src="{{ URL::asset('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{asset('public/assets/global/js/leatflat/leaflet.js')}}"></script>
+    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
 
     <script>
         $(document).on('click', ".btn-address", function () {
             $("#frm_add_address").toggleClass('hidden')
         });
         $(document).ready(function () {
+
+            $('#meeting_date').MdPersianDateTimePicker({
+                targetTextSelector: '#meeting_date',
+                enableTimePicker: false,
+                disableBeforeToday: true,
+                englishNumber: true
+            });
+
             var mymap = L.map('mapid').setView([36.00000, 51.2769549], 13);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg', {
                 attribution: '',
@@ -68,7 +78,6 @@
                             'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                         },
                         success: function (data) {
-
                             if (data.message.status === 200) {
                                 PNotify.success({
                                     text: data.message.message,
@@ -166,36 +175,11 @@
                     }
                 })
             })
+            $('.clockpicker').clockpicker();
+            $('.clockpicker-button').text("انتخاب");
 
             $("#frm_order").validate({
                 lang: "fa",
-                rules: {
-                    transportation: {
-                        required: true,
-                    },
-                    cities: {
-                        required: true,
-                    },
-                    address: {
-                        required: true,
-                        minlength: 3
-                    },
-                    receiver: {
-                        required: true,
-                        minlength: 5,
-                        maxlength: 100,
-                    },
-                    mobile: {
-                        minlength: 11,
-                        maxlength: 11,
-                        number: true
-                    },
-                    phone: {
-                        minlength: 11,
-                        maxlength: 11,
-                        number: true
-                    }
-                },
                 submitHandler: function (form) {
                     var form_btn = $(form).find('button[type="submit"]');
                     var form_result_div = '#form-result';
@@ -204,36 +188,39 @@
                     var form_btn_old_msg = form_btn.html();
                     form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                     $(form).ajaxSubmit({
-                        dataType: 'json',
                         headers: {
                             'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
                         },
                         success: function (data) {
-
-                            if (data.message.status === 200) {
-                                PNotify.success({
-                                    text: data.message.message,
-                                    delay: 3000,
-                                });
-                                $("#frm_add_address").toggleClass('hidden');
-                                $(form).find('.form-control').val('');
-                            }
+                            console.log(data);
+                            // if (data.message.status === 200) {
+                            //     PNotify.success({
+                            //         text: data.message.message,
+                            //         delay: 3000,
+                            //     });
+                            //     $(form).find('.form-control').val('');
+                            // }
                             form_btn.prop('disabled', false).html(form_btn_old_msg);
                             $(form_result_div).html(data.message).fadeIn('slow');
                             setTimeout(function () {
                                 $(form_result_div).fadeOut('slow')
                             }, 6000);
-                        }, error: function (error) {
-                            $.each(error.responseJSON.errors, function (i, item) {
+                        }, error: function (response) {
+                            console.log(response);
+                            var errors = response.responseJSON.errors;
+                            $.each(errors, function (index, value) {
                                 PNotify.error({
-                                    text: item,
-                                    delay: 3000,
+                                    delay: 5000,
+                                    title: '',
+                                    text: value,
                                 });
                             });
                             form_btn.prop('disabled', false).html(form_btn_old_msg);
+                            $(form_result_div).html(data.message).fadeIn('slow');
                             setTimeout(function () {
-                                return window.location.reload();
-                            }, 1000);
+                                $(form_result_div).fadeOut('slow')
+                            }, 6000);
+
                         }
                     });
                 }
@@ -244,7 +231,11 @@
     </script>
 @stop
 @section('css')
+    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+          rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{asset('public/assets/global/js/leatflat/leaflet.css')}}"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css"/>
     <style>
         .border {
             border: 2px solid #88e0a1 !important;
@@ -262,7 +253,6 @@
         {{@csrf_field()}}
         <section class="">
             <div class="container mt-30 mb-30 p-30">
-
                 <div class="row">
                     <div class="col-md-6 bg-success text-center step_two">
                         <h3 class="badge badge-danger">1</h3><br>
@@ -344,7 +334,8 @@
 
                                     <div class="col-md-12 col-xs-12">
                                         <label for="receiver">{{__('messages.condolences_to')}}</label>
-                                        <input type="text" class="form-control" required="required" name="condolences_to">
+                                        <input type="text" class="form-control" required="required"
+                                               name="condolences_to">
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="receiver">{{__('messages.on_behalf_of')}}</label>
@@ -356,19 +347,23 @@
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="receiver">{{__('messages.meeting_date')}}</label>
-                                        <input type="text" class="form-control" required="required" name="meeting_date">
+                                        <input type="text" class="form-control" required="required" id="meeting_date"
+                                               name="meeting_date">
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="receiver">{{__('messages.meeting_time')}}</label>
-                                        <input type="text" class="form-control" required="required" name="meeting_time">
+                                        <input type="text" class="form-control clockpicker" required="required"
+                                               value="09:30" name="meeting_time">
                                     </div>
                                     <div class="col-md-6 col-xs-12">
                                         <label for="meeting_address">{{__('messages.meeting_address')}}</label>
-                                        <textarea cols="30" rows="4" class="form-control" required="required" name="meeting_address" id="meeting_address"></textarea>
+                                        <textarea cols="30" rows="4" class="form-control" required="required"
+                                                  name="meeting_address" id="meeting_address"></textarea>
                                     </div>
                                     <div class="col-md-6 col-xs-12 form-group">
                                         <label for="description">{{__('messages.descriptions')}}</label>
-                                        <textarea name="description" id="description" class="form-control" cols="30" rows="4"></textarea>
+                                        <textarea name="description" id="description" class="form-control" cols="30"
+                                                  rows="4"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12 form-group">
@@ -398,43 +393,42 @@
                                                 class="btn btn-block btn-success">{{__('messages.submit')}}</button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-12">
-                        <label><i class="fa fa-angle-left"></i> {{__('messages.address')}}</label>
-                        <table class="table table-bordered border text-center" style="vertical-align: middle">
-                            <tbody>
-                            @foreach($userInfo['addresses'] as $tra)
-                                <tr>
-                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
-                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
-                                    </td>
-                                    <td class="align-middle" style="vertical-align: middle">
-                                        <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right btn  btn-sm align-middle mr-20">{{$tra['address']}}</span>
-                                        <button class="btn btn-default btn-sm pull-right btn-delete"
-                                                data-id="{{$tra['id']}}">{{__('messages.delete')}}</button>
-                                        <span class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong
-                                                class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
-                                    </td>
-                                    <td>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="address" id="address_radio_{{$tra['id']}}"
-                                                       value="option1"
-                                                        {{$tra['default']==1?'checked':''}}>
-                                                {{__('messages.select')}}
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <form action="" method="post" id="frm_order">
+                    <form action="{{route('store_order_submit')}}" method="post" id="frm_order">
+                        <div class="col-md-12">
+                            <label><i class="fa fa-angle-left"></i> {{__('messages.address')}}</label>
+                            <table class="table table-bordered border text-center" style="vertical-align: middle">
+                                <tbody>
+                                @foreach($userInfo['addresses'] as $tra)
+                                    <tr>
+                                        <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                            <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                        </td>
+                                        <td class="align-middle" style="vertical-align: middle">
+                                            <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
+                                            <span class="pull-right btn  btn-sm align-middle mr-20">{{$tra['address']}}</span>
+                                            <button class="btn btn-default btn-sm pull-right btn-delete"
+                                                    data-id="{{$tra['id']}}">{{__('messages.delete')}}</button>
+                                            <span class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong
+                                                    class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
+                                        </td>
+                                        <td>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="address" id="address_radio_{{$tra['id']}}"
+                                                           value="{{$tra['id']}}"
+                                                            {{$tra['default']==1?'checked':''}}>
+                                                    {{__('messages.select')}}
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-md-6">
                             <label><i class="fa fa-angle-left"></i> {{__('messages.how_to_send')}}</label>
                             <table class="table table-bordered border text-center" style="vertical-align: middle">
@@ -453,7 +447,8 @@
                                             <div class="radio">
                                                 <label>
                                                     <input type="radio" name="transportation"
-                                                           id="trans_radio_{{$tra['id']}}" value="option1" checked>
+                                                           id="trans_radio_{{$tra['id']}}" value="{{$tra['id']}}"
+                                                           checked>
                                                     {{__('messages.select')}}
                                                 </label>
                                             </div>
@@ -467,63 +462,95 @@
                             <label><i class="fa fa-angle-left"></i> {{__('messages.payment_type')}}</label>
                             <table class="table table-bordered border text-center" style="vertical-align: middle">
                                 <tbody>
+                                @php $pays = []; @endphp
+                                @foreach($gateways as $gat)
+                                    @if($gat['online']==1 && !in_array('online',$pays))
+                                        <tr>
+                                            <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                                <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                            </td>
+                                            <td class="align-middle" style="vertical-align: middle">
+                                                <i class="fa fa-anchor fa-2x pull-right mr-20"></i>
+                                                <span class="pull-right align-middle mr-20">{{__('messages.online')}}</span>
+                                                <span class="pull-left align-middle ml-20 text-success"></span>
+                                            </td>
+                                            <td>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="payment" id="payment_radio_online"
+                                                               value="online" checked>
+                                                        {{__('messages.select')}}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php array_push($pays,'online')@endphp
+                                    @endif
+                                    @if($gat['cart']==1 && !in_array('cart',$pays))
+                                        <tr>
+                                            <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                                <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                            </td>
+                                            <td class="align-middle" style="vertical-align: middle">
+                                                <i class="fa fa-credit-card fa-2x pull-right mr-20"></i>
+                                                <span class="pull-right align-middle mr-20">{{__('messages.cart_to_cart')}}</span>
+                                                <span class="pull-left align-middle ml-20 text-success"></span>
+                                            </td>
+                                            <td>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="payment" id="payment_radio_cart"
+                                                               value="cart">
+                                                        {{__('messages.select')}}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php array_push($pays,'cart')@endphp
+                                    @endif
+                                    @if($gat['account']==1 && !in_array('account',$pays))
+                                        <tr>
+                                            <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
+                                                <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
+                                            </td>
+                                            <td class="align-middle" style="vertical-align: middle">
+                                                <i class="fa fa-money fa-2x pull-right mr-20"></i>
+                                                <span class="pull-right align-middle mr-20">{{__('messages.send_to_account')}}</span>
+                                                <span class="pull-left align-middle ml-20 text-success"></span>
+                                            </td>
+                                            <td>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="payment" id="payment_radio_account"
+                                                               value="account">
+                                                        {{__('messages.select')}}
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php array_push($pays,'account')@endphp
+                                    @endif
+                                @endforeach
                                 <tr>
                                     <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
                                         <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
                                     </td>
                                     <td class="align-middle" style="vertical-align: middle">
-                                        <i class="fa fa-anchor fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{__('messages.online')}}</span>
-                                        <span class="pull-left align-middle ml-20 text-success"></span>
-                                    </td>
-                                    <td>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="payment" id="payment_radio_online"
-                                                       value="pay_online" checked>
-                                                {{__('messages.select')}}
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
-                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
-                                    </td>
-                                    <td class="align-middle" style="vertical-align: middle">
-                                        <i class="fa fa-credit-card fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{__('messages.cart_to_cart')}}</span>
-                                        <span class="pull-left align-middle ml-20 text-success"></span>
-                                    </td>
-                                    <td>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="payment" id="payment_radio_cart"
-                                                       value="pay_cart" checked>
-                                                {{__('messages.select')}}
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="1" class="col-md-1 success" style="vertical-align: middle">
-                                        <i class="fa fa-check-square-o fa-3x text-success align-middle text-center"></i>
-                                    </td>
-                                    <td class="align-middle" style="vertical-align: middle">
-                                        <i class="fa fa-money fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{__('messages.send_to_account')}}</span>
+                                        <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
+                                        <span class="pull-right align-middle mr-20">{{__('messages.pay_on_place')}}</span>
                                         <span class="pull-left align-middle ml-20 text-success"></span>
                                     </td>
                                     <td>
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="payment" id="payment_radio_account"
-                                                       value="option1" checked>
+                                                       value="place" checked>
                                                 {{__('messages.select')}}
                                             </label>
                                         </div>
                                     </td>
                                 </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -534,8 +561,8 @@
                                 <?php
                                 $time = 0;
                                 ?>
-                                @if(session('cart'))
-                                    @foreach(session('cart') as $id => $details)
+                                @if(session('cart')['order'])
+                                    @foreach(session('cart')['order'] as $id => $details)
                                         <?php
                                         if ($details['time'] > $time) {
                                             $time = $details['time'];
@@ -561,8 +588,6 @@
                             <i class="fa fa-caret-left pr-10"></i></button>
                     </form>
                 </div>
-
-
             </div>
         </section>
     </div>

@@ -2,11 +2,8 @@
 
 @section('js')
     <script>
-
         $(document).on("change", '.priceFinal', function (event) {
-            // skip for arrow keys
             if (event.which >= 37 && event.which <= 40) return;
-            // format number
             $(this).val(function (index, value) {
                 return value
                     .replace(/\D/g, "")
@@ -14,35 +11,21 @@
                     ;
             });
         });
-
         function comma(val) {
             return val.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-
-
         $(document).on('ready', function () {
             $(document).on('click', '.single_add_to_cart_button', function () {
                 var btnContent = $(".cart-btn").html();
                 $(".single_add_to_cart_button").attr("disabled", "disabled");
                 $(".single_add_to_cart_button").html("<i class='fa fa-spin fa-spinner fa-1x'></i> {{__('messages.please_waite')}}...");
-
                 var pro_id = '{{$proInfo['id']}}';
-                var inventory_id = 0;
-                var inventory_size_id = 0;
                 var qty = $(".qty").val();
-                if ($(".inventory").length) {
-                    inventory_id = $(".inventory").val();
-                }
-                if ($(".select-size").length) {
-                    inventory_size_id = $(".select-size").val();
-                }
                 $.ajax({
                     url: "{{route('add_to_cart')}}",
                     type: "post",
                     data: {
                         pro_id: pro_id,
-                        inventory_id: inventory_id,
-                        inventory_size_id: inventory_size_id,
                         count: qty
                     },
                     headers: {
@@ -96,31 +79,11 @@
             });
             $(".select-size").change();
         })
-
     </script>
 @endsection
 @section('content')
     @csrf
-    @php
-        $sizes = $proInfo->store_product_inventory_size;
-    @endphp
     <div class="main-content">
-
-        <!-- Section: inner-header -->
-        <section class="inner-header divider parallax layer-overlay overlay-dark-5"
-                 data-bg-img="{{URL::asset('public/assets/global/images/bg/bg1.jpg')}}">
-            <div class="container pt-90 pb-50">
-                <!-- Section Content -->
-                <div class="section-content pt-100">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="title text-white">{{$proInfo['title']}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section>
             <div class="container">
                 <div class="section-content">
@@ -149,14 +112,19 @@
                                     {{--                                        </ul>--}}
                                     {{--                                    </div>--}}
                                     <div class="price">
-                                        @if(sizeof($sizes)==0)
-                                            <input type="hidden" name="inventory" class="inventory"
-                                                   value="{{$proInfo->store_product_inventory['id']}}">
+                                        <input type="hidden" name="inventory" class="inventory"
+                                               value="{{$proInfo['store_product_inventory']['id']}}">
+                                        @if($proInfo['store_product_inventory']['off']>0)
                                             <del>
-                                                <span class="amount off">{{number_format($proInfo->store_product_inventory['price'])}}</span>
+                                                <span class="amount off">{{number_format($proInfo['store_product_inventory']['price'])}}</span>
                                             </del>
                                             <ins>
-                                                <span class="amount priceFinal">{{number_format($proInfo->store_product_inventory['price']-($proInfo->store_product_inventory['price']*$proInfo->store_product_inventory['off']/100))}}</span>
+                                                <span class="amount priceFinal">{{number_format($proInfo['store_product_inventory']['price']-($proInfo['store_product_inventory']['price']*$proInfo['store_product_inventory']['off']/100))}}</span>
+                                                <small class="text-gray">{{__('messages.toman')}}</small>
+                                            </ins>
+                                        @else
+                                            <ins>
+                                                <span class="amount priceFinal">{{number_format($proInfo['store_product_inventory']['price'])}}</span>
                                                 <small class="text-gray">{{__('messages.toman')}}</small>
                                             </ins>
                                         @endif
@@ -166,13 +134,10 @@
                                     {{ $proInfo['properties'] }}
                                 </div>
                                 <hr>
-                                @php
-                                    $cats = $proInfo->store_category;
-                                @endphp
-                                @if(sizeof($cats)>=1)
+                                @if(sizeof($proInfo['store_category'])>=1)
                                     <div class="category"><strong>{{__("messages.category")}}:</strong>
-                                        @foreach($cats as $cat)
-                                            <a href="#">{{$cat->title}}</a>,
+                                        @foreach($proInfo['store_category'] as $cat)
+                                            <a href="#">{{$cat['title']}}</a>,
                                         @endforeach
                                     </div>
                                 @endif
@@ -180,35 +145,24 @@
                                     <div class="tags">
                                         <strong>{{__('messages.tags')}}: </strong>
                                         @foreach($proInfo->store_product_tag as $tag)
-                                            <a href="#">{{$tag['tag']}}</a>,
+                                            @if($tag['tag']!="")
+                                                <a href="#">{{$tag['tag']}}</a>,
+                                            @endif
                                         @endforeach
                                     </div>
                                 @endif
                                 <div class="cart-form-wrapper mt-30">
                                     <form enctype="multipart/form-data" method="post" class="cart">
                                         <input type="hidden" value="productID" name="add-to-cart">
-
                                         <table class="table variations no-border">
                                             <tbody>
-                                            @if(sizeof($sizes)>=1)
-                                                <tr>
-                                                    <td class="name">{{__('messages.size')}}</td>
-                                                    <td class="value">
-                                                        <select class="form-control select-size">
-                                                            @foreach($sizes as $size)
-                                                                <option value="{{$size['id']}}">{{$size['size']}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            @endif
                                             <tr>
                                                 <td class="name">{{__('messages.count')}}</td>
                                                 <td class="value">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" class="minus" value="-">
                                                         <input type="number" size="4" class="input-text qty text"
-                                                               title="count" value="1" name="count" min="1" step="1">
+                                                               title="count" value="1" name="count" min="1" max="20" step="1">
                                                         <input type="button" class="plus" value="+">
                                                     </div>
                                                 </td>
@@ -226,8 +180,8 @@
                         <div class="col-md-12">
                             <div class="horizontal-tab product-tab">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab1"
-                                                          data-toggle="tab">{{__('messages.description')}}</a></li>
+                                    <li class="active">
+                                        <a href="#tab1" data-toggle="tab">{{__('messages.description')}}</a></li>
                                     <li><a href="#tab2" data-toggle="tab">{{{__('messages.properties')}}}</a></li>
                                 </ul>
                                 <div class="tab-content">
