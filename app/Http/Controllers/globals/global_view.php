@@ -20,6 +20,8 @@ use App\Events\userRegisterEvent;
 use App\gallery_category;
 use App\gateway;
 use App\media;
+use App\order;
+use App\orders_item;
 use App\setting_transportation;
 use App\store_product;
 use App\store_product_inventory;
@@ -221,15 +223,57 @@ class global_view extends Controller
 
     public function store_order_sub(Request $request)
     {
-            $card2 = [
-                "extraInfo" => [
-                    'address' => $request['address'],
-                    'transportation' => $request['transportation'],
-                    'payment' => $request['payment']
-                ]];
+        $card2 = [
+            "extraInfo" => [
+                'address' => $request['address'],
+                'transportation' => $request['transportation'],
+                'payment' => $request['payment']
+            ]];
         session()->put('info', $card2);
-        //add order table and submit data
-        return view('global.store.final');
+
+        $items = session('cart')['order'];
+        $count = 0;
+        $price = 0;
+        $off = 0;
+        foreach ($items as $item) {
+            if ($proInfo = store_product::find($item['product_id'])) {
+                $count += $item['count'];
+                $price += $proInfo['price'];
+                $off += $proInfo['off'];
+            }
+        }
+        $off = (($price * $count) * $off) / 100;
+        $totalAfterOff = ($price * $count) - $off;
+        $order_info = order::create('orders',
+            [
+                'user_id' => Auth::id(),
+                'count' => $count,
+                'address_id' => $request['address'],
+                'transportation_id' => $request['transportation'],
+                'payment' => $request['payment'],
+                'price' => $price,
+                'tax' => 0,
+                'discount' => $off,
+                'final_price' => $totalAfterOff,
+            ]);
+        foreach ($items as $item) {
+            if ($proInfo = store_product::find($item['product_id'])) {
+                orders_item::create([
+                    'order_id' => $order_info['id'],
+                    'product_id' => $proInfo['id'],
+                    'count' => $item['count'],
+                    'price' => $proInfo['price'],
+                    'final_price' => $proInfo['price'] * $item['count'],
+                    'discount' => $item['off'],
+                ]);
+            }
+        }
+        $gateways = gateway::where('status', 'active')->get();
+        return view('global.store.factor', compact('gateways','proInfo'));
+    }
+
+    public function store_order_factor()
+    {
     }
 
     public function store_payment()

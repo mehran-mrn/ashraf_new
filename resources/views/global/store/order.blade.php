@@ -177,55 +177,6 @@
             })
             $('.clockpicker').clockpicker();
             $('.clockpicker-button').text("انتخاب");
-
-            $("#frm_order").validate({
-                lang: "fa",
-                submitHandler: function (form) {
-                    var form_btn = $(form).find('button[type="submit"]');
-                    var form_result_div = '#form-result';
-                    $(form_result_div).remove();
-                    form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
-                    var form_btn_old_msg = form_btn.html();
-                    form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
-                    $(form).ajaxSubmit({
-                        headers: {
-                            'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-                        },
-                        success: function (data) {
-                            console.log(data);
-                            // if (data.message.status === 200) {
-                            //     PNotify.success({
-                            //         text: data.message.message,
-                            //         delay: 3000,
-                            //     });
-                            //     $(form).find('.form-control').val('');
-                            // }
-                            form_btn.prop('disabled', false).html(form_btn_old_msg);
-                            $(form_result_div).html(data.message).fadeIn('slow');
-                            setTimeout(function () {
-                                $(form_result_div).fadeOut('slow')
-                            }, 6000);
-                        }, error: function (response) {
-                            console.log(response);
-                            var errors = response.responseJSON.errors;
-                            $.each(errors, function (index, value) {
-                                PNotify.error({
-                                    delay: 5000,
-                                    title: '',
-                                    text: value,
-                                });
-                            });
-                            form_btn.prop('disabled', false).html(form_btn_old_msg);
-                            $(form_result_div).html(data.message).fadeIn('slow');
-                            setTimeout(function () {
-                                $(form_result_div).fadeOut('slow')
-                            }, 6000);
-
-                        }
-                    });
-                }
-            });
-
         })
 
     </script>
@@ -397,6 +348,7 @@
                         </form>
                     </div>
                     <form action="{{route('store_order_submit')}}" method="post" id="frm_order">
+                        @csrf
                         <div class="col-md-12">
                             <label><i class="fa fa-angle-left"></i> {{__('messages.address')}}</label>
                             <table class="table table-bordered border text-center" style="vertical-align: middle">

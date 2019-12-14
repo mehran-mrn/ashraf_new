@@ -613,6 +613,7 @@ Route::get('/involved', 'globals\global_view@involved_projects')->name('involved
 
     Route::get('/order/order', 'globals\global_view@store_order')->name('store_order')->middleware('global_auth');
     Route::post('/order/order/submit', 'globals\global_view@store_order_sub')->name('store_order_submit')->middleware('global_auth');
+    Route::get('/order/factor/', 'globals\global_view@store_order_factor')->name('store_order_factor')->middleware('global_auth');
 
     Route::post('/order/add/address', 'globals\global_controller@store_order_add_address')->name('store_order_add_address');
     Route::delete('/order/remove/address', 'globals\global_controller@store_order_remove_address')->name('store_order_delete_address');
