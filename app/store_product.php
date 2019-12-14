@@ -2,6 +2,7 @@
 
 namespace App;
 
+use http\QueryString;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,6 +11,10 @@ class store_product extends Model
     //
     protected $guarded = [];
     use SoftDeletes;
+
+    protected $rules = [
+        'slug' => 'required|unique:store_products,slug',
+    ];
 
     public function store_category()
     {

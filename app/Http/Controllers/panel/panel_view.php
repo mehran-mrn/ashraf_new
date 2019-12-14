@@ -938,16 +938,20 @@ class panel_view extends Controller
     public function product_add()
     {
         $items_cats = store_item_category::all();
-        $gateways = gateway::get();
-        return view('panel.store.product.product_add', compact('gateways', 'items_cats'));
+        $gatewaysOnline = gateway::where('online',1)->get();
+        $gatewaysCard = gateway::where('cart',1)->get();
+        $gatewaysAccount = gateway::where('account',1)->get();
+        return view('panel.store.product.product_add', compact('gatewaysOnline','gatewaysCard','gatewaysAccount', 'items_cats'));
     }
 
     public function store_product_edit(Request $request)
     {
         $items_cats = store_item_category::all();
-        $gateways = gateway::get();
-        $product = store_product::find($request['pro_id']);
-        return view('panel.store.product.product_edit', compact('gateways', 'items_cats', 'product'));
+        $gatewaysOnline = gateway::where('online',1)->get();
+        $gatewaysCard = gateway::where('cart',1)->get();
+        $gatewaysAccount = gateway::where('account',1)->get();
+        $product = store_product::with('store_product_gateway','store_product_inventory')->find($request['pro_id']);
+        return view('panel.store.product.product_edit', compact('gatewaysOnline','gatewaysCard','gatewaysAccount', 'items_cats', 'product'));
     }
 
     public function product_list()

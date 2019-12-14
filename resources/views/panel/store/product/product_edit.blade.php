@@ -10,8 +10,55 @@
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
     <script src="{{URL::asset('/public/assets/panel/global_assets/js/plugins/ui/dragula.min.js')}}"></script>
     <script>
+        $(document).on("keyup", '.price', function (event) {
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
 
+            // format number
+            $(this).val(function (index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    ;
+            });
+        });
+
+        function convertToSlug(titleStr) {
+            titleStr = titleStr.replace(/^\s+|\s+$/g, '');
+            titleStr = titleStr.toLowerCase();
+            titleStr = titleStr.replace(/[^a-z0-9_\s-ءاأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهويةى]#u/, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            return titleStr;
+        }
+
+        $(document).on("change", "#title", function () {
+            $("#slug").val(convertToSlug($(this).val()))
+        })
         $(document).ready(function () {
+            $('input:radio[name="inv_type"]').change(
+                function () {
+                    if ($(this).is(':checked') && $(this).val() === 'bycolor') {
+                        $(".inv-box").html("");
+                        $(".inventoriesW").addClass("d-none");
+                        $(".inventoriesC").removeClass("d-none");
+                    } else if ($(this).is(':checked') && $(this).val() === 'withoutcolor') {
+                        $(".color-box").html("");
+                        $(".inventoriesW").removeClass("d-none");
+                        $(".inventoriesC").addClass("d-none");
+                        $(".inv-box").html('' +
+                            '<div class="d-flex">' +
+                            '<div class="p-2"><input type="number" class="form-control" required="required" name="inventories" id="inventories" placeholder={{__('messages.inventories')}}></div>' +
+                            '<div class="p-2"><input type="text" class="form-control price" required="required" name="price" id="price" placeholder="{{__('messages.price')." ".__('messages.toman')}}"></div>' +
+                            '<div class="p-2"><input type="number" min="0" max="100" class="form-control" required="required" name="off" id="off" placeholder="{{__('messages.off')}}"></div>' +
+                            '<div class="p-2"><button type="button" onclick="addSize2()" class="btn btn-outline-info"><i class="icon-plus2"></i></button></div>' +
+                            '</div>' +
+                            '<div class="col-md-12 pt-2">' +
+                            '<div class="d-flex-row size_counter">' +
+                            '</div>' +
+                            '</div>');
+                    }
+                });
             CKEDITOR.replace('description', {
                 language: 'fa',
                 uiColor: '#9AB8F3',
@@ -41,9 +88,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 DragAndDrop.init();
             });
-
             var route_prefix = {{env('url')}}"/laravel-filemanager";
-
             (function ($) {
 
                 $.fn.filemanager = function (type, options) {
@@ -81,9 +126,76 @@
                 }
 
             })(jQuery);
-
             $('#lfmMain').filemanager('image', {prefix: route_prefix});
+            $(".add-color").on('click', function () {
+                var x = +$("#randomNumber").val() + 1;
+                $(".color-box").append(
+                    '<div class="card counter-row-' + x + '">' +
+                    '<div class="card-header">' +
+                    '<span class=""card-title>{{__('messages.information')}}</span>' +
+                    '</div>' +
+                    '<div class="card-body">' +
+                    '<div class="row pt-2">' +
+                    '<div class="col-md-10">' +
+                    '<div class="row">' +
+                    '<div class="col-md-3">' +
+                    '<div class="d-inline-block"><input type="text" data-preferred-format="hex" class="form-control colorpicker-palette" value="#27ADCA" data-fouc name="color-name[' + x + '][]"></div>' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="number" min="0" max="10000000" placeholder="{{__('messages.count')}}" required="required" class="form-control" name="color-name[' + x + '][]">' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="text" class="form-control price" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.price')." ".__('messages.toman')}}">' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input type="number" min="0" max="100" class="form-control" required="required" name="color-name[' + x + '][]" placeholder="{{__('messages.off')}}">' +
+                    '</div>' +
+                    '<div class="col-md-12 pt-2">' +
+                    '<div class="d-flex-row size_counter_' + x + '">' +
+                    '</div></div></div></div>' +
+                    '<div class="col-md-2"><div class="btn-group">' +
+                    '<button type="button" data-row-id="' + x + '" onclick="addSize(' + x + ')" class="btn btn-outline-info btn-xs"><i class="icon-plus3"></i></button>' +
+                    '<button type="button" data-row-id="' + x + '" onclick="removeRow(' + x + ')" class="btn btn-outline-danger btn-xs"><i class="icon-x"></i></button>' +
+                    '<div></div></div></div></div>'
+                );
+                $("#randomNumber").val(x);
+                ColorPicker.init();
+            })
         });
+
+        function addSize(x) {
+            var y = +$("#randomNumberSize").val() + 1;
+            $(".size_counter_" + x).append(
+                '<div class="d-flex size-row-' + y + '"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.count')}}"></div>' +
+                '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.price')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][' + y + '][]" placeholder="{{__('messages.off')}}"></div>' +
+                '<div class="m-1"><button class="btn btn-danger" type="button" onclick="removeSize(' + y + ')"><i class="icon-x"></i></button></div></div>'
+            );
+            $("#randomNumberSize").val(y);
+        }
+
+        function addSize2() {
+            var x = +$("#randomNumberSize").val() + 1;
+            $(".size_counter").append(
+                '<div class="d-flex size-row-' + x + '"><div class="m-1"><input type="text" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.size')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="10000000" class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.count')}}"></div>' +
+                '<div class="m-1"><input type="text" class="form-control price" name="size[' + x + '][]" placeholder="{{__('messages.price')}}"></div>' +
+                '<div class="m-1"><input type="number" min="0" max="100"  class="form-control" name="size[' + x + '][]" placeholder="{{__('messages.off')}}"></div>' +
+                '<div class="m-1"><button class="btn btn-danger" type="button" onclick="removeSize(' + x + ')"><i class="icon-x"></i></button></div>'
+            );
+            $("#randomNumberSize").val(x);
+        }
+
+        function removeRow(x) {
+            var rowID = x;
+            $(".counter-row-" + rowID).remove();
+        };
+
+        function removeSize(x) {
+            var rowID = x;
+            $(".size-row-" + rowID).remove();
+        };
 
         function deleteGatewayOnline(id) {
             $("#g_row_online_" + id).html("");
@@ -254,16 +366,23 @@
             <div class="row">
                 <div class="col-12 col-md-8">
                     <div class="card">
-                        <div class="card-header text-center bg-light"><span
-                                    class="card-title">{{__('messages.product_add')}}</span>
+                        <div class="card-header text-center bg-light">
+                            <span class="card-title">{{__('messages.product_add')}}</span>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="title">{{__('messages.product_title')}}</label>
                                         <input type="text" name="title" id="title" class="form-control"
                                                value="{{$product['title']}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="slug">{{__('messages.slug')}}</label>
+                                        <input type="text" readonly="readonly" name="slug" id="slug"
+                                               class="form-control" value="{{$product['slug']}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -277,7 +396,7 @@
                                     <div class="form-group">
                                         <label for="properties">{{__('messages.properties')}}</label>
                                         <textarea name="properties" id="properties" cols="30" rows="5"
-                                                  class="form-control"></textarea>
+                                                  class="form-control">{{$product['properties']}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -297,13 +416,91 @@
                                                name="image[]" data-fouc>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="tages">{{__('messages.tages')}}</label>
                                         <input type="text" class="form-control tokenfield"
                                                placeholder="{{__('messages.enter_text')}}"
                                                data-fouc name="tags" id="tags" value="{{$tags}}">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header text-center bg-light">
+                                            <span class="panel title">{{__('messages.count')}}</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                {{--                                                <div class="col-md-12 text-center">--}}
+                                                {{--                                                    <div class="form-group mb-3 mb-md-2">--}}
+                                                {{--                                                        <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>--}}
+                                                {{--                                                        <div class="custom-control custom-radio custom-control-inline">--}}
+                                                {{--                                                            <input type="radio" class="custom-control-input"--}}
+                                                {{--                                                                   name="inv_type"--}}
+                                                {{--                                                                   id="custom_radio_inline_unchecked" checked--}}
+                                                {{--                                                                   value="withoutcolor">--}}
+                                                {{--                                                            <label class="custom-control-label"--}}
+                                                {{--                                                                   for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>--}}
+                                                {{--                                                        </div>--}}
+
+                                                {{--                                                        <div class="custom-control custom-radio custom-control-inline">--}}
+                                                {{--                                                            <input type="radio" class="custom-control-input"--}}
+                                                {{--                                                                   name="inv_type"--}}
+                                                {{--                                                                   id="custom_radio_inline_checked" value="bycolor">--}}
+                                                {{--                                                            <label class="custom-control-label"--}}
+                                                {{--                                                                   for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>--}}
+                                                {{--                                                        </div>--}}
+                                                {{--                                                    </div>--}}
+                                                {{--                                                </div>--}}
+                                                <div class="col-md-12 inventoriesW">
+                                                    <div class="form-group inv-box">
+                                                        <div class="d-flex">
+                                                            <div class="p-2">
+                                                                <label for="count">{{__("messages.count")}}</label>
+                                                                <input type="number" class="form-control"
+                                                                       required="required"
+                                                                       name="count" id="count"
+                                                                       value="{{$product['store_product_inventory']['count']}}"
+                                                                       placeholder="{{__('messages.inventories')}}">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <label for="price">{{__("messages.price")}}</label>
+                                                                <input type="text" class="form-control price"
+                                                                       required="required" name="price"
+                                                                       id="price"
+                                                                       value="{{$product['store_product_inventory']['price']}}"
+                                                                       placeholder="{{__('messages.price')." ".__('messages.toman')}}">
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <label for="off">{{__("messages.off")}}</label>
+                                                                <input type="number" class="form-control"
+                                                                       required="required" name="off"
+                                                                       id="off" min="0" max="100"
+                                                                       value="{{$product['store_product_inventory']['off']}}"
+                                                                       placeholder="{{__('messages.off')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 pt-2">
+                                                            <div class="d-flex-row size_counter">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 inventoriesC d-none">
+                                                    <button type="button"
+                                                            class="btn btn-outline-info add-color float-right"><i
+                                                                class="icon-plus2"></i> {{__('messages.add_color')}}
+                                                    </button>
+                                                    <div class="clearfix"></div>
+                                                    <hr>
+                                                    <input type="hidden" value="1" id="randomNumber">
+                                                    <div class="color-box">
+                                                    </div>
+                                                </div>
+                                                {{--                                                <input type="hidden" value="{{$i}}" id="randomNumberSize">--}}
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -328,113 +525,77 @@
                             {!! treeView($cats) !!}
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <div class="form-group mb-3 mb-md-2">
-                                    <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" name="inv_type"
-                                               id="custom_radio_inline_unchecked" checked value="withoutcolor">
-                                        <label class="custom-control-label"
-                                               for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>
-                                    </div>
-
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" name="inv_type"
-                                               id="custom_radio_inline_checked" value="bycolor">
-                                        <label class="custom-control-label"
-                                               for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 inventoriesW">
-                                <div class="form-group inv-box">
-                                    <label for="inventories">{{__("messages.inventories")}}</label>
-                                    <input type="number" class="form-control" required="required" name="inventories"
-                                           id="inventories">
-                                </div>
-                            </div>
-                            <div class="col-md-12 inventoriesC d-none">
-                                <button type="button" class="btn btn-outline-info add-color float-right"><i
-                                            class="icon-plus2"></i> {{__('messages.add_color')}}</button>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <input type="hidden" value="1" id="randomNumber">
-                                <div class="color-box">
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
                                     class="card-title">{{__('messages.pay_gateway')}}</span></div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center pb-3">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_online"
-                                               name="pay_online"
-                                               @if($online) checked @endif>
-                                        <label class="custom-control-label"
-                                               for="pay_online">{{__('messages.online')}}</label>
+                            @if(sizeof($gatewaysOnline)>=1)
+                                <div class="row">
+                                    <div class="col-md-12 text-center pb-3">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="pay_online"
+                                                   name="pay_online"
+                                                   @if($online) checked @endif>
+                                            <label class="custom-control-label"
+                                                   for="pay_online">{{__('messages.online')}}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-12">
-                                    <div class="row">
-                                        @foreach($gateways as $gateway)
-                                            @php
-                                                $logo = $gateway->bank->logo;
-                                                $checked = '';
-                                                if(in_array($gateway['id'],$gatewayEdit['online'])){
-                                                    $checked='checked';
-                                                }
-                                                if($gateway['online']==1){
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            @foreach($gatewaysOnline as $gateway)
+                                                @php
+                                                    $logo = $gateway->bank->logo;
+                                                    $checked = '';
+                                                    foreach($product['store_product_gateway'] as $g){
+                                                        if($g['gateway_id']==$gateway['id']){
+                                                            $checked='checked';
+                                                        }
+                                                    }
                                                     echo '<div class="col-4 col-md-4">';
                                                     echo '<div class="custom-control custom-checkbox custom-control-inline border-right-1">';
                                                     echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_online_'.$gateway['id'].'" name="online_gateway_online[]" value="'.$gateway['id'].'">';
                                                     echo '<label class="custom-control-label" for="online_gateway_online_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                                }
-                                            @endphp
-                                        @endforeach
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12 text-center pb-3">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_cart"
-                                               name="pay_cart" @if($cart) checked @endif>
-                                        <label class="custom-control-label"
-                                               for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                            @endif
+                            @if(sizeof($gatewaysCard)>=1)
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 text-center pb-3">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="pay_cart"
+                                                   name="pay_cart" @if($cart) checked @endif>
+                                            <label class="custom-control-label"
+                                                   for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            @foreach($gatewaysCard as $gateway)
+                                                @php
+                                                    $checked = '';
+                                                    foreach($product['store_product_gateway'] as $g){
+                                                        if($g['gateway_id']==$gateway['id']){
+                                                            $checked='checked';
+                                                        }
+                                                    }
+                                                    $logo = $gateway->bank->logo;
+                                                    echo '<div class="col-4 col-md-4 border-right-1">';
+                                                    echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                                                    echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
+                                                    echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12">
-                                    <div class="row">
-                                        @foreach($gateways as $gateway)
-                                            @php
-                                                $checked = '';
-                                                if(isset($gatewayEdit['cart']) && in_array($gateway['id'],$gatewayEdit['cart'])){
-                                                    $checked='checked';
-                                                }
-                                                $logo = $gateway->bank->logo;
-                                                if($gateway['cart']==1){
-                                                echo '<div class="col-4 col-md-4 border-right-1">';
-                                                echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                                echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
-                                                echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                                }
-                                            @endphp
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-
-                            <div class="row">
+                            @endif
+                            @if(sizeof($gatewaysAccount)>=1)
+                                <hr>
+                                <div class="row">
                                 <div class="col-md-12 text-center pb-3">
                                     <div class="custom-control custom-checkbox custom-control-inline">
                                         <input type="checkbox" class="custom-control-input" id="pay_account"
@@ -446,24 +607,25 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="row">
-                                        @foreach($gateways as $gateway)
+                                        @foreach($gatewaysAccount as $gateway)
                                             @php
                                                 $checked = '';
-                                                if(isset($gatewayEdit['account']) && in_array($gateway['id'],$gatewayEdit['account'])){
-                                                    $checked='checked';
+                                                foreach($product['store_product_gateway'] as $g){
+                                                    if($g['gateway_id']==$gateway['id']){
+                                                        $checked='checked';
+                                                    }
                                                 }
                                                 $logo = $gateway->bank->logo;
-                                                if($gateway['account']==1){
-                                                    echo '<div class="col-4 col-md-4 border-right-1">';
-                                                    echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                                    echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_account_'.$gateway['id'].'" name="online_gateway_account[]" value="'.$gateway['id'].'">';
-                                                    echo '<label class="custom-control-label" for="online_gateway_account_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                                }
+                                                echo '<div class="col-4 col-md-4 border-right-1">';
+                                                echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                                                echo '<input type="checkbox" '.$checked.' class="custom-control-input" id="online_gateway_account_'.$gateway['id'].'" name="online_gateway_account[]" value="'.$gateway['id'].'">';
+                                                echo '<label class="custom-control-label" for="online_gateway_account_'.$gateway['id'].'">'.$logo.'</label></div></div>';
                                             @endphp
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <hr>
                             <div class="row">
                                 <div class="col-md-12 text-center">
@@ -494,30 +656,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <label for="price">{{__('messages.price')}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="price" name="price" min="0"
-                                                   max="60" value="{{$product['price']}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-12 col-md-6">
-                                            <label for="off">{{__('messages.off')}}</label>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <input type="number" class="form-control" id="off" name="off" min="0"
-                                                   max="100" value="{{$product['off']}}">
-                                        </div>
-                                    </div>
-
-                                </div>
-
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-12 col-md-6">
@@ -623,6 +761,23 @@
                 </div>
                 <br>
                 <hr>
+            </div>
+        </div>
+    </div>
+    <div id="modal_backdrop" class="modal fade" data-backdrop="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{__("messages.select_color")}}</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">{{__('messages.cancel')}}</button>
+                    <button type="button" class="btn bg-primary">{{__('messages.add')}}</button>
+                </div>
             </div>
         </div>
     </div>

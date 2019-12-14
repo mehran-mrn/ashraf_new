@@ -190,15 +190,14 @@ class global_view extends Controller
     public function shop_page()
     {
 
-        $products = store_product_inventory_size::where('count', '>', '1')->get();
-        $productsInv = store_product_inventory::all();
-        return view('global.store.store', compact('products', 'productsInv'));
+        $products = store_product::where('status', 'active')->with('store_category', 'store_product_inventory')->get();
+        return view('global.store.store', compact('products'));
     }
 
     public function detail_product(Request $request)
     {
 
-        $proInfo = store_product::where('slug', $request['pro_id'])->first();
+        $proInfo = store_product::where('slug', $request['pro_id'])->with('store_category', 'store_product_inventory')->first();
         if ($proInfo) {
             return view('global.store.details', compact('proInfo'));
         } else {
@@ -216,7 +215,21 @@ class global_view extends Controller
         $tran = setting_transportation::where('status', "active")->get();
         $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
         $provinces = city::where('parent', 0)->get();
-        return view('global.store.order', compact('tran', 'userInfo', 'provinces'));
+        $gateways = gateway::where('status', 'active')->get();
+        return view('global.store.order', compact('tran', 'userInfo', 'provinces', 'gateways'));
+    }
+
+    public function store_order_sub(Request $request)
+    {
+            $card2 = [
+                "extraInfo" => [
+                    'address' => $request['address'],
+                    'transportation' => $request['transportation'],
+                    'payment' => $request['payment']
+                ]];
+        session()->put('info', $card2);
+        //add order table and submit data
+        return view('global.store.final');
     }
 
     public function store_payment()
@@ -454,20 +467,20 @@ class global_view extends Controller
                 $charity->pay_date = date("Y-m-d H:i:s", time());
                 $charity->save();
                 $messages['des'] = __('messages.charity_period');
-            }elseif ($data->module=="charity_champion"){
+            } elseif ($data->module == "charity_champion") {
                 $charity = champion_transaction::with('champion')->findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $messages['des'] = $charity['champion']['title'];
                 $charity->save();
                 $sum = champion_transaction::where(
                     [
-                        'champion_id'=>$charity['champion_id'],
-                        'status'=>'paid'
+                        'champion_id' => $charity['champion_id'],
+                        'status' => 'paid'
                     ]
                 )->sum('amount');
-                charity_champion::where('id',$charity['champion_id'])->update(
+                charity_champion::where('id', $charity['champion_id'])->update(
                     [
-                        'raised'=>$sum
+                        'raised' => $sum
                     ]
                 );
             }

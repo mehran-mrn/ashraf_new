@@ -85,10 +85,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 DragAndDrop.init();
             });
-
-
             var route_prefix = {{env('url')}}"/laravel-filemanager";
-
             (function ($) {
                 $.fn.filemanager = function (type, options) {
                     type = type || 'file';
@@ -124,10 +121,7 @@
                     });
                 }
             })(jQuery);
-
             $('#lfmMain').filemanager('image', {prefix: route_prefix});
-
-
             $(".add-color").on('click', function () {
                 var x = +$("#randomNumber").val() + 1;
                 $(".color-box").append(
@@ -162,8 +156,6 @@
                 $("#randomNumber").val(x);
                 ColorPicker.init();
             })
-
-
         });
         function addSize(x) {
             var y = +$("#randomNumberSize").val() + 1;
@@ -363,8 +355,8 @@
             <div class="row">
                 <div class="col-12 col-md-8">
                     <div class="card">
-                        <div class="card-header text-center bg-light"><span
-                                    class="card-title">{{__('messages.product_add')}}</span>
+                        <div class="card-header text-center bg-light">
+                            <span class="card-title">{{__('messages.product_add')}}</span>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -375,7 +367,6 @@
                                                value="{{old('title')}}" >
                                     </div>
                                 </div>
-
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="slug">{{__('messages.slug')}}</label>
@@ -383,8 +374,6 @@
                                                value="{{old('slug')}}">
                                     </div>
                                 </div>
-
-
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="description">{{__('messages.description')}}</label>
@@ -422,59 +411,56 @@
                                                data-fouc name="tags" id="tags" value="{{old('tags')}}">
                                     </div>
                                 </div>
-
                                 <div class="col-12">
                                     <div class="card">
-                                        <div class="card-header text-center bg-light"><span
-                                                    class="panel title">{{__('messages.count')}}</span></div>
+                                        <div class="card-header text-center bg-light">
+                                            <span class="panel title">{{__('messages.count')}}</span>
+                                        </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-12 text-center">
-                                                    <div class="form-group mb-3 mb-md-2">
-                                                        <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>
-                                                        <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" class="custom-control-input"
-                                                                   name="inv_type"
-                                                                   id="custom_radio_inline_unchecked" checked
-                                                                   value="withoutcolor">
-                                                            <label class="custom-control-label"
-                                                                   for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>
-                                                        </div>
-
-                                                        <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" class="custom-control-input"
-                                                                   name="inv_type"
-                                                                   id="custom_radio_inline_checked" value="bycolor">
-                                                            <label class="custom-control-label"
-                                                                   for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+{{--                                                <div class="col-md-12 text-center">--}}
+{{--                                                    <div class="form-group mb-3 mb-md-2">--}}
+{{--                                                        <label class="d-block font-weight-semibold">{{__('messages.inventories')}}</label>--}}
+{{--                                                        <div class="custom-control custom-radio custom-control-inline">--}}
+{{--                                                            <input type="radio" class="custom-control-input"--}}
+{{--                                                                   name="inv_type"--}}
+{{--                                                                   id="custom_radio_inline_unchecked" checked--}}
+{{--                                                                   value="withoutcolor">--}}
+{{--                                                            <label class="custom-control-label"--}}
+{{--                                                                   for="custom_radio_inline_unchecked">{{__("messages.without_color")}}</label>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="custom-control custom-radio custom-control-inline">--}}
+{{--                                                            <input type="radio" class="custom-control-input"--}}
+{{--                                                                   name="inv_type"--}}
+{{--                                                                   id="custom_radio_inline_checked" value="bycolor">--}}
+{{--                                                            <label class="custom-control-label"--}}
+{{--                                                                   for="custom_radio_inline_checked">{{__("messages.by_color")}}</label>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                                 <div class="col-md-12 inventoriesW">
                                                     <div class="form-group inv-box">
                                                         <div class="d-flex">
                                                             <div class="p-2">
+                                                                <label for="count">{{__("messages.count")}}</label>
                                                                 <input type="number" class="form-control"
                                                                        required="required"
-                                                                       name="inventories" id="inventories"
+                                                                       name="count" id="count"
                                                                        placeholder="{{__('messages.inventories')}}">
                                                             </div>
                                                             <div class="p-2">
+                                                                <label for="price">{{__("messages.price")}}</label>
                                                                 <input type="text" class="form-control price"
                                                                        required="required" name="price"
                                                                        id="price"
                                                                        placeholder="{{__('messages.price')." ".__('messages.toman')}}">
                                                             </div>
                                                             <div class="p-2">
+                                                                <label for="off">{{__("messages.off")}}</label>
                                                                 <input type="number" class="form-control"
                                                                        required="required" name="off"
                                                                        id="off" min="0" max="100"
                                                                        placeholder="{{__('messages.off')}}">
-                                                            </div>
-                                                            <div class="p-2">
-                                                                <button type="button" onclick="addSize2()"
-                                                                        class="btn btn-outline-info"><i
-                                                                            class="icon-plus2"></i></button>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 pt-2">
@@ -484,9 +470,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 inventoriesC d-none">
-                                                    <button type="button"
-                                                            class="btn btn-outline-info add-color float-right"><i
-                                                                class="icon-plus2"></i> {{__('messages.add_color')}}
+                                                    <button type="button" class="btn btn-outline-info add-color float-right">
+                                                        <i class="icon-plus2"></i> {{__('messages.add_color')}}
                                                     </button>
                                                     <div class="clearfix"></div>
                                                     <hr>
@@ -523,93 +508,89 @@
                             {!! treeView() !!}
                         </div>
                     </div>
-
-
                     <div class="card">
                         <div class="card-header text-center bg-light"><span
                                     class="card-title">{{__('messages.pay_gateway')}}</span></div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center pb-3">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_online"
-                                               name="pay_online"
-                                               checked>
-                                        <label class="custom-control-label"
-                                               for="pay_online">{{__('messages.online')}}</label>
+                            @if(sizeof($gatewaysOnline)>=1)
+                                <div class="row">
+                                    <div class="col-md-12 text-center pb-3">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="pay_online"
+                                                   name="pay_online"
+                                                   checked>
+                                            <label class="custom-control-label"
+                                                   for="pay_online">{{__('messages.online')}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            @foreach($gatewaysOnline as $gateway)
+                                                @php
+                                                    $logo = $gateway->bank->logo;
+                                                    echo '<div class="col-4 col-md-4">';
+                                                    echo '<div class="custom-control custom-checkbox custom-control-inline border-right-1">';
+                                                    echo '<input type="checkbox" checked class="custom-control-input" id="online_gateway_online_'.$gateway['id'].'" name="online_gateway_online[]" value="'.$gateway['id'].'">';
+                                                    echo '<label class="custom-control-label" for="online_gateway_online_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12">
-                                    <div class="row">
-                                        @foreach($gateways as $gateway)
-                                            @php
-                                                $logo = $gateway->bank->logo;
-                                            if($gateway['online']==1){
-
-                                            echo '<div class="col-4 col-md-4 border-right-1">';
-                                            echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                            echo '<input type="checkbox" checked class="custom-control-input" id="online_gateway_online_'.$gateway['id'].'" name="online_gateway_online[]" value="'.$gateway['id'].'">';
-                                            echo '<label class="custom-control-label" for="online_gateway_online_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                            }
-                                            @endphp
-                                        @endforeach
+                            @endif
+                            @if(sizeof($gatewaysCard)>=1)
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 text-center pb-3">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="pay_cart"
+                                                   name="pay_cart" checked>
+                                            <label class="custom-control-label"
+                                                   for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            @foreach($gatewaysCard as $gateway)
+                                                @php
+                                                    $logo = $gateway->bank->logo;
+                                                    echo '<div class="col-4 col-md-4 border-right-1">';
+                                                    echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                                                    echo '<input type="checkbox" checked class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
+                                                    echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12 text-center pb-3">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_cart"
-                                               name="pay_cart"
-                                               checked>
-                                        <label class="custom-control-label"
-                                               for="pay_cart">{{__('messages.cart_to_cart')}}</label>
+                            @endif
+                            @if(sizeof($gatewaysAccount)>=1)
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12 text-center pb-3">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="pay_account"
+                                                   name="pay_account"
+                                                   checked>
+                                            <label class="custom-control-label"
+                                                   for="pay_account">{{__('messages.send_to_account')}}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-12">
-                                    <div class="row">
-                                        @foreach($gateways as $gateway)
-                                            @php
-                                                $logo = $gateway->bank->logo;
-                                            if($gateway['cart']==1){
-                                            echo '<div class="col-4 col-md-4 border-right-1">';
-                                            echo '<div class="custom-control custom-checkbox custom-control-inline">';
-                                            echo '<input type="checkbox" checked class="custom-control-input" id="online_gateway_cart_'.$gateway['id'].'" name="online_gateway_cart[]" value="'.$gateway['id'].'">';
-                                            echo '<label class="custom-control-label" for="online_gateway_cart_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                            }
-                                            @endphp
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12 text-center pb-3">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="pay_account"
-                                               name="pay_account"
-                                               checked>
-                                        <label class="custom-control-label"
-                                               for="pay_account">{{__('messages.send_to_account')}}</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12">
-                                    <div class="row">
-                                        @foreach($gateways as $gateway)
-                                            @php
-                                                $logo = $gateway->bank->logo;
-                                                if($gateway['account']==1){
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            @foreach($gatewaysAccount as $gateway)
+                                                @php
+                                                    $logo = $gateway->bank->logo;
                                                     echo '<div class="col-4 col-md-4 border-right-1">';
                                                     echo '<div class="custom-control custom-checkbox custom-control-inline">';
                                                     echo '<input type="checkbox" checked class="custom-control-input" id="online_gateway_account_'.$gateway['id'].'" name="online_gateway_account[]" value="'.$gateway['id'].'">';
                                                     echo '<label class="custom-control-label" for="online_gateway_account_'.$gateway['id'].'">'.$logo.'</label></div></div>';
-                                                }
-                                            @endphp
-                                        @endforeach
+                                                @endphp
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                             <hr>
                             <div class="row">
                                 <div class="col-md-12 text-center">
@@ -737,7 +718,6 @@
             </div>
         </div>
     </div>
-
     <div id="modal_backdrop" class="modal fade" data-backdrop="false" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

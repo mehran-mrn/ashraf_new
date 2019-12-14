@@ -62,6 +62,7 @@ class global_controller extends Controller
     {
         return $this->check_email_exists($request);
     }
+
     public function check_email(Request $request)
     {
         $email = null;
@@ -142,30 +143,11 @@ class global_controller extends Controller
     //start cart actions
     public function add_to_cart(Request $request)
     {
-
-        $inventory_id = 0;
-        $inventory_size_id = 0;
         $count = 1;
-        $product = store_product::find($request['pro_id']);
-        $price = $product['price'];
-        $off = $product['off'];
-        $extra_title = "";
+        $product = store_product::with('store_product_inventory')->find($request['pro_id']);
+        $price = $product['store_product_inventory']['price'];
+        $off = $product['store_product_inventory']['off'];
         $time = $product['ready'];
-        if (isset($request['inventory_id']) && $request['inventory_id'] != 0) {
-            $inventory = store_product_inventory::find($request['inventory_id']);
-            $price = $inventory['price'];
-            $off = $inventory['off'];
-            $inventory_id = $request['inventory_id'];
-            $extra_title = $inventory['color_code'];
-        }
-        if (isset($request['inventory_size_id']) && $request['inventory_size_id'] != 0) {
-            $inventory_size = store_product_inventory_size::find($request['inventory_size_id']);
-            $price = $inventory_size['price'];
-            $off = $inventory_size['off'];
-            $inventory_size_id = $request['inventory_size_id'];
-            $extra_title = $inventory_size['size'];
-
-        }
         if (isset($request['count'])) {
             $count = $request['count'];
         }
@@ -178,16 +160,16 @@ class global_controller extends Controller
         // if cart is empty then this the first product
         if (!$cart) {
             $cart = [
-                $request['pro_id'] . $inventory_id . $inventory_size_id => [
-                    "title" => $product['title'] . " " . $extra_title,
-                    "product_id" => $product['id'],
-                    "inventory_id" => $inventory_id,
-                    "inventory_size_id" => $inventory_size_id,
-                    "price" => $price,
-                    "off" => $off,
-                    "count" => $count,
-                    "photo" => $product['main_image'],
-                    'time' => $time
+                "order" => [
+                    $request['pro_id'] => [
+                        "title" => $product['title'],
+                        "product_id" => $product['id'],
+                        "price" => $price,
+                        "off" => $off,
+                        "count" => $count,
+                        "photo" => $product['main_image'],
+                        'time' => $time
+                    ]
                 ]
             ];
             session()->put('cart', $cart);
@@ -196,9 +178,9 @@ class global_controller extends Controller
         }
 
         // if cart not empty then check if this product exist then increment quantity
-        if (isset($cart[$request['pro_id'] . $inventory_id . $inventory_size_id])) {
+        if (isset($cart['order'][$request['pro_id']])) {
 
-            $cart[$request['pro_id'] . $inventory_id . $inventory_size_id]['count']++;
+            $cart[$request['order']['pro_id']]['count']++;
 
             session()->put('cart', $cart);
 
@@ -208,11 +190,9 @@ class global_controller extends Controller
         }
 
         // if item not exist in cart then add to cart with quantity = 1
-        $cart[$request['pro_id'] . $inventory_id . $inventory_size_id] = [
-            "title" => $product['title'] . " " . $extra_title,
+        $cart[$request['order']['pro_id']] = [
+            "title" => $product['title'],
             "product_id" => $product['id'],
-            "inventory_id" => $inventory_id,
-            "inventory_size_id" => $inventory_size_id,
             "price" => $price,
             "off" => $off,
             "count" => $count,
@@ -376,11 +356,11 @@ class global_controller extends Controller
                 'cities' => 'required',
                 'meeting_address' => 'required',
                 'receiver' => 'required',
-                'condolences_to'=>'required',
-                'from_as'=>'required',
-                'late_name'=>'required',
-                'meeting_date'=>'required',
-                'meeting_time'=>'required',
+                'condolences_to' => 'required',
+                'from_as' => 'required',
+                'late_name' => 'required',
+                'meeting_date' => 'required',
+                'meeting_time' => 'required',
             ]
         );
         $address = users_address::create(
@@ -408,13 +388,13 @@ class global_controller extends Controller
         );
         users_address_extra_info::create(
             [
-                'condolences'=>$request['condolences_to'],
-                'on_behalf_of'=>$request['from_as'],
-                'late_name'=>$request['late_name'],
-                'meeting_date'=>$request['meeting_date'],
-                'meeting_time'=>$request['meeting_time'],
-                'descriptions'=>$request['description'],
-                'address_id'=>$address->id,
+                'condolences' => $request['condolences_to'],
+                'on_behalf_of' => $request['from_as'],
+                'late_name' => $request['late_name'],
+                'meeting_date' => $request['meeting_date'],
+                'meeting_time' => $request['meeting_time'],
+                'descriptions' => $request['description'],
+                'address_id' => $address->id,
             ]
         );
         return back_normal($request, ['message' => __("messages.address_added"), 'status' => 200]);

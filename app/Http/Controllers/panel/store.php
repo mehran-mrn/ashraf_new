@@ -162,6 +162,8 @@ class store extends Controller
                 'slug' => 'required|min:1|unique:store_products,slug',
                 'description' => 'required|min:1',
                 'filepath' => 'required',
+                'count' => 'required',
+                'price' => 'required',
             ]);
         $mainFileID = get_file_id($request['filepath']);
         $product_info = store_product::create([
@@ -171,74 +173,44 @@ class store extends Controller
             'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
-            'price' => 0,
-            'off' => 0,
+            'model' => $request['model'],
+            'code' => $request['code'],
             'ready' => $request['ready'] OR 1
         ]);
         $product_id = $product_info->id;
 
-        if ($request['inv_type'] == "bycolor") {
-            if (isset($request['color-name']) && sizeof($request['color-name']) >= 1) {
-                foreach ($request['color-name'] as $item => $val) {
-                    $colorInfo = store_product_inventory::create(
-                        [
-                            'product_id' => $product_id,
-                            'color_code' => trim($val[0]),
-                            'count' => trim($val[1]),
-                            'price' => str_replace(",", "", trim($val[2])),
-                            'off' => trim($val[3]),
-                            'type' => 'p',
-                            'user_id' => Auth::id(),
-                        ]
-                    );
-                    $colorID = $colorInfo->id;
-                    if (isset($request['size'][$item]) && sizeof($request['size'][$item]) >= 1) {
-                        foreach ($request['size'][$item] as $valSize) {
-                            $off = 0;
-                            if (isset($valSize[3])) {
-                                $off = $valSize[3];
-                            }
-                            store_product_inventory_size::create([
-                                'size' => trim($valSize[0]),
-                                'count' => trim($valSize[2]),
-                                'price' => str_replace(",", "", $valSize[3]),
-                                'off' => trim($off),
-                                'inventory_id' => $colorID,
-                                'product_id' => $product_id,
-                            ]);
-                        }
-                    }
-                }
-            }
-        } elseif ($request['inv_type'] == "withoutcolor") {
-            $colorInfo = store_product_inventory::create(
+        if($request['count']!="") {
+            store_product_inventory::create(
                 [
                     'product_id' => $product_id,
-                    'count' => $request['inventories'],
+                    'count' => $request['count'],
                     'price' => str_replace(",", "", $request['price']),
                     'off' => $request['off'],
                     'type' => 'p',
                     'user_id' => Auth::id(),
                 ]
             );
-            $colorID = $colorInfo->id;
-            if (isset($request['size']) && sizeof($request['size']) >= 1) {
-                foreach ($request['size'] as $valSize) {
-                    $off = 0;
-                    if (isset($valSize[3])) {
-                        $off = $valSize[3];
-                    }
-                    store_product_inventory_size::create([
-                        'size' => trim($valSize[0]),
-                        'count' => trim($valSize[1]),
-                        'price' => str_replace(",", "", $valSize[2]),
-                        'off' => trim($off),
-                        'inventory_id' => $colorID,
-                        'product_id' => $product_id
-                    ]);
-                }
-            }
         }
+
+//        if ($request['inv_type'] == "bycolor") {
+//            if (isset($request['color-name']) && sizeof($request['color-name']) >= 1) {
+//                foreach ($request['color-name'] as $item => $val) {
+//                    store_product_inventory::create(
+//                        [
+//                            'product_id' => $product_id,
+//                            'color_code' => trim($val[0]),
+//                            'count' => trim($val[1]),
+//                            'price' => str_replace(",", "", trim($val[2])),
+//                            'off' => trim($val[3]),
+//                            'type' => 'p',
+//                            'user_id' => Auth::id(),
+//                        ]
+//                    );
+//                }
+//            }
+//        } elseif ($request['inv_type'] == "withoutcolor") {
+//
+//        }
         if ($request['tags'] != "") {
             $tags = explode(',', $request['tags']);
             if (sizeof($tags) >= 1) {
@@ -250,28 +222,31 @@ class store extends Controller
                 }
             }
         }
-        if (sizeof($request['cats']) >= 1) {
-            foreach ($request['cats'] as $cat) {
-                store_product_category::create(
-                    [
-                        'product_id' => $product_id,
-                        'category_id' => $cat
-                    ]
-                );
+        if(isset($request['cats'])) {
+            if (sizeof($request['cats']) >= 1) {
+                foreach ($request['cats'] as $cat) {
+                    store_product_category::create(
+                        [
+                            'product_id' => $product_id,
+                            'category_id' => $cat
+                        ]
+                    );
+                }
             }
         }
-        if (sizeof($request['items_id']) >= 1) {
-            foreach ($request['items_id'] as $item) {
-                store_product_item::create(
-                    [
-                        "product_id" => $product_id,
-                        "item_id" => $item,
-                        'value' => $request['items_' . $item]
-                    ]
-                );
+        if(isset($request['items_id'])) {
+            if (sizeof($request['items_id']) >= 1) {
+                foreach ($request['items_id'] as $item) {
+                    store_product_item::create(
+                        [
+                            "product_id" => $product_id,
+                            "item_id" => $item,
+                            'value' => $request['items_' . $item]
+                        ]
+                    );
+                }
             }
         }
-
         if (isset($request['pay_online'])) {
             if (is_array($request['online_gateway_online']) AND sizeof($request['online_gateway_online']) >= 1) {
                 foreach ($request['online_gateway_online'] as $item) {
@@ -285,7 +260,6 @@ class store extends Controller
                 }
             }
         }
-
         if (isset($request['pay_cart'])) {
             if (is_array($request['online_gateway_cart']) AND sizeof($request['online_gateway_cart']) >= 1) {
                 foreach ($request['online_gateway_cart'] as $item) {
@@ -334,7 +308,7 @@ class store extends Controller
 //            }
 //        }
 
-        $message = trans("messages.add", ['item' => trans('messages.product')]);
+        $message = trans("messages.product_add", ['item' => trans('messages.product')]);
         return back_normal($request, $message);
     }
 
@@ -378,28 +352,41 @@ class store extends Controller
 
     public function store_product_update(Request $request)
     {
-
         $this->validate($request,
             [
                 'title' => 'required|min:1',
                 'description' => 'required|min:1',
                 'filepath' => 'required',
+                'slug' => 'required|min:1|unique:store_products,slug,'.$request['pro_id'].',id',
+                'count' => 'required',
+                'price' => 'required',
             ]);
 
         $mainFileID = get_file_id($request['filepath']);
         store_product::where('id', $request['pro_id'])->update([
             'title' => $request['title'],
+            'slug' => $request['slug'],
             'description' => $request['description'],
             'properties' => $request['properties'],
             'main_image' => $request['filepath'],
             'main_image_id' => $mainFileID,
-            'price' => $request['price'],
-            'off' => $request['off'],
             'ready' => $request['ready'],
-            'status' => $request['status']
+            'status' => $request['status'],
+            'model' => $request['model'],
+            'code' => $request['code'],
         ]);
-
         $product_id = $request['pro_id'];
+
+        if($request['count']!="") {
+            store_product_inventory::where('product_id',$product_id)->update(
+                [
+                    'count' => $request['count'],
+                    'price' => str_replace(",", "", $request['price']),
+                    'off' => $request['off'],
+                    'user_id' => Auth::id(),
+                ]
+            );
+        }
         if ($request['tags'] != "") {
             $tags = explode(',', $request['tags']);
             if (sizeof($tags) >= 1) {
@@ -412,30 +399,33 @@ class store extends Controller
                 }
             }
         }
-        if (sizeof($request['cats']) >= 1) {
-            store_product_category::where('product_id', $product_id)->forceDelete();
-            foreach ($request['cats'] as $cat) {
-                store_product_category::create(
-                    [
-                        'product_id' => $product_id,
-                        'category_id' => $cat
-                    ]
-                );
+        if(isset($request['cats'])) {
+            if (sizeof($request['cats']) >= 1) {
+                store_product_category::where('product_id', $product_id)->forceDelete();
+                foreach ($request['cats'] as $cat) {
+                    store_product_category::create(
+                        [
+                            'product_id' => $product_id,
+                            'category_id' => $cat
+                        ]
+                    );
+                }
             }
         }
-        if (sizeof($request['items_id']) >= 1) {
-            store_product_item::where('product_id', $product_id)->forceDelete();
-            foreach ($request['items_id'] as $item) {
-                store_product_item::create(
-                    [
-                        "product_id" => $product_id,
-                        "item_id" => $item,
-                        'value' => $request['items_' . $item]
-                    ]
-                );
+        if(isset($request['items_id'])) {
+            if (sizeof($request['items_id']) >= 1) {
+                store_product_item::where('product_id', $product_id)->forceDelete();
+                foreach ($request['items_id'] as $item) {
+                    store_product_item::create(
+                        [
+                            "product_id" => $product_id,
+                            "item_id" => $item,
+                            'value' => $request['items_' . $item]
+                        ]
+                    );
+                }
             }
         }
-
         store_product_gateway::where('product_id', $product_id)->forceDelete();
         if (isset($request['pay_online'])) {
             if (sizeof($request['online_gateway_online']) >= 1) {
