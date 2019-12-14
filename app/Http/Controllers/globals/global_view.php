@@ -23,11 +23,13 @@ use App\media;
 use App\order;
 use App\orders_item;
 use App\setting_transportation;
+use App\setting_transportation_cost;
 use App\store_product;
 use App\store_product_inventory;
 use App\store_product_inventory_size;
 use App\transaction;
 use App\User;
+use App\users_address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
@@ -231,20 +233,19 @@ class global_view extends Controller
             ]];
         session()->put('info', $card2);
 
-        $items = session('cart')['order'];
+        $items = session('cart');
         $count = 0;
         $price = 0;
         $off = 0;
-        foreach ($items as $item) {
-            if ($proInfo = store_product::find($item['product_id'])) {
+        foreach ($items['order'] as $item) {
+            if ($proInfo = store_product::with('store_product_inventory')->find($item['product_id'])) {
                 $count += $item['count'];
-                $price += $proInfo['price'];
-                $off += $proInfo['off'];
+                $price += $proInfo['store_product_inventory']['price'] * $item['count'];
+                $off += (($proInfo['store_product_inventory']['price'] * $item['count']) * $proInfo['store_product_inventory']['off']) / 100;
             }
         }
-        $off = (($price * $count) * $off) / 100;
-        $totalAfterOff = ($price * $count) - $off;
-        $order_info = order::create('orders',
+        $totalAfterOff = $price - $off;
+        $order_info = order::create(
             [
                 'user_id' => Auth::id(),
                 'count' => $count,
@@ -256,7 +257,7 @@ class global_view extends Controller
                 'discount' => $off,
                 'final_price' => $totalAfterOff,
             ]);
-        foreach ($items as $item) {
+        foreach ($items['order'] as $item) {
             if ($proInfo = store_product::find($item['product_id'])) {
                 orders_item::create([
                     'order_id' => $order_info['id'],
@@ -269,7 +270,14 @@ class global_view extends Controller
             }
         }
         $gateways = gateway::where('status', 'active')->get();
-        return view('global.store.factor', compact('gateways','proInfo'));
+        $address = users_address::find($request['address']);
+        $trnasCost = setting_transportation_cost::where(
+            [
+                ['c_id','=',$address['city_id']],
+                ['t_id','=',$request['transportation']],
+            ]
+        )->get();
+        return view('global.store.factor', compact('gateways', 'proInfo','trnasCost'));
     }
 
     public function store_order_factor()

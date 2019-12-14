@@ -70,7 +70,7 @@
                                 <li class="text-black">|</li>
                                 <li>
                                     <a class="text-black"
-                                       href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a>
+                                       href="{{route('store_cart')}}">{{__('messages.buy_basket')}}</a>
                                 </li>
                             @endif
                             @if(has_caravan())
@@ -148,7 +148,7 @@
                         @endforeach
 
                         @if(session()->get('cart'))
-                            <li><a href="{{route('store_order')}}">{{__('messages.buy_basket')}}</a></li>
+                            <li><a href="{{route('store_cart')}}">{{__('messages.buy_basket')}}</a></li>
                         @endif
                         @if(has_caravan())
                             <li><a href="{{route('global_caravan')}}">{{__('messages.caravan')}}</a></li>

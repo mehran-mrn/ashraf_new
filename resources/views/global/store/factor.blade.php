@@ -102,19 +102,46 @@
                                         </div>
                                     </td>
                                     <td data-th="Quantity"><h5
-                                            class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                            class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                            class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
+                                                class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
                                     </td>
                                     <td data-th="Subtotal" class="text-center"><h5
-                                            class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
                                     </td>
                                 </tr>
                             @endforeach
+                            @if($trnasCost!="")
+                                <tr>
+                                    <td data-th="Product">
+                                        <div class="row">
+                                            <div class="col-sm-3 hidden-xs">
+                                                <img src="{{ $details['photo'] }}" width="100" height="100"
+                                                     class="img-responsive"/>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <h5 class="m-30 font-weight-900">{{ $details['title'] }}</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-th="Quantity"><h5
+                                                class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
+                                    </td>
+                                    <td data-th="Price"><h5
+                                                class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
+                                    </td>
+                                    <td data-th="Price"><h5
+                                                class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
+                                    </td>
+                                    <td data-th="Subtotal" class="text-center"><h5
+                                                class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
+                                    </td>
+                                </tr>
+                            @endif
                             </tbody>
                             <tfoot class="border-0 no-border table-borderless">
                             <tr class="visible-xs">
@@ -122,10 +149,11 @@
                             </tr>
                             <tr class="border-0 no-border table-borderless">
                                 <td colspan="2" class="hidden-xs text-left no-border"></td>
-                                <td colspan="2" class="hidden-xs success text-left"><h6>{{__('messages.pay_amount')}}</h6>
+                                <td colspan="2" class="hidden-xs success text-left">
+                                    <h6>{{__('messages.pay_amount')}}</h6>
                                 </td>
                                 <td colspan="2" class="hidden-xs success bold text-left pl-20"><h4
-                                        class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
+                                            class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
                                 </td>
                             </tr>
                             </tfoot>

@@ -17,7 +17,6 @@ class setting_transportation extends Model
         return $this->belongsToMany('App\city', 'setting_transportation_costs','t_id','c_id')->withPivot('cost');
     }
 
-
     public function deleteAll()
     {
         $this->setting_transportation_cost()->delete();
