@@ -27,7 +27,7 @@
                                 <tr>
                                     <td class="{{$sform['status'] == 0 ? "font-weight-bolder" :""}}">{{$sform['title']}}</td>
                                     <td >{{miladi_to_shamsi_date($sform['created_at'])}}</td>
-                                    <td><span class="badge badge-danger">
+                                    <td><span class="badge {{$sform['status'] == 0 ? "badge-danger":"badge-info"}}">
                                         @switch($sform['status'])
                                             @case(0)
                                             {{trans('words.new')}}

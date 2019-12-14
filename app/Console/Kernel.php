@@ -6,6 +6,7 @@ use App\charity_period;
 use App\charity_periods_transaction;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,6 +31,12 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->call(function () {
+            Log::notice("schedule run at ".date("Y-m-d H:i:s"));
+        })->everyMinute();
+
+        $schedule->call(function () {
+            Log::notice("schedule run at ".date("Y-m-d H:i:s"));
+
             $charity = charity_period::where(
                 [
                     ['status', '=', 'active'],
@@ -56,6 +63,7 @@ class Kernel extends ConsoleKernel
                     );
                 }
             }
+
         })->everyMinute();
     }
 

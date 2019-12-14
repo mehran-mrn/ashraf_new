@@ -124,9 +124,12 @@
         <h5>Sorry, our website needs javascript to be eanable</h5>
     </span>
     <!-- /error title -->
-    <style>div {
+    <style>
+        div {
             display: none;
-        }</style>
+        }
+
+    </style>
 </noscript>
 
 <body class="rtl dark">
@@ -141,10 +144,25 @@
 {{--        <div id="disable-preloader" class="btn btn-default btn-sm">{{trans('messages.Disable_Preloader')}}</div>--}}
 {{--    </div>--}}
     <!-- header -->
+
+
     @include('layouts.global.navbar')
     @yield('content')
     @include('layouts.global.footer')
     @include('panel.materials.form_notification')
+
+
+
+    <div id="banner-botton" style="position:fixed; z-index:100; left:0px; bottom: 0px;">
+        <a href="http://old.ashrafolanbia.ir/">
+            <img src="{{ URL::asset('/public/assets/global/images/oldLink.png.png')}}?i=4" alt="telegram"
+                 style="border-radius: 10px 100px /200px 15px 20px;
+            box-shadow: 6px 7px 20px 0px #043c75;
+            width: 100px";
+            >
+        </a>
+    </div>
+
 
 </div>
 
@@ -164,14 +182,14 @@
         PNotify.error({
             title: '{{$key}}',
             text: '{{ $error }}',
-            delay: 5000,
+            delay: 6000,
         });
         @endforeach
         @endif
         @if ($message = Session::get('message'))
         PNotify.success({
             text: '{{$message}}',
-            delay: 3000,
+            delay: 6000,
         });
         @endif
         {{Session::forget('message')}}

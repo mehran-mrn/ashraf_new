@@ -35,6 +35,7 @@
                         <option {{$sform['status']==0 ? "selected":""}} value="0">{{trans('words.new')}}</option>
                         <option {{$sform['status']==1 ? "selected":""}} value="1">{{trans('words.inProgress')}}</option>
                         <option {{$sform['status']==2 ? "selected":""}} value="2">{{trans('words.closed')}}</option>
+                        <option {{$sform['status']==3 ? "selected":""}} value="3">{{trans('words.spam')}}</option>
                     </select>
 
             </div>

@@ -16,6 +16,7 @@
             </form>
         </div>
     </div>
+    @if(!$side_menu->isEmpty())
     <div class="widget">
         <h5 class="widget-title line-bottom">{{trans('messages.categories')}}</h5>
         <div class="categories">
@@ -28,6 +29,7 @@
             </ul>
         </div>
     </div>
+    @endif
     <div class="widget">
         <h5 class="widget-title line-bottom">{{trans('messages.latest_post')}}</h5>
 

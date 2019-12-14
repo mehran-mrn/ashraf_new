@@ -35,21 +35,21 @@
                                         <label>{{$field['title']}}<span class="text-danger">{{$field['required'] ?"*":""}}</span> </label>
                                         @switch($field['type'])
                                             @case(0)
-                                            <input type="text" class="form-control" {{$field['required'] ?"required":""}} name="{{$field['title']}}">
+                                            <input type="text" class="form-control" {{$field['required'] ?"required":""}} name="{{$field['id']}}">
                                             @break
                                             @case(1)
-                                            <textarea name="{{$field['title']}}" {{$field['required'] ?"required":""}} class="form-control"
+                                            <textarea name="{{$field['id']}}" {{$field['required'] ?"required":""}} class="form-control"
                                                       id="field[{{$field['id']}}]" cols="30" rows="3"></textarea>
                                             @break
                                             @case(2)
                                             <input type="number" {{$field['required'] ?"required":""}} class="form-control"
-                                                   name="{{$field['title']}}">
+                                                   name="{{$field['id']}}">
                                             @break
                                             @case(3)
-                                            <input type="date" {{$field['required'] ?"required":""}} class="form-control" name="{{$field['title']}}">
+                                            <input type="date" {{$field['required'] ?"required":""}} class="form-control" name="{{$field['id']}}">
                                             @break
                                             @case(4)
-                                            <input type="time" {{$field['required'] ?"required":""}} class="form-control" name="{{$field['title']}}">
+                                            <input type="time" {{$field['required'] ?"required":""}} class="form-control" name="{{$field['id']}}">
                                             @break
                                         @endswitch
                                     </div>

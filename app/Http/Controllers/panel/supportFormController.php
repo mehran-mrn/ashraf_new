@@ -115,7 +115,7 @@ class supportFormController extends Controller
     }
     public function sform_list()
     {
-        $sforms = charity_supportForm_file::orderBy('status')->paginate(100);
+        $sforms = charity_supportForm_file::orderBy('status')->orderBy('created_at','desc')->paginate(100);
         return view('panel.charity.sform.sform_list',compact('sforms'));
     }
     public function sform_file_view($id)

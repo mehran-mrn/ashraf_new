@@ -3,11 +3,24 @@
     .menuzord-menu > li {
         padding: 14px 0 !important;
     }
+
+    #banner a {
+        position:fixed;
+        display:block;
+        right:5px;
+        bottom:5px;
+
+        width:150px;
+        height:150px;
+        background:url('') transparent no-repeat scroll center center;
+    }
 </style>
+
 <header id="header" class="header">
 
     <div class="header-top p-0 text-black bg-silver-light xs-text-center"
          data-bg-img="{{ URL::asset('/public/assets/global/images/footer-bg.png') }}">
+
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">

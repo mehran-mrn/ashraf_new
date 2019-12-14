@@ -24,7 +24,7 @@ class BlogEtcRssFeedController extends Controller
     {
         $feed->title = config("app.name") . ' Blog';
         $feed->description = config("blogetc.rssfeed.description", "Our blog RSS feed");
-        $feed->link = route('blogetc.index');
+//        $feed->link = route('blogetc.index');
         $feed->setDateFormat('carbon');
         $feed->pubdate = isset($posts[0]) ? $posts[0]->posted_at : Carbon::now()->subYear(10);
         $feed->lang = config("blogetc.rssfeed.language", "en");

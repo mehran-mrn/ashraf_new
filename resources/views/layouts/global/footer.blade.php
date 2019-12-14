@@ -19,9 +19,12 @@
                         <li class="m-0 pl-10 pr-10"><i class="fa fa-envelope-o text-theme-colored mr-5"></i> <a
                                     class="text-gray" href="#">{{trans('site_info.email')}}</a></li>
                         <li class="m-0 pl-10 pr-10"><i class="fa fa-globe text-theme-colored mr-5"></i> <a
-                                    class="text-gray" href="#">{{trans('site_info.site_address')}}</a></li>
+                                class="text-gray" href="#">{{trans('site_info.site_address')}}</a></li>
+                        <li class="m-0 pl-10 pr-10"> <a
+                                class="text-gray" href="#">{{trans('messages.sms_box')}}:{{trans('site_info.sms_box')}}</a></li>
 
                     </ul>
+
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
@@ -33,11 +36,7 @@
                                 <div class="post-right">
                                     <h5 class="post-title mt-0">
                                         <a href="{{route('post_page',['blogPostSlug'=>$news['slug']])}}">
-                                            @if(strlen($news['title'])>=100)
-                                                {{substr($news['title'],0,100)}}...
-                                            @else
-                                                {{$news['title']}}
-                                            @endif
+                                            {{$news['title']}}
                                         </a>
                                     </h5>
                                 </div>
@@ -72,10 +71,7 @@
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="widget dark">
-                    <h5 class="widget-title mb-10">{{trans('messages.sms_box')}}</h5>
-                    <div class="text-gray">
-                        {{trans('site_info.sms_box')}} <br>
-                    </div>
+
                     {{--                    <h5 class="widget-title line-bottom">Useful Links</h5>--}}
                     {{--                    <ul class="list angle-double-right list-border">--}}
                     {{--                        <li><a href="#">Body Building</a></li>--}}
@@ -182,11 +178,15 @@
                             </li>
                             <li>|</li>
                             <li>
-                                <a href="#">Help Desk</a>
+                                <a href="{{trans('site_info.site_roles_link')}}">{{trans('site_info.site_roles')}}</a>
                             </li>
                             <li>|</li>
                             <li>
-                                <a href="#">Support</a>
+                                <a href="{{trans('site_info.criticism_link')}}">{{trans('site_info.criticism')}}</a>
+                            </li>
+                            <li>|</li>
+                            <li>
+                                <a href="{{route('blogetc.feed')}}">RSS</a>
                             </li>
                         </ul>
                     </div>
