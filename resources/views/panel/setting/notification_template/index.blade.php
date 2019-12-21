@@ -32,11 +32,12 @@
                     <div class="card" id="card_{{$template['id']}}">
 
                         <div class="card-header bg-teal">
-                            <span class="font-size-lg label label-warning">{{$template['module']}}</span>
+                            <span class="font-size-lg label label-warning">{{$template['module']}} <label class="text-white">{{$template['description']}}</label></span>
                         </div>
-                        <div class="card-body row">
-                            <label class="text-muted">{{$template['description']}}</label>
-                            <div class="col-md-10">
+                        <div class="card-body ">
+
+                            <div class="row">
+                            <div class="col-md-6">
 
                             <form method="post" action="{{route('notification_template.update',[$template['id']])}}">
                                 @csrf
@@ -55,7 +56,7 @@
                                 </div>
                             </form>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
                                         {{__('words.variables')}}
@@ -73,6 +74,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

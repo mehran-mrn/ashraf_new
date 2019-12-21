@@ -27,11 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+
 
         $schedule->call(function () {
-            Log::notice("schedule run at ".date("Y-m-d H:i:s"));
+            sendSms('09365944410','test');
         })->everyMinute();
 
         $schedule->call(function () {
