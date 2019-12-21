@@ -190,7 +190,7 @@ class global_controller extends Controller
         }
 
         // if item not exist in cart then add to cart with quantity = 1
-        $cart[$request['order']['pro_id']] = [
+        $cart['order'][$request['pro_id']] = [
             "title" => $product['title'],
             "product_id" => $product['id'],
             "price" => $price,

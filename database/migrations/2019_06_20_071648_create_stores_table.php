@@ -72,6 +72,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('category_id');
             $table->softDeletes();
@@ -79,6 +80,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_images', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('media_id')->nullable();
             $table->string('url')->nullable();
@@ -87,6 +89,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('tag');
             $table->softDeletes();
@@ -94,6 +97,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('item_id');
             $table->string('value');
@@ -102,6 +106,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_gateways', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->integer('gateway_id');
             $table->string('type');
@@ -110,6 +115,7 @@ class CreateStoresTable extends Migration
         });
         Schema::create('store_product_inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->string('color_code')->nullable();
             $table->integer('count')->default(0);
@@ -128,6 +134,7 @@ class CreateStoresTable extends Migration
             $table->integer('count')->default(0);
             $table->integer('off')->default(0);
             $table->integer('inventory_id')->default(0);
+            $table->integer('product_id');
             $table->foreign('product_id')->references('id')->on('store_products');
             $table->softDeletes();
             $table->timestamps();
