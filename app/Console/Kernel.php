@@ -2,11 +2,8 @@
 
 namespace App\Console;
 
-use App\charity_period;
-use App\charity_periods_transaction;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,9 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\CreateCharityPeriod::class,
+        Commands\CreateNextDateIfNull::class,
+        Commands\CreateNextDateIfInactive::class
     ];
-
     /**
      * Define the application's command schedule.
      *
@@ -27,43 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('Create:NextDateIfNull')->everyMinute();
+        $schedule->command('Create:NextDateIfInactive')->everyMinute();
+        $schedule->command('Create:charityPeriod')->everyMinute();
 
-
-        $schedule->call(function () {
-            sendSms('09365944410','test');
-        })->everyMinute();
-
-        $schedule->call(function () {
-            Log::notice("schedule run at ".date("Y-m-d H:i:s"));
-
-            $charity = charity_period::where(
-                [
-                    ['status', '=', 'active'],
-                    ['next_date', '<=', date("Y-m-d")]
-                ])->get();
-            foreach ($charity as $item) {
-                $nextDate = strtotime($item['next_date']);
-                $now = time();
-                if ($now >= $nextDate) {
-                    charity_periods_transaction::create(
-                        [
-                            'user_id' => $item['user_id'],
-                            'period_id' => $item['id'],
-                            'payment_date' => $item['next_date'],
-                            'amount' => $item['amount'],
-                            'description' => "پرداخت دوره ای شماره " . $item['id'],
-                            'status' => "unpaid",
-                        ]
-                    );
-                    charity_period::where('id', $item['id'])->update(
-                        [
-                            'next_date' => date('Y-m-d', strtotime("+" . $item['period'] . " month", time()))
-                        ]
-                    );
-                }
-            }
-
-        })->everyMinute();
     }
 
     /**

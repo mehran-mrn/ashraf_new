@@ -49,6 +49,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laratrust\Models\LaratrustPermission;
 use Laratrust\Models\LaratrustRole;
@@ -1136,5 +1137,21 @@ class panel_view extends Controller
             }
 
         }
+    }
+
+    public function test()
+    {
+        Log::notice("Charity period maker Run At".date("Y-m-d H:i:s"));
+
+        $charity = charity_period::where('status','active')->where("next_date","<=",date("Y-m-d"))->get();
+$result =[];
+        foreach ($charity as $item) {
+            $nextTimeStrTime = strtotime($item['next_date']." +".$item['period'] ." months");
+            $newNextDate =  date("Y-m-d",$nextTimeStrTime);
+            $result[$item['next_date']] = $newNextDate;
+
+
+        }
+        return $result;
     }
 }

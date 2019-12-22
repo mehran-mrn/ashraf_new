@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\charity_period;
+use App\charity_periods_transaction;
+
 \Illuminate\Support\Facades\Artisan::call('cache:clear');
 \Illuminate\Support\Facades\Artisan::call('route:clear');
 \Illuminate\Support\Facades\Artisan::call('view:clear');
@@ -27,12 +31,8 @@ Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
-Route::get('/test', function () {
 
-    $result = sendSms('09365944410','سلام چطوری');
-    return $result;
-
-});
+    Route::get('/test', 'panel\panel_view@test');
 
 
 //=========================================
