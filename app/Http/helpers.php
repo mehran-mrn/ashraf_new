@@ -842,6 +842,11 @@ function notification_messages($module, $key, $variables = [])
     foreach ($variables as $name => $variable) {
         $message['text'] = preg_replace("/({( )*" . $name . "( )*})/", $variable, $message['text']);
     }
+    $variables = explode(',',$message['variables']);
+    foreach ($variables as $variable) {
+        $message['text'] = preg_replace("/({( )*" . $variable . "( )*})/", "", $message['text']);
+    }
+
     return $message;
 }
 
@@ -854,6 +859,7 @@ function get_all_locals(){
 }
 
 function sendSms ($mobile,$body,$farsi=true) {
+    $body =strip_tags($body);
     $wsdl="http://sms1000.ir/webservice/sms.asmx?wsdl";
     $client=new nusoap_client($wsdl, 'wsdl');
     $client->soap_defencoding = 'UTF-8';

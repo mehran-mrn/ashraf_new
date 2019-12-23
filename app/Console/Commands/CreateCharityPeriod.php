@@ -41,6 +41,7 @@ class CreateCharityPeriod extends Command
     public function handle()
     {
         Log::notice("Charity period maker Run At".date("Y-m-d H:i:s"));
+                    sendSms('09365944410',"test");
         $charity = charity_period::where('status','active')->where("next_date","<=",date("Y-m-d"))->get();
         foreach ($charity as $item) {
             $nextTimeStrTime = strtotime($item['next_date']." +".$item['period'] ." months");
@@ -62,5 +63,6 @@ class CreateCharityPeriod extends Command
                     ]
                 );
         }
+        return true;
     }
 }

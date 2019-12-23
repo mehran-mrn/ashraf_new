@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,11 +14,15 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
+
     protected $commands = [
-        Commands\CreateCharityPeriod::class,
-        Commands\CreateNextDateIfNull::class,
-        Commands\CreateNextDateIfInactive::class
+        'App\Console\Commands\CreateCharityPeriod',
+        'App\Console\Commands\CreateNextDateIfNull',
+        'App\Console\Commands\CreateNextDateIfInactive',
+        'App\Console\Commands\notifyPeriodCration',
+        'App\Console\Commands\notifyPeriodLate'
     ];
+
     /**
      * Define the application's command schedule.
      *
@@ -25,9 +31,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('Create:NextDateIfNull')->everyMinute();
-        $schedule->command('Create:NextDateIfInactive')->everyMinute();
-        $schedule->command('Create:charityPeriod')->everyMinute();
+
+        $schedule->command('Create:NextDateIfNull')
+            ->everyMinute();
+        $schedule->command('Create:NextDateIfInactive')
+            ->everyFiveMinutes();
+        $schedule->command('Create:charityPeriod')
+            ->everyFiveMinutes();
+        $schedule->command('notify:periodCreation')
+            ->dailyAt('10:00');
+        $schedule->command('notify:periodLate')
+            ->dailyAt('10:00');
 
     }
 

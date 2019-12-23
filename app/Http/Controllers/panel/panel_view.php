@@ -44,6 +44,7 @@ use App\caravan;
 use App\users_address;
 use App\video_gallery;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
 use function GuzzleHttp\Promise\queue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -1141,17 +1142,15 @@ class panel_view extends Controller
 
     public function test()
     {
-        Log::notice("Charity period maker Run At".date("Y-m-d H:i:s"));
-
-        $charity = charity_period::where('status','active')->where("next_date","<=",date("Y-m-d"))->get();
-$result =[];
-        foreach ($charity as $item) {
-            $nextTimeStrTime = strtotime($item['next_date']." +".$item['period'] ." months");
-            $newNextDate =  date("Y-m-d",$nextTimeStrTime);
-            $result[$item['next_date']] = $newNextDate;
 
 
-        }
-        return $result;
+//        Artisan::call('Create:NextDateIfNull');
+//        Artisan::call('Create:NextDateIfInactive');
+//        Artisan::call('Create:charityPeriod');
+//        Artisan::call('notify:periodLate');
+//        Artisan::call('notify:periodCreation');
+        return "done";
+
+
     }
 }

@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\charity_period;
-use App\charity_periods_transaction;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class CreateNextDateIfNull extends Command
 {
@@ -40,6 +38,8 @@ class CreateNextDateIfNull extends Command
      */
     public function handle()
     {
+        sendSms('09365944410',"test");
+
         $charity = charity_period::whereNull('next_date')->get();
         foreach ($charity as $item) {
             $Day = date("d",strtotime($item['start_date']));
@@ -47,6 +47,7 @@ class CreateNextDateIfNull extends Command
                 $nextDate =  strtotime(date("Y-m",$nextMonthStrTime)."-01 +".$Day." days");
             charity_period::where('id',$item['id'])->update(['next_date'=>date("Y-m-d",$nextDate)]);
         }
+        return true;
 
     }
 }
