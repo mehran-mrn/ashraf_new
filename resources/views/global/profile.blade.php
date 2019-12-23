@@ -90,6 +90,7 @@
                             <div id="myTabContent" class="tab-content">
                                 <div class="tab-pane fade in active" id="payment_list">
                                     <div class="table-responsive">
+
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
@@ -133,6 +134,9 @@
                                 </div>
                                 <div class="tab-pane fade" id="periodic_payment">
                                     <div class="table-responsive">
+                                        <span class="text-danger font-size-lg center-block">
+                                            {{trans('messages.monthlyPayGuide')}}
+                                        </span>
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
