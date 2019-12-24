@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('notify:periodCreation')
             ->dailyAt('10:00');
         $schedule->command('notify:periodLate')
-            ->dailyAt('10:00');
+            ->dailyAt('10:01');
 
     }
 

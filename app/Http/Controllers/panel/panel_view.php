@@ -1144,9 +1144,9 @@ class panel_view extends Controller
     {
 
 
-//        Artisan::call('Create:NextDateIfNull');
-//        Artisan::call('Create:NextDateIfInactive');
-//        Artisan::call('Create:charityPeriod');
+        Artisan::call('Create:NextDateIfNull');
+        Artisan::call('Create:NextDateIfInactive');
+        Artisan::call('Create:charityPeriod');
 //        Artisan::call('notify:periodLate');
 //        Artisan::call('notify:periodCreation');
         return "done";
