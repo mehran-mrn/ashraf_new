@@ -8,4 +8,5 @@ return array (
   'pending_person_exists' => 'وضعیت تمام افراد مشخص نشده است.',
   'national_code_is_incorrect' => 'کد ملی معتبر نیست',
   'file_not_found' => 'فایل پیدا نشد.',
+  'periodic_phone_required' => 'برای ایجاد تعهد دوره ای نیاز است شماره موبایل شما ثبت و تایید شود.',
 );

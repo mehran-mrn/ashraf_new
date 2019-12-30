@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\charity_periods_transaction;
 use App\notification_template;
+use App\User;
 use Illuminate\Console\Command;
 
 class notifyPeriodCration extends Command
@@ -46,7 +47,21 @@ class notifyPeriodCration extends Command
         $smsText = notification_messages('sms','reminder');
 
         foreach ($periodicTransaction as $value){
-            $phone = get_user($value['user_id'])['phone'];
+            $user = User::with('people')->find($value['user_id']);
+            $variables = [];
+            $name='';
+            $gender='';
+            if ($user and $user['people'] and $user['people']['name'] and $user['people']['family']){
+                $gender = ($user['people']['gender'] == '2'?"خانم":"آقای");
+                $name = $gender . " " . $user['people']['name']." ".$user['people']['family'];
+                $variables['name'] = $name;
+                $smsText = notification_messages('sms','reminder',$variables);
+            }
+            else{
+                $smsText = notification_messages('sms','reminder');
+
+            }
+            $phone = $user['phone'];
             if ($phone){
                 sendSms($phone,$smsText['text']);
             }

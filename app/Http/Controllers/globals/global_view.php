@@ -161,17 +161,27 @@ class global_view extends Controller
         return view('global.profile.addresses', compact('userInfo', 'provinces'));
     }
 
-    public function send_sms()
+    public function send_sms(Request $request)
     {
         $user = User::findOrFail(Auth::id());
-        $user->code_phone = random_int(12320, 98750);
-        $user->code_phone_send = date("Y-m-d H:i:s");
-        $user->save();
-
-        // SMS EVENT
-
-        return view('global.materials.sms');
-    }
+        if ($user['phone']) {
+            if ($user['code_phone_send'] and (strtotime(date("Y-m-d H:i:s")) - strtotime($user['code_phone_send'])) < 180) {
+                $wait = 180 -( strtotime(date("Y-m-d H:i:s")) - strtotime($user['code_phone_send']));
+                $message = "$wait  ثانیه صبر کنید";
+                return back_normal($request, $message);
+            } else {
+                $code = random_int(12320, 98750);
+                $user->code_phone = $code;
+                $user->code_phone_send = date("Y-m-d H:i:s");
+                $user->save();
+                sendSms($user['phone'], $user->code_phone);
+                $message = "کد فعال سازی برای شما ارسال شد.";
+                return back_normal($request, $message);
+                // SMS EVENT
+            }
+        }
+        $message = "ابتدا شماره موبایل را ویرایش کنید.";
+        return back_normal($request, $message);    }
 
     public function send_email()
     {
@@ -273,11 +283,11 @@ class global_view extends Controller
         $address = users_address::find($request['address']);
         $trnasCost = setting_transportation_cost::where(
             [
-                ['c_id','=',$address['city_id']],
-                ['t_id','=',$request['transportation']],
+                ['c_id', '=', $address['city_id']],
+                ['t_id', '=', $request['transportation']],
             ]
         )->get();
-        return view('global.store.factor', compact('gateways', 'proInfo','trnasCost'));
+        return view('global.store.factor', compact('gateways', 'proInfo', 'trnasCost'));
     }
 
     public function store_order_factor()

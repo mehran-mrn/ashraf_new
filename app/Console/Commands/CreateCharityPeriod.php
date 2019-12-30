@@ -41,27 +41,31 @@ class CreateCharityPeriod extends Command
     public function handle()
     {
         Log::notice("Charity period maker Run At".date("Y-m-d H:i:s"));
-                    sendSms('09365944410',"test");
+
         $charity = charity_period::where('status','active')->where("next_date","<=",date("Y-m-d"))->get();
         foreach ($charity as $item) {
             $nextTimeStrTime = strtotime($item['next_date']." +".$item['period'] ." months");
             $newNextDate =  date("Y-m-d",$nextTimeStrTime);
+                $exists = charity_periods_transaction::where('period_id',$item['id'])
+                    ->where('payment_date',$item['next_date'])->exists();
 
-                charity_periods_transaction::create(
-                    [
-                        'user_id' => $item['user_id'],
-                        'period_id' => $item['id'],
-                        'payment_date' => $item['next_date'],
-                        'amount' => $item['amount'],
-                        'description' => "پرداخت دوره ای شماره " . $item['id'],
-                        'status' => "unpaid",
-                    ]
-                );
-                charity_period::where('id', $item['id'])->update(
-                    [
-                        'next_date' => $newNextDate,
-                    ]
-                );
+                if (!$exists){
+                    charity_periods_transaction::create(
+                        [
+                            'user_id' => $item['user_id'],
+                            'period_id' => $item['id'],
+                            'payment_date' => $item['next_date'],
+                            'amount' => $item['amount'],
+                            'description' => "پرداخت دوره ای شماره " . $item['id'],
+                            'status' => "unpaid",
+                        ]
+                    );
+                    charity_period::where('id', $item['id'])->update(
+                        [
+                            'next_date' => $newNextDate,
+                        ]
+                    );
+                }
         }
         return true;
     }

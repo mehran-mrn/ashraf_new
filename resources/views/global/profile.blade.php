@@ -14,36 +14,21 @@
                             <div class="row">
                                 <div class="col-md-12 mb-sm-40">
                                     <div class="row">
-                                        <div class="col-md-3 border-1px p-20">
+                                        <div class="col-md-6 border-1px p-20">
                                             <span class="text-gray">{{__('messages.name_family')}}:</span>
                                             <span class="text-black">{{$userInfo['people']['name']}} {{$userInfo['people']['family']}}</span>
                                         </div>
-                                        <div class="col-md-3 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.username')}}: </span>
-                                            <span class="text-black">{{$userInfo['phone']}}</span>
-                                            @if(!$userInfo['phone_verified_at'])
-                                                <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
-                                                <a href="{{route('global_profile_send_sms')}}"
-                                                   class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_sms')}}</a>
-                                                @else
-                                                <i class="fa fa-check text-success"></i>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-3 border-1px p-20">
+
+                                        <div class="col-md-6 border-1px p-20">
                                             <span class="text-gray">{{__('messages.national_code')}}: </span>
                                             <span class="text-black">{{$userInfo['people']['national_code']}}</span>
                                         </div>
+                                        <div class="col-md-6 border-1px p-20">
+                                            @include('global.component.phone')
+                                        </div>
+                                        <div class="col-md-6 border-1px p-20">
+                                            @include('global.component.email')
 
-                                        <div class="col-md-3 border-1px p-20">
-                                            <span class="text-gray">{{__('messages.email')}}: </span>
-                                            <span class="text-black">{{$userInfo['email']}}</span>
-                                            @if(!$userInfo['email_verified_at'])
-                                                <span class="badge badge-danger">{{__('messages.not_valid')}}</span>
-                                                <a href="{{route('global_profile_send_email')}}"
-                                                   class="btn btn-success btn-block ajaxload-popup">{{__('messages.send_verify_email')}}</a>
-                                            @else
-                                                <i class="fa fa-check text-success"></i>
-                                            @endif
                                         </div>
                                         <div class="col-md-12 border-1px p-20">
                                             <div class="row">
@@ -114,13 +99,13 @@
                                                     <?php $btn_color = "warning" ?>
                                                 @endif
                                                 <tr>
-                                                    <td>{{number_format($unpaid['amount'])}}</td>
-                                                    <td>{{miladi_to_shamsi_date($unpaid['payment_date'])}}</td>
-                                                    <td>{{$unpaid['description']}}</td>
-                                                    <td>
+                                                    <td class="text-center">{{number_format($unpaid['amount'])}}</td>
+                                                    <td class="text-center">{{miladi_to_shamsi_date($unpaid['payment_date'])}}</td>
+                                                    <td class="text-center">{{$unpaid['description']}}</td>
+                                                    <td class="text-center">
                                                         <span class="label {{$color}}">{{__("messages.".$unpaid['status'])}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <a href="{{route('vow_cart',['id'=>$unpaid['id']])}}"
                                                            class="btn btn-xs btn-{{$btn_color}} btn-pay">
                                                             {{__('messages.pay')}} <i class="fa fa-chevron-left"></i>
@@ -140,12 +125,12 @@
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
-                                                <th>{{__('messages.amount')}}</th>
-                                                <th>{{__('messages.start_date')}}</th>
-                                                <th>{{__('messages.period')}}</th>
-                                                <th>{{__('messages.description')}}</th>
-                                                <th>{{__('messages.status')}}</th>
-                                                <th></th>
+                                                <th class="text-center">{{__('messages.amount')}}</th>
+                                                <th class="text-center">{{__('messages.start_date')}}</th>
+                                                <th class="text-center">{{__('messages.period')}}</th>
+                                                <th class="text-center">{{__('messages.description')}}</th>
+                                                <th class="text-center">{{__('messages.status')}}</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -159,14 +144,14 @@
                                                     <?php $btn_color = "danger" ?>
                                                 @endif
                                                 <tr>
-                                                    <td>{{$period['amount']}}</td>
-                                                    <td>{{miladi_to_shamsi_date($period['start_date'])}}</td>
-                                                    <td>{{$period['period']}}</td>
-                                                    <td>{{$period['description']}}</td>
-                                                    <td>
+                                                    <td class="text-center">{{$period['amount']}}</td>
+                                                    <td class="text-center">{{miladi_to_shamsi_date($period['start_date'])}}</td>
+                                                    <td class="text-center">{{$period['period']}}</td>
+                                                    <td class="text-center">{{$period['description']}}</td>
+                                                    <td class="text-center">
                                                         <span class="label {{$color}}">{{__("messages.".$period['status'])}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <button class="btn btn-{{$btn_color}} btn-xs btn-delete"
                                                                 data-id="{{$period['id']}}">{{__('messages.'.$text)}}</button>
                                                     </td>
@@ -181,12 +166,12 @@
                                         <table class="table table-striped text-center table-bordered">
                                             <thead class="text-center">
                                             <tr>
-                                                <th>{{__('messages.amount')}}</th>
-                                                <th>{{__('messages.start_date')}}</th>
-                                                <th>{{__('messages.period')}}</th>
-                                                <th>{{__('messages.description')}}</th>
-                                                <th>{{__('messages.status')}}</th>
-                                                <th></th>
+                                                <th class="text-center">{{__('messages.amount')}}</th>
+                                                <th class="text-center">{{__('messages.start_date')}}</th>
+                                                <th class="text-center">{{__('messages.period')}}</th>
+                                                <th class="text-center">{{__('messages.description')}}</th>
+                                                <th class="text-center">{{__('messages.status')}}</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                             </thead>
                                             <tbody class="text-center">
@@ -200,14 +185,14 @@
                                                     <?php $btn_color = "danger" ?>
                                                 @endif
                                                 <tr>
-                                                    <td>{{$period['amount']}}</td>
-                                                    <td>{{miladi_to_shamsi_date($period['start_date'])}}</td>
-                                                    <td>{{$period['period']}}</td>
-                                                    <td>{{$period['description']}}</td>
-                                                    <td>
+                                                    <td class="text-center">{{$period['amount']}}</td>
+                                                    <td class="text-center">{{miladi_to_shamsi_date($period['start_date'])}}</td>
+                                                    <td class="text-center">{{$period['period']}}</td>
+                                                    <td class="text-center">{{$period['description']}}</td>
+                                                    <td class="text-center">
                                                         <span class="label {{$color}}">{{__("messages.".$period['status'])}}</span>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <button class="btn btn-{{$btn_color}} btn-xs btn-delete"
                                                                 data-id="{{$period['id']}}">{{__('messages.'.$text)}}</button>
                                                     </td>

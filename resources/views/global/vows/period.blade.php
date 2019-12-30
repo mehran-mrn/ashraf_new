@@ -87,6 +87,17 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 col-md-8">
                         <h3 class="mt-0 line-bottom">{{$patern['title']}}<span class="font-weight-300"></span></h3>
+                        <div class="alert alert-success" role="alert">
+                            {!!__('long_msg.periodic_list_guide',['link'=>route('global_profile')])!!}
+                        </div>
+                        @if(! \Illuminate\Support\Facades\Auth::user()->phone_verified_at)
+                            <div class="alert alert-danger" role="alert">
+                                {{__('errors.periodic_phone_required')}}
+
+                            </div>
+                            @include('global.component.phone')
+                        @endif
+
                         <form action="" method="post" id="frm_add_period">
                             @csrf
                             <input type="hidden" name="charity_id" value="{{$patern['id']}}">

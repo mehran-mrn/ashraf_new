@@ -514,15 +514,16 @@ class global_controller extends Controller
 
     public function verify_mobile(Request $request)
     {
-        if ($user = User::findOrFail(Auth::id())) {
-            $created = new Carbon($user->code_phone_send);
-            $now = Carbon::now();
-            $diff = $created->diff($now)->i;
-            if ($diff < 6) {
+        $user = User::findOrFail(Auth::id());
+        if ($user  and  $user->code_phone_send) {
+            $created = strtotime($user->code_phone_send);
+            $now = strtotime(date('Y-m-d H:i:s'));
+            $diff = $now - $created;
+            if ($diff < 200) {
                 if ($user->code_phone == $request['code']) {
                     $user->phone_verified_at = date("Y-m-d H:i:s");
                     $user->save();
-                    return back_normal($request, ['message' => __('messages.phone_verified')]);
+                    return back_normal($request,  __('messages.phone_verified'));
                 } else {
                     return back_error($request, __('messages.code_invalid'));
                 }

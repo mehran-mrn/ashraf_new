@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\charity_periods_transaction;
+use App\User;
 use Illuminate\Console\Command;
 
 class notifyPeriodLate extends Command
@@ -42,10 +43,23 @@ class notifyPeriodLate extends Command
             ->where('payment_date','>=',date('Y-m-d',strtotime(date('Y-m-d')." -4 day")))
             ->where('payment_date','<',date('Y-m-d',strtotime(date('Y-m-d')." -3 day")))
             ->get();
-        $smsText = notification_messages('sms','reminderLate3');
 
         foreach ($periodicTransaction as $value){
-            $phone = get_user($value['user_id'])['phone'];
+            $user = User::with('people')->find($value['user_id']);
+            $variables = [];
+            $name='';
+            $gender='';
+            if ($user and $user['people'] and $user['people']['name'] and $user['people']['family']){
+                $gender = ($user['people']['gender']== '2' ?"خانم":"آقای");
+                $name = $gender . " " . $user['people']['name']." ".$user['people']['family'];
+                $variables['name'] = $name;
+                $smsText = notification_messages('sms','reminderLate3',$variables);
+            }
+            else{
+                $smsText = notification_messages('sms','reminderLate3');
+
+            }
+            $phone = $user['phone'];
             if ($phone){
                 sendSms($phone,$smsText['text']);
             }
