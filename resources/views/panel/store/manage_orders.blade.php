@@ -1,7 +1,9 @@
 @extends('layouts.panel.panel_layout')
 @section('js')
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             var DatatableBasic = function () {
@@ -102,16 +104,73 @@
                             <table class="table datatable-basic table-striped">
                                 <thead>
                                 <tr>
-                                    <th>{{__("messages.it's_over_date")}}</th>
+                                    <th>{{__("messages.user")}}</th>
+                                    <th>{{__("messages.tracking_code")}}</th>
                                     <th>{{__('messages.amount')}}</th>
                                     <th>{{{__('messages.payment_date')}}}</th>
                                     <th>{{__('messages.gateway')}}</th>
                                     <th>{{__('messages.status')}}</th>
-                                    <th class="text-center">{{__('messages.description')}}</th>
+                                    <th class="text-center">{{__('messages.view')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($orders as $order)
+                                    @if($order['status']!="accepted")
+                                    <tr>
+                                        <td>{{$order['people']['name']." ".$order['people']['family']}}</td>
+                                        <td>{{$order['trans_id']}}</td>
+                                        <td>{{number_format($order['amount'])}}</td>
+                                        <td>{{miladi_to_shamsi_date($order['pay_date'])}}</td>
+                                        <td>{{$order['gateway']['title']}}</td>
+                                        <td>
+                                            @if($order['status']=='paid')
+                                                <span
+                                                    class="badge badge-success">{{__('messages.'.$order['status'])}}</span>
+                                            @elseif($order['status']=='fail')
+                                                <span
+                                                    class="badge badge-danger">{{__('messages.'.$order['status'])}}</span>
+                                            @else
+                                                <span
+                                                    class="badge badge-secondary">{{__('messages.'.$order['status'])}}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{route('manage_orders_detail',['id'=>$order['id']])}}"
+                                               data-toggle="tooltip" data-placement="top" title=""
+                                               class="btn btn-outline-dark btn-sm" data-original-title="مشاهده"><i
+                                                    class="icon-eye"></i></a>
 
+                                            <a href="javascript:;"
+                                               class="btn btn-outline-success btn-sm swal-alert "
+                                               data-ajax-link="{{route('manage_orders_approve',['id'=>$order['id']])}}"
+                                               data-method="post"
+                                               data-csrf="{{csrf_token()}}"
+                                               data-title="{{trans('messages.approve',['item'=>trans('messages.order')])}}"
+                                               data-text="{{trans('messages.approve',['item'=>trans('messages.order')])}}"
+                                               data-type="success"
+                                               data-cancel="true"
+                                               data-toggle="tooltip" data-placement="top" title="{{__('messages.approve')}}"
+                                               data-confirm-text="{{trans('messages.approve')}}"
+                                               data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-check top-0"></i></a>
+
+                                            <a href="javascript:;"
+                                               class="btn btn-outline-danger btn-sm swal-alert "
+                                               data-ajax-link="{{route('manage_orders_delete',['id'=>$order['id']])}}"
+                                               data-method="post"
+                                               data-csrf="{{csrf_token()}}"
+                                               data-title="{{trans('messages.delete_item',['item'=>trans('messages.order')])}}"
+                                               data-text="{{trans('messages.delete_item_text',['item'=>trans('messages.order')])}}"
+                                               data-type="warning"
+                                               data-cancel="true"
+                                               data-toggle="tooltip" data-placement="top" title="{{__('messages.delete')}}"
+                                               data-confirm-text="{{trans('messages.delete')}}"
+                                               data-cancel-text="{{trans('messages.cancel')}}">
+                                                <i class="icon-bin top-0"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -120,16 +179,45 @@
                             <table class="table datatable-basic table-striped">
                                 <thead>
                                 <tr>
-                                    <th>{{__("messages.it's_over_date")}}</th>
+                                    <th>{{__("messages.user")}}</th>
+                                    <th>{{__("messages.tracking_code")}}</th>
                                     <th>{{__('messages.amount')}}</th>
                                     <th>{{{__('messages.payment_date')}}}</th>
                                     <th>{{__('messages.gateway')}}</th>
                                     <th>{{__('messages.status')}}</th>
-                                    <th class="text-center">{{__('messages.description')}}</th>
+                                    <th class="text-center">{{__('messages.view')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                @foreach($orders as $order)
+                                    @if($order['status']=="accepted")
+                                        <tr>
+                                            <td>{{$order['people']['name']." ".$order['people']['family']}}</td>
+                                            <td>{{$order['trans_id']}}</td>
+                                            <td>{{number_format($order['amount'])}}</td>
+                                            <td>{{miladi_to_shamsi_date($order['pay_date'])}}</td>
+                                            <td>{{$order['gateway']['title']}}</td>
+                                            <td>
+                                                @if($order['status']=='paid')
+                                                    <span
+                                                        class="badge badge-success">{{__('messages.'.$order['status'])}}</span>
+                                                @elseif($order['status']=='fail')
+                                                    <span
+                                                        class="badge badge-danger">{{__('messages.'.$order['status'])}}</span>
+                                                @else
+                                                    <span
+                                                        class="badge badge-secondary">{{__('messages.'.$order['status'])}}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{route('manage_orders_detail',['id'=>$order['id']])}}"
+                                                   data-toggle="tooltip" data-placement="top" title=""
+                                                   class="btn btn-outline-dark btn-sm" data-original-title="مشاهده"><i
+                                                        class="icon-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

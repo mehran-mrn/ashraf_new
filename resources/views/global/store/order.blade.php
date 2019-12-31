@@ -1,10 +1,12 @@
 @extends('layouts.global.global_layout')
 @section('js')
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/global/js/localization/messages_fa.js') }}"></script>
     <script src="{{ URL::asset('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{asset('public/assets/global/js/leatflat/leaflet.js')}}"></script>
-    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <script
+        src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
 
     <script>
@@ -13,6 +15,24 @@
         });
         $(document).ready(function () {
 
+            var map = L.map('mapid').setView([35.700, 51.400], 11);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                accessToken: 'sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg'
+            }).addTo(map);
+
+
+            map.on('click', function (e) {
+                $(".leaflet-marker-pane").html("");
+                $(".leaflet-shadow-pane").html("");
+                var marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+                marker.bindPopup("<span>{{__('messages.your_location')}}: </span>" + e.latlng.lat + " | " + e.latlng.lng + "<br>").openPopup();
+                $("#lat").val(e.latlng.lat);
+                $("#lon").val(e.latlng.lng);
+            });
+
+
             $('#meeting_date').MdPersianDateTimePicker({
                 targetTextSelector: '#meeting_date',
                 enableTimePicker: false,
@@ -20,22 +40,6 @@
                 englishNumber: true
             });
 
-            var mymap = L.map('mapid').setView([36.00000, 51.2769549], 13);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg', {
-                attribution: '',
-                maxZoom: 18,
-                id: 'mapbox.streets',
-                accessToken: 'sk.eyJ1IjoibWlsYWRrYXJkZ2FyIiwiYSI6ImNqenU2cjIweDAxeGozY283eGF0NXgxamwifQ.Zf18DPBuHLhHR8FIONTtWg'
-            }).addTo(mymap);
-
-            mymap.on('click', function (e) {
-                $(".leaflet-marker-pane").html("");
-                $(".leaflet-shadow-pane").html("");
-                var marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-                marker.bindPopup("<span>{{__('messages.your_location')}}: </span>" + e.latlng.lat + " | " + e.latlng.lng + "<br>").openPopup();
-                $("#lat").val(e.latlng.lat);
-                $("#lon").val(e.latlng.lng);
-            });
             $("#frm_add_address").validate({
                 lang: "fa",
                 rules: {
@@ -182,9 +186,10 @@
     </script>
 @stop
 @section('css')
-    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
-          rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{asset('public/assets/global/js/leatflat/leaflet.css')}}"/>
+    <link
+        href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+        rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ URL::asset('public/assets/global/js/leatflat/leaflet.css')}}"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css"/>
     <style>
@@ -193,7 +198,7 @@
         }
 
         #mapid {
-            height: 180px;
+            height: 400px;
         }
 
     </style>
@@ -227,7 +232,7 @@
                             <tbody>
                             <tr>
                                 <td rowspan="2" colspan="1" class="col-md-1 success"><i
-                                            class="fa fa-check-square-o fa-3x text-success mr-20 mt-10"></i></td>
+                                        class="fa fa-check-square-o fa-3x text-success mr-20 mt-10"></i></td>
                                 <td colspan="4">
                                     <label class="text-secondary">{{__('messages.name_family')}}: </label>
                                     <span>{{$userInfo['people']['name']}} {{$userInfo['people']['family']}}</span>
@@ -261,10 +266,14 @@
                             </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-xs p-10 mb-20 btn-theme-colored  btn-hover-theme-colored btn-address pull-left">{{__('messages.add_new_address')}}</button>
+                        <button
+                            class="btn btn-xs p-10 mb-20 btn-theme-colored  btn-hover-theme-colored btn-address pull-left">{{__('messages.add_new_address')}}</button>
                         <div class="clearfix"></div>
+                        <div id="mapid"></div>
+
                         <form action="{{route('store_order_add_address')}}" id="frm_add_address" method="post"
                               class="hidden border">
+
                             <div class="row add-address m-20">
                                 <div class="col-md-6 col-xs-12 form-group ">
                                     <div class="col-md-6 col-xs-12 form-group">
@@ -335,7 +344,6 @@
                                         <input type="text" class="form-control" dir="ltr" name="mobile">
                                     </div>
                                     <div class="col-md-12 col-xs-12 form-group">
-                                        <div id="mapid"></div>
                                         <input type="hidden" name="lat" id="lat">
                                         <input type="hidden" name="lon" id="lon">
                                     </div>
@@ -360,18 +368,20 @@
                                         </td>
                                         <td class="align-middle" style="vertical-align: middle">
                                             <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
-                                            <span class="pull-right btn  btn-sm align-middle mr-20">{{$tra['address']}}</span>
+                                            <span
+                                                class="pull-right btn  btn-sm align-middle mr-20">{{$tra['address']}}</span>
                                             <button class="btn btn-default btn-sm pull-right btn-delete"
                                                     data-id="{{$tra['id']}}">{{__('messages.delete')}}</button>
-                                            <span class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong
-                                                    class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
+                                            <span
+                                                class="pull-left btn  btn-sm align-middle ml-20 text-success">{{$tra["receiver"]}}</span><strong
+                                                class="pull-left btn  btn-sm">{{__('messages.receiver_name').": "}} </strong>
                                         </td>
                                         <td>
                                             <div class="radio">
                                                 <label>
                                                     <input type="radio" name="address" id="address_radio_{{$tra['id']}}"
                                                            value="{{$tra['id']}}"
-                                                            {{$tra['default']==1?'checked':''}}>
+                                                        {{$tra['default']==1?'checked':''}}>
                                                     {{__('messages.select')}}
                                                 </label>
                                             </div>
@@ -393,7 +403,8 @@
                                         <td class="align-middle" style="vertical-align: middle">
                                             <i class="fa fa-truck fa-2x pull-right mr-20"></i>
                                             <span class="pull-right align-middle mr-20">{{$tra['title']}}</span>
-                                            <span class="pull-left align-middle ml-20 text-success">{{__("messages.free")}}</span>
+                                            <span
+                                                class="pull-left align-middle ml-20 text-success">{{__("messages.free")}}</span>
                                         </td>
                                         <td>
                                             <div class="radio">
@@ -423,7 +434,8 @@
                                             </td>
                                             <td class="align-middle" style="vertical-align: middle">
                                                 <i class="fa fa-anchor fa-2x pull-right mr-20"></i>
-                                                <span class="pull-right align-middle mr-20">{{__('messages.online')}}</span>
+                                                <span
+                                                    class="pull-right align-middle mr-20">{{__('messages.online')}}</span>
                                                 <span class="pull-left align-middle ml-20 text-success"></span>
                                             </td>
                                             <td>
@@ -445,7 +457,8 @@
                                             </td>
                                             <td class="align-middle" style="vertical-align: middle">
                                                 <i class="fa fa-credit-card fa-2x pull-right mr-20"></i>
-                                                <span class="pull-right align-middle mr-20">{{__('messages.cart_to_cart')}}</span>
+                                                <span
+                                                    class="pull-right align-middle mr-20">{{__('messages.cart_to_cart')}}</span>
                                                 <span class="pull-left align-middle ml-20 text-success"></span>
                                             </td>
                                             <td>
@@ -467,7 +480,8 @@
                                             </td>
                                             <td class="align-middle" style="vertical-align: middle">
                                                 <i class="fa fa-money fa-2x pull-right mr-20"></i>
-                                                <span class="pull-right align-middle mr-20">{{__('messages.send_to_account')}}</span>
+                                                <span
+                                                    class="pull-right align-middle mr-20">{{__('messages.send_to_account')}}</span>
                                                 <span class="pull-left align-middle ml-20 text-success"></span>
                                             </td>
                                             <td>
@@ -489,7 +503,8 @@
                                     </td>
                                     <td class="align-middle" style="vertical-align: middle">
                                         <i class="fa fa-map-pin fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{__('messages.pay_on_place')}}</span>
+                                        <span
+                                            class="pull-right align-middle mr-20">{{__('messages.pay_on_place')}}</span>
                                         <span class="pull-left align-middle ml-20 text-success"></span>
                                     </td>
                                     <td>
@@ -528,8 +543,10 @@
                                     </td>
                                     <td class="align-middle" style="vertical-align: middle">
                                         <i class="fa fa-truck fa-2x pull-right mr-20"></i>
-                                        <span class="pull-right align-middle mr-20">{{__('messages.max_send_time_your_order')}}</span>
-                                        <span class="pull-left align-middle ml-20 text-success">{{$time."  ". __("messages.work_day")}}</span>
+                                        <span
+                                            class="pull-right align-middle mr-20">{{__('messages.max_send_time_your_order')}}</span>
+                                        <span
+                                            class="pull-left align-middle ml-20 text-success">{{$time."  ". __("messages.work_day")}}</span>
                                     </td>
                                 </tr>
                                 </tbody>

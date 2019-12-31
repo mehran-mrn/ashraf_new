@@ -202,6 +202,7 @@ return array(
     'max_send_time_your_order' => 'حداکثر زمان ارسال سفارش شما',
     'work_day' => 'روز کاری',
     'order_title' => 'عنوان سفارش',
+    'order_detail'=>'اطلاعات سفارش',
     'view_detail' => 'نمایش جزییات',
     'for' => 'بابت',
     'payment_gateway' => 'درگاه پرداخت',
@@ -716,5 +717,6 @@ return array(
     'meeting_address'=>'آدرس مجلس',
     'descriptions'=>'توضیحات',
     'champions_payments'=>'پرداخت های کمپین ها',
-    'unavailable'=>'ناموجود'
+    'unavailable'=>'ناموجود',
+    'shop_order'=>'خرید تاج گل'
 );

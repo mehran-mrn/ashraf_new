@@ -12,7 +12,7 @@
                 submit.attr('disabled', 'disabled');
                 submit.html("{{__('messages.please_waite')}}");
                 $.ajax({
-                    url: "",
+                    url: "{{route('payment2',['type2'=>"shop",'id2'=>$order_info['id']])}}",
                     type: "POST",
                     data: $(this).serialize(),
                     headers: {
@@ -102,46 +102,41 @@
                                         </div>
                                     </td>
                                     <td data-th="Quantity"><h5
-                                                class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
+                                            class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                                class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
+                                            class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                                class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
+                                            class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
                                     </td>
                                     <td data-th="Subtotal" class="text-center"><h5
-                                                class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
+                                            class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
                                     </td>
                                 </tr>
                             @endforeach
-                            @if($trnasCost!="")
-                                <tr>
-                                    <td data-th="Product">
-                                        <div class="row">
-                                            <div class="col-sm-3 hidden-xs">
-                                                <img src="{{ $details['photo'] }}" width="100" height="100"
-                                                     class="img-responsive"/>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <h5 class="m-30 font-weight-900">{{ $details['title'] }}</h5>
-                                            </div>
+                            <tr>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-sm-6 hidden-xs">
+                                            <h5 class="m-30 font-weight-900">{{ __('messages.transportation') }}</h5>
+
                                         </div>
-                                    </td>
-                                    <td data-th="Quantity"><h5
-                                                class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
-                                    </td>
-                                    <td data-th="Price"><h5
-                                                class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
-                                    </td>
-                                    <td data-th="Price"><h5
-                                                class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
-                                    </td>
-                                    <td data-th="Subtotal" class="text-center"><h5
-                                                class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
-                                    </td>
-                                </tr>
-                            @endif
+                                        <div class="col-sm-6">
+                                            <h5 class="m-30 font-weight-900">{{ $transport['title'] }}</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td colspan="3"></td>
+
+                                <td data-th="Subtotal" class="text-center">
+                                    <h5 class="m-30 font-weight-900">
+                                        {{$trnasCost==0?__('messages.free'): number_format($trnasCost)." ".__('messages.toman') }}</h5>
+                                </td>
+                            </tr>
+                            @php
+                                $total += $trnasCost['cost'];
+                            @endphp
                             </tbody>
                             <tfoot class="border-0 no-border table-borderless">
                             <tr class="visible-xs">
@@ -153,42 +148,95 @@
                                     <h6>{{__('messages.pay_amount')}}</h6>
                                 </td>
                                 <td colspan="2" class="hidden-xs success bold text-left pl-20"><h4
-                                            class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
+                                        class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
                                 </td>
                             </tr>
                             </tfoot>
                         </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.province')}}: </span>
+                                        <strong>{{$address['province']['name']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.city')}}: </span>
+                                        <strong>{{$address['city']['name']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.receiver_name')}}: </span>
+                                        <strong>{{$address['receiver']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.phone')}}: </span>
+                                        <strong>{{$address['phone']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.mobile')}}: </span>
+                                        <strong>{{$address['mobile']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.condolences_to')}}: </span>
+                                        <strong>{{$address['extraInfo']['condolences']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.on_behalf_of')}}: </span>
+                                        <strong>{{$address['extraInfo']['on_behalf_of']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.late_name')}}: </span>
+                                        <strong>{{$address['extraInfo']['late_name']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.meeting_date')}}: </span>
+                                        <strong dir="ltr">{{$address['extraInfo']['meeting_date']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span>{{__('messages.meeting_time')}}: </span>
+                                        <strong>{{$address['extraInfo']['meeting_time']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span>{{__('messages.descriptions')}}: </span>
+                                        <strong>{{$address['extraInfo']['descriptions']}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <span>{{__('messages.address')}}: </span>
+                                        <strong>{{$address['address']}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-6 col-md-push-3">
                             <form action="" method="get" id="frm_payment">
                                 @csrf
-                                <input type="hidden" value="" name="id">
-                                <input type="hidden" value="charity_period" name="type">
+                                <input type="hidden" value="{{$order_info['id']}}" name="id">
+                                <input type="hidden" value="shop" name="type">
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-7">
-                                        <div class="row ">
-                                            <div class="col-md-4 col-xs-12 pt-20">
-                                                <strong>{{__('messages.description')}}</strong>
-                                            </div>
-                                            <div class="col-md-8 col-xs-12 pt-20 text-center">
-                                                <h4></h4>
-                                            </div>
-                                            <div class="col-md-4 col-xs-12 pt-20">
-                                                <strong>{{__('messages.price')}}:</strong>
-                                            </div>
-                                            <div class="col-md-8 col-xs-12 pt-20 text-center">
-                                                <h4>
-                                                    <small>{{__('messages.rial')}}</small>
-                                                </h4>
-                                            </div>
-                                            <div class="col-md-4 col-xs-12 pt-20">
-                                                <strong>{{__("messages.payment_date")}}:</strong>
-                                            </div>
-                                            <div class="col-md-8 col-xs-12 pt-20 text-center">
-                                                <h4></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-md-5">
+                                    <div class="col-xs-12 col-md-12">
                                         <div class="row">
                                             <div class="col-md-12 col-xs-12 pt-20 text-center">
                                                 <strong>{{__('messages.payment_gateway')}}</strong>

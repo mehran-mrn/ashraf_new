@@ -26,7 +26,11 @@ class CreateOrdersTable extends Migration
             $table->string('price')->default(0);
             $table->string('tax')->default(0);
             $table->string('discount')->default(0);
-            $table->string('final_price')->default(0);
+            $table->string('amount')->default(0);
+            $table->integer('gateway_id')->nullable();
+            $table->integer('trans_id')->nullable();
+            $table->string('status')->default('waiting');
+            $table->dateTime('pay_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

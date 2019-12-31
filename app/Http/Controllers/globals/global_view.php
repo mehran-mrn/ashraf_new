@@ -16,6 +16,8 @@ use App\charity_supportForm;
 use App\charity_transaction;
 use App\charity_transactions_value;
 use App\city;
+use App\Events\charityPaymentConfirmation;
+use App\Events\storePaymentConfirmation;
 use App\Events\userRegisterEvent;
 use App\gallery_category;
 use App\gateway;
@@ -252,32 +254,37 @@ class global_view extends Controller
                 'address_id' => $request['address'],
                 'transportation_id' => $request['transportation'],
                 'payment' => $request['payment'],
-                'price' => $price,
+                'price' => $price . "0",
                 'tax' => 0,
                 'discount' => $off,
-                'final_price' => $totalAfterOff,
+                'amount' => $totalAfterOff . "0",
             ]);
         foreach ($items['order'] as $item) {
             if ($proInfo = store_product::find($item['product_id'])) {
+                $final = $proInfo['price'] * $item['count'];
                 orders_item::create([
                     'order_id' => $order_info['id'],
                     'product_id' => $proInfo['id'],
                     'count' => $item['count'],
-                    'price' => $proInfo['price'],
-                    'final_price' => $proInfo['price'] * $item['count'],
+                    'price' => $proInfo['price'] . "0",
+                    'final_price' => $final . "0",
                     'discount' => $item['off'],
                 ]);
             }
         }
         $gateways = gateway::where('status', 'active')->get();
-        $address = users_address::find($request['address']);
-        $trnasCost = setting_transportation_cost::where(
+        $address = users_address::with('extraInfo', 'city', 'province')->find($request['address']);
+        $transport = setting_transportation::find($request['transportation']);
+        $trnasCost = 0;
+        if ($trna = setting_transportation_cost::where(
             [
-                ['c_id','=',$address['city_id']],
-                ['t_id','=',$request['transportation']],
+                ['c_id', '=', $address['city_id']],
+                ['t_id', '=', $request['transportation']],
             ]
-        )->get();
-        return view('global.store.factor', compact('gateways', 'proInfo','trnasCost'));
+        )->first()) {
+            $trnasCost = $trna['cost'];
+        };
+        return view('global.store.factor', compact('gateways', 'address', 'trnasCost', 'transport', 'order_info'));
     }
 
     public function store_order_factor()
@@ -455,6 +462,11 @@ class global_view extends Controller
             $info->gateway_id = $request['gateway_id'];
             $info->save();
             $info = champion_transaction::findOrFail($id);
+        } elseif ($type == 'shop') {
+            $info = order::find($id);
+            $info->gateway_id = $request['gateway_id'];
+            $info->save();
+            $info = order::find($id);
         }
         if (!is_null($info) && $con) {
             $gatewayInfo = gateway::findOrFail($info['gateway_id']);
@@ -504,6 +516,7 @@ class global_view extends Controller
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
+            $mobile = 0;
 
             $gateway = config('gateway.table', 'gateway_transactions');
             $data = \DB::table($gateway)->find($request['transaction_id']);
@@ -511,18 +524,38 @@ class global_view extends Controller
                 $charity = charity_transaction::findOrFail($data->module_id);
                 $charity->status = 'success';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
+                if ($charity['user_id'] != 0) {
+                    $user = User::find($charity['user_id']);
+                    $mobile = $user['phone'];
+                } else {
+                    if ($charity['phone'] != "") {
+                        $mobile = $charity['phone'];
+                    }
+                }
                 $charity->save();
+                event(new charityPaymentConfirmation($mobile,'champion'));
                 $messages['des'] = __('messages.charity_donate');
             } elseif ($data->module == "charity_period") {
                 $charity = charity_periods_transaction::findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $charity->pay_date = date("Y-m-d H:i:s", time());
-                $charity->save();
                 $messages['des'] = __('messages.charity_period');
+                $user = User::find($charity['user_id']);
+                $mobile = $user['phone'];
+                $charity->save();
+                event(new charityPaymentConfirmation($mobile,'period'));
             } elseif ($data->module == "charity_champion") {
                 $charity = champion_transaction::with('champion')->findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $messages['des'] = $charity['champion']['title'];
+                if ($charity['user_id'] != 0) {
+                    $user = User::find($charity['user_id']);
+                    $mobile = $user['phone'];
+                } else {
+                    if ($charity['phone'] != "") {
+                        $mobile = $charity['phone'];
+                    }
+                }
                 $charity->save();
                 $sum = champion_transaction::where(
                     [
@@ -535,6 +568,18 @@ class global_view extends Controller
                         'raised' => $sum
                     ]
                 );
+                if ($mobile != 0) {
+                    event(new charityPaymentConfirmation($mobile,'champion'));
+                }
+
+            } elseif ($data->module == "shop") {
+                $charity = order::findOrFail($data->module_id);
+                $charity->status = 'paid';
+                $charity->pay_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+                $messages['des'] = __('messages.shop_order');
+                $user = User::find($charity['user_id']);
+                event(new storePaymentConfirmation($user));
             }
 
 
@@ -544,7 +589,7 @@ class global_view extends Controller
             $messages['date'] = jdate("Y/m/d");
 
             $messages['amount'] = number_format($charity->amount) . " " . __('messages.rial');
-            return view('mail.payment_confirmation2', compact('messages'));
+            return view('global.callbackmain', compact('messages'));
 
         } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
             $messages['message'] = $e->getMessage();
@@ -557,6 +602,15 @@ class global_view extends Controller
                 $charity = charity_transaction::findOrFail($data->module_id);
                 $charity->status = 'fail';
                 $charity->payment_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+            } elseif ($data->module == "charity_champion") {
+                $charity = champion_transaction::findOrFail($data->module_id);
+                $charity->status = 'fail';
+                $charity->payment_date = date("Y-m-d H:i:s", time());
+                $charity->save();
+            } elseif ($data->module == "shop") {
+                $charity = order::findOrFail($data->module_id);
+                $charity->status = 'fail';
                 $charity->save();
             }
             $messages['message'] = $e->getMessage();

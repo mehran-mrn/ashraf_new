@@ -225,9 +225,9 @@ class global_controller extends Controller
 
             $cart = session()->get('cart');
 
-            if (isset($cart[$request['id']])) {
+            if (isset($cart['order'][$request['id']])) {
 
-                unset($cart[$request['id']]);
+                unset($cart['order'][$request['id']]);
 
                 session()->put('cart', $cart);
             }
