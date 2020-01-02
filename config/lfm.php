@@ -20,7 +20,6 @@ return [
     // // Use relative paths (without domain)
 //     'relative_paths'           => false,
 
-    'prefix'=>'',
     /*
     |--------------------------------------------------------------------------
     | Multi-User Mode

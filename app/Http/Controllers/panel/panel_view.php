@@ -983,7 +983,7 @@ class panel_view extends Controller
 
     public function manage_orders()
     {
-        $orders = order::with('people', 'gateway')->whereIn('status', ['fail', 'paid','accepted'])->get();
+        $orders = order::with('people', 'gateway')->get();
         return view('panel.store.manage_orders', compact('orders'));
     }
 

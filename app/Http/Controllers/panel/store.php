@@ -548,8 +548,8 @@ class store extends Controller
     public function manage_orders_delete(Request $request)
     {
         if (isset($request['id'])) {
-            order::where('id', $request['id'])->delete();
-            orders_item::where('order_id', $request['id'])->delete();
+            order::where('id', $request['id'])->forceDelete();
+            orders_item::where('order_id', $request['id'])->forceDelete();
         }
         $message = trans("messages.deleted", ['item' => trans('messages.order')]);
         return back_normal($request, $message);

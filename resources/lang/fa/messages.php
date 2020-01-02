@@ -718,5 +718,8 @@ return array(
     'descriptions'=>'توضیحات',
     'champions_payments'=>'پرداخت های کمپین ها',
     'unavailable'=>'ناموجود',
-    'shop_order'=>'خرید تاج گل'
+    'shop_order'=>'خرید تاج گل',
+    'map_position'=>'موقعیت روی نقشه',
+    'user_information'=>'اطلاعات کاربر',
+    'place'=>'محل'
 );

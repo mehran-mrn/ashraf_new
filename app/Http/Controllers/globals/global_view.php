@@ -218,11 +218,9 @@ class global_view extends Controller
 
     public function store_order()
     {
-        $tran = setting_transportation::where('status', "active")->get();
         $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
         $provinces = city::where('parent', 0)->get();
-        $gateways = gateway::where('status', 'active')->get();
-        return view('global.store.order', compact('tran', 'userInfo', 'provinces', 'gateways'));
+        return view('global.store.order', compact( 'userInfo', 'provinces'));
     }
 
     public function store_order_sub(Request $request)
@@ -287,6 +285,13 @@ class global_view extends Controller
         return view('global.store.factor', compact('gateways', 'address', 'trnasCost', 'transport', 'order_info'));
     }
 
+    public function store_order_information()
+    {
+        $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
+        $tran = setting_transportation::where('status', "active")->get();
+        $gateways = gateway::where('status', 'active')->get();
+        return view('global.store.order_information',compact('tran','gateways','userInfo'));
+    }
     public function store_order_factor()
     {
     }
@@ -577,6 +582,8 @@ class global_view extends Controller
                 $charity->status = 'paid';
                 $charity->pay_date = date("Y-m-d H:i:s", time());
                 $charity->save();
+                session()->forget('cart');
+                session()->forget('info');
                 $messages['des'] = __('messages.shop_order');
                 $user = User::find($charity['user_id']);
                 event(new storePaymentConfirmation($user));

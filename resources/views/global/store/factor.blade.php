@@ -55,14 +55,19 @@
             <section class="">
                 <div class="container mt-30 mb-30 p-30">
                     <div class="row">
-                        <div class="col-md-6  text-center step_two">
+                        <div class="col-md-4 text-center step_one">
                             <h3 class="badge badge-danger">1</h3><br>
+                            <i class="fa fa-user fa-3x mb-10"></i>
+                            <h5>{{__('messages.user_information')}}</h5>
+                        </div>
+                        <div class="col-md-4 text-center step_two">
+                            <h3 class="badge badge-danger">2</h3><br>
                             <i class="fa fa-truck fa-3x mb-10"></i>
                             <h5>{{__('messages.send_information')}}</h5>
                         </div>
-                        <div class="col-md-6 bg-success text-center step_three">
-                            <h3 class="badge badge-danger">2</h3><br>
-                            <i class="fa fa-amazon fa-3x text-success mb-10"></i>
+                        <div class="col-md-4 bg-success text-center step_three">
+                            <h3 class="badge badge-danger">3</h3><br>
+                            <i class="fa fa-amazon fa-3x text-success  mb-10"></i>
                             <h5>{{__('messages.payment_information')}}</h5>
                         </div>
                     </div>
@@ -102,16 +107,16 @@
                                         </div>
                                     </td>
                                     <td data-th="Quantity"><h5
-                                            class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($details['count']) }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                            class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($details['price'])." ".__('messages.toman') }}</h5>
                                     </td>
                                     <td data-th="Price"><h5
-                                            class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
+                                                class="m-30 font-weight-900">{{$off>0? number_format($off)." ".__('messages.toman'):0}}</h5>
                                     </td>
                                     <td data-th="Subtotal" class="text-center"><h5
-                                            class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
+                                                class="m-30 font-weight-900">{{ number_format($totalAfterOff)." ".__('messages.toman') }}</h5>
                                     </td>
                                 </tr>
                             @endforeach
@@ -148,7 +153,7 @@
                                     <h6>{{__('messages.pay_amount')}}</h6>
                                 </td>
                                 <td colspan="2" class="hidden-xs success bold text-left pl-20"><h4
-                                        class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
+                                            class="text-success">{{ number_format($total)." ".__('messages.toman') }}</h4>
                                 </td>
                             </tr>
                             </tfoot>
@@ -231,42 +236,47 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-md-push-3">
-                            <form action="" method="get" id="frm_payment">
-                                @csrf
-                                <input type="hidden" value="{{$order_info['id']}}" name="id">
-                                <input type="hidden" value="shop" name="type">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12 col-xs-12 pt-20 text-center">
-                                                <strong>{{__('messages.payment_gateway')}}</strong>
-                                            </div>
-                                            <div class="col-md-12 pt-10">
-                                                @foreach($gateways as $gateway)
-                                                    <div class="col-md-6 col-xs-6 border-1px border-success">
-                                                        <div class="text-center">
-                                                            {!! $gateway['logo'] !!}
+                            @if($order_info['payment']=="online")
+                                <form action="" method="get" id="frm_payment">
+                                    @csrf
+                                    <input type="hidden" value="{{$order_info['id']}}" name="id">
+                                    <input type="hidden" value="shop" name="type">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 col-xs-12 pt-20 text-center">
+                                                    <strong>{{__('messages.payment_gateway')}}</strong>
+                                                </div>
+                                                <div class="col-md-12 pt-10">
+                                                    @foreach($gateways as $gateway)
+                                                        <div class="col-md-6 col-xs-6 border-1px border-success">
+                                                            <div class="text-center">
+                                                                {!! $gateway['logo'] !!}
+                                                            </div>
+                                                            <div class="radio text-center">
+                                                                <label>
+                                                                    <input type="radio" name="gateway_id"
+                                                                           id="gateway_{{$gateway['id']}}"
+                                                                           value="{{$gateway['id']}}"
+                                                                           checked="checked">
+                                                                    <strong>{{$gateway['bank']['name']}}</strong>
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="radio text-center">
-                                                            <label>
-                                                                <input type="radio" name="gateway_id"
-                                                                       id="gateway_{{$gateway['id']}}"
-                                                                       value="{{$gateway['id']}}"
-                                                                       checked="checked">
-                                                                <strong>{{$gateway['bank']['name']}}</strong>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <div class="col-md-12 pt-10 text-center">
-                                                <button class="btn btn-block btn-theme-colored"
-                                                        type="submit">{{__("messages.pay")}}</button>
+                                                    @endforeach
+                                                </div>
+                                                <div class="col-md-12 pt-10 text-center">
+                                                    <button class="btn btn-block btn-theme-colored"
+                                                            type="submit">{{__("messages.pay")}}</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            @elseif($order_info['payment']=="place")
+                                <hr>
+                                <h4 class="alert alert-success">سفارش شما با موفقیت ثبت گردید. منتظر تماس از موسسه باشید.</h4>
+                            @endif
                         </div>
                         <div id="res"></div>
                     </div>
