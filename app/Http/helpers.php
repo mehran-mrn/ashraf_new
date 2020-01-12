@@ -67,7 +67,7 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "",
             }
             if ($edit == true) {
                 $html .= '
-                <button type="button" 
+                <button type="button"
                 class="btn btn-sm btn-outline-dark modal-ajax-load"
                 data-ajax-link="' . $table . '/edit/' . $select->id . '" data-toggle="modal"
                 data-modal-title="' . trans('messages.edit', ['item' => trans('messages.role')]) . '"
@@ -583,7 +583,7 @@ function get_parent_child_checkbox($id, $parent = 0, $table)
              <div class="custom-control custom-checkbox custom-control-inline">
     <input type="checkbox" class="custom-control-input" value="' . $select->id . '" id="cat_' . $select->id . '" checked>
     <label class="custom-control-label" for="custom_checkbox_inline_unchecked">' . $title . '</label>
-</div>  
+</div>
 </li>
            ';
             $html .= get_parent_child_checkbox($id, $select->id, $table);
@@ -847,7 +847,7 @@ function notification_messages($module, $key, $variables = [])
         $message['text'] = preg_replace("/({( )*" . $variable . "( )*})/", "", $message['text']);
     }
 
-    return $message;
+    return strip_tags($message);
 }
 
 function get_all_locals(){

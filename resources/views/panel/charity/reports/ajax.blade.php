@@ -66,13 +66,14 @@
             <th>{{__('messages.ip')}}</th>
             <th>{{__('messages.date')}}</th>
             <th>{{__('messages.type')}}</th>
+            <th>{{__('messages.type')}}</th>
         </tr>
         </thead>
         <tbody>
         @php $i=1; @endphp
         @foreach($reportRow as $row)
             <tr>
-                <td>{{$i}}</td>
+                <td>{{$row['id']}}</td>
                 <td>{{$row['port']}}</td>
                 <td>{{number_format($row['price'])}}</td>
                 <td><span dir="ltr">{{$row['ref_id']}}</span></td>
@@ -82,6 +83,7 @@
                 <td><span dir="ltr">{{$row['ip']}}</span></td>
                 <td><span dir="ltr">{{jdate("Y-m-d H:i:s",strtotime($row['payment_date']),'','','en')}}</span></td>
                 <td>{{__('messages.'.$row['module'])}}</td>
+                <td>{{$row['charity_info']['title']['title']}}</td>
             </tr>
         @endforeach
         </tbody>

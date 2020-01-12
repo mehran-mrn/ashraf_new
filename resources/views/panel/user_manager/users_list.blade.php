@@ -94,6 +94,7 @@ $active_sidbare = ['user_manager', 'users_list']
                                 <thead>
                                 <tr>
                                     <th>{{__('messages.id')}}</th>
+                                    <th>{{__('messages.username')}}</th>
                                     <th>{{__('messages.name')}}</th>
                                     <th>{{__('messages.email')}}</th>
                                     <th>{{__('messages.mobile')}}</th>
@@ -109,6 +110,7 @@ $active_sidbare = ['user_manager', 'users_list']
                                 @foreach($users as $user)
                                     <tr>
                                         <td><b>{{$i}}</b></td>
+                                        <td><b>{{$user['name']}}</b></td>
                                         <td><b>{{$user['people']['name']}} {{$user['people']['family']}}</b></td>
                                         <td><b>{{$user['email']}}</b></td>
                                         <td><b>{{$user['phone']}}</b></td>
@@ -149,7 +151,7 @@ $active_sidbare = ['user_manager', 'users_list']
                                                         data-toggle="tooltip" data-placement="top" title="{{__('messages.inactivate')}}"
                                                         data-confirm-text="{{trans('messages.delete')}}"
                                                         data-cancel-text="{{trans('messages.cancel')}}">
-                                                    <i class="fa fa-trash"></i>
+                                                    <i class="fa fa-remove"></i>
                                                 </button>
                                                     @else
                                                     <button type="button"
@@ -167,6 +169,22 @@ $active_sidbare = ['user_manager', 'users_list']
                                                         <i class="fa fa-check"></i>
                                                     </button>
                                                 @endif
+                                                @permission('User_manager_delete_force')
+                                                <button type="button"
+                                                        class="btn btn-danger btn-sm swal-alert"
+                                                        data-ajax-link="{{route('users_list_delete_force',['id'=>$user->id])}}"
+                                                        data-method="POST"
+                                                        data-csrf="{{csrf_token()}}"
+                                                        data-title="{{trans('messages.delete',['item'=>__('messages.user')])}}"
+                                                        data-text="{{trans('messages.delete',['item'=>trans('messages.user')])}}"
+                                                        data-type="warning"
+                                                        data-cancel="true"
+                                                        data-toggle="tooltip" data-placement="top" title="{{__('messages.activate')}}"
+                                                        data-confirm-text="{{trans('messages.delete')}}"
+                                                        data-cancel-text="{{trans('messages.cancel')}}">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                @endpermission
                                             </div>
                                         </td>
                                     </tr>

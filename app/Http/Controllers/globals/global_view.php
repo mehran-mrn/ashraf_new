@@ -539,7 +539,7 @@ class global_view extends Controller
                 }
                 $charity->save();
                 event(new charityPaymentConfirmation($mobile,'champion'));
-                $messages['des'] = __('messages.charity_donate');
+                $messages['des'] = $charity['title']['title'];
             } elseif ($data->module == "charity_period") {
                 $charity = charity_periods_transaction::findOrFail($data->module_id);
                 $charity->status = 'paid';

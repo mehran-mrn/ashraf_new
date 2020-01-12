@@ -47,7 +47,7 @@ class notifyPeriodLate extends Command
         foreach ($periodicTransaction as $value){
             $phone = get_user($value['user_id'])['phone'];
             if ($phone){
-                sendSms($phone,$smsText['text']);
+                sendSms($phone,strip_tags($smsText['text']));
             }
         }
     }

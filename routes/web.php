@@ -52,6 +52,7 @@ Route::group(
 
             Route::get('info/edit/{userInfo}', 'panel\panel_view@users_list_info_edit')->name('users_list_info_edit');
             Route::post('info/edit/delete/{id}', 'panel\user_manager@users_list_delete')->name('users_list_delete');
+            Route::post('info/edit/deleteForce/{id}', 'panel\user_manager@users_list_delete_force')->name('users_list_delete_force')->middleware('permission:User_manager_delete_force');
 
             Route::post('/info/update', 'panel\user_manager@user_info_update')->name('user_info_update');
             Route::post('/info/update/image', 'panel\user_manager@user_info_update_image')->name('user_info_update_image');
