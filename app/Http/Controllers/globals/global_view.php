@@ -220,7 +220,7 @@ class global_view extends Controller
     {
         $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
         $provinces = city::where('parent', 0)->get();
-        return view('global.store.order', compact( 'userInfo', 'provinces'));
+        return view('global.store.order', compact('userInfo', 'provinces'));
     }
 
     public function store_order_sub(Request $request)
@@ -290,8 +290,9 @@ class global_view extends Controller
         $userInfo = User::with('addresses', 'people')->findOrFail(Auth::id());
         $tran = setting_transportation::where('status', "active")->get();
         $gateways = gateway::where('status', 'active')->get();
-        return view('global.store.order_information',compact('tran','gateways','userInfo'));
+        return view('global.store.order_information', compact('tran', 'gateways', 'userInfo'));
     }
+
     public function store_order_factor()
     {
     }
@@ -516,13 +517,19 @@ class global_view extends Controller
 
     public function callback(Request $request)
     {
+        $res = false;
         try {
             $gateway = \Gateway::verify();
             $trackingCode = $gateway->trackingCode();
             $refId = $gateway->refId();
             $cardNumber = $gateway->cardNumber();
             $mobile = 0;
-
+            $res = true;
+        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
+            $messages['message'] = $e->getMessage();
+            $messages['result'] = "repeat";
+        }
+        if ($res == true) {
             $gateway = config('gateway.table', 'gateway_transactions');
             $data = \DB::table($gateway)->find($request['transaction_id']);
             if ($data->module == "charity_donate" || $data->module == "charity_vow") {
@@ -538,7 +545,7 @@ class global_view extends Controller
                     }
                 }
                 $charity->save();
-                event(new charityPaymentConfirmation($mobile,'champion'));
+                event(new charityPaymentConfirmation($mobile, 'champion'));
                 $messages['des'] = $charity['title']['title'];
             } elseif ($data->module == "charity_period") {
                 $charity = charity_periods_transaction::findOrFail($data->module_id);
@@ -548,11 +555,12 @@ class global_view extends Controller
                 $user = User::find($charity['user_id']);
                 $mobile = $user['phone'];
                 $charity->save();
-                event(new charityPaymentConfirmation($mobile,'period'));
+                event(new charityPaymentConfirmation($mobile, 'period'));
             } elseif ($data->module == "charity_champion") {
                 $charity = champion_transaction::with('champion')->findOrFail($data->module_id);
                 $charity->status = 'paid';
                 $messages['des'] = $charity['champion']['title'];
+                $mobile=0;
                 if ($charity['user_id'] != 0) {
                     $user = User::find($charity['user_id']);
                     $mobile = $user['phone'];
@@ -574,7 +582,7 @@ class global_view extends Controller
                     ]
                 );
                 if ($mobile != 0) {
-                    event(new charityPaymentConfirmation($mobile,'champion'));
+                    event(new charityPaymentConfirmation($mobile, 'champion'));
                 }
 
             } elseif ($data->module == "shop") {
@@ -588,8 +596,6 @@ class global_view extends Controller
                 $user = User::find($charity['user_id']);
                 event(new storePaymentConfirmation($user));
             }
-
-
             $messages['result'] = "success";
             $messages['name'] = $charity->name;
             $messages['trackingCode'] = $request['transaction_id'];
@@ -597,12 +603,7 @@ class global_view extends Controller
 
             $messages['amount'] = number_format($charity->amount) . " " . __('messages.rial');
             return view('global.callbackmain', compact('messages'));
-
-        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
-            $messages['message'] = $e->getMessage();
-            $messages['result'] = "repeat";
-            return view('global.callback', compact('messages'));
-        } catch (\Exception $e) {
+        } else {
             $gateway = config('gateway.table', 'gateway_transactions');
             $data = \DB::table($gateway)->find($request['transaction_id']);
             if ($data->module == "charity_donate" || $data->module == "charity_vow") {
@@ -620,7 +621,6 @@ class global_view extends Controller
                 $charity->status = 'fail';
                 $charity->save();
             }
-            $messages['message'] = $e->getMessage();
             $messages['result'] = "fail";
             return view('global.callback', compact('messages'));
         }

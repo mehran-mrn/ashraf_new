@@ -847,7 +847,8 @@ function notification_messages($module, $key, $variables = [])
         $message['text'] = preg_replace("/({( )*" . $variable . "( )*})/", "", $message['text']);
     }
 
-    return strip_tags($message);
+    $message['text']=strip_tags($message['text']);
+    return $message;
 }
 
 function get_all_locals(){

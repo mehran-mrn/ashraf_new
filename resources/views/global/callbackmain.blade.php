@@ -14,19 +14,23 @@
         direction: rtl;
         height: 100%;
     }
+
     * {
         font-family: IRANSans, Nastaliq, 'Times New Roman', serif;
     }
+
     .bg-img {
         min-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     }
+
     .bg {
         background: rgba(251, 255, 254, 0.52);
         border-radius: 50px;
     }
+
     .bgB {
         background: rgba(251, 255, 254, 0.90);
         border-radius: 50px;
@@ -52,9 +56,11 @@
         width: 20%;
         opacity: 0.9;
     }
+
     .btn:hover {
         opacity: 1;
     }
+
     @media (max-width: 575.98px) {
         .bg-img {
             background-image: url("/public/assets/global/images/callbackSmall.jpg");
@@ -85,6 +91,7 @@
         }
 
     }
+
     @media (min-width: 576px) and (max-width: 767.98px) {
         .bg-img {
             background-image: url("/public/assets/global/images/callbackM.jpg");
@@ -98,13 +105,16 @@
             width: 95%;
             margin-top: 210px;
         }
+
         .bgB {
             width: 90%;
         }
+
         .btn {
             width: 100%;
         }
     }
+
     @media (min-width: 768px) and (max-width: 991.98px) {
         .bg-img {
             background-image: url("/public/assets/global/images/callback.jpg");
@@ -118,13 +128,16 @@
             width: 80%;
             margin-top: 210px;
         }
+
         .bgB {
             width: 90%;
         }
+
         .btn {
             width: 50%;
         }
     }
+
     @media (min-width: 992px) and (max-width: 1199.98px) {
         .bg-img {
             background-image: url("/public/assets/global/images/callback.jpg");
@@ -139,13 +152,16 @@
             margin-top: 210px;
 
         }
+
         .bgB {
             width: 90%;
         }
+
         .btn {
             width: 20%;
         }
     }
+
     @media (min-width: 1200px) {
         .bg-img {
             background-image: url("/public/assets/global/images/callback.jpg");
@@ -163,6 +179,7 @@
         .bgB {
             width: 90%;
         }
+
         .btn {
             width: 20%;
         }
@@ -193,11 +210,15 @@
                             <strong> {{isset($messages['name']) ? " ".$messages['name']:''}}</strong>
                         </div>
                         <hr class="mt-0">
-                        <div class="d-flex justify-content-between  text-center">
-                            <label><b>تاریخ: </b></label>
-                            <strong>{{isset($messages['date'])?$messages['date']:''}}</strong>
+                        <div class="d-flex bd-highlight ">
+                            <div class="flex-grow-1 bd-highlight text-center">
+                                <label><b>تاریخ: </b></label>
+                                <strong>{{isset($messages['date'])?$messages['date']:''}}</strong>
+                            </div>
+                            <div class="flex-grow-1 bd-highlight text-center">
                             <label><b>مبلغ: </b></label>
-                            <strong>{{isset($messages['amount'])?$messages['amount']:''}}</strong>
+                            <strong>{{isset($messages['amount'])? $messages['amount']:''}}</strong>
+                            </div>
                         </div>
                         <hr class="mt-0">
                         <div class="d-flex justify-content-center">
