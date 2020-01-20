@@ -338,7 +338,7 @@ function loadItems() {
             });
 
           if (item.thumb_url) {
-            var image = $('<div>').css('background-image', 'url("' + item.thumb_url + '?timestamp=' + item.time + '")');
+            var image = $('<div>').css('background-image', 'url("//' + item.thumb_url + '?timestamp=' + item.time + '")');
           } else {
             var image = $('<div>').addClass('mime-icon ico-' + item.icon);
           }
