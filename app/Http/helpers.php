@@ -67,7 +67,7 @@ function NestableTableGetData($id, $parent = 0, $extra_float = "", $module = "",
             }
             if ($edit == true) {
                 $html .= '
-                <button type="button" 
+                <button type="button"
                 class="btn btn-sm btn-outline-dark modal-ajax-load"
                 data-ajax-link="' . $table . '/edit/' . $select->id . '" data-toggle="modal"
                 data-modal-title="' . trans('messages.edit', ['item' => trans('messages.role')]) . '"
@@ -583,7 +583,7 @@ function get_parent_child_checkbox($id, $parent = 0, $table)
              <div class="custom-control custom-checkbox custom-control-inline">
     <input type="checkbox" class="custom-control-input" value="' . $select->id . '" id="cat_' . $select->id . '" checked>
     <label class="custom-control-label" for="custom_checkbox_inline_unchecked">' . $title . '</label>
-</div>  
+</div>
 </li>
            ';
             $html .= get_parent_child_checkbox($id, $select->id, $table);
@@ -847,6 +847,7 @@ function notification_messages($module, $key, $variables = [])
         $message['text'] = preg_replace("/({( )*" . $variable . "( )*})/", "", $message['text']);
     }
 
+    $message['text']=strip_tags($message['text']);
     return $message;
 }
 
@@ -859,22 +860,29 @@ function get_all_locals(){
 }
 
 function sendSms ($mobile,$body,$farsi=true) {
-    $body =strip_tags($body);
-    $wsdl="http://sms1000.ir/webservice/sms.asmx?wsdl";
-    $client=new nusoap_client($wsdl, 'wsdl');
-    $client->soap_defencoding = 'UTF-8';
-    $client->decode_utf8 = true;
-    $param=array(
-        'uUsername' => 'anbiya',
-        'uPassword' => '131571',
-        'uNumber' => 1000454646, //شماره اختصاصی
-        'uCellphones' => $mobile,
-        'uMessage' => $body,
-        'uFarsi' => $farsi
-    );
-    $results = $client->call('doSendSMS', $param);
-    return $results;
+    $mobile = trim($mobile);
+    if (strlen($mobile) >= 10 and strlen($mobile)<=14){
+        $mobile = "0".substr($mobile,strlen($mobile)-10,10);
+    }
+    $regex = "/(09)\d{9}\s{1}P/";
+    if(preg_match($regex,$mobile." P")) {
+        $wsdl = "http://sms1000.ir/webservice/sms.asmx?wsdl";
+        $client = new nusoap_client($wsdl, 'wsdl');
+        $client->soap_defencoding = 'UTF-8';
+        $client->decode_utf8 = true;
+        $param = array(
+            'uUsername' => 'anbiya',
+            'uPassword' => '131571',
+            'uNumber' => 1000454646, //شماره اختصاصی
+            'uCellphones' => $mobile,
+            'uMessage' => $body,
+            'uFarsi' => $farsi
+        );
+        $results = $client->call('doSendSMS', $param);
+        return $results;
+    }
     /*include ('/home/ashraf/public_html/include/libs/class.sms.php');
     $sms = new sms();
     $sms->SendSMS($mobile, $body);*/
 }
+

@@ -18,7 +18,7 @@ return [
     'use_package_routes'       => true,
 
     // // Use relative paths (without domain)
-    // 'relative_paths'           => false,
+//     'relative_paths'           => false,
 
     /*
     |--------------------------------------------------------------------------

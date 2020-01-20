@@ -304,29 +304,46 @@ class charity extends Controller
         $endDate = $endDate . " " . $explodeEnd[1];
 
 
-        $reportPort = DB::table('gateway_transactions')
-            ->select(DB::raw('sum(price) as price'), DB::raw('port'))
-            ->whereIn('module', $request['type'])
-            ->whereIn('port', $request['gateway'])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', '=', 'SUCCEED')
-            ->groupBy('port')
-            ->get();
-        $report = DB::table('gateway_transactions')
-            ->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'), DB::raw('price'), DB::raw('port'))
-            ->whereIn('module', $request['type'])
-            ->whereIn('port', $request['gateway'])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('status', '=', 'SUCCEED')
-            ->get();
+        $reportPort = gateway_transaction::query();
+        $reportPort->select(DB::raw('sum(price) as price'), DB::raw('port'));
+        $reportPort->whereIn('module', $request['type']);
+        $reportPort->whereIn('port', $request['gateway']);
+        $reportPort->whereBetween('created_at', [$startDate, $endDate]);
+        $reportPort->where('status', '=', 'SUCCEED');
+        if (in_array('charity_donate', $request['type'])) {
+            $reportPort->whereHas('charityInfo', function ($q) use ($request) {
+                $q->whereIn('title_id', $request['chType']);
+            });
+        }
+        $reportPort->groupBy('port');
+        $reportPort = $reportPort->get();
 
+        $report = gateway_transaction::query();
+        $report->select(DB::raw('module as mo'), DB::raw('DATE(created_at) as date'), DB::raw('price'), DB::raw('port'));
+        $report->whereIn('module', $request['type']);
+        $report->whereIn('port', $request['gateway']);
+        $report->whereBetween('created_at', [$startDate, $endDate]);
+        $report->where('status', '=', 'SUCCEED');
+        if (in_array('charity_donate', $request['type'])) {
+            $report->whereHas('charityInfo', function ($q) use ($request) {
+                $q->whereIn('title_id', $request['chType']);
+            });
+        }
+        $report = $report->get();
 
-        $reportRow = gateway_transaction::whereIn('module', $request['type'])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereIn('port', $request['gateway'])
-            ->whereIn('module', $request['type'])
-            ->where('status', '=', 'SUCCEED')
-            ->get();
+        $reportRowQuery = gateway_transaction::query();
+        $reportRowQuery->with('charityInfo');
+        $reportRowQuery->whereIn('module', $request['type']);
+        $reportRowQuery->whereBetween('created_at', [$startDate, $endDate]);
+        $reportRowQuery->whereIn('port', $request['gateway']);
+        $reportRowQuery->whereIn('module', $request['type']);
+        $reportRowQuery->where('status', '=', 'SUCCEED');
+        if (in_array('charity_donate', $request['type'])) {
+            $reportRowQuery->whereHas('charityInfo', function ($q) use ($request) {
+                $q->whereIn('title_id', $request['chType']);
+            });
+        }
+        $reportRow = $reportRowQuery->get();
 
         $reports = $report->groupBy(['mo', 'date']);
         $reportPort = json_decode($reportPort, true);

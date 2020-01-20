@@ -317,5 +317,11 @@ class user_manager extends Controller
         }
         return back_normal($request, $return);
     }
+
+    public function users_list_delete_force(Request $request)
+    {
+        User::where('id', $request['id'])->forceDelete();
+        return back_normal($request, trans('messages.done'));
+    }
 }
 

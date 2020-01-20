@@ -58,13 +58,14 @@
         <tr>
             <th>{{__('messages.id')}}</th>
             <th>{{__('messages.gateway')}}</th>
-            <th>{{__('messages.amount')}}</th>
             <th>{{__('messages.ref_id')}}</th>
             <th>{{__('messages.tracking_code')}}</th>
             <th>{{__('messages.card_number')}}</th>
             <th>{{__('messages.status')}}</th>
             <th>{{__('messages.ip')}}</th>
             <th>{{__('messages.date')}}</th>
+            <th>{{__('messages.amount')}}</th>
+            <th>{{__('messages.type')}}</th>
             <th>{{__('messages.type')}}</th>
         </tr>
         </thead>
@@ -72,16 +73,17 @@
         @php $i=1; @endphp
         @foreach($reportRow as $row)
             <tr>
-                <td>{{$i}}</td>
+                <td>{{$row['id']}}</td>
                 <td>{{$row['port']}}</td>
-                <td>{{number_format($row['price'])}}</td>
                 <td><span dir="ltr">{{$row['ref_id']}}</span></td>
                 <td><span dir="ltr">{{$row['tracking_code']}}</span></td>
                 <td><span dir="ltr">{{$row['card_number']}}</span></td>
                 <td>{{__('messages.'.$row['status'])}}</td>
                 <td><span dir="ltr">{{$row['ip']}}</span></td>
                 <td><span dir="ltr">{{jdate("Y-m-d H:i:s",strtotime($row['payment_date']),'','','en')}}</span></td>
+                <td>{{number_format($row['price'])}}</td>
                 <td>{{__('messages.'.$row['module'])}}</td>
+                <td>{{$row['charity_info']['title']['title']}}</td>
             </tr>
         @endforeach
         </tbody>
@@ -122,7 +124,8 @@
                 buttons: [
                     {
                         extend: 'csv',
-                        charset: 'UTF-8',
+                        charset: 'utf-8',
+                        extension: '.xls',
                         bom: true,
                     }
                 ],

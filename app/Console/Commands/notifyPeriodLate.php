@@ -61,7 +61,7 @@ class notifyPeriodLate extends Command
             }
             $phone = $user['phone'];
             if ($phone){
-                sendSms($phone,$smsText['text']);
+                sendSms($phone,strip_tags($smsText['text']));
             }
         }
     }

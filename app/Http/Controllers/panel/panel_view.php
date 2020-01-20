@@ -26,6 +26,7 @@ use App\city;
 use App\gallery_category;
 use App\gateway;
 use App\gateway_transaction;
+use App\order;
 use App\period;
 use App\Permission;
 use App\person;
@@ -835,7 +836,7 @@ class panel_view extends Controller
 
     public function charity_payment_list()
     {
-        $otherPayments = charity_transaction::with('values', 'user', 'patern','title')->get();
+        $otherPayments = charity_transaction::with('values', 'user', 'patern', 'title')->get();
         return view('panel.charity.other_payment.list', compact('periods', 'payments', 'paymentsApprove', 'otherPayments'));
     }
 
@@ -850,7 +851,7 @@ class panel_view extends Controller
     public function charity_payment_list_vow_show(Request $request)
     {
 
-        $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway','title')->findOrFail($request['id']);
+        $info = charity_transaction::with('tranInfo', 'patern', 'user', 'values', 'gateway', 'title')->findOrFail($request['id']);
         return view('panel.charity.other_payment.show', compact('info'));
     }
 
@@ -863,10 +864,11 @@ class panel_view extends Controller
             return view('panel.charity.setting.module.edit_champion', compact('champion', 'projects'));
         };
     }
+
     public function charity_champion_payments_list()
     {
 
-        if ($champion = champion_transaction::with('champion','user','gateway')->get()) {
+        if ($champion = champion_transaction::with('champion', 'user', 'gateway')->get()) {
             return view('panel.charity.champion.list', compact('champion'));
         };
     }
@@ -881,8 +883,9 @@ class panel_view extends Controller
     {
 
         $gateway = DB::table('gateway_transactions')->select(DB::raw('port'))->groupBy('port')->get();
-        $gateway = json_decode($gateway,true);
-        return view('panel.charity.reports.report',compact('gateway'));
+        $titles = charity_payment_title::get();
+        $gateway = json_decode($gateway, true);
+        return view('panel.charity.reports.report', compact('gateway','titles'));
     }
 //end charity module
 
@@ -940,20 +943,20 @@ class panel_view extends Controller
     public function product_add()
     {
         $items_cats = store_item_category::all();
-        $gatewaysOnline = gateway::where('online',1)->get();
-        $gatewaysCard = gateway::where('cart',1)->get();
-        $gatewaysAccount = gateway::where('account',1)->get();
-        return view('panel.store.product.product_add', compact('gatewaysOnline','gatewaysCard','gatewaysAccount', 'items_cats'));
+        $gatewaysOnline = gateway::where('online', 1)->get();
+        $gatewaysCard = gateway::where('cart', 1)->get();
+        $gatewaysAccount = gateway::where('account', 1)->get();
+        return view('panel.store.product.product_add', compact('gatewaysOnline', 'gatewaysCard', 'gatewaysAccount', 'items_cats'));
     }
 
     public function store_product_edit(Request $request)
     {
         $items_cats = store_item_category::all();
-        $gatewaysOnline = gateway::where('online',1)->get();
-        $gatewaysCard = gateway::where('cart',1)->get();
-        $gatewaysAccount = gateway::where('account',1)->get();
-        $product = store_product::with('store_product_gateway','store_product_inventory')->find($request['pro_id']);
-        return view('panel.store.product.product_edit', compact('gatewaysOnline','gatewaysCard','gatewaysAccount', 'items_cats', 'product'));
+        $gatewaysOnline = gateway::where('online', 1)->get();
+        $gatewaysCard = gateway::where('cart', 1)->get();
+        $gatewaysAccount = gateway::where('account', 1)->get();
+        $product = store_product::with('store_product_gateway', 'store_product_inventory')->find($request['pro_id']);
+        return view('panel.store.product.product_edit', compact('gatewaysOnline', 'gatewaysCard', 'gatewaysAccount', 'items_cats', 'product'));
     }
 
     public function product_list()
@@ -981,7 +984,20 @@ class panel_view extends Controller
 
     public function manage_orders()
     {
-        return view('panel.store.manage_orders');
+        $orders = order::with('people', 'gateway')->get();
+        return view('panel.store.manage_orders', compact('orders'));
+    }
+
+    public function manage_orders_detail(Request $request)
+    {
+        $orders = order::with('items','address','people', 'gateway')->find($request['id']);
+        $transInfo= gateway_transaction::where(
+            [
+                ['module','=','shop'],
+                ['module_id','=',$request['id']],
+            ]
+        )->get();
+        return view('panel.store.manage.show', compact('orders','transInfo'));
     }
 
     public function store_setting()
@@ -1142,9 +1158,15 @@ class panel_view extends Controller
 
     public function test()
     {
-//        Artisan::call('Create:NextDateIfNull');
-//        Artisan::call('Create:NextDateIfInactive');
-//        Artisan::call('Create:charityPeriod');
+        $messages['name'] = 'میلاد کاردگر';
+        $messages['date'] = '1398/10/22';
+        $messages['amount'] = '10000 ریال';
+        $messages['des'] = 'پرداخت ماهیانه';
+        $messages['trackingCode'] = '12544852';
+        return view('global.callbackmain', compact('messages'));
+        Artisan::call('Create:NextDateIfNull');
+        Artisan::call('Create:NextDateIfInactive');
+        Artisan::call('Create:charityPeriod');
 //        Artisan::call('notify:periodLate');
 //        Artisan::call('notify:periodCreation');
         return "done";

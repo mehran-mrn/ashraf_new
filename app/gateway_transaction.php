@@ -13,6 +13,12 @@ class gateway_transaction extends Model
         return $this->belongsTo('App\charity_transaction', 'id', 'module_id');
     }
 
+
+    public function charityInfo()
+    {
+        return $this->hasOne('App\charity_transaction', 'trans_id', 'id')->with('title');
+    }
+
     public function dayTrans($module, $startDate, $endDate)
     {
         return gateway_transaction::whereDate('created_at', [$startDate, $endDate])

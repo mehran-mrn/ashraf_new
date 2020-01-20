@@ -3,14 +3,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section('js')
-    <script src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
     <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
 
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
-    <script src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+    <script
+        src="{{ URL::asset('/public/assets/panel/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -45,12 +51,22 @@
                     }
                 });
             })
+
+            $('#charity_donate').change(function() {
+                if(this.checked) {
+                    $(".type").css('display','block');
+                }else{
+                    $(".type").css('display','none');
+                }
+            });
         });
+
     </script>
 @endsection
 @section('css')
-    <link href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
-          rel="stylesheet" type="text/css">
+    <link
+        href="{{ URL::asset('/node_modules/md.bootstrappersiandatetimepicker/src/jquery.md.bootstrap.datetimepicker.style.css') }}"
+        rel="stylesheet" type="text/css">
 @stop
 @php
     $active_sidbare = ['charity', 'charity_reports']
@@ -78,7 +94,7 @@
                                                    value="{{jdate("Y-m-d 00:00:01",time())}}">
                                             <button class="btn btn-outline-dark btn-sm" type="button"
                                                     id="start_date_btn"><i
-                                                        class="icon-calendar"></i>
+                                                    class="icon-calendar"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -103,7 +119,8 @@
                                         @foreach($gateway as $g)
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input-styled" name="gateway[]" value="{{$g['port']}}" checked
+                                                    <input type="checkbox" class="form-check-input-styled"
+                                                           name="gateway[]" value="{{$g['port']}}" checked
                                                            data-fouc>
                                                     {{$g['port']}}
                                                 </label>
@@ -115,34 +132,54 @@
                             <div class="d-flex justify-content-center">
                                 <div class="m-2">
                                     <label for="">{{__('messages.payment_type')}}</label>
-
                                     <div class="form-group mb-3 mb-md-2">
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_vow" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]"
+                                                       value="charity_vow" checked
                                                        data-fouc>
                                                 {{__('messages.charity_vow')}}
                                             </label>
                                         </div>
-
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_donate" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]"
+                                                       value="charity_donate" id="charity_donate"
                                                        data-fouc>
                                                 {{__('messages.charity_donate')}}
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input-styled" name="type[]" value="charity_period" checked
+                                                <input type="checkbox" class="form-check-input-styled" name="type[]"
+                                                       value="charity_period" checked
                                                        data-fouc>
                                                 {{__('messages.charity_period')}}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+                            <div class="type" style="display: none">
+                                <div class="d-flex justify-content-center ">
+                                    <div class="m-2">
+                                        <label for="">{{__('messages.type')}}</label>
+                                        <div class="form-group mb-3 mb-md-2">
+                                            @foreach($titles as $title)
+                                                <div class="form-check form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" class="form-check-input-styled"
+                                                               name="chType[]" value="{{$title['id']}}"
+                                                               data-fouc>
+                                                        {{$title['title']}}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="d-flex justify-content-center">
                                 <div class="m-2">
                                     <button type="submit" class="btn btn-success">{{__('messages.reports')}}</button>

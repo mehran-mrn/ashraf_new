@@ -46,7 +46,7 @@
                 <?php
                 $total = 0;
                 $details = 0; ?>
-                @if(session('cart'))
+                @if(session('cart')['order'])
                     <table id="cart" class="table table-bordered text-center table-condensed">
                         <thead class="">
                         <tr class="bg-light">

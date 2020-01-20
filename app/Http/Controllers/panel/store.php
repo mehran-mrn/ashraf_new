@@ -4,6 +4,8 @@ namespace App\Http\Controllers\panel;
 
 use App\discount_code;
 use App\Http\Controllers\Controller;
+use App\order;
+use App\orders_item;
 use App\product_category;
 use App\store_category;
 use App\store_discount_code;
@@ -179,7 +181,7 @@ class store extends Controller
         ]);
         $product_id = $product_info->id;
 
-        if($request['count']!="") {
+        if ($request['count'] != "") {
             store_product_inventory::create(
                 [
                     'product_id' => $product_id,
@@ -222,7 +224,7 @@ class store extends Controller
                 }
             }
         }
-        if(isset($request['cats'])) {
+        if (isset($request['cats'])) {
             if (sizeof($request['cats']) >= 1) {
                 foreach ($request['cats'] as $cat) {
                     store_product_category::create(
@@ -234,7 +236,7 @@ class store extends Controller
                 }
             }
         }
-        if(isset($request['items_id'])) {
+        if (isset($request['items_id'])) {
             if (sizeof($request['items_id']) >= 1) {
                 foreach ($request['items_id'] as $item) {
                     store_product_item::create(
@@ -357,7 +359,7 @@ class store extends Controller
                 'title' => 'required|min:1',
                 'description' => 'required|min:1',
                 'filepath' => 'required',
-                'slug' => 'required|min:1|unique:store_products,slug,'.$request['pro_id'].',id',
+                'slug' => 'required|min:1|unique:store_products,slug,' . $request['pro_id'] . ',id',
                 'count' => 'required',
                 'price' => 'required',
             ]);
@@ -377,8 +379,8 @@ class store extends Controller
         ]);
         $product_id = $request['pro_id'];
 
-        if($request['count']!="") {
-            store_product_inventory::where('product_id',$product_id)->update(
+        if ($request['count'] != "") {
+            store_product_inventory::where('product_id', $product_id)->update(
                 [
                     'count' => $request['count'],
                     'price' => str_replace(",", "", $request['price']),
@@ -399,7 +401,7 @@ class store extends Controller
                 }
             }
         }
-        if(isset($request['cats'])) {
+        if (isset($request['cats'])) {
             if (sizeof($request['cats']) >= 1) {
                 store_product_category::where('product_id', $product_id)->forceDelete();
                 foreach ($request['cats'] as $cat) {
@@ -412,7 +414,7 @@ class store extends Controller
                 }
             }
         }
-        if(isset($request['items_id'])) {
+        if (isset($request['items_id'])) {
             if (sizeof($request['items_id']) >= 1) {
                 store_product_item::where('product_id', $product_id)->forceDelete();
                 foreach ($request['items_id'] as $item) {
@@ -540,6 +542,27 @@ class store extends Controller
     {
         $item_category = store_item_category::find($request['cat_id']);
         $item_category->deleteAllItems();
+    }
+
+
+    public function manage_orders_delete(Request $request)
+    {
+        if (isset($request['id'])) {
+            order::where('id', $request['id'])->forceDelete();
+            orders_item::where('order_id', $request['id'])->forceDelete();
+        }
+        $message = trans("messages.deleted", ['item' => trans('messages.order')]);
+        return back_normal($request, $message);
+    }
+    public function manage_orders_approve(Request $request)
+    {
+        if (isset($request['id'])) {
+            $order = order::where('id', $request['id'])->first();
+            $order->status = 'accepted';
+            $order->save();
+        }
+        $message = trans("messages.approve", ['item' => trans('messages.order')]);
+        return back_normal($request, $message);
     }
 
 }
