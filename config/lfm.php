@@ -30,6 +30,7 @@ return [
 
     'allow_share_folder'       => true,
 
+    'base_directory' => 'public',
     /*
     |--------------------------------------------------------------------------
     | Folder Names

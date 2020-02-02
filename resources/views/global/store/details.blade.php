@@ -130,9 +130,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="short-description pt-20">
-                                    {{ $proInfo['properties'] }}
-                                </div>
+
                                 <hr>
                                 @if(sizeof($proInfo['store_category'])>=1)
                                     <div class="category"><strong>{{__("messages.category")}}:</strong>
@@ -190,6 +188,9 @@
                                         {!! $proInfo['description'] !!}
                                     </div>
                                     <div class="tab-pane fade" id="tab2">
+                                        <div class="short-description pt-20">
+                                            {{ $proInfo['properties'] }}
+                                        </div>
                                         @php
                                             $pro = $proInfo->store_product_item;
                                         @endphp
